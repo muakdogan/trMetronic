@@ -47,7 +47,6 @@ Route::group(['middleware' => ['web']], function () {
   //public in altındaki klasörün içine yönlendiriyor
   Route::get('/admin/login','AdminAuth\AuthController@showLoginForm');
 
-
   Route::post('/admin/login','AdminAuth\AuthController@login');
   //Route::get('/admin/logout','AdminAuth\AuthController@logout');
   Route::get('/admin/logout','AdminAuth\AuthController@logout');
@@ -65,6 +64,9 @@ Route::group(['middleware' => ['web']], function () {
 
 });
 
+Route::get('/userrr', function () {
+    return view('layouts.appUser');
+});
 Route::get('/password/reset/{belirleme}/{token?}','Auth\PasswordController@showResetForm');
 
 Route::get('/admin/kalemlerTablolari',['middleware' => 'admin' , function () {

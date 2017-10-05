@@ -1,6 +1,7 @@
-@extends('layouts.app')
-<br>
-<br>
+@extends('layouts.appUser')
+@section('baslik') Kontrol Panel @endsection
+@section('aciklama')  @endsection
+
  @section('content')
  <style>
 table {
@@ -108,7 +109,6 @@ tr:nth-child(even) {
 </style>
      <div class="container">
           <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
-        @include('layouts.alt_menu') 
              <div class="row">
                  <div class="col-xs-12 col-sm-6 col-md-8">
                      <div class="panel-group">
