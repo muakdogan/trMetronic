@@ -1,282 +1,255 @@
-@extends('layouts.app')
+@extends('layouts.appUser')
+
+@section('baslik') {{$firma->adi}} Profili @endsection
+
+@section('aciklama') @endsection
+
+@section('head')
+<script src="{{asset('js/ajax-crud.js')}}"></script>
+<script src="{{asset('js/ajax-crud-image.js')}}"></script>
+<script src="{{asset('js/ajax-crud-firmaTanitim.js')}}"></script>
+<script src="//cdn.ckeditor.com/4.5.10/basic/ckeditor.js"></script>
+<script src="{{asset('js/ajax-crud-malibilgiler.js')}}"></script>
+<script src="{{asset('js/ajax-crud-ticaribilgiler.js')}}"></script>
+<script src="{{asset('js/ajax-crud-bilgilendirmetercihi.js')}}"></script>
+<script src="{{asset('js/ajax-crud-referanslar.js')}}"></script>
+<script src="{{asset('js/ajax-crud-referanslarGecmis.js')}}"></script>
+<script src="{{asset('js/ajax-crud-kalite.js')}}"></script>
+<script src="{{asset('js/ajax-crud-firmacalisanlari.js')}}"></script>
+<script src="{{asset('js/ajax-crud-firmabrosur.js')}}"></script>
+<link href="{{asset('css/multi-select.css')}}" media="screen" rel="stylesheet" type="text/css"></link>
+<link href="{{asset('css/multiple-select.css')}}" rel="stylesheet"/>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+
+        text-align: left;
+        padding: 5px;
+    }
+    .button {
+        background-color: #555555; /* Green */
+        border: none;
+        color: white;
+        padding: 10px 22px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 13px;
+        margin: 4px 2px;
+        cursor: pointer;
+        float:right;
+    }
+
+    .wrapper {
+        padding: 25px;
+    }
+
+    .image-wrapper {
+        padding: 5px;
+
+
+    }
+
+    .image-wrapper img {
+        max-width:200px;
+        height:200px;
+
+    }
+    .bilgiEkle{
+        text-align: center;
+        height:67px;
+        border-width:2px;
+        border-style:dotted;
+        border-color:#ddd
+
+    }
+    /* Pie Chart */
+    .progress-pie-chart {
+        width:200px;
+        height: 200px;
+        border-radius: 50%;
+        background-color: #E5E5E5;
+        position: relative;
+    }
+    .progress-pie-chart.gt-50 {
+        background-color: #81CE97;
+    }
+
+    .ppc-progress {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        left: calc(50% - 100px);
+        top: calc(50% - 100px);
+        width: 200px;
+        height: 200px;
+        clip: rect(0, 200px, 200px, 100px);
+    }
+    .ppc-progress .ppc-progress-fill {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        left: calc(50% - 100px);
+        top: calc(50% - 100px);
+        width: 200px;
+        height: 200px;
+        clip: rect(0, 100px, 200px, 0);
+        background: #81CE97;
+        transform: rotate(60deg);
+    }
+    .gt-50 .ppc-progress {
+        clip: rect(0, 100px, 200px, 0);
+    }
+    .gt-50 .ppc-progress .ppc-progress-fill {
+        clip: rect(0, 200px, 200px, 100px);
+        background: #E5E5E5;
+    }
+
+    .ppc-percents {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        left: calc(50% - 173.91304px/2);
+        top: calc(50% - 173.91304px/2);
+        width: 173.91304px;
+        height: 173.91304px;
+        background: #fff;
+        text-align: center;
+        display: table;
+    }
+    .ppc-percents span {
+        display: block;
+        font-size: 2.6em;
+        font-weight: bold;
+        color: #81CE97;
+    }
+
+    .pcc-percents-wrapper {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .progress-pie-chart {
+        margin: 50px auto 0;
+    }
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 18px;
+        margin-top: 8px;
+    }
+
+    .switch input {display:none;}
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 20px;
+        left: 0px;
+        bottom: 2px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+    .test + .tooltip > .tooltip-inner {
+        background-color: #73AD21;
+        color: #FFFFFF;
+        border: 1px solid green;
+        padding: 10px;
+        font-size: 12px;
+    }
+    .test + .tooltip.bottom > .tooltip-arrow {
+        border-bottom: 5px solid green;
+    }
+    form .error {
+        color: #000;
+    }
+    .popup, .popup2, .bMulti {
+        background-color: #fff;
+        border-radius: 10px 10px 10px 10px;
+        box-shadow: 0 0 25px 5px #999;
+        color: #111;
+        display: none;
+        min-width: 450px;
+        padding: 25px;
+        text-align: center;
+    }
+    .popup, .bMulti {
+        min-height: 150px;
+    }
+    .button.b-close, .button.bClose {
+        border-radius: 7px 7px 7px 7px;
+        box-shadow: none;
+        font: bold 131% sans-serif;
+        padding: 0 6px 2px;
+        position: absolute;
+        right: -7px;
+        top: -7px;
+    }
+    .button {
+        background-color: #2b91af;
+        border-radius: 10px;
+        box-shadow: 0 2px 3px rgba(0,0,0,0.3);
+        color: #fff;
+        cursor: pointer;
+        display: inline-block;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+    }
+</style>
+@endsection
+
 @section('content')
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <script src="{{asset('js/ajax-crud.js')}}"></script>
-        <script src="{{asset('js/ajax-crud-image.js')}}"></script>
-        <script src="{{asset('js/ajax-crud-firmaTanitim.js')}}"></script>
-        <script src="//cdn.ckeditor.com/4.5.10/basic/ckeditor.js"></script>
-        <script src="{{asset('js/ajax-crud-malibilgiler.js')}}"></script>
-        <script src="{{asset('js/ajax-crud-ticaribilgiler.js')}}"></script>
-        <script src="{{asset('js/ajax-crud-bilgilendirmetercihi.js')}}"></script>
-        <script src="{{asset('js/ajax-crud-referanslar.js')}}"></script>
-        <script src="{{asset('js/ajax-crud-referanslarGecmis.js')}}"></script>
-        <script src="{{asset('js/ajax-crud-kalite.js')}}"></script>
-        <script src="{{asset('js/ajax-crud-firmacalisanlari.js')}}"></script>
-        <script src="{{asset('js/ajax-crud-firmabrosur.js')}}"></script>
-        <link rel="stylesheet" type="text/css" href="{{asset('css/firmaProfil.css')}}"/>
-        <link href="{{asset('css/multi-select.css')}}" media="screen" rel="stylesheet" type="text/css"></link>
-        <link href="{{asset('css/multiple-select.css')}}" rel="stylesheet"/>
-        <style>
-            .search_icon {   
-                background-color: white;
-                background-image: url("{{asset('images/src.png')}}");
-                background-repeat: no-repeat;
-                padding: 0px 0px 0px 20px;
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+    <script src="{{asset('js/jquery.multi-select.js')}}" type="text/javascript"></script>
+    <script type="text/javascript" src="{{asset('js/jquery.quicksearch.js')}}"></script>
+    <script src="{{asset('js/multiple-select.js')}}"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
-            }
-            table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-            }
-
-            td, th {
-
-            text-align: left;
-            padding: 5px;
-            }
-            .button {
-            background-color: #555555; /* Green */
-            border: none;
-            color: white;
-            padding: 10px 22px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 13px;
-            margin: 4px 2px;
-            cursor: pointer;
-            float:right;
-            }
-            .button1 {
-            background-color: #555555; /* Green */
-            border: none;
-            color: white;
-            padding: 10px 22px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 13px;
-            margin: 4px 2px;
-            cursor: pointer;
-            float:left;
-            }
-            .wrapper {
-                padding: 25px;
-              }
-
-              .image-wrapper {
-                padding: 5px;
-             
-               
-              }
-
-              .image-wrapper img {
-                  max-width:200px;
-                  height:200px;
-               
-              }
-              .bilgiEkle{
-                  text-align: center;
-                  height:67px;
-                  border-width:2px;
-                  border-style:dotted;
-                  border-color:#ddd
-                  
-              }
-              /* Pie Chart */
-                .progress-pie-chart {
-                width:200px;
-                height: 200px;
-                border-radius: 50%;
-                background-color: #E5E5E5;
-                position: relative;
-                }
-                .progress-pie-chart.gt-50 {
-                background-color: #81CE97;
-                }
-
-                .ppc-progress {
-                content: "";
-                position: absolute;
-                border-radius: 50%;
-                left: calc(50% - 100px);
-                top: calc(50% - 100px);
-                width: 200px;
-                height: 200px;
-                clip: rect(0, 200px, 200px, 100px);
-                }
-                .ppc-progress .ppc-progress-fill {
-                content: "";
-                position: absolute;
-                border-radius: 50%;
-                left: calc(50% - 100px);
-                top: calc(50% - 100px);
-                width: 200px;
-                height: 200px;
-                clip: rect(0, 100px, 200px, 0);
-                background: #81CE97;
-                transform: rotate(60deg);
-                }
-                .gt-50 .ppc-progress {
-                clip: rect(0, 100px, 200px, 0);
-                }
-                .gt-50 .ppc-progress .ppc-progress-fill {
-                clip: rect(0, 200px, 200px, 100px);
-                background: #E5E5E5;
-                }
-
-                .ppc-percents {
-                content: "";
-                position: absolute;
-                border-radius: 50%;
-                left: calc(50% - 173.91304px/2);
-                top: calc(50% - 173.91304px/2);
-                width: 173.91304px;
-                height: 173.91304px;
-                background: #fff;
-                text-align: center;
-                display: table;
-                }
-                .ppc-percents span {
-                display: block;
-                font-size: 2.6em;
-                font-weight: bold;
-                color: #81CE97;
-                }
-
-                .pcc-percents-wrapper {
-                display: table-cell;
-                vertical-align: middle;
-                }
-
-                .progress-pie-chart {
-                margin: 50px auto 0;
-                }
-                .switch {
-                position: relative;
-                display: inline-block;
-                width: 40px;
-                height: 18px;
-                margin-top: 8px;
-              }
-
-              .switch input {display:none;}
-
-              .slider {
-                position: absolute;
-                cursor: pointer;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: #ccc;
-                -webkit-transition: .4s;
-                transition: .4s;
-              }
-
-              .slider:before {
-                position: absolute;
-                content: "";
-                height: 16px;
-                width: 20px;
-                left: 0px;
-                bottom: 2px;
-                background-color: white;
-                -webkit-transition: .4s;
-                transition: .4s;
-              }
-
-              input:checked + .slider {
-                background-color: #2196F3;
-              }
-
-              input:focus + .slider {
-                box-shadow: 0 0 1px #2196F3;
-              }
-
-              input:checked + .slider:before {
-                -webkit-transform: translateX(26px);
-                -ms-transform: translateX(26px);
-                transform: translateX(26px);
-              }
-
-              /* Rounded sliders */
-              .slider.round {
-                border-radius: 34px;
-              }
-
-              .slider.round:before {
-                border-radius: 50%;
-              }
-              .test + .tooltip > .tooltip-inner {
-                background-color: #73AD21; 
-                color: #FFFFFF; 
-                border: 1px solid green; 
-                padding: 10px;
-                font-size: 12px;
-             }
-             .test + .tooltip.bottom > .tooltip-arrow {
-                    border-bottom: 5px solid green;
-             }
-               form .error {
-                  color: #000;
-                 }
-                .popup, .popup2, .bMulti {
-                   background-color: #fff;
-                   border-radius: 10px 10px 10px 10px;
-                   box-shadow: 0 0 25px 5px #999;
-                   color: #111;
-                   display: none;
-                   min-width: 450px;
-                   padding: 25px;
-                   text-align: center;
-                   }
-                   .popup, .bMulti {
-                       min-height: 150px;
-                   }
-                   .button.b-close, .button.bClose {
-                       border-radius: 7px 7px 7px 7px;
-                       box-shadow: none;
-                       font: bold 131% sans-serif;
-                       padding: 0 6px 2px;
-                       position: absolute;
-                       right: -7px;
-                       top: -7px;
-                   }
-                   .button {
-                       background-color: #2b91af;
-                       border-radius: 10px;
-                       box-shadow: 0 2px 3px rgba(0,0,0,0.3);
-                       color: #fff;
-                       cursor: pointer;
-                       display: inline-block;
-                       padding: 10px 20px;
-                       text-align: center;
-                       text-decoration: none;
-                   }        
-        </style>
-   </head>
-   <body>
-         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
-         <script src="{{asset('js/jquery.multi-select.js')}}" type="text/javascript"></script>
-         <script type="text/javascript" src="{{asset('js/jquery.quicksearch.js')}}"></script>
-         <script src="{{asset('js/multiple-select.js')}}"></script>
-         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
-         
-  
-   <div class="container">
-       <br>
-       <br>
-         @include('layouts.alt_menu') 
-       <h2>{{$firma->adi}} Profili</h2>
-   </div>
    <div class="container"> 
     <div class="row">
      <div class="col-sm-8" >
@@ -290,7 +263,6 @@
                        <button class="btn btn-primary btn-xs btn-detail " id="btn-add-image" onclick="" value="{{$firma->id}}">Düzenle</button>
                    </div>
                    <div class="col-sm-7">
-
                        <div class="panel panel-default">
                            <div  class="panel-heading">
                                <h4 class="panel-title">
@@ -305,11 +277,6 @@
                                </ul>
                            </div>
                        </div>
-
-
-
-
-
                    </div>
                </div>
                <div class="modal fade" id="myModal-image" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -367,7 +334,6 @@
                    </div>
                </div>
            </div>
-
 
            <div class="panel panel-default">
                <div  class="panel-heading">

@@ -1,8 +1,11 @@
-@extends('layouts.app')
-<br>
-<br>
- @section('content')
- <style>
+@extends('layouts.appUser')
+
+@section('baslik') Davet Edildiğim İlanlar @endsection
+
+@section('aciklama') @endsection
+
+@section('head')
+<style>
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
@@ -38,8 +41,9 @@ tr:nth-child(even) {
     border-radius: 8px;
 }
 </style>
+@endsection
+@section('content')
      <div class="container">
-        @include('layouts.alt_menu') 
              <div class="row">
                  <div class="col-xs-12 col-sm-6 col-md-8">
                      <div class="panel-group">
@@ -53,7 +57,7 @@ tr:nth-child(even) {
                                          <th>Başvuru Sayısı</th>
                                          <th></th>
                                      </tr>
-                                    @foreach(App\BelirlIstekli::where('firma_id',$firma->id)->get() as $dvtIlan)
+                                    @foreach(App\BelirliIstekli::where('firma_id',$firma->id)->get() as $dvtIlan)
                                      <tr>
                                          <td>{{$dvtIlan->dvtIlanAdi($dvtIlan->ilan_id)}}</td>
                                          <td>{{$dvtIlan->dIlanTeklifsayısı($dvtIlan->ilan_id)}}</td>
@@ -68,3 +72,4 @@ tr:nth-child(even) {
                  </div>
              </div>
      </div>
+    @endsection
