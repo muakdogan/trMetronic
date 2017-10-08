@@ -1,247 +1,251 @@
-@extends('layouts.app')
 <?php
     use Carbon\Carbon;
     $dt = Carbon::today();
     $time = Carbon::parse($dt);
     $dt = $time->format('Y-m-d');
 ?>
-<br>
-<br>
- @section('content')
-    <script src="{{asset('js/noUiSlider/nouislider.js')}}"></script>
-    <script src="{{asset('js/wNumb.js')}}"></script>
-    <link href="{{asset('css/noUiSlider/nouislider.css')}}" rel="stylesheet"></link>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css"></link>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+@extends('layouts.appUser')
 
- <style>
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
+@section('baslik') İlanlarım @endsection
 
-    td, th {
-        border: 1px solid #fff;
-        text-align: left;
-        padding: 8px;
-        font-size: 12px;
-    }
+@section('aciklama') @endsection
 
-    tr:nth-child(even) {
-        background-color: #fff;
-    }
+@section('head')
+<script src="{{asset('js/noUiSlider/nouislider.js')}}"></script>
+<script src="{{asset('js/wNumb.js')}}"></script>
+<link href="{{asset('css/noUiSlider/nouislider.css')}}" rel="stylesheet"></link>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css"></link>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
 
-    .div5{
-        float:right;
-    }
-    .div6{
-        float:left;
-    }
-    .button {
-        background-color: #ccc; /* Green */
-        border: none;
-        color: white;
-        padding: 6px 25px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 14px;
-        margin: 4px 2px;
-        cursor: pointer;
-        border-radius: 8px;
-    }
-    .dataTables_wrapper .dataTables_paginate .paginate_button {
-        padding : 0px;
-        margin-left: 0px;
-        display: inline;
-        border: 0px;
-    }
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
 
-    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-        border: 0px;
-    }
-    .add
-    {
-      transition: box-shadow .2s linear, margin .3s linear .5s;
-    }
-    .add.active
-    {
-      margin:0 98px;
-      transition: box-shadow .2s linear, margin .3s linear;
-    }
-    .button:link
-    {
-      color: #eee;
-      text-decoration: none;
-    }
-    .button:visited
-    {
-      color: #eee;
-    }
-    .button:hover
-    {
-      box-shadow:none;
-    }
-    .button:active,
-    .button.active {
-      color: #eee;
-      border-color: #C24032;
-      box-shadow: 0px 0px 4px #C24032 inset;
-    }
-    nav ul li a:active {
-      color: #eee;
-    }
-    nav ul li a.active {
-      color: #eee;
-    }
-    .dialog {
-      position: relative;
-      text-align: center;
-      background: #fff;
-      margin: 13px 0 4px 4px;
-      display: inline-block;
-    }
-    .dialog:after,
-    .dialog:before {
-      bottom: 100%;
-      border: solid transparent;
-      content: " ";
-      height: 0;
-      width: 0;
-      position: absolute;
-      pointer-events: none;
-    }
-    .dialog:after {
-      border-color: rgba(255, 255, 255, 0);
-      border-bottom-color: #5C9CCE;
-      border-width: 15px;
-      left: 50%;
-      margin-left: -15px;
-    }
-    .dialog:before {
-      border-color: rgba(170, 170, 170, 0);
-      border-width: 16px;
-      left: 50%;
-      margin-left: -16px;
-    }
-    .dialog .title {
-      font-weight: bold;
-      text-align: center;
-      border: 1px solid #eeeeee;
-      border-radius: 8px;
-      border-width: 0px 0px 1px 0px;
-      margin-left: 0;
-      margin-right: 0;
-      margin-bottom: 4px;
-      margin-top: 8px;
-      padding: 8px 16px;
-      background: #fff;
-      font-size: 16px;
-      line-height:2em;
-    }
-    .dialog .title:first-child {
-      margin-top: -4px;
-    }
-    form
-    {
-      padding:16px;
-      padding-top: 0;
-    }
-    label1{
-        display: inline-block;
-        font-size: 12px;
-    }
-    textarea,input[type=text],input[type=datetime-local],input[type=time],select,label1
-    {
-      color: #000;
-      border-width: 0px 0px 1px 0px;
-      border-radius: 8px;
-      border:0px solid #ccc;
-      outline: 0;
-      resize: none;
-      margin: 0;
-      margin-top: 1em;
-      padding: .5em;
-      width:100%;
-      border-bottom: 1px dotted rgba(250, 250, 250, 0.4);
-      background:#fff;
-      box-shadow:inset 0 2px 2px rgb(119, 119, 119);
-    }
-    input[type=text]:focus,input[type=datetime-local]:focus,input[type=time]:focus {
-      background-color: #ddd;
-    }
-    input[type=submit]
-    {
-      border:none;
-      background: #FAFEFF;
-      padding: .5em 1em;
-      margin-top: 1em;
-      color:#4478a0;
-    }
-    input[type=submit]:active
-    {
-      background: #E1E5E5;
-    }
-    input:-moz-placeholder, textarea:-moz-placeholder {
-            color: #555;
-    }
-    input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-      color: #555;
-    }
-    input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-            color:#555;
-    }
-    .blink_text {
+td, th {
+    border: 1px solid #fff;
+    text-align: left;
+    padding: 8px;
+    font-size: 12px;
+}
 
-    animation:2s blinker linear infinite;
-    -webkit-animation:2s blinker linear infinite;
-    -moz-animation:2s blinker linear infinite;
-    }
+tr:nth-child(even) {
+    background-color: #fff;
+}
 
-    @-moz-keyframes blinker {
-     0% { opacity: 1.0; }
-     50% { opacity: 0.0; }
-     100% { opacity: 1.0; }
-     }
+.div5{
+    float:right;
+}
+.div6{
+    float:left;
+}
+.button {
+    background-color: #ccc; /* Green */
+    border: none;
+    color: white;
+    padding: 6px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding : 0px;
+    margin-left: 0px;
+    display: inline;
+    border: 0px;
+}
 
-    @-webkit-keyframes blinker {
-     0% { opacity: 1.0; }
-     50% { opacity: 0.0; }
-     100% { opacity: 1.0; }
-     }
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    border: 0px;
+}
+.add
+{
+  transition: box-shadow .2s linear, margin .3s linear .5s;
+}
+.add.active
+{
+  margin:0 98px;
+  transition: box-shadow .2s linear, margin .3s linear;
+}
+.button:link
+{
+  color: #eee;
+  text-decoration: none;
+}
+.button:visited
+{
+  color: #eee;
+}
+.button:hover
+{
+  box-shadow:none;
+}
+.button:active,
+.button.active {
+  color: #eee;
+  border-color: #C24032;
+  box-shadow: 0px 0px 4px #C24032 inset;
+}
+nav ul li a:active {
+  color: #eee;
+}
+nav ul li a.active {
+  color: #eee;
+}
+.dialog {
+  position: relative;
+  text-align: center;
+  background: #fff;
+  margin: 13px 0 4px 4px;
+  display: inline-block;
+}
+.dialog:after,
+.dialog:before {
+  bottom: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.dialog:after {
+  border-color: rgba(255, 255, 255, 0);
+  border-bottom-color: #5C9CCE;
+  border-width: 15px;
+  left: 50%;
+  margin-left: -15px;
+}
+.dialog:before {
+  border-color: rgba(170, 170, 170, 0);
+  border-width: 16px;
+  left: 50%;
+  margin-left: -16px;
+}
+.dialog .title {
+  font-weight: bold;
+  text-align: center;
+  border: 1px solid #eeeeee;
+  border-radius: 8px;
+  border-width: 0px 0px 1px 0px;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 4px;
+  margin-top: 8px;
+  padding: 8px 16px;
+  background: #fff;
+  font-size: 16px;
+  line-height:2em;
+}
+.dialog .title:first-child {
+  margin-top: -4px;
+}
+form
+{
+  padding:16px;
+  padding-top: 0;
+}
+label1{
+    display: inline-block;
+    font-size: 12px;
+}
+textarea,input[type=text],input[type=datetime-local],input[type=time],select,label1
+{
+  color: #000;
+  border-width: 0px 0px 1px 0px;
+  border-radius: 8px;
+  border:0px solid #ccc;
+  outline: 0;
+  resize: none;
+  margin: 0;
+  margin-top: 1em;
+  padding: .5em;
+  width:100%;
+  border-bottom: 1px dotted rgba(250, 250, 250, 0.4);
+  background:#fff;
+  box-shadow:inset 0 2px 2px rgb(119, 119, 119);
+}
+input[type=text]:focus,input[type=datetime-local]:focus,input[type=time]:focus {
+  background-color: #ddd;
+}
+input[type=submit]
+{
+  border:none;
+  background: #FAFEFF;
+  padding: .5em 1em;
+  margin-top: 1em;
+  color:#4478a0;
+}
+input[type=submit]:active
+{
+  background: #E1E5E5;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+        color: #555;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  color: #555;
+}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+        color:#555;
+}
+.blink_text {
 
-    @keyframes blinker {
-     0% { opacity: 1.0; }
-     50% { opacity: 0.0; }
-     100% { opacity: 1.0; }
-     }
-    .test + .tooltip > .tooltip-inner {
-        background-color: #73AD21;
-        color: #FFFFFF;
-        border: 1px solid green;
-        padding: 10px;
-        font-size: 12px;
-     }
-     .test + .tooltip.bottom > .tooltip-arrow {
-            border-bottom: 5px solid green;
-     }
-     @keyframes fontbulger {
-        0%, 100% {
-          font-size: 10px;
-        }
-        50% {
-          font-size: 12px;
-        }
+animation:2s blinker linear infinite;
+-webkit-animation:2s blinker linear infinite;
+-moz-animation:2s blinker linear infinite;
+}
+
+@-moz-keyframes blinker {
+ 0% { opacity: 1.0; }
+ 50% { opacity: 0.0; }
+ 100% { opacity: 1.0; }
+ }
+
+@-webkit-keyframes blinker {
+ 0% { opacity: 1.0; }
+ 50% { opacity: 0.0; }
+ 100% { opacity: 1.0; }
+ }
+
+@keyframes blinker {
+ 0% { opacity: 1.0; }
+ 50% { opacity: 0.0; }
+ 100% { opacity: 1.0; }
+ }
+.test + .tooltip > .tooltip-inner {
+    background-color: #73AD21;
+    color: #FFFFFF;
+    border: 1px solid green;
+    padding: 10px;
+    font-size: 12px;
+ }
+ .test + .tooltip.bottom > .tooltip-arrow {
+        border-bottom: 5px solid green;
+ }
+ @keyframes fontbulger {
+    0%, 100% {
+      font-size: 10px;
     }
-    #box {
-       animation: fontbulger 2s infinite;
-        font-weight: bold;
+    50% {
+      font-size: 12px;
     }
+}
+#box {
+   animation: fontbulger 2s infinite;
+    font-weight: bold;
+}
 </style>
-     <div class="container">
-           @include('layouts.alt_menu')
+@endsection
+@section('content')
+<div class="container">
         <div class="row">
             <div class="col-sm-9">
                 <div class="panel panel-default">
@@ -273,7 +277,7 @@
                                     @if($aktif_ilan->kapanma_tarihi > $dt || $aktif_ilan->teklifler->count() == 0)
                                        <td> <a href="{{ URL::to('teklifGor', array($firma->id,$aktif_ilan->id), false) }}"><button style="float:right;padding: 4px 12px;font-size:12px" type="button" class="btn btn-info">Detay/Teklif Gör</button></a></td>
                                     @else
-                                    <td> <a href="{{ URL::to('teklifGor', array($firma->id,$aktif_ilan->id), false) }}"><button style="background-color:00ff00 ;float:right;padding: 4px 12px;font-size:12px;height:28px;width: 113px" type="button" class="btn btn-info"><span  id=box>Kazananı İlan Et</span></button></a></td>
+                                    <td> <a href="{{ URL::to('teklifGor', array($firma->id,$aktif_ilan->id), false) }}"><button style="background-color:#00ff00 ;float:right;padding: 4px 12px;font-size:12px;height:28px;width: 113px" type="button" class="btn btn-info"><span  id=box>Kazananı İlan Et</span></button></a></td>
                                     @endif
 
                                 </tr>
@@ -394,14 +398,10 @@
                         </tbody>
                      </table>
                     @else
-
                         <p style="text-align:center">Henüz Sonuçlanmış İlanınız Bulunmamamktadır.</p>
-
                     @endif
                     </div>
                 </div>
-
-
 
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong>Pasif İlanlarım &nbsp;({{$pasif_ilanlar->count()}} İlan)</strong></div>
@@ -427,12 +427,12 @@
                                     <td>{{$pasif_ilan->adi}}</td>
 
                                     <td>{{date('d-m-Y', strtotime($pasif_ilan->kapanma_tarihi))}}</td>
-                                    <td>{{$ilan->teklifler->count() == 0 ? 0 : $ilan->teklifler[0]->firma_sayisi}}</td>
+                                    <td>{{$pasif_ilan->teklifler->count() == 0 ? 0 : $ilan->teklifler[0]->firma_sayisi}}</td>
 
                                     @if($pasif_ilan->kapanma_tarihi > $dt || $pasif_ilan->teklifler->count() == 0)
                                        <td> <a href="{{ URL::to('teklifGor', array($firma->id,$pasif_ilan->id), false) }}"><button style="float:right;padding: 4px 12px;font-size:12px" type="button" class="btn btn-info">Detay/Teklif Gör</button></a></td>
                                     @else
-                                    <td> <a href="{{ URL::to('teklifGor', array($firma->id,$pasif_ilan->id), false) }}"><button style="background-color:00ff00 ;float:right;padding: 4px 12px;font-size:12px;height:28px;width: 113px" type="button" class="btn btn-info"><span  id=box>Kazananı İlan Et</span></button></a></td>
+                                    <td> <a href="{{ URL::to('teklifGor', array($firma->id,$pasif_ilan->id), false) }}"><button style="background-color:#00ff00 ;float:right;padding: 4px 12px;font-size:12px;height:28px;width: 113px" type="button" class="btn btn-info"><span  id=box>Kazananı İlan Et</span></button></a></td>
 
                                     @endif
                                 </tr>
@@ -452,7 +452,7 @@
             </div>
             <div class="col-sm-3">
                     <div class="panel panel-default">
-                        <div  style="background-color:00ff00;text-align:center;color:#fff" class="panel-heading"><strong>KAZANANI BELİRLE</strong><span id="blinker"><img src="{{asset('images/unlem.png')}}"> <img src="{{asset('images/unlem.png')}}"><img src="{{asset('images/unlem.png')}}"></span></div>
+                        <div  style="background-color:#00ff00;text-align:center;color:#fff" class="panel-heading"><strong>KAZANANI BELİRLE</strong><span id="blinker"><img src="{{asset('images/unlem.png')}}"> <img src="{{asset('images/unlem.png')}}"><img src="{{asset('images/unlem.png')}}"></span></div>
                         <div style="background-color:#ccffb3" class="panel-body">
                             <table style="font-size:12px">
                                   <tr>

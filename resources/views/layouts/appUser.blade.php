@@ -44,7 +44,7 @@
 </head>
 <!-- END HEAD -->
 
-<body class="page-container-bg-solid page-header-menu-fixed">
+<body id="app-layout" class="page-container-bg-solid page-header-menu-fixed">
 <div class="page-wrapper">
     <div class="page-wrapper-row">
         <div class="page-wrapper-top">
@@ -128,7 +128,7 @@
 <script src="{{asset('MetronicFiles/global/plugins/ie8.fix.min.js')}}"></script>
 <![endif]-->
 <!-- BEGIN CORE PLUGINS -->
-<script src="{{asset('MetronicFiles/global/plugins/jquery.min.js')}}" type="text/javascript"></script>
+
 <script src="{{asset('MetronicFiles/global/plugins/bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('MetronicFiles/global/plugins/js.cookie.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('MetronicFiles/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
@@ -154,5 +154,6 @@
 <script src="{{asset('MetronicFiles/layouts/layout3/scripts/demo.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('MetronicFiles/layouts/global/scripts/quick-sidebar.min.js')}}" type="text/javascript"></script>
 <!-- END THEME LAYOUT SCRIPTS -->
+@yield('sayfaSonu') {{--ic sayfalardan sayfa sonuna bolumune kod eklemek icin--}}
 </body>
 </html>
