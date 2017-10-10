@@ -150,6 +150,10 @@ Route::post('/doluluk_orani/{id}', function (Request $request,$id) {
 
 });
 
+/*Route::get('/', function() {
+  return view('FrontEnd.index');
+});*/
+
 Route::get('/', function () {
   return view('Anasayfa.temelAnasayfa');
 });
