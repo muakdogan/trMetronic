@@ -46,7 +46,11 @@
         <!-- BEGIN LOGIN -->
         <div class="content">
             <!-- BEGIN LOGIN FORM -->
+<<<<<<< HEAD
             <form class="login-form" action="index.html" method="post" action="{{ url('/login') }}">
+=======
+            <form class="login-form" method="post" action="{{url('/login') }}">
+>>>>>>> 39cd80344e68a9810e2c5407d996399422425146
                 {!! csrf_field() !!}
                 <h3 class="form-title">Hesap Bilgileriniz</h3>
                 <div class="alert alert-danger display-hide">
@@ -58,7 +62,11 @@
                     <label class="control-label visible-ie8 visible-ie9">Mail adresi</label>
                     <div class="input-icon">
                         <i class="fa fa-user"></i>
+<<<<<<< HEAD
                         <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Mail adresi" name="username" /> </div>
+=======
+                        <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Mail adresi" name="email" /> </div>
+>>>>>>> 39cd80344e68a9810e2c5407d996399422425146
                 </div>
                 <div class="form-group">
                     <label class="control-label visible-ie8 visible-ie9">Şifre</label>
