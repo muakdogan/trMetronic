@@ -12,13 +12,12 @@ $i=1;
 @section('aciklama') @endsection
 @section('head')
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <script src="//cdn.ckeditor.com/4.5.10/basic/ckeditor.js"></script>
         <link href="{{asset('css/multi-select.css')}}" media="screen" rel="stylesheet" type="text/css"></link>
+        <link href="{{asset('css/skin-bootstrap/ui.fancytree.css')}}" rel="stylesheet" class="skinswitcher">
 
         <!--kalem agacı -->
          <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
         <script src="//cdn.jsdelivr.net/jquery.ui-contextmenu/1/jquery.ui-contextmenu.min.js"></script>
-        <link href="{{asset('css/skin-bootstrap/ui.fancytree.css')}}" rel="stylesheet" class="skinswitcher">
         <script src="{{asset('js/jquery.fancytree.js')}}"></script>
         <script src="{{asset('js/jquery.fancytree.glyph.js')}}"></script>
         <script src="{{asset('js/jquery.fancytree.dnd.js')}}"></script>
@@ -26,41 +25,9 @@ $i=1;
         <script src="{{asset('js/jquery.fancytree.filter.js')}}"></script>
         <script src="{{asset('js/jquery.fancytree.table.js')}}"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+        <script src="//cdn.ckeditor.com/4.5.10/basic/ckeditor.js"></script>
 
         <style>
-            .popup, .popup2, .bMulti {
-                background-color: #fff;
-                border-radius: 10px 10px 10px 10px;
-                box-shadow: 0 0 25px 5px #999;
-                color: #111;
-                display: none;
-                min-width: 450px;
-                padding: 25px;
-                text-align: center;
-            }
-            .popup, .bMulti {
-                min-height: 150px;
-            }
-            .button.b-close, .button.bClose {
-                border-radius: 7px 7px 7px 7px;
-                box-shadow: none;
-                font: bold 131% sans-serif;
-                padding: 0 6px 2px;
-                position: absolute;
-                right: -7px;
-                top: -7px;
-            }
-            .button {
-                background-color: #2b91af;
-                border-radius: 10px;
-                box-shadow: 0 2px 3px rgba(0,0,0,0.3);
-                color: #fff;
-                cursor: pointer;
-                display: inline-block;
-                padding: 10px 20px;
-                text-align: center;
-                text-decoration: none;
-            }
 
             table {
                 font-family: arial, sans-serif;
@@ -72,32 +39,6 @@ $i=1;
 
                 text-align: center;
                 padding: 5px;
-            }
-            .button {
-                background-color: #555555; /* Green */
-                border: none;
-                color: white;
-                padding: 10px 22px;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                font-size: 13px;
-                margin: 4px 2px;
-                cursor: pointer;
-                float:right;
-            }
-            .button1 {
-                background-color: #555555; /* Green */
-                border: none;
-                color: white;
-                padding: 10px 22px;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                font-size: 13px;
-                margin: 4px 2px;
-                cursor: pointer;
-                float:left;
             }
             .test + .tooltip > .tooltip-inner {
                 background-color: #73AD21;
@@ -149,60 +90,6 @@ $i=1;
                 color: #2C3E50;
                 margin-bottom: 10px;
             }
-            .fs-subtitle {
-                font-weight: normal;
-                font-size: 13px;
-                color: #666;
-                margin-bottom: 20px;
-            }
-            /*progressbar*/
-            #progressbar {
-
-                overflow: hidden;
-                /*CSS counters to number the steps*/
-                counter-reset: step;
-            }
-            #progressbar li {
-                list-style-type: none;
-                color: #27ae60;
-                text-transform: uppercase;
-                font-size: 9px;
-                width: 33.33%;
-                float: left;
-                position: relative;
-                text-align: center;
-                z-index: 0;
-            }
-            #progressbar li:before {
-                content: counter(step);
-                counter-increment: step;
-                width: 20px;
-                line-height: 20px;
-                display: block;
-                font-size: 10px;
-                color: #333;
-                background: white;
-                border-radius: 3px;
-                margin: 0 auto 5px auto;
-            }
-            /*progressbar connectors*/
-            #progressbar li:after {
-                content: '';
-                width: 95%;
-                height: 3px;
-                background: white;
-                position: absolute;
-                left: -46.60%;
-                top: 9px;
-                z-index: -1; /*put it behind the numbers*/
-            }
-            #progressbar li:first-child:after {
-                content: none;
-            }
-            #progressbar li.active:before,  #progressbar li.active:after{
-                background: #27AE60;
-                color: white;
-            }
             .eula-container {
                 padding: 15px 20px;
                 height: 250px;
@@ -227,44 +114,7 @@ $i=1;
                 position:relative;
                 top:80px;
             }
-            .box {
-                width:100%;
-                height:200px;
-                background:#FFF;
-                margin:40px auto;
-            }
-            .effect8
-            {
-                position:relative;
-                -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-                -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-                box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
-            }
-            .effect8:before, .effect8:after
-            {
-                content:"";
-                position:absolute;
-                z-index:-1;
-                -webkit-box-shadow:0 0 20px rgba(0,0,0,0.8);
-                -moz-box-shadow:0 0 20px rgba(0,0,0,0.8);
-                box-shadow:0 0 20px rgba(0,0,0,0.8);
-                top:10px;
-                bottom:10px;
-                left:0;
-                right:0;
-                -moz-border-radius:100px / 10px;
-                border-radius:100px / 10px;
-            }
-            .effect8:after
-            {
-                right:10px;
-                left:auto;
-                -webkit-transform:skew(8deg) rotate(3deg);
-                -moz-transform:skew(8deg) rotate(3deg);
-                -ms-transform:skew(8deg) rotate(3deg);
-                -o-transform:skew(8deg) rotate(3deg);
-                transform:skew(8deg) rotate(3deg);
-            }
+
         </style>
 @endsection
 @section('content')
@@ -351,7 +201,7 @@ $i=1;
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-md-12">
-                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">İlan Adı*</label>
+                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">İlan Adı<span class="required"> * </span></label>
                                                 <label for="inputTask" style="text-align: right;padding-right:3px;padding-left:3px"class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
                                                     <input type="text" class="form-control required" id="ilan_adi" name="ilan_adi" placeholder="İlan Adı" value="" >
@@ -369,10 +219,10 @@ $i=1;
                                         <div class="form-group row">
                                             <div class="col-md-12">
 
-                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">İlan Türü*</label>
+                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">İlan Türü<span class="required"> * </span></label>
                                                 <label for="inputTask" style="text-align:right;padding-right:3px;padding-left:3px" class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control required"  name="ilan_turu" id="ilan_turu">
+                                                    <select class="form-control selectpicker required"  name="ilan_turu" id="ilan_turu">
                                                         <option selected disabled value="Seçiniz">Seçiniz</option>
                                                         <option value="1">Mal</option>
                                                         <option value="2">Hizmet</option>
@@ -390,13 +240,11 @@ $i=1;
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-md-12">
-
-                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">İlan Sektör*</label>
+                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">İlan Sektör<span class="required"> * </span></label>
                                                 <label for="inputTask" style="text-align: right;padding-right:3px;padding-left:3px"class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
-
-                                                    <select class="form-control selectpicker required" style=" font-size:12px;height:20px" data-live-search="true"  name="firma_sektor" id="firma_sektor"  >
-                                                        <option  style="color:#eee"  selected disabled>Seçiniz</option>
+                                                    <select class="form-control selectpicker required" data-live-search="true"  name="firma_sektor" id="firma_sektor">
+                                                        <option selected disabled>Seçiniz</option>
                                                     </select>
                                                     @if($errors->first('firma_sektor') != null)
                                                         <span class="help-block" style="color:red">{{ $errors->first('firma_sektor') }}</span>
@@ -411,7 +259,7 @@ $i=1;
                                         <div class="form-group row">
                                             <div class="col-md-12">
 
-                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">İlanın Tarih Aralığı*</label>
+                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">İlanın Tarih Aralığı<span class="required"> * </span></label>
                                                 <label for="inputTask" style="text-align: right;padding-right:3px;padding-left:3px"class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
                                                     <input type="text" name="ilan_tarihi_araligi"  id="ilan_tarihi_araligi"  readonly value="" class="form-control  filled-in"
@@ -429,12 +277,11 @@ $i=1;
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-md-12">
-
-                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">İşin Süresi*</label>
+                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">İşin Süresi<span class="required"> * </span></label>
                                                 <label for="inputTask" style="text-align: right;padding-right:3px;padding-left:3px"class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control required" name="isin_suresi" id="isin_suresi">
-                                                        <option selected disabled value="Seçiniz">Seçiniz</option>
+                                                    <select class="form-control selectpicker required" name="isin_suresi" id="isin_suresi">
+                                                        <option selected disabled>Seçiniz</option>
                                                         <option value="Tek Seferde">Tek Seferde</option>
                                                         <option value="Zamana Yayılarak">Zamana Yayılarak</option>
                                                     </select>
@@ -450,8 +297,7 @@ $i=1;
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-md-12">
-
-                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">İş Tarih Aralığı*</label>
+                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">İş Tarih Aralığı<span class="required"> * </span></label>
                                                 <label for="inputTask" style="text-align: right;padding-right:3px;padding-left:3px"class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
                                                     <input type="text" name="is_tarihi_araligi"  id="is_tarihi_araligi"  readonly value="" class="form-control filled-in"
@@ -492,10 +338,10 @@ $i=1;
                                         <div class="form-group row">
                                             <div class="col-md-12">
 
-                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Katılımcılar*^</label>
+                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Katılımcılar<span class="required"> * </span></label>
                                                 <label for="inputTask" style="text-align: right;padding-right:3px;padding-left:3px"class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control required" name="katilimcilar" id="katilimcilar" data-validation="required"
+                                                    <select class="form-control selectpicker required" name="katilimcilar" id="katilimcilar" data-validation="required"
                                                             data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                                         <option selected disabled value="Seçiniz">Seçiniz</option>
                                                         <option value="1">Onaylı Tedarikçiler</option>
@@ -545,10 +391,10 @@ $i=1;
 
                                         <div class="form-group row">
                                             <div class="col-md-12">
-                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Rekabet Şekli*</label>
+                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Rekabet Şekli<span class="required"> * </span></label>
                                                 <label for="inputTask" style="text-align: right;padding-right:3px;padding-left:3px"class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control required" name="rekabet_sekli" id="rekabet_sekli">
+                                                    <select class="form-control selectpicker required" name="rekabet_sekli" id="rekabet_sekli">
                                                         <option selected disabled value="Seçiniz">Seçiniz</option>
                                                         <option value="1">Tamrekabet</option>
                                                         <option value="2">Sadece Başvuru</option>
@@ -567,10 +413,10 @@ $i=1;
                                         <div class="form-group row">
                                             <div class="col-md-12">
 
-                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Sözleşme Türü</label>
+                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Sözleşme Türü<span class="required"> * </span></label>
                                                 <label for="inputTask" style="text-align:right;padding-right:3px;padding-left:3px"class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control required" name="sozlesme_turu" id="sozlesme_turu">
+                                                    <select class="form-control selectpicker required" name="sozlesme_turu" id="sozlesme_turu">
                                                         <option selected disabled value="Seçiniz">Seçiniz</option>
                                                         <option value="0">Birim Fiyatlı</option>
                                                         <option value="1">Götürü Bedel</option>
@@ -588,10 +434,10 @@ $i=1;
                                         <div class="form-group fiyatlandirma row">
                                             <div class="col-md-12">
 
-                                                <label for="inputEmail3"   style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Fiyatlandırma Şekli*</label>
+                                                <label for="inputEmail3"   style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Fiyatlandırma Şekli<span class="required"> * </span></label>
                                                 <label for="inputTask" style="text-align:right;padding-right:3px;padding-left:3px"class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control  required" name="kismi_fiyat" id="kismi_fiyat" >
+                                                    <select class="form-control selectpicker required" name="kismi_fiyat" id="kismi_fiyat" >
                                                         <option selected disabled value="Seçiniz">Seçiniz</option>
                                                         <option   value="1">Kısmi Fiyat Teklifine Açık</option>
                                                         <option  value="0">Kısmi Fiyat Teklifine Kapalı</option>
@@ -612,7 +458,7 @@ $i=1;
                                                 <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Yaklaşık Maliyet</label>
                                                 <label for="inputTask" style="text-align: right;padding-right:3px;padding-left:3px"class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control required" name="yaklasik_maliyet" id="yaklasik_maliyet" >
+                                                    <select class="form-control selectpicker required" name="yaklasik_maliyet" id="yaklasik_maliyet" >
                                                         <option selected disabled>Seçiniz</option>
                                                         @foreach($maliyetler as $maliyet)
                                                             <option value="{{$maliyet->miktar}}" >{{$maliyet->aralik}}</option>
@@ -631,11 +477,10 @@ $i=1;
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-md-12">
-
-                                                <label for="inputEmail3" class="col-sm-3 control-label">Ödeme Türü*</label>
+                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Ödeme Türü<span class="required"> * </span></label>
                                                 <label for="inputTask" style="text-align:right;padding-right:3px;padding-left:3px"class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control required" name="odeme_turu" id="odeme_turu" >
+                                                    <select class="form-control selectpicker required" name="odeme_turu" id="odeme_turu" >
                                                         <option selected disabled>Seçiniz</option>
                                                         @foreach($odeme_turleri as $odeme_turu)
                                                             <option value="{{$odeme_turu->id}}" >{{$odeme_turu->adi}}</option>
@@ -650,11 +495,10 @@ $i=1;
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-md-12">
-
-                                                <label for="inputEmail3" class="col-sm-3 control-label">Para Birimi*</label>
+                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Para Birimi<span class="required"> * </span></label>
                                                 <label for="inputTask" style="text-align:right;padding-right:3px;padding-left:3px"class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control required" name="para_birimi" id="para_birimi" >
+                                                    <select class="form-control selectpicker required" name="para_birimi" id="para_birimi" >
                                                         <option selected disabled>Seçiniz</option>
                                                         @foreach($para_birimleri as $para_birimi)
                                                             <option  value="{{$para_birimi->id}}" >{{$para_birimi->adi}}</option>
@@ -667,14 +511,12 @@ $i=1;
                                                 <div class="col-md-1 aciklama-tooltip"></div>
                                             </div>
                                         </div>
-
                                         <div class="form-group row">
                                             <div class="col-md-12">
-
-                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Teslim Yeri*</label>
+                                                <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Teslim Yeri<span class="required"> * </span></label>
                                                 <label for="inputTask" style="text-align: right;padding-right:3px;padding-left:3px"class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control required" name="teslim_yeri" id="teslim_yeri" >
+                                                    <select class="form-control selectpicker required" name="teslim_yeri" id="teslim_yeri" >
                                                         <option selected disabled value="Seçiniz">Seçiniz</option>
                                                         <option   value="Satıcı Firma">Satıcı Firma</option>
                                                         <option  value="Adrese Teslim">Adrese Teslim</option>
@@ -690,13 +532,13 @@ $i=1;
                                             </div>
                                         </div>
 
-                                        <div class="form-group error teslim_il row">
+                                        <div class="form-group teslim_il row">
                                             <div class="col-md-12">
 
-                                                <label for="inputTask" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Teslim Ad. İli*</label>
+                                                <label for="inputTask" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Teslim Ad. İli<span class="required"> * </span></label>
                                                 <label for="inputTask" style="text-align: right;padding-right:3px;padding-left:3px"class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control required" name="il_id" id="il_id" >
+                                                    <select class="form-control selectpicker required" name="il_id" id="il_id" >
                                                         <option selected disabled>Seçiniz</option>
                                                         <?php $iller_query= DB::select(DB::raw("SELECT *
                                                                         FROM  `iller`
@@ -718,13 +560,12 @@ $i=1;
                                                 <div class="col-md-1 aciklama-tooltip"></div>
                                             </div>
                                         </div>
-                                        <div class="form-group error teslim_ilce row">
+                                        <div class="form-group teslim_ilce row">
                                             <div class="col-md-12">
-
-                                                <label for="inputTask" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Teslim Ad. İlçesi*</label>
+                                                <label for="inputTask" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Teslim Ad. İlçesi<span class="required"> * </span></label>
                                                 <label for="inputTask" style="text-align: right;padding-right:3px;padding-left:3px"class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
-                                                    <select class="form-control required" name="ilce_id" id="ilce_id" >
+                                                    <select class="form-control selectpicker required" name="ilce_id" id="ilce_id" >
                                                         <option selected disabled value="Seçiniz">Seçiniz</option>
                                                     </select>
                                                     @if($errors->first('ilce_id') != null)
@@ -792,7 +633,7 @@ $i=1;
 
                                             </td>
                                             <td>
-                                                <select class="form-control  selectpicker  required" name="mal_birim[0]" id="mal_birim" data-live-search="true"  >
+                                                <select class="form-control selectpicker  required" name="mal_birim[0]" id="mal_birim" data-live-search="true"  >
                                                     <option selected disabled>Seçiniz</option>
                                                     @foreach($birimler as $birimleri)
                                                         <option  value="{{$birimleri->id}}" >{{$birimleri->adi}}</option>
@@ -930,8 +771,6 @@ $i=1;
                                         </tr>
                                     </table>
                                 </div>
-                                    <div class="ftree"></div>
-
 
                                 <input style="float:right" type="button" class="action-button" id="btn2" value="Kalem Ekle" />
                                 </fieldset>
@@ -955,7 +794,7 @@ $i=1;
                                 <a href="javascript:;" class="btn btn-outline green button-next next"> İleri
                                     <i class="fa fa-angle-right"></i>
                                 </a>
-                                <a href="javascript:;" class="btn green button-submit"> {!! Form::button('Onayla ve Gönder', array('id'=>'onayButton')) !!}
+                                <a href="javascript:;" class="btn green button-submit" id="onayButton">Onayla ve Gönder
                                     <i class="fa fa-check"></i>
                                 </a>
                             </div>
@@ -965,6 +804,8 @@ $i=1;
 
             {!! Form::close() !!}
         </div>
+        <!--kalemler tree modalı -->
+        @include('Firma.ilan.kalemAgaci')
     </div>
 
 
@@ -980,8 +821,10 @@ $i=1;
     $("#onayButton").unbind().click(function(e){
         for ( instance in CKEDITOR.instances )
             CKEDITOR.instances[instance].updateElement();
+
         var postData = new FormData($("#submit_form")[0]);
         var formURL = $("#submit_form").attr('action');
+        console.log(postData);
         $.ajax(
             {
                 beforeSend: function(){
@@ -1005,7 +848,8 @@ $i=1;
                 },
                 error: function(jqXHR, textStatus, errorThrown)
                 {
-                    alert(textStatus + "," + errorThrown);
+                    console.log(jqXHR);
+                    alert(textStatus + "," + errorThrown+","+jqXHR);
                     $('.ajax-loader').css("visibility", "hidden");
                 }
             });
@@ -1498,7 +1342,6 @@ $('#yapim_table').on('click', '.sil', function(e) {
 $('#mal_table').on('click', '.mal_show', function(event) {
      kalemAgaci();
   var input_id=event.target.id;
-    alert(input_id);
   $(".m_kalemAgaci #input_mal_id").val(input_id);
   $('.m_kalemAgaci').modal('show');
 });
@@ -1506,21 +1349,18 @@ $('#hizmet_table').on('click', '.hizmet_show', function(event) {
 
      kalemAgaci();
     var input_id=event.target.id;
-    alert(input_id);
     $(".m_kalemAgaci #input_hizmet_id").val(input_id);
     $('.m_kalemAgaci').modal('show');
 });
 $('#goturu_table').on('click', '.goturu_show', function(event) {
      kalemAgaci();
     var input_id=event.target.id;
-    alert(input_id);
     $(".m_kalemAgaci #input_goturu_id").val(input_id);
     $('.m_kalemAgaci').modal('show');
 });
 $('#yapim_table').on('click', '.yapim_show', function(event) {
      kalemAgaci();
     var input_id=event.target.id;
-    alert(input_id);
     $(".m_kalemAgaci #input_yapim_id").val(input_id);
     $('.m_kalemAgaci').modal('show');
 });
