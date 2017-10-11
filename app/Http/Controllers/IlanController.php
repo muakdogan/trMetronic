@@ -704,7 +704,7 @@ class IlanController extends Controller
     public function ilanOlusturEkle(Request $request, $firma_id)
     {
         //ilan bilgileri kaydediliyor.
-        DebugBar::info($request->all());
+       /* DebugBar::info($request->all());
 
         $ilceler = \App\Ilce::where('il_id', $request->il_id)->get();
         $sektorlerList = \App\Sektor::where('id', $request->firma_sektor)->get();
@@ -720,9 +720,6 @@ class IlanController extends Controller
         {
           $sektorlerListString = $sektorlerListString.$k->id.",";
         }
-
-
-
 
         $isinSuresiString = "Tek Seferde,Zamana Yayılarak";
         $teslimYeriString = "Satıcı Firma,Adrese Teslim";
@@ -789,8 +786,7 @@ class IlanController extends Controller
           ],[//Error Messages
 
           ]);
-        }
-
+        }*/
 
 
         $firma = Firma::find($firma_id);
