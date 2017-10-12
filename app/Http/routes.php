@@ -262,7 +262,6 @@ Route::delete('/kullaniciDelete/{id}/{firma_id}',function($id,$firma_id,Request 
 
 });
 
-
 Route::get('/firmalist', ['middleware'=>'auth' ,function () {
   $firmalar = Firma::paginate(2);
   return view('Firma.firmalar')->with('firmalar', $firmalar);
