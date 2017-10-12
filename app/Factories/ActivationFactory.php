@@ -31,7 +31,7 @@ class ActivationFactory
         $message = sprintf('Hesabınızı aktifleştirin %s', $link);
 
         $this->mailer->raw($message, function (Message $m) use ($user) {
-            $m->to($user->email)->subject('Activation mail');
+            $m->to($user->email)->subject('Tamrekabet - Aktivasyon Mailı');
         });
     }
 

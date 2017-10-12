@@ -47,6 +47,14 @@ class AuthController extends Controller
 
     protected function authenticated(Request $request, Kullanici $user)
     {
+        //Kullanıcının onayli field'ına bak, onaylı değilse login'e izin verme
+        if (!$user->onayli) {
+            $this->activationFactory->sendActivationMail($user);
+            auth()->logout();
+            Session::flush();
+            return back()->with('activationWarning', true);
+        }
+
         //set the session varibles after login - mete 8May17
         $request->session()->put('kullanici_id', $user->id);
         $request->session()->put('kullanici_adi', $user->adi . " " . $user->soyadi);
@@ -56,14 +64,6 @@ class AuthController extends Controller
         $request->session()->put('firma_adi', $user->firmalar()->first()->adi);
         $role_id = $user->get_role_id($firma_id);
         $request->session()->put('role_id', $user->get_role_id($firma_id));
-
-        //Kullanıcının onayli field'ına bak, onaylı değilse login'e izin verme
-        if (!$user->onayli) {
-            $this->activationFactory->sendActivationMail($user);
-            auth()->logout();
-            Session::flush();
-            return back()->with('activationWarning', true);
-        }
 
         return redirect()->intended($this->redirectPath());
     }

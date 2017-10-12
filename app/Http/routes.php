@@ -150,13 +150,13 @@ Route::post('/doluluk_orani/{id}', function (Request $request,$id) {
 
 });
 
-/*Route::get('/', function() {
+Route::get('/', function() {
   return view('FrontEnd.index');
-});*/
-
-Route::get('/', function () {
-  return view('Anasayfa.temelAnasayfa');
 });
+
+/*Route::get('/', function () {
+  return view('Anasayfa.temelAnasayfa');
+});*/
 
 Route::get('/admin/firmaList', 'AdminController@firmaList');
 
