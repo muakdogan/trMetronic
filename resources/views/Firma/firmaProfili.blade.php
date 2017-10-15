@@ -5,10 +5,10 @@
 @section('aciklama') @endsection
 
 @section('head')
-    <script src="//cdn.ckeditor.com/4.5.10/basic/ckeditor.js"></script>
 <script src="{{asset('js/ajax-crud.js')}}"></script>
 <script src="{{asset('js/ajax-crud-image.js')}}"></script>
 <script src="{{asset('js/ajax-crud-firmaTanitim.js')}}"></script>
+<script src="//cdn.ckeditor.com/4.5.10/basic/ckeditor.js"></script>
 <script src="{{asset('js/ajax-crud-malibilgiler.js')}}"></script>
 <script src="{{asset('js/ajax-crud-ticaribilgiler.js')}}"></script>
 <script src="{{asset('js/ajax-crud-bilgilendirmetercihi.js')}}"></script>
@@ -2519,8 +2519,6 @@ $("#iletisim_kayit").submit(function(e)
    {
        var postData = $(this).serialize();
             var formURL = $(this).attr('action');
-              
-            
             $.ajax(
             {
                 beforeSend: function(){
@@ -2544,7 +2542,6 @@ $("#iletisim_kayit").submit(function(e)
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-                         
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
@@ -2560,8 +2557,6 @@ $("#iletisim_kayit").submit(function(e)
    {
        var postData = $(this).serialize();
             var formURL = $(this).attr('action');
-                
-            
             $.ajax(
             {
                 beforeSend: function(){
@@ -2585,7 +2580,6 @@ $("#iletisim_kayit").submit(function(e)
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-                         
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
@@ -2601,8 +2595,6 @@ $("#iletisim_kayit").submit(function(e)
    {
        var postData = $(this).serialize();
             var formURL = $(this).attr('action');
-          
-            
             $.ajax(
             {
                 beforeSend: function(){
@@ -2642,8 +2634,6 @@ $("#iletisim_kayit").submit(function(e)
    {
        var postData = $(this).serialize();
             var formURL = $(this).attr('action');
-              
-            
             $.ajax(
             {
                 beforeSend: function(){
@@ -2683,8 +2673,6 @@ $("#iletisim_kayit").submit(function(e)
    {
        var postData = $(this).serialize();
             var formURL = $(this).attr('action');
-               
-            
             $.ajax(
             {
                 beforeSend: function(){
@@ -2724,8 +2712,6 @@ $("#iletisim_kayit").submit(function(e)
    {
        var postData = $(this).serialize();
             var formURL = $(this).attr('action');
-              
-            
             $.ajax(
             {
                 beforeSend: function(){
@@ -2764,9 +2750,7 @@ $("#iletisim_kayit").submit(function(e)
   $("#brosur_up_kayit").submit(function(e)
    {
        var postData = $(this).serialize();
-            var formURL = $(this).attr('action');
-               
-            
+       var formURL = $(this).attr('action');
             $.ajax(
             {
                 beforeSend: function(){
@@ -2806,8 +2790,6 @@ $("#iletisim_kayit").submit(function(e)
    {
        var postData = $(this).serialize();
             var formURL = $(this).attr('action');
-           
-            
             $.ajax(
             {
                 beforeSend: function(){
@@ -2847,8 +2829,6 @@ $("#iletisim_kayit").submit(function(e)
    {
        var postData = $(this).serialize();
             var formURL = $(this).attr('action');
-               
-            
             $.ajax(
             {
                 beforeSend: function(){
@@ -2885,146 +2865,4 @@ $("#iletisim_kayit").submit(function(e)
             e.preventDefault();
     });
 </script>
-</body>
-</html>
-@endsection
-
-@section('sayfaSonu')
-    <script>
-        //AJAX CRUD
-        $(document).ready(function(){
-            var url = {{asset('firma')}};
-            //display modal form for task editing
-            $('.open-modal').click(function(){
-                var iletisimbilgisi_id = $(this).val();
-                $.get(url + '/' + iletisimbilgisi_id, function (data) {
-                    //success data
-                    console.log(data);
-                    $('#il_id').val(data.il_id);
-                    $('#ilce_id').val(data.ilce_id);
-                    $('#semt_id').val(data.semt_id);
-                    $('#adres').val(data.adres);
-                    $('#telefon').val(data.telefon);
-                    $('#fax').val(data.fax);
-                    $('#web_sayfası').val(data.web_sayfası);
-                    $('#btn-save').val("update");
-                    $('#myModal').modal('show');
-                })
-            });
-            //display modal form for task editing
-
-            //display modal form for creating new task
-            $('#btn-add').click(function(){
-                $('#myModal').modal('show');
-            });
-
-            //delete task and remove it from list
-            $('.delete-task').click(function(){
-                var commucation_id = $(this).val();
-                $.ajax({
-                    type: "DELETE",
-                    url: url + '/' + commucation_id,
-                    success: function (data) {
-                        console.log(data);
-                        $("#task" + commucation_id).remove(); //task yerine ne yazmam lazım ?? o task html adı???
-                    },
-                    error: function (data) {
-                        console.log('Error:', data);
-                    }
-                });
-            });
-
-            //create new task / update existing task
-            $("#btn-save").click(function (e) {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    }
-                });
-
-                e.preventDefault();
-
-                var formData = {
-                    il_id: $('#il_id').val(),
-                    ilce_id: $('#ilce_id').val(),
-                    semt_id: $('#semt_id').val(),
-                    adres: $('#adres').val(),
-                    telefon: $('#telefon').val(),
-                    fax: $('#fax').val(),
-                    web_sayfası: $('#web_sayfası').val(),
-                }
-
-                //used to determine the http verb to use [add=POST], [update=PUT]
-                var state = $('#btn-save').val();
-                var type = "POST"; //for creating new resource
-                var commucation_id = $('#commucation_id').val();
-                var my_url = url;
-
-                if (state == "update"){
-                    type = "PUT"; //for updating existing resource
-                    my_url += '/' + commucation_id;
-                }
-
-                console.log(formData);
-                $.ajax({
-                    type: type,
-                    url: my_url,
-                    data: formData,
-                    dataType: 'json',
-                    success: function (data) {
-                        console.log(data);
-                        $('#frmTasks').trigger("reset");
-                        $('#myModal').modal('hide')
-                    },
-                    error: function (data) {
-                        console.log('Error:', data);
-                    }
-                });
-            });
-
-            //AJAX CRUD BILGILENDIRMETERCIHI
-            $('#btn-add-bilgilendirmetercihi').click(function(){
-                $('#btn-save-bilgilendirmetercihi').val("add");
-                $('#myModal-bilgilendirmetercihi').modal('show');
-            });
-            //
-
-            //AJAX CRUD FIRMBROSUR
-            $('#btn-add-firmabrosurEkle').click(function(){
-                $('#btn-save-firmabrosurEkle').val("add");
-                $('#myModal-firmabrosurEkle').modal('show');
-            });
-            var url = {{asset('firmabrosur')}};
-            $('.open-modal-brosurGuncelle').click(function(){
-                var brosur_id = $(this).val();
-
-                $.get(url + '/'  + brosur_id, function (data) {
-                    //success data
-                    console.log(data);
-                    $('#brosur_id').val(data.id);
-                    $('#brosur_adi').val(data.adi);
-                    $('#myModal-firmabrosurGuncelle').modal('show');
-                })
-            });
-            //
-
-            //AJAX CRUD FIRMACALISANLARI
-            $('#btn-add-firmacalisanbilgileri').click(function(){
-                $('#btn-save-firmacalisanbilgileri').val("add");
-                $('#myModal-firmacalisanbilgileri').modal('show');
-            });
-            //
-
-            //AJAX CRUD FIRMATANITIM
-            //display modal form for creating new task
-            $('#btn-add-tanıtımyazısı').click(function(){
-                $('#btn-save-tanıtımyazısı').val("add");
-                $('#myModal-tanıtımyazısı').modal('show');
-            });
-        });
-        //
-
-
-
-    </script>
 @endsection
