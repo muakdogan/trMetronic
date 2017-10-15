@@ -1,7 +1,10 @@
-@extends('layouts.app')
-<br>
-<br>
- @section('content')
+@extends('layouts.appUser')
+@section('baslik') Başvurularım @endsection
+@section('aciklama') @endsection
+
+
+
+@section('content')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css"></link>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
@@ -55,7 +58,6 @@ table.dataTable{width:100%;margin:0 auto;clear:both;border-collapse:separate;bor
 }
 </style>
     <div class="container">
-        @include('layouts.alt_menu')
         <?php $i=1;?> 
         <div class="row">
             <div class="col-sm-9">

@@ -1,4 +1,8 @@
-@extends('layouts.app')
+@extends('layouts.appUser')
+
+@section('baslik') {{$ilan->adi}} ilanı @endsection
+
+@section('aciklama')  @endsection
 
 @section('head') <!-- Osman Kutlu - jQuery confirm icin gerekli -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.3/jquery-confirm.min.css">
@@ -542,9 +546,6 @@
     </script>
 
     <div class="container">
-        <br>
-        <br>
-        @include('layouts.alt_menu')
         <div class="ajax-loader">
             <img src="{{asset('images/200w.gif')}}" class="img-responsive" />
         </div>
