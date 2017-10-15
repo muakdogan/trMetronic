@@ -1,10 +1,11 @@
+<?php   $kullanici = Auth::user(); ?>
+
+@extends('layouts.appUser')
+@section('baslik') Hoşgeldiniz {{$kullanici->adi}} {{$kullanici->soyadi}} @endsection
+@section('aciklama') @endsection
 
 
-@extends('layouts.app')
-<br>
- <br>
- @section('content')
-  
+@section('content')
  <style>
 table {
     font-family: arial, sans-serif;
@@ -20,51 +21,6 @@ td, th {
 
 tr:nth-child(even) {
     background-color: #fff;
-}
-.div5{
-    float:right;
-}
-.div6{
-    float:left;
-}
-.button {
-    background-color: #ccc; /* Green */
-    border: none;
-    color: white;
-    padding: 6px 25px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 8px;
-}
-
-
-
-
-		
-		
-#container{			
-	width:600px;
-	margin:0 auto;
-	background:#ffffff;
-	padding:20px;
-}
-
-#header{
-	text-align:center;
-	margin:20px 0 40px;
-}
-		
-#footer{
-	text-align:center;
-	margin-top:40px;
-}
-
-#register {
-	margin-left:100px;	
 }
 #register label{
 	margin-right:5px;
@@ -99,28 +55,14 @@ tr:nth-child(even) {
 }
  
 </style>
-
      <div class="container">
-         
-           @include('layouts.alt_menu') 
-           
           <div class="col-sm-12">
-             <?php                                   
-               $kullanici = Auth::user();
-                                      
-              ?>
-                                
-              <h3><strong>Hoşgeldiniz {{$kullanici->adi}} {{$kullanici->soyadi}}</strong></h3>
-             <hr>
-            
              <p><strong>Adınız:&nbsp;&nbsp;</strong>{{$kullanici->adi}}</p>
              <p><strong>Kullanıcı Adınız:&nbsp;&nbsp;</strong>{{Auth::user()->name}}</p>
              <p><strong>Soyadınız:&nbsp;&nbsp;</strong>{{$kullanici->soyadi}}</p>
              <p><strong>Email:&nbsp;&nbsp;</strong>{{$kullanici->email}}</p>
              <p><strong>Telefon:&nbsp;&nbsp;</strong>{{$kullanici->telefon}}</p>
-              <p></p>
-              
-              
+
               <div class="modal fade" id="myModal-kullanici" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                       <div class="modal-content">
@@ -149,8 +91,6 @@ tr:nth-child(even) {
                                       <input type="text" class="form-control" id="soyadi" name="soyadi" placeholder="Soyadı giriniz" value="{{$kullanici->soyadi}}" required>
                                   </div>
                               </div>
-                             
-                              
                               <div class="form-group">
                                   <label for="inputEmail3" class="col-sm-3 control-label">Email</label>
                                   <div class="col-sm-9">

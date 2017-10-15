@@ -12,7 +12,7 @@
     <title>TamRekabet Metronic Panel</title>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport" />
     <meta content="description" name="description" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -40,18 +40,33 @@
     <link href="{{asset('MetronicFiles/layouts/layout3/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
     <!-- END THEME LAYOUT STYLES -->
     <link rel="shortcut icon" href="favicon.ico" />
+
+    <!--begin::Menu icin -->
+    <link href="{{asset('MetronicFiles/menu/vendors/base/vendors.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('MetronicFiles/menu/demo/demo5/base/style.bundle.css')}}" rel="stylesheet" type="text/css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js"></script>
+    <script>
+        WebFont.load({
+            google: {"families":["Poppins:300,400,500,600,700","Roboto:300,400,500,600,700"]},
+            active: function() {
+                sessionStorage.fonts = true;
+            }
+        });
+    </script>
+    <!--end::Menu icin -->
+
     @yield('head') {{--ic sayfalardan head bolumune kod eklemek icin--}}
 </head>
 <!-- END HEAD -->
 
-<body id="app-layout" class="page-container-bg-solid page-header-menu-fixed">
+<body id="app-layout" class="page-container-bg-solid m-page--wide m-header--fixed m-header--fixed-mobile m-footer--push m-aside--offcanvas-default">
 <div class="page-wrapper">
     <div class="page-wrapper-row">
-        <div class="page-wrapper-top">
+        <div class="page-wrapper-top m-grid m-grid--hor m-grid--root m-page">
         @include('layouts.headerUser'){{--sitenin ust kismini (header) include eder--}}
         </div>
     </div>
-    <div class="page-wrapper-row full-height">
+    <div class="page-wrapper-row m-grid__item m-grid__item--fluid m-grid m-grid--hor-desktop m-grid--desktop m-body">
         <div class="page-wrapper-middle">
             <!-- BEGIN CONTAINER -->
             <div class="page-container">
@@ -154,6 +169,10 @@
 <script src="{{asset('MetronicFiles/layouts/layout3/scripts/demo.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('MetronicFiles/layouts/global/scripts/quick-sidebar.min.js')}}" type="text/javascript"></script>
 <!-- END THEME LAYOUT SCRIPTS -->
+<!--begin::Menu icin -->
+<script src="{{asset('MetronicFiles/menu/vendors/base/vendors.bundle.js')}}" type="text/javascript"></script>
+<script src="{{asset('MetronicFiles/menu/demo/demo5/base/scripts.bundle.js')}}" type="text/javascript"></script>
+<!--end::Menu icin -->
 @yield('sayfaSonu') {{--ic sayfalardan sayfa sonuna bolumune kod eklemek icin--}}
 </body>
 </html>

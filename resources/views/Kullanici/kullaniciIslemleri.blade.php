@@ -1,6 +1,10 @@
-@extends('layouts.app')
-<br>
-<br>
+@extends('layouts.appUser')
+@section('baslik') Kullanıcılar @endsection
+@section('aciklama') @endsection
+
+
+
+
  @section('content')
  
  <style>
@@ -41,11 +45,9 @@
  </style>
      <div class="container">
          
-           @include('layouts.alt_menu') 
-           
+
             <div class="col-sm-12">                
-              <h3>Kullanıcılar &nbsp;&nbsp;&nbsp;</h3>
-           <hr>
+
            <div id="mal"   class="panel panel-default">
                  <div class="panel-heading">
                      <h4 class="panel-title">
