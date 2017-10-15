@@ -5,7 +5,7 @@
         <div class="container">
             <!-- BEGIN LOGO -->
             <div class="page-logo">
-                <a href="index.html">
+                <a href="{{asset('')}}">
                     <img src="{{asset('MetronicFiles/layouts/layout3/img/logo-purple-studio.png')}}" alt="logo" class="logo-default">
                 </a>
             </div>
