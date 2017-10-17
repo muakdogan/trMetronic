@@ -150,17 +150,7 @@ Debugbar::info($ilan);
 <div class="container">
 
     @include('Firma.ilanDuzenle.ilanDuzenleM')
-
-    <div id="mesaj" class="popup">
-        <span class="button b-close"><span>X</span></span>
-        <h2 style="color:red;font-size:14px"> Dikkat!!</h2>
-        <h3 style="font-size:12px">Lütfen Rekabet Şeklini Seçmeden Önce İlan Sektörü Seçimi Yapınız.</h3>
-    </div>
-    <div id="mesaj_sistem" class="popup">
-        <span class="button b-close"><span>X</span></span>
-        <h2 style="color:red"> Üzgünüz.. !!!</h2>
-        <h3>Sistemsel bir hata oluştu.Lütfen daha sonra tekrar deneyin</h3>
-    </div>
+    
 </div>
 
 <script src="http://thecodeplayer.com/uploads/js/jquery.easing.min.js" type="text/javascript"></script>
