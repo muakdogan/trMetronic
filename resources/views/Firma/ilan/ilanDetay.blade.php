@@ -12,7 +12,6 @@
 @section('bodyAttributes')onload="loadPage()"@endsection {{-- teklif girilirken textbox cursorunu dogru konumlandirmak icin gerekli --}}
 
 @section('content')
-
     <?php
         $kullaniciTeklifi=null;
         $para_birimi=$ilan->para_birimleri->para_birimi();
@@ -39,7 +38,6 @@
             text-align: left;
             padding: 5px;
         }
-
         .button {
             background-color: #2b91af;
             border-radius: 10px;
@@ -230,7 +228,7 @@
             color: #000;
             border-width: 0px 0px 1px 0px;
             border-radius: 0px;
-            border:0px solid #ccc;
+            border:1px solid #ccc;
             outline: 0;
             resize: none;
             margin: 0;
@@ -998,12 +996,13 @@
                 }
                 count++;
             });
-            if(y == 0 && {{$ilan->kismi_fiyat}} == 1){
+            var ilan_kismi_fiyat="{{$ilan->kismi_fiyat}}";
+            if(y == 0 && ilan_kismi_fiyat == 1){
                 $('#iskontoLabel').text(" İskonto Ver");
                 $('#iskonto').prop("type", "checkbox");
             }
 
-            else if(y == 1 && {{$ilan->kismi_fiyat}} == 1){
+            else if(y == 1 && ilan_kismi_fiyat == 1){
                 $('#iskontoLabel').text("İskonto verebilmek için tüm kalemlere teklif vermelisiniz!");
                 $('#iskonto').prop("type", "hidden");
                 $('#iskonto').attr('checked', false);
@@ -1028,7 +1027,7 @@
             $("#toplamFiyatL").text("KDV Hariç Toplam Fiyat: "+kdvsizToplamFiyat.formatMoney(2)+" "+symbolP);
             $(".firmaFiyat").html("<strong>"+toplamFiyat.formatMoney(2)+"</strong>"+" "+symbolP);
 
-            if({{$ilan->kismi_fiyat}} == 0){
+            if(ilan_kismi_fiyat == 0){
                 voteClick($('#table'));
             }
 
@@ -1093,11 +1092,12 @@
                     }
                     count++;
                 });
-                if(y == 0 && {{$ilan->kismi_fiyat}} == 1){
+                var ilan_kismi_fiyat="{{$ilan->kismi_fiyat}}";
+                if(y == 0 && ilan_kismi_fiyat == 1){
                     $('#iskontoLabel').text(" İskonto Ver");
                     $('#iskonto').prop("type", "checkbox");
                 }
-                else if(y == 1 && {{$ilan->kismi_fiyat}} == 1){
+                else if(y == 1 && ilan_kismi_fiyat == 1){
                     $('#iskontoLabel').text("İskonto verebilmek için tüm kalemlere teklif vermelisiniz!");
                     $('#iskonto').prop("type", "hidden");
                     $('#iskonto').attr('checked', false);
@@ -1120,7 +1120,7 @@
                 $("#toplamFiyatLabel").text("KDV Dahil Toplam Fiyat: " + toplamFiyat.formatMoney(2)+" "+symbolP);
                 $(".firmaFiyat").html("<strong>"+toplamFiyat.formatMoney(2)+"</strong>"+" "+symbolP);
 
-                if({{$ilan->kismi_fiyat}} == 0){
+                if(ilan_kismi_fiyat == 0){
                     voteClick($('#table'));
                 }
 
@@ -1237,7 +1237,6 @@
 
         $("#btn_ilanDuzenle").click(function(e) {
             {{-- ilan statu: 0-> aktif 1-> sonuclanmis 2-> pasif --}}
-
             if(ilanStatu!=2){
                 {{--ilani pasif duruma gecir--}}
                 $.confirm({
@@ -1299,7 +1298,8 @@
                 }
                 count++;
             });
-            if(y == 0 && {{$ilan->kismi_fiyat}} == 1){
+            var ilan_kismi_fiyat="{{$ilan->kismi_fiyat}}";
+            if(y == 0 && ilan_kismi_fiyat == 1){
                 $('#iskontoLabel').text(" İskonto Ver");
                 $('#iskonto').prop("type", "checkbox");
             }
@@ -1319,8 +1319,8 @@
 
             $("#gonder").click(function(e) {
                 var isValid = 1;
-
-                if({{$ilan->kismi_fiyat}} == 0){
+                var ilan_kismi_fiyat="{{$ilan->kismi_fiyat}}";
+                if(ilan_kismi_fiyat == 0){
                     $(".kalem_toplam").each(function(){
                         var kalem_toplam = TrToEnMoney($(this).text());
                         if(kalem_toplam==0){
