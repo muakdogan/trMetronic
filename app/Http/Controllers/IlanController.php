@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\TeklifHareket;
 use Illuminate\Http\Request;
-use Request as Req; //
+use Request as Req; // "Illuminate\Http\Request" ile karismamasi icin yeniden adlandirildi
 use App\Il;
 use App\Firma;
 use App\OdemeTuru;
