@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'info@tamrekabet.com', 'name' => 'İletişim Mesajı'],
+    'from' => ['address' => 'info@tamrekabet.com', 'name' => 'Tamrekabet'],
 
     /*
     |--------------------------------------------------------------------------

@@ -300,7 +300,10 @@ Route::get('/yeniFirmaKaydet' ,function () {
   return view('Firma.yeniFirmaKaydet')->with('iller', $iller)->with('sektorler',$sektorler)->with('kullanici_id',$kullanici_id);
 });
 
-Route::get('/firmaIslemleri/{id}',['middleware'=>'auth', function ($id) {
+Route::get('/firmaIslemleri/{id?}',['middleware'=>'auth', function ($id = null) {
+  //firma işlemlerindeki parametre opsiyonel yapıldı, eğer parametre geçirilmiyorsa sessiondan alınarak atama yapılıyor
+  if($id == null && (session()->has('firma_id')))
+    $id = session()->get('firma_id');
   $firma = Firma::find($id);
 
   if (Gate::denies('show', $firma)) {

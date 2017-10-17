@@ -39,7 +39,7 @@
     <body class=" login">
       <div class="logo">
           <a href="index.html">
-              <img src="../assets/pages/img/logo-big.png" alt="" /> </a>
+              <img src="{{asset('images/fe/logo_big.png')}}" alt="Tamrekabet" /> </a>
       </div>
       <!-- END LOGO -->
       <!-- BEGIN CONTENT -->

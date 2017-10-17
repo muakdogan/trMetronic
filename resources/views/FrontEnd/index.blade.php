@@ -222,7 +222,7 @@
     <h2 class="text-center">Neden tamrekabet.com?</h2>
     <div class="row text-center-mobile">
       <div class="col-md-6">
-        <p><img alt="" src="{{asset('images_fe/1.jpg')}}" class="img-responsive"></p>
+        <p><img alt="" src="{{asset('images/fe/nedenTR.jpg')}}" class="img-responsive"></p>
       </div>
       <div class="col-md-6">
         <div class="col-md-4">
