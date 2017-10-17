@@ -19,12 +19,11 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use App\OnayliTedarikci;
 use Barryvdh\Debugbar\Facade as Debugbar;
-//use Illuminate\Http\Request;
-//use App\Http\Requests;
+use Illuminate\Http\Request;
 use Response;
 use Illuminate\Support\Str;
 use DB;
-use Request;
+use Request as Req; // "Illuminate\Http\Request" ile karismamasi icin yeniden adlandirildi
 use View;
 
 class FirmaController extends Controller
@@ -231,7 +230,7 @@ class FirmaController extends Controller
 
         $firmalar=$firmalar->paginate(5);
          DebugBar::info($firmalar);
-        if (Request::ajax()) {
+        if (Req::ajax()) {
             return Response::json(View::make('Firma.firmalar',array('firmalar'=> $firmalar))->render());
         }
 
@@ -278,8 +277,6 @@ class FirmaController extends Controller
     }
 
     public function uploadImage(Request $request) {
-
-            $file = $request->file('logo');
             $file = array('logo' => $request->file('logo'));
             $rules = array('logo' => 'required|mimes:jpeg,bmp,png|max:100000'); //mimes:jpeg,bmp,png and for max size max:10000
             $validator = Validator::make($file, $rules);
@@ -297,18 +294,17 @@ class FirmaController extends Controller
                     $firma->logo = $fileName;
                     $firma->save();
                     $request->file('logo')->move($destinationPath, $fileName);
+                    Session::set('firma_logo', $fileName);
 
                     Session::flash('success', 'Upload successfully');
                     File::delete("uploads/$oldName");
-                    return Redirect::to('firmaProfili/'.$firma->id);
+                    return Redirect::to('firmaProfili');
                 }
                 else {
-
                     Session::flash('error', 'uploaded file is not valid');
-                    return Redirect::to('firmaProfili/'.$request->firmaId)->withInput()->withErrors($validator);
+                    return Redirect::to('firmaProfili')->withInput()->withErrors($validator);
                 }
             }
-
     }
 
     public function deleteImage($id){
@@ -317,7 +313,8 @@ class FirmaController extends Controller
         $item->logo=null;
         $item->save();
         File::delete("uploads/$oldName");
-        return Redirect::to('iletisimbilgilerii/'.$item->id);
+        Session::set('firma_logo', '');
+        return Redirect::to('firmaProfili');
     }
     public function iletisimAdd(Request $request){
 

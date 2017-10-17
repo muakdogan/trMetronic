@@ -1,3 +1,8 @@
+<?php
+use Barryvdh\Debugbar\Facade as Debugbar;
+Debugbar::info(session()->all());
+?>
+
 <!DOCTYPE html>
 
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
@@ -44,7 +49,7 @@
 </head>
 <!-- END HEAD -->
 
-<body id="app-layout" class="page-container-bg-solid page-header-menu-fixed">
+<body id="app-layout" class="page-container-bg-solid page-header-menu-fixed" @yield('bodyAttributes')>
 <div class="page-wrapper">
     <div class="page-wrapper-row">
         <div class="page-wrapper-top">
@@ -74,19 +79,7 @@
                     <!-- BEGIN PAGE CONTENT BODY -->
                     <div class="page-content">
                         <div class="container">
-                            {{--
-                            <!-- BEGIN PAGE BREADCRUMBS -->
-                            <ul class="page-breadcrumb breadcrumb">
-                                <li>
-                                    <a href="index.html">Home</a>
-                                    <i class="fa fa-circle"></i>
-                                </li>
-                                <li>
-                                    <span>BREADCRUMBS</span>
-                                </li>
-                            </ul>
-                            <!-- END PAGE BREADCRUMBS -->
-                            --}}
+
                             <!-- BEGIN PAGE CONTENT INNER -->
                             <div class="page-content-inner">
                                 @yield('content') {{--ic sayfalardan icerik duzenlemek icin (body)--}}

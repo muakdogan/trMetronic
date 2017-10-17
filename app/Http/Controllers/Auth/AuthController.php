@@ -61,6 +61,7 @@ class AuthController extends Controller
         $firma_id = $user->firmalar()->first()->id;
         $request->session()->put('firma_id', $firma_id);
         $request->session()->put('firma_adi', $user->firmalar()->first()->adi);
+        $request->session()->put('firma_logo', $user->firmalar()->first()->logo);
         $role_id = $user->get_role_id($firma_id);
         $request->session()->put('role_id', $user->get_role_id($firma_id));
 

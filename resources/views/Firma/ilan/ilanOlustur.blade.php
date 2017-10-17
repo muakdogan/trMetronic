@@ -130,6 +130,7 @@ $i=1;
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 
     <link rel="stylesheet" type="text/css" href="{{asset('css/aciklama-tooltip.css')}}" />
+
     <div class="portlet light " id="form_wizard_1">
         <div class="portlet-title">
             <div class="caption">
@@ -1468,7 +1469,6 @@ function kalemAgaci(){
   $(".fancytree-container").toggleClass("fancytree-connectors");
 
   $("input[name=search]").keyup(function(e){
-
     var n,
       tree = $.ui.fancytree.getTree(),
       args = "autoApply autoExpand fuzzy hideExpanders highlight leavesOnly nodata".split(" "),
@@ -1659,10 +1659,8 @@ $(function() {
                 },
                     startDate: is_tarihi_start,
                     endDate: is_tarihi_end
-
         });
     });
-
     $('input[name="is_tarihi_araligi"]').daterangepicker({
                 locale: {
                   format: 'DD/MM/YYYY',
@@ -1699,9 +1697,7 @@ $(function() {
                 },
                 startDate:new Date(),
                 endDate: dt
-
      });
-
 });
 </script>
 @endsection

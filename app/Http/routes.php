@@ -568,7 +568,7 @@ Route::get('ilanTeklifVer/{ilan_id}',['middleware'=>'auth' ,function ($ilan_id) 
 
   //firma profil route...
   Route::post('firmaProfili/uploadImage/{id}', 'FirmaController@uploadImage');
-  Route::post('firmaProfili/deleteImage/{id}', 'FirmaController@deleteImage');
+  Route::delete('firmaProfili/deleteImage/{id}', 'FirmaController@deleteImage');
   Route::post('firmaProfili/iletisimAdd/{id}', 'FirmaController@iletisimAdd');
   Route::post('firmaProfili/tanitim/{id}', 'FirmaController@tanitimAdd');
   Route::post('firmaProfili/malibilgi/{id}', 'FirmaController@maliBilgiAdd');
@@ -621,10 +621,10 @@ Route::get('ilanTeklifVer/{ilan_id}',['middleware'=>'auth' ,function ($ilan_id) 
   Route::get('/set_session' ,function () {
 
     $firmaId = Input::get('role');
-    $firmaAdi = Firma::find($firmaId);
+    $firma = Firma::find($firmaId);
     Session::set('firma_id', $firmaId);
-    Session::set('firma_adi', $firmaAdi->adi);
-
+    Session::set('firma_adi', $firma->adi);
+    Session::set('firma_logo', $firma->logo);
     return;
   });
   //////////////////////////////////////Puan Yorum //////////////////////

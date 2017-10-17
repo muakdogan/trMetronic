@@ -1,4 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.appUser')
+@section('baslik') Firma Havuzu @endsection
+@section('aciklama') Tüm firmaların listesini içerir. @endsection
  @section('content')
     <style>
            input[type=text] {
@@ -146,12 +148,7 @@
    <link href="{{asset('css/multiple-select.css')}}" rel="stylesheet"/>
 
 <body style="overflow-x:hidden">
-   <br>
-   <br>
-   <br>
         <div  class="container">
-            @include('layouts.alt_menu')
-
             <div class="col-sm-12">
                 <ul style="list-style: none outside none;">
                     <?php $j=0; ?>
