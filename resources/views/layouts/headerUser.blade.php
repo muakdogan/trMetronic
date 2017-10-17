@@ -20,7 +20,13 @@
                     <!-- BEGIN USER LOGIN DROPDOWN -->
                     <li class="dropdown dropdown-user ">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                            <img alt="" class="img-circle" src="{{asset('MetronicFiles/layouts/layout3/img/avatar9.jpg')}}">
+                            <?php $firma_logo= session()->get('firma_logo'); ?>
+                            @if($firma_logo != "")
+                                <img alt="" class="img-circle" src="{{asset('uploads')}}/{{$firma_logo}}">
+                            @else
+                                <img alt="" class="img-circle" src="{{asset('uploads/logo/defaultFirmaLogo.png')}}">
+                            @endif
+
                             <span class="username username-hide-mobile">{{session()->get('kullanici_adi') }}/ {{session()->get('firma_adi')}}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">

@@ -1,4 +1,7 @@
-
+<?php
+use Barryvdh\Debugbar\Facade as Debugbar;
+Debugbar::info(session()->all());
+?>
 <!DOCTYPE html>
 <html lang="en">
 

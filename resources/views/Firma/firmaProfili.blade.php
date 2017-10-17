@@ -250,7 +250,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
-   <div class="container"> 
+   <div class="container">
     <div class="row">
      <div class="col-sm-8" >
 
@@ -258,7 +258,11 @@
            <div  class="form-group">
                <div class="row">
                    <div class="col-sm-5" >
-                       <img id="logo1" value="" src="{{asset('uploads')}}/{{$firma->logo}}" alt="HTML5 Icon" style="width:128px;height:128px;">
+                       @if($firma->logo != "")
+                           <img id="logo1" src="{{asset('uploads')}}/{{$firma->logo}}" alt="Firma Logo" style="width:128px;height:128px;">
+                       @else
+                           <img id="logo1" src="{{asset('uploads/logo/defaultFirmaLogo.png')}}" alt="Firma Logo" style="width:128px;height:128px;">
+                       @endif
                         <br />
                        <button class="btn btn-primary btn-xs btn-detail " id="btn-add-image" onclick="" value="{{$firma->id}}">Düzenle</button>
                    </div>
@@ -297,7 +301,13 @@
                                                        <div class="secure"><strong>Mevcut Logonuz</strong></div>
                                                        <br>
                                                        <div style="width:128px;height:128px;"class="image-wrapper">
-                                                           <img src="{{asset('uploads')}}/{{$firma->logo}}" alt="HTML5 Icon" style="width:128px;height:128px;">
+                                                           @if($firma->logo != "")
+                                                               <img src="{{asset('uploads')}}/{{$firma->logo}}" alt="Firma Logo" style="width:128px;height:128px;">
+                                                           @else
+                                                               <img src="{{asset('uploads/logo/defaultFirmaLogo.png')}}" alt="Firma Logo" style="width:128px;height:128px;">
+                                                               Henüz Logonuz Yok!
+                                                           @endif
+
                                                        </div>
                                                    </div>
                                                    <div class="col-sm-8" >
@@ -318,10 +328,12 @@
                                        </div>
                                        {!! Form::submit('Logo Yükle', array('url'=>'firmaProfili/uploadImage'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
                                        {!! Form::close() !!}
-                                       {{ Form::open(array('url'=>'firmaProfili/deleteImage/'.$firma->id,'method' => 'DELETE', 'files'=>true)) }}
-                                       {{ Form::hidden('id', $firma->logo) }}
-                                       {{ Form::submit('Logo Sil', ['style'=>'float:right' ,'class' => 'btn btn-danger']) }}
-                                       {{ Form::close() }}
+                                       @if($firma->logo != "")
+                                           {{ Form::open(array('url'=>'firmaProfili/deleteImage/'.$firma->id,'method' => 'DELETE', 'files'=>true)) }}
+                                           {{ Form::hidden('id', $firma->logo) }}
+                                           {{ Form::submit('Logo Sil', ['style'=>'float:right' ,'class' => 'btn btn-danger']) }}
+                                           {{ Form::close() }}
+                                       @endif
                                        <br>
                                        <br>
                                        <br>
@@ -425,7 +437,7 @@
                                                    <option selected disabled>Seçiniz</option>
                                                </select>
                                            </div>
-                                       </div>                                                     
+                                       </div>
                                        <div class="form-group">
                                             <label for="inputTask" class="col-sm-1 control-label"></label>
                                            <label for="inputEmail3" class="col-sm-3 control-label">Adres</label>
@@ -462,23 +474,23 @@
                                        <br>
                                        <br>
                                        {!! Form::close() !!}
-                                   </div>                                                        
+                                   </div>
                                    <div class="modal-footer">
                                        <input type="hidden" id="iletisimbilgisi_id" name="iletisimbilgisi_id" value="{{$firma->iletisim_bilgileri->id}}">
                                    </div>
                                </div>
                            </div>
                        </div>
-                       
+
                    </div>
-               
+
            </div>
            <div class="panel panel-default">
                <div style="border-bottom: 3px solid transparent;border-color:#ddd" class="panel-heading">
                    <h4 class="panel-title">
                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><img src="{{asset('images/yazi.png')}}">&nbsp;<strong>Firma Tanıtım Yazısı</strong></a>
                         @if($firma->tanitim_yazisi=="")
-                           
+
                         @else
                          <button style="float:right" id="btn-add-tanıtımyazısı" name="btn-add-tanıtımyazısı" class="btn btn-primary btn-xs" >Ekle / Düzenle</button>
                         @endif
@@ -486,7 +498,7 @@
                </div>
                    <div class="panel-body">
                        @if($firma->tanitim_yazisi=="")
-                        <div class="bilgiEkle"> 
+                        <div class="bilgiEkle">
                             <button style="margin-top:20px" id="btn-add-tanıtımyazısı" name="btn-add-tanıtımyazısı" class="btn btn-primary btn-xs" ><img src="{{asset('images/plus.png')}}">&nbsp;Bilgilerinizi Ekleyin</button>
                         </div>
                        @else
@@ -515,8 +527,8 @@
                                        <div class="form-group">
                                            <label for="inputEmail3" class="col-sm-3 control-label">Tanıtım Yazısı</label>
                                              <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                           <div class="col-sm-8">  
-                                               <textarea id="tanitim_yazisi" name="tanitim_yazisi" rows="5" class="form-control ckeditor"  placeholder="{{$firma->tanitim_yazisi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">&lt;p&gt; &lt;/p&gt; <?php echo $firma->tanitim_yazisi;?></textarea>                                        
+                                           <div class="col-sm-8">
+                                               <textarea id="tanitim_yazisi" name="tanitim_yazisi" rows="5" class="form-control ckeditor"  placeholder="{{$firma->tanitim_yazisi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">&lt;p&gt; &lt;/p&gt; <?php echo $firma->tanitim_yazisi;?></textarea>
                                                 <br>
                                                 <br>
                                            </div>
@@ -527,7 +539,7 @@
                                        {!! Form::close() !!}
                                    </div>
                                    <br> <br><br><br><br><br><br><br><br><br><br><br><br>
-                                   <div class="modal-footer">                                                            
+                                   <div class="modal-footer">
                                    </div>
                                </div>
                            </div>
@@ -560,7 +572,7 @@
 
                <div class="panel-body">
                    @if($firma->mali_bilgiler->firma_id==0)
-                   <div class="bilgiEkle"> 
+                   <div class="bilgiEkle">
                        <button style="margin-top:20px" id="btn-add-malibilgiler" name="btn-add-malibilgiler" class="btn btn-primary btn-xs"><img src="{{asset('images/plus.png')}}">&nbsp;Bilgilerinizi Ekleyin</button>
                    </div>
                    @else
@@ -573,7 +585,7 @@
                            <tr>
                                <td><strong>Şirket Türü</strong></td>
                                @foreach($sirketTurleri as $sirket)
-                                @if($sirket->id == $firma->sirket_turu) 
+                                @if($sirket->id == $firma->sirket_turu)
                                     <td id="sirket_id_td"><strong>:</strong>  {{$sirket->adi}}</td>
                                 @endif
                                @endforeach
@@ -591,7 +603,7 @@
                                <td id="mali_ilce_td"><strong>:</strong>  {{$firmaFatura->ilceler->adi}}</td>
                            </tr>
                            <tr>
-                               <td><strong>Vergi Dairesi</strong></td>                                                        
+                               <td><strong>Vergi Dairesi</strong></td>
                                <td id="vergi_id_td"><strong>:</strong>  {{$firma->mali_bilgiler->vergi_daireleri->adi}}</td>
                            </tr>
                            <tr>
@@ -625,7 +637,7 @@
                                        <div class="col-sm-7">
                                            <input type="text" class="form-control" id="fatura_adresi" name="fatura_adresi" placeholder="Fatura Adresi" value="{{$firmaFatura->adres}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                        </div>
-                                   </div>   
+                                   </div>
                                    <div class="form-group error">
                                        <label for="inputTask" class="col-sm-1 control-label"></label>
                                        <label for="inputTask" class="col-sm-3 control-label">İl</label>
@@ -678,7 +690,7 @@
                                        <div class="col-sm-7">
                                            <select class="form-control" name="vergi_dairesi_id" id="vergi_dairesi_id" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                                <option selected disabled>Seçiniz</option>
-                                               
+
                                            </select>
                                        </div>
                                    </div>
@@ -702,12 +714,12 @@
                                                <option  value="1.000.001-8.000.000" >1.000.001-8.000.000</option>
                                                <option  value="8.000.001-40.000.000" >8.000.001-40.000.000</option>
                                                <option  value="40.000.000 ve üzeri" >40.000.000 ve üzeri</option>
-                                            </select>   
+                                            </select>
                                                <label>Gösterme</label>
                                                <label class="switch" style="margin-bottom: -5px;">
                                                     <input type="checkbox" id="ciro_goster" name="ciro_goster" checked>
                                                     <div class="slider round"></div>
-                                               </label> 
+                                               </label>
                                                 <label>Göster</label>
                                        </div>
                                    </div>
@@ -721,7 +733,7 @@
                                            <label class="switch" style="margin-bottom: -5px;">
                                                 <input type="checkbox" id="sermaye_goster" name="sermaye_goster" checked>
                                                 <div class="slider round"></div>
-                                           </label> 
+                                           </label>
                                             <label>Göster</label>
                                        </div>
                                    </div>
@@ -777,7 +789,7 @@
                                    @endforeach
                                </td>
                            </tr>
-                           
+
                            <tr>
                                 <td><strong>Kuruluş Tarihi</strong></td>
                                 <td><strong>:</strong>
@@ -785,7 +797,7 @@
                                         {{$firma->kurulus_tarihi}}
                                     @endif
                                 </td>
-                           </tr> 
+                           </tr>
                            <tr>
                                <td><strong>Firmanın Ürettiği Markalar</strong></td>
                                <td  id="urettigi_id_td"><strong>:</strong>
@@ -801,12 +813,12 @@
                                         @foreach($firma->$satilanMarka as $satMarka)
                                             {{$satMarka->satilan_marka_adi}}
                                         @endforeach
-                                    @endif 
+                                    @endif
                                </td>
                            </tr>
                        </thead>
                    </table>
-              
+
                    <div class="modal fade" id="myModal-ticaribilgiler" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                        <div class="modal-dialog">
                            <div class="modal-content">
@@ -844,7 +856,7 @@
                                         <div class="col-sm-6">
                                             @foreach($faaliyetler as $faaliyet)
                                                 <input type="checkbox" class="firma_faaliyet_turu" id="firma_faaliyet_turu" name="firma_faaliyet_turu[]" value="{{$faaliyet->id}}"  data-validation="checkbox_group" data-validation-qty="min1" data-validation-error-msg="En az bir tanesini seçiniz!">{{$faaliyet->adi}}
-                                            @endforeach    
+                                            @endforeach
                                         </div>
                                    </div>
                                    <div class="form-group">
@@ -871,7 +883,7 @@
                                                     <option  value="{{$sektor->id}}" >{{$sektor->adi}}</option>
                                                 @endforeach
                                           </select>
-                                           
+
                                        </div>
                                    </div>
                                    <div class="form-group">
@@ -892,7 +904,7 @@
                                                @foreach($uretilenMarka as $markas)
                                                     <div><input type="text" id="firmanin_urettigi_markalar" name="firmanin_urettigi_markalar[]"  value="{{$markas->adi}}" data-validation-error-msg="Lütfen bu alanı doldurunuz!"><a href="#" class="remove_field">Sil</a></div>
                                                @endforeach
-                                               
+
                                             </div>
                                        </div>
                                    </div>
@@ -931,16 +943,16 @@
                    <div class="panel-body">
                        <div class="panel-footer"><strong>Kalite Belgeleri</strong>
                         @if($kaliteBelge==null)
-                            <div class="bilgiEkle"> 
+                            <div class="bilgiEkle">
                                 <button style="margin-top:20px" id="btn-add-kalite" name="btn-add-kalite" class="btn btn-primary btn-xs"><img src="{{asset('images/plus.png')}}">&nbsp;Kalite Belgeleirnizi  Ekleyin</button>
                             </div>
-                        @else 
-                           <button style="float:right" id="btn-add-kalite" name="btn-add-kalite" class="btn btn-primary btn-xs" >Ekle</button>  
+                        @else
+                           <button style="float:right" id="btn-add-kalite" name="btn-add-kalite" class="btn btn-primary btn-xs" >Ekle</button>
                            <table class="table" >
                                <thead id="tasks-list" name="tasks-list">
                                        <th>Kalite Belgesi:</th>
                                        <th>Belge NO:</th>
-                                   
+
                                    @foreach($firma->kalite_belgeleri as $kalite_belgesi)
                                     <tr>
                                        <td id="kalite_id_td">
@@ -950,19 +962,19 @@
                                            {{$kalite_belgesi->pivot->belge_no}}
                                        </td>
                                        <td>
-                                 
+
                                        <button name="open-modal-kaliteGuncelle"  style="float:right" value="{{$kalite_belgesi->id}}" class="btn btn-primary btn-xs open-modal-kaliteGuncelle" >Düzenle</button>
                                        </td>
-                                      
+
                                         <td>
-                                            
+
                                             {{ Form::open(array('url'=>'firmaProfili/kaliteSil/'.$kalite_belgesi->id,'method' => 'DELETE')) }}
                                             <input type="hidden" name="firma_id"  id="firma_id" value="{{$firma->id}}">
                                             {{ Form::submit('Sil', ['class' => 'btn btn-primary btn-xs']) }}
                                             {{ Form::close() }}
-                                             
+
                                         </td>
-                                       
+
                                    </tr>
                            <div class="modal fade" id="myModal-kaliteGuncelle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                <div class="modal-dialog">
@@ -997,14 +1009,14 @@
                                            </div>
                                            <br>
                                            <br>
-                                           <input type="hidden" name="kalite_id"  id="kalite_id" value="{{$kalite_belgesi->id}}"> 
+                                           <input type="hidden" name="kalite_id"  id="kalite_id" value="{{$kalite_belgesi->id}}">
                                            {!! Form::submit('Kaydet', array('url'=>'firmaProfili/kaliteGuncelle/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
                                            {!! Form::close() !!}
                                        </div>
                                        <br>
                                        <br>
                                        <br>
-                                       <div class="modal-footer">                                                            
+                                       <div class="modal-footer">
                                        </div>
                                    </div>
                                </div>
@@ -1012,7 +1024,7 @@
                                @endforeach
                             </thead>
                            </table>
-                        @endif   
+                        @endif
                            <div class="modal fade" id="myModal-kalite" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                <div class="modal-dialog">
                                    <div class="modal-content">
@@ -1049,17 +1061,17 @@
                                            <br>
                                            {!! Form::close() !!}
                                        </div>
-                                       <div class="modal-footer">                                                            
+                                       <div class="modal-footer">
                                        </div>
-                                       
+
                                    </div>
                                </div>
                            </div>
-                          
+
                        </div>
                        <div class="panel-footer "><strong>Referanslar</strong>
                            @if($referans==null)
-                            <div class="bilgiEkle"> 
+                            <div class="bilgiEkle">
                                 <button style="margin-top:20px" id="btn-add-referanslar" name="btn-add-referanslar" class="btn btn-primary btn-xs"><img src="{{asset('images/plus.png')}}">&nbsp;Referanslarınızı  Ekleyin</button>
                             </div>
                            @else
@@ -1122,7 +1134,7 @@
                                                 {{ Form::submit('Sil', ['class' => 'btn btn-primary btn-xs'])}}
                                                 {{ Form::close()}}
                                         </td>
-                                                <input type="hidden" name="ref_id"  id="ref_id" value="{{$firmaReferans->id}}"> 
+                                                <input type="hidden" name="ref_id"  id="ref_id" value="{{$firmaReferans->id}}">
                                        </tr>
                                         <div class="modal fade" id="myModal-referanslarGecmis" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                            <div class="modal-dialog">
@@ -1135,15 +1147,15 @@
                                                        {!! Form::open(array('id'=>'ref_up_kayit','url'=>'firmaProfili/referansUpdate/'. $firmaReferans->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
 
                                                        <div class="form-group">
-                                                             
+
                                                            <label for="inputEmail3" class="col-sm-2 control-label">Referans Türü</label>
                                                              <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                             
+
                                                            <div class="col-sm-9">
                                                                <select class="form-control" name="ref_turu" id="ref_turu" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                                                    <option selected disabled value="Seçiniz">Seçiniz</option>
                                                                    <option   value="Geçmiş">Geçmiş</option>
-                                                                   <option  value="Şuan">Şuan</option>                                                  
+                                                                   <option  value="Şuan">Şuan</option>
                                                                </select>
                                                            </div>
                                                        </div>
@@ -1223,10 +1235,10 @@
                                                            <br>
                                                            {!! Form::close() !!}
                                                            </div>
-                                                           <div class="modal-footer">   
+                                                           <div class="modal-footer">
                                                            </div>
                                                    </div>
-                                                    <div class="modal-footer">   
+                                                    <div class="modal-footer">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1246,7 +1258,7 @@
                                                            {!! Form::open(array('id'=>'ref_add_kayit','url'=>'firmaProfili/referans/'.$firma->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
 
                                                            <div class="form-group">
-                                                               
+
                                                                <label for="inputTask" class="col-sm-4 control-label">Referans Türü</label>
                                                                <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
                                                                <div class="col-sm-7">
@@ -1258,7 +1270,7 @@
                                                                </div>
                                                            </div>
                                                            <div class="form-group">
-                                                                
+
                                                                <label for="inputTask" class="col-sm-4 control-label">Firma Adı</label>
                                                                  <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
                                                                <div class="col-sm-7">
@@ -1266,7 +1278,7 @@
                                                                </div>
                                                            </div>
                                                            <div class="form-group">
-                                                                
+
                                                                <label for="inputEmail3" class="col-sm-4 control-label">Yapım İşi Adı</label>
                                                                  <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
                                                                <div class="col-sm-7">
@@ -1274,7 +1286,7 @@
                                                                </div>
                                                            </div>
                                                            <div class="form-group">
-                                                               
+
                                                                <label for="inputEmail3" class="col-sm-4 control-label">İşin Türü</label>
                                                                  <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
                                                                <div class="col-sm-7">
@@ -1287,7 +1299,7 @@
                                                                </div>
                                                            </div>
                                                            <div class="form-group">
-                                                               
+
                                                                <label for="inputEmail3" class="col-sm-4 control-label">İş Yılı</label>
                                                                  <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
                                                                <div class="col-sm-7">
@@ -1329,15 +1341,15 @@
 
                                                            {!! Form::close() !!}
                                                        </div>
-                                                       <div class="modal-footer">                                                            
+                                                       <div class="modal-footer">
                                                        </div>
                                                    </div>
                                                </div>
                                            </div>
-                                           <input type="hidden" name="add"  id="add" value="add"> 
+                                           <input type="hidden" name="add"  id="add" value="add">
                                        </div>
                    </div>
-               
+
            </div>
            <div class="panel panel-default">
                 <div style="border-bottom: 3px solid transparent;border-color:#ddd" class="panel-heading">
@@ -1349,28 +1361,28 @@
                         @endif
                     </h4>
                 </div>
-              
+
                 <div class="panel-body">
                        @if($brosur==null)
-                        <div class="bilgiEkle"> 
+                        <div class="bilgiEkle">
                                 <button style="margin-top:20px" id="btn-add-firmabrosurEkle" name="btn-add-firmabrosurEkle" class="btn btn-primary btn-xs"><img src="{{asset('images/plus.png')}}">&nbsp;Broşürünüzü Ekleyin</button>
                         </div>
-                       
+
                        @else
                        <table class="table" >
                            <thead id="tasks-list" name="tasks-list">
                                 <th>Broşür Adı:</th>
                                 <th>Broşür Pdf:</th>
-                                
+
                                 @foreach($firma->firma_brosurler as $firmaBrosur)
-                                    <tr >   
+                                    <tr >
                                        <td>
                                            {{$firmaBrosur->adi}}
                                        </td>
                                        <td data-toggle="tooltip" data-placement="bottom" title="PDF'i görüntülemek için lütfen üstüne tıklayın!">
                                            <a target="_blank" href="{{ asset('brosur/'.$firmaBrosur->yolu) }}"><img src="{{asset('images/see.png')}}">   {{$firmaBrosur->yolu}}</a>
                                        </td>
-                                  
+
                                     <td><button   value="{{$firmaBrosur->id}}" class="btn btn-primary btn-xs open-modal-brosurGuncelle" >Düzenle</button>
                                     </td>
                                     <td>
@@ -1379,7 +1391,7 @@
                                               {{ Form::submit('Sil', ['class' => 'btn btn-primary btn-xs']) }}
                                              {{ Form::close() }}
                                    </td>
-                                     <input type="hidden" name="brosur_id"  id="brosur_id" value="{{$firmaBrosur->id}}"> 
+                                     <input type="hidden" name="brosur_id"  id="brosur_id" value="{{$firmaBrosur->id}}">
                                     </tr>
                                     <div class="modal fade" id="myModal-firmabrosurGuncelle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -1413,17 +1425,17 @@
                                                                     @endif
                                                                 </div>
                                                             </div>
-                                                            <div id="success"> 
+                                                            <div id="success">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                     <input type="hidden" name="brosur_id"  id="brosur_id" value="{{$firmaBrosur->id}}"> 
+                                                     <input type="hidden" name="brosur_id"  id="brosur_id" value="{{$firmaBrosur->id}}">
                                                     {!! Form::submit('Kaydet', array('url'=>'firmaProfili/firmaBrosurGuncelle/'.$firmaBrosur->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
                                                     <br>
                                                     <br>
                                                     {!! Form::close() !!}
                                                 </div>
-                                                <div class="modal-footer">                                                            
+                                                <div class="modal-footer">
                                                 </div>
                                             </div>
                                         </div>
@@ -1464,7 +1476,7 @@
                                                               @endif
                                                           </div>
                                                       </div>
-                                                      <div id="success"> 
+                                                      <div id="success">
                                                       </div>
                                                   </div>
                                               </div>
@@ -1474,7 +1486,7 @@
                                               <br>
                                               {!! Form::close() !!}
                                           </div>
-                                          <div class="modal-footer">                                                            
+                                          <div class="modal-footer">
                                           </div>
                                       </div>
                                   </div>
@@ -1494,7 +1506,7 @@
 
                <div class="panel-body">
                    @if($calisan==null)
-                    <div class="bilgiEkle"> 
+                    <div class="bilgiEkle">
                             <button style="margin-top:20px" id="btn-add-firmacalisanbilgileri" name="btn-add-firmacalisanbilgileri" class="btn btn-primary btn-xs"><img src="{{asset('images/plus.png')}}">&nbsp;Bilgilerinizi Ekleyin</button>
                     </div>
                    @else
@@ -1565,8 +1577,8 @@
                                        <div class="col-sm-7">
                                            <input type="checkbox" class="firma_calisan " name="firma_calisma_profili[]" value="1" data-validation="checkbox_group"  data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1"/>Mavi Yaka
                                            <input type="checkbox" class="firma_calisan "  name="firma_calisma_profili[]" value="2" data-validation="checkbox_group" data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1"/>Beyaz Yaka
-                                           
-                                           
+
+
                                        </div>
                                    </div>
                                    <div class="form-group">
@@ -1595,7 +1607,7 @@
                                    <br>
                                    {!! Form::close() !!}
                                </div>
-                               <div class="modal-footer">                                                            
+                               <div class="modal-footer">
                                </div>
                            </div>
                        </div>
@@ -1634,7 +1646,7 @@
                                    </div>
                                    <div class="modal-body">
                                        {!! Form::open(array('id'=>'bilgilendirme_kayit','url'=>'firmaProfili/bilgilendirmeTercihi/'.$firma->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
-                   
+
                                        <div class="form-group">
                                            <label for="inputEmail3" class="col-sm-4 control-label">Bilgilendirilme Tercihi</label>
                                            <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
@@ -1650,7 +1662,7 @@
                                        <br>
                                        {!! Form::close() !!}
                                     </div>
-                                   <div class="modal-footer">                                                            
+                                   <div class="modal-footer">
                                     </div>
                                </div>
                            </div>
@@ -1700,17 +1712,17 @@
             <h2 style="color:red"> Üzgünüz.. !!!</h2>
             <h3>Sistemsel bir hata oluştu.Lütfen daha sonra tekrar deneyin</h3>
        </div>
-     
-   </div>  
-   <script src="{{asset('js/selectDD.js')}}"></script>  
+
+   </div>
+   <script src="{{asset('js/selectDD.js')}}"></script>
    <script src="{{asset('js/jquery.bpopup-0.11.0.min.js')}}"></script>
-<script> 
+<script>
     $("#firma_departmanlari").multipleSelect({
             width: 260,
             multiple: true,
             multipleWidth: 100
     });
-    
+
     var count = 0;
     $('#custom-headers').multiSelect({
         selectableHeader: "</i><input type='text'  class='search-input col-sm-12 search_icon' autocomplete='off' placeholder='Sektör Seçiniz'></input>",
@@ -1733,14 +1745,14 @@
         },
         afterSelect: function(values){
           count++;
-         
+
           if(count>5){
               $('#custom-headers').multiSelect('deselect', values);
           }
           this.qs1.cache();
           this.qs2.cache();
-          
-         
+
+
         },
         afterDeselect: function(){
           count--;
@@ -1799,7 +1811,7 @@
             }
         }
     });
-    
+
   $.validate({
     modules : 'location, date, security, file',
     onModulesLoaded : function() {
@@ -1812,14 +1824,14 @@
           if($(this).val() == falyAdi){
               $(this).prop("checked",true);
             }
-          
+
       <?php } ?>
 
    });
   $('.firma_faaliyet_turu').click(function(){ ///////////faaliyet turu /////////////////
         var sonSecilen;
         var count=0;
-        
+
         jQuery('.firma_faaliyet_turu:checked').each(function(){
             sonSecilen = $(this).val();
             count++;
@@ -1838,14 +1850,17 @@
     });
   $('#presentation').restrictLength( $('#pres-max-length') );
     $(document).ready(function() {
-         $.fn.datepicker.dates['tr'] = {
+         /*$.fn.datepicker.dates['tr'] = {
             days: ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"],
             daysShort: ["Pz", "Pzt", "Sal", "Çrş", "Prş", "Cu", "Cts", "Pz"],
             daysMin: ["Pz", "Pzt", "Sa", "Çr", "Pr", "Cu", "Ct", "Pz"],
             months: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
             monthsShort: ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"],
             today: "Bugün"
-	};
+	        };
+        $('.datepicker').datepicker({
+            language: 'tr'
+        });
         var date_input=$('input[class="form-control date"]'); //our date input has the name "date"
         var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
         date_input.datepicker({
@@ -1858,11 +1873,11 @@
             todayHighlight: true,
             autoclose: true
         });
-        
+*/
         $("#calisma_gunleri").val({{$firma->firma_calisma_bilgileri->calisma_gunleri_id}});
-        
+
         $("#ust_sektor").val({{$firma->ticari_bilgiler->ust_sektor}});
-        $('[data-toggle="tooltip"]').tooltip();   
+        $('[data-toggle="tooltip"]').tooltip();
         var arrayDepartman = new Array();
         <?php foreach($firma->departmanlar as $departman){ ?>
              arrayDepartman.push({{$departman->id}});
@@ -1884,7 +1899,7 @@
         $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
             e.preventDefault(); $(this).parent('div').remove(); x--;
         });
-        
+
         var s=1;
         var wrapper_sattigi         = $(".input_fields_sattigi_wrap"); //Fields wrapper
         var add_button_sattigi      = $(".add_field_sattigi_button"); //Add button ID
@@ -1919,37 +1934,37 @@
         {
             $('.ppc-progress-wrapper').css("background","#e54100");
             $('.ppc-percents span').css("color","#e54100");
-            
+
         }
         if(max > 15 && max <= 30)
         {
             $('.ppc-progress-fill').css("background","#f46f02");
             $('.ppc-percents span').css("color","#f46f02");
-            
+
         }
         if(max > 30 && max <=45 )
         {
             $('.ppc-progress-fill').css("background","#ffba04");
             $('.ppc-percents span').css("color","#ffba04");
-            
+
         }
         if(max > 45 && max <=60 )
         {
             $('.ppc-progress-fill').css("background","#d6d036");
             $('.ppc-percents span').css("color","#d6d036");
-            
+
         }
         if(max > 60 && max <=75 )
         {
             //$('.ppc-progress-fill').css("background","#a5c530");
             $('.ppc-percents span').css("color","#a5c530");
-            
+
         }
         if(max > 75 && max <=100)
         {
             //$('.ppc-progress-fill').css("background","#45c538");
             $('.ppc-percents span').css("color","#45c538");
-            
+
         }
         time = (1000 / max) * 0.5;
         value = progressbar.val();
@@ -1964,10 +1979,9 @@
         if (value > 50) {
            $ppc.addClass('gt-50');
         }
-
         $('.ppc-progress-fill').css('transform', 'rotate(' + deg + 'deg)');
         $('.ppc-percents span').html(value + '%');
-     
+
 
         if (value == max) {
             clearInterval(animate);
@@ -1977,20 +1991,18 @@
         var animate = setInterval(function() {
         loading();
         }, time);
-       
-
     });
-   
+
     function GetIlce(il_id,Id) {
-        
+
         if (il_id > 0) {
             if(Id == "il_id"){
                 $("#ilce_id").get(0).options.length = 0;
-                $("#ilce_id").get(0).options[0] = new Option("Yükleniyor", "-1"); 
+                $("#ilce_id").get(0).options[0] = new Option("Yükleniyor", "-1");
             }
             else{
                 $("#mali_ilce_id").get(0).options.length = 0;
-                $("#mali_ilce_id").get(0).options[0] = new Option("Yükleniyor", "-1"); 
+                $("#mali_ilce_id").get(0).options[0] = new Option("Yükleniyor", "-1");
             }
             $.ajax({
                 type: "GET",
@@ -2005,7 +2017,7 @@
                     }else{
                         $("#mali_ilce_id").get(0).options.length = 0;
                         $("#mali_ilce_id").get(0).options[0] = new Option("Seçiniz", "-1");
-                    }    
+                    }
                     $.each(msg, function(index, ilce) {
                         if(Id == "il_id"){
                             $("#ilce_id").get(0).options[$("#ilce_id").get(0).options.length] = new Option(ilce.adi, ilce.id);
@@ -2036,11 +2048,11 @@
             }
         }
     }
-    
+
     function GetSemt(ilce_id) {
         if (ilce_id > 0) {
             $("#semt_id").get(0).options.length = 0;
-            $("#semt_id").get(0).options[0] = new Option("Yükleniyor", "-1"); 
+            $("#semt_id").get(0).options[0] = new Option("Yükleniyor", "-1");
 
             $.ajax({
                 type: "GET",
@@ -2070,7 +2082,7 @@
     function GetTicaret(il_id) {
         if (il_id > 0) {
             $("#ticaret_odasi").get(0).options.length = 0;
-            $("#ticaret_odasi").get(0).options[0] = new Option("Yükleniyor", "-1"); 
+            $("#ticaret_odasi").get(0).options[0] = new Option("Yükleniyor", "-1");
 
             $.ajax({
                 type: "GET",
@@ -2100,7 +2112,7 @@
         function GetVergi(il_id) {
         if (il_id > 0) {
             $("#vergi_dairesi_id").get(0).options.length = 0;
-            $("#vergi_dairesi_id").get(0).options[0] = new Option("Yükleniyor", "-1"); 
+            $("#vergi_dairesi_id").get(0).options[0] = new Option("Yükleniyor", "-1");
 
             $.ajax({
                 type: "GET",
@@ -2139,14 +2151,15 @@
         $("#ticaret_odasi").val({{$firma->ticari_bilgiler->tic_oda_id}});
     }
     function populateMaliDD(){
-        GetIlce({{$firmaFatura->iller->id}},"mali_il_id");
-        GetVergi({{$firmaFatura->iller->id}});
+        var firmaFatura_il_id = "{{$firmaFatura->iller->id}}";
+        GetIlce(firmaFatura_il_id,"mali_il_id");
+        GetVergi(firmaFatura_il_id);
         $("#mali_il_id").val({{$firmaFatura->iller->id}});
         $("#mali_ilce_id").val({{$firmaFatura->ilceler->id}});
         $("#sirket_turu").val({{$firma->sirket_turu}});
         $("#yillik_cirosu").val("{{$firma->mali_bilgiler->yillik_cirosu}}");
         $("#vergi_dairesi_id").val({{$firma->mali_bilgiler->vergi_dairesi_id}});
-        
+
         if( "{{$mali_bilgi}}" == "dolu" && {{$checkboxCiro}} == 0){
             $("#ciro_goster").prop('checked',false);
         }
@@ -2181,101 +2194,101 @@
       console.log('please select and image file');
     }
   });
-  
-  
-        var total_row=44; 
-        var dolu_row=0;
-        var total_yuzde=0; 
-        function dolulukForm(){
-     
-        var logo1 = document.getElementById("logo1").src;
-        
-        var il_id = $('#il_id_td').text();
-    
-        var ilce_id = $('#ilce_id_td').text();
-        
-        var semt_id= $('#semt_id_td').text();
-      
-        var adres=$('#adres').val(); 
-        
-        var telefon=$('#telefon').val(); 
-        
-        var fax=$('#fax').val(); 
-        
-        var web_sayfasi=$('#web_sayfasi').val(); 
-        
-        var firma_tanitim =$('#tanitim_id_td').text(); 
-     
-        var mal_il_id= $('#mali_il_td').text()
-       
-        var mal_ilce_id= $('#mali_ilce_td').text();
-        
-        var unvani=$('#unvani').val();      
-       
-        var sirket_turu=$('#sirket_id_td').text();
-       
-        var vergi_dairesi= $('#vergi_id_td').text();
-        
-        var vergi_numarasi=$('#vergi_numarasi').val(); 
-        
-        var yillik_cirosu=$('#ciro_id_td').text(); 
-        
-        var sermayesi=$('#sermayesi').val(); 
 
-        var ticaret_sicil_no=$('#ticaret_sicil_no').val(); 
+
+        var total_row=44;
+        var dolu_row=0;
+        var total_yuzde=0;
+        function dolulukForm(){
+
+        var logo1 = document.getElementById("logo1").src;
+
+        var il_id = $('#il_id_td').text();
+
+        var ilce_id = $('#ilce_id_td').text();
+
+        var semt_id= $('#semt_id_td').text();
+
+        var adres=$('#adres').val();
+
+        var telefon=$('#telefon').val();
+
+        var fax=$('#fax').val();
+
+        var web_sayfasi=$('#web_sayfasi').val();
+
+        var firma_tanitim =$('#tanitim_id_td').text();
+
+        var mal_il_id= $('#mali_il_td').text()
+
+        var mal_ilce_id= $('#mali_ilce_td').text();
+
+        var unvani=$('#unvani').val();
+
+        var sirket_turu=$('#sirket_id_td').text();
+
+        var vergi_dairesi= $('#vergi_id_td').text();
+
+        var vergi_numarasi=$('#vergi_numarasi').val();
+
+        var yillik_cirosu=$('#ciro_id_td').text();
+
+        var sermayesi=$('#sermayesi').val();
+
+        var ticaret_sicil_no=$('#ticaret_sicil_no').val();
         var ticaret_odasi= $('#odasi_id_td').text();
-     
-       
+
+
         var ust_sektor= $('#ust_id_td').text();
-        
-        var faaliyet_sektorleri=$('#dfaaliyet_id_td').text(); 
-        
-        var firma_departmanlari=$('#departman_id_td').text(); 
-        
-        var kurulus_tarihi=$('#kurulus_tarihi').val(); 
-        
-        var firma_faaliyet_turu=$('#faaliyet_id_td').text(); 
-        
-        var firmanin_urettigi_markalar=$('#urettigi_id_td').text(); 
-        
-        var firmanin_sattigi_markalar=$('#sattıgı_id_td').text(); 
-       
-       
+
+        var faaliyet_sektorleri=$('#dfaaliyet_id_td').text();
+
+        var firma_departmanlari=$('#departman_id_td').text();
+
+        var kurulus_tarihi=$('#kurulus_tarihi').val();
+
+        var firma_faaliyet_turu=$('#faaliyet_id_td').text();
+
+        var firmanin_urettigi_markalar=$('#urettigi_id_td').text();
+
+        var firmanin_sattigi_markalar=$('#sattıgı_id_td').text();
+
+
         var kalite_belgeleri=$('#kalite_id_td').text();
-        
-        var belge_no=$('#belge_no').val(); 
-        
-      
+
+        var belge_no=$('#belge_no').val();
+
+
         var ref_turu= $('#ref_turu_id_td').text();
-        
-        var ref_firma_adi=$('#ref_firma_adi').val(); 
-        
-        var yapılan_isin_adi=$('#yapılan_isin_adi').val(); 
-       
+
+        var ref_firma_adi=$('#ref_firma_adi').val();
+
+        var yapılan_isin_adi=$('#yapılan_isin_adi').val();
+
         var isin_turu= $('#is_turu_id_td').text();
-        
-        var is_yili=$('#is_yili').val(); 
-        
-        var calisma_suresi=$('#calısma_suresi').val(); 
-        
-        var yetkili_kisi_adi=$('#yetkili_kisi_adi').val(); 
-        
-        var yetkili_kisi_email=$('#yetkili_kisi_email').val(); 
-        
-        var yetkili_kisi_telefon=$('#yetkili_kisi_telefon').val(); 
-        
-        var brosur_adi=$('#brosur_adi').val(); 
-       
+
+        var is_yili=$('#is_yili').val();
+
+        var calisma_suresi=$('#calısma_suresi').val();
+
+        var yetkili_kisi_adi=$('#yetkili_kisi_adi').val();
+
+        var yetkili_kisi_email=$('#yetkili_kisi_email').val();
+
+        var yetkili_kisi_telefon=$('#yetkili_kisi_telefon').val();
+
+        var brosur_adi=$('#brosur_adi').val();
+
         var calisma_gunleri= $('#calisma_id_td').text();
-        
-        var calisma_saatleri=$('#calisma_saatleri').val(); 
-        
-        var calisma_profili=$('#profil_id_td').text(); 
-        
-        var calisma_sayisi=$('#calisma_sayisi').val(); 
-        
-        var bilgilendirme_tercihi='dolu'; 
-        
+
+        var calisma_saatleri=$('#calisma_saatleri').val();
+
+        var calisma_profili=$('#profil_id_td').text();
+
+        var calisma_sayisi=$('#calisma_sayisi').val();
+
+        var bilgilendirme_tercihi='dolu';
+
         if(logo1 != null ){
              dolu_row++
         }
@@ -2284,13 +2297,13 @@
         }
         if(ilce_id != "" && ilce_id!="Seçiniz"){
              dolu_row++
-        } 
+        }
         if(semt_id != "" && semt_id!="Seçiniz"){
-            dolu_row++  
-        } 
+            dolu_row++
+        }
         if(adres != ""){
             dolu_row++
-            
+
         }
         if(telefon != ""){
              dolu_row++
@@ -2300,11 +2313,11 @@
         }
         if(web_sayfasi != ""){
              dolu_row++
-            
-        } 
+
+        }
         if(firma_tanitim != ""){
              dolu_row++
-            
+
         }
         if(mal_il_id != "" && mal_il_id!="Seçiniz"){
              dolu_row++
@@ -2312,7 +2325,7 @@
         if(mal_ilce_id != "" && mal_ilce_id!="Seçiniz"){
              dolu_row++
         }
-        
+
         if(unvani != ""){
              dolu_row++
         }
@@ -2409,28 +2422,28 @@
         if(bilgilendirme_tercihi != ""){
              dolu_row++
         }
-        
+
        var total_dolu_row=dolu_row;
-       
+
        var hesaplama=(total_dolu_row/total_row)*100;
        total_yuzde=hesaplama.toFixed(0);
-       
+
        funcDolulukKayıt()
-       
+
     }
-    
-   function funcDolulukKayıt(){             
+
+   function funcDolulukKayıt(){
     $.ajax({
         type:"POST",
         url: "{{asset('doluluk_orani')}}"+"/"+{{$firma->id}},
         data:{doluluk_orani:total_yuzde},
-       
+
         cache: false,
         success: function(data){
            console.log(data);
         },
-        error: function(XMLHttpRequest, textStatus, errorThrown) { 
-            alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            alert("Status: " + textStatus); alert("Error: " + errorThrown);
         }
     });
    }
@@ -2448,29 +2461,29 @@ $("#iletisim_kayit").submit(function(e)
                 url : formURL,
                 type: "POST",
                 data : postData,
-                success:function(data, textStatus, jqXHR) 
+                success:function(data, textStatus, jqXHR)
                 {
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-                        
+
                         $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
                             transitionClose: 'slideBack',
-                            autoClose: 5000 
+                            autoClose: 5000
                         });
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-                         
+
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
                 },
-                error: function(jqXHR, textStatus, errorThrown) 
+                error: function(jqXHR, textStatus, errorThrown)
                 {
-                    alert(textStatus + "," + errorThrown);     
+                    alert(textStatus + "," + errorThrown);
                 }
             });
             e.preventDefault();
@@ -2479,7 +2492,7 @@ $("#iletisim_kayit").submit(function(e)
    {
        var postData = $(this).serialize();
             var formURL = $(this).attr('action');
-               
+
             $.ajax(
             {
                 beforeSend: function(){
@@ -2488,33 +2501,33 @@ $("#iletisim_kayit").submit(function(e)
                 url : formURL,
                 type: "POST",
                 data : postData,
-                success:function(data, textStatus, jqXHR) 
+                success:function(data, textStatus, jqXHR)
                 {
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-                        
+
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
                             transitionClose: 'slideBack',
-                            autoClose: 5000 
+                            autoClose: 5000
                         });
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-                      
+
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
                 },
-                error: function(jqXHR, textStatus, errorThrown) 
+                error: function(jqXHR, textStatus, errorThrown)
                 {
-                    alert(textStatus + "," + errorThrown);     
+                    alert(textStatus + "," + errorThrown);
                 }
             });
             e.preventDefault();
-    });    
+    });
   $("#ticari_kayit").submit(function(e)
    {
        var postData = $(this).serialize();
@@ -2527,17 +2540,17 @@ $("#iletisim_kayit").submit(function(e)
                 url : formURL,
                 type: "POST",
                 data : postData,
-                success:function(data, textStatus, jqXHR) 
+                success:function(data, textStatus, jqXHR)
                 {
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-                        
+
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
                             transitionClose: 'slideBack',
-                            autoClose: 5000 
+                            autoClose: 5000
                         });
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
@@ -2546,13 +2559,13 @@ $("#iletisim_kayit").submit(function(e)
                     }
                         e.preventDefault();
                 },
-                error: function(jqXHR, textStatus, errorThrown) 
+                error: function(jqXHR, textStatus, errorThrown)
                 {
-                    alert(textStatus + "," + errorThrown);     
+                    alert(textStatus + "," + errorThrown);
                 }
             });
             e.preventDefault();
-    });   
+    });
   $("#kalite_add_kayit").submit(function(e)
    {
        var postData = $(this).serialize();
@@ -2565,17 +2578,17 @@ $("#iletisim_kayit").submit(function(e)
                 url : formURL,
                 type: "POST",
                 data : postData,
-                success:function(data, textStatus, jqXHR) 
+                success:function(data, textStatus, jqXHR)
                 {
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-                        
+
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
                             transitionClose: 'slideBack',
-                            autoClose: 5000 
+                            autoClose: 5000
                         });
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
@@ -2584,9 +2597,9 @@ $("#iletisim_kayit").submit(function(e)
                     }
                         e.preventDefault();
                 },
-                error: function(jqXHR, textStatus, errorThrown) 
+                error: function(jqXHR, textStatus, errorThrown)
                 {
-                    alert(textStatus + "," + errorThrown);     
+                    alert(textStatus + "," + errorThrown);
                 }
             });
             e.preventDefault();
@@ -2603,29 +2616,29 @@ $("#iletisim_kayit").submit(function(e)
                 url : formURL,
                 type: "POST",
                 data : postData,
-                success:function(data, textStatus, jqXHR) 
+                success:function(data, textStatus, jqXHR)
                 {
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-                        
+
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
                             transitionClose: 'slideBack',
-                            autoClose: 5000 
+                            autoClose: 5000
                         });
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-                         
+
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
                 },
-                error: function(jqXHR, textStatus, errorThrown) 
+                error: function(jqXHR, textStatus, errorThrown)
                 {
-                    alert(textStatus + "," + errorThrown);     
+                    alert(textStatus + "," + errorThrown);
                 }
             });
             e.preventDefault();
@@ -2642,29 +2655,29 @@ $("#iletisim_kayit").submit(function(e)
                 url : formURL,
                 type: "POST",
                 data : postData,
-                success:function(data, textStatus, jqXHR) 
+                success:function(data, textStatus, jqXHR)
                 {
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-                        
+
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
                             transitionClose: 'slideBack',
-                            autoClose: 5000 
+                            autoClose: 5000
                         });
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-                         
+
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
                 },
-                error: function(jqXHR, textStatus, errorThrown) 
+                error: function(jqXHR, textStatus, errorThrown)
                 {
-                    alert(textStatus + "," + errorThrown);     
+                    alert(textStatus + "," + errorThrown);
                 }
             });
             e.preventDefault();
@@ -2681,29 +2694,29 @@ $("#iletisim_kayit").submit(function(e)
                 url : formURL,
                 type: "POST",
                 data : postData,
-                success:function(data, textStatus, jqXHR) 
+                success:function(data, textStatus, jqXHR)
                 {
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-                        
+
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
                             transitionClose: 'slideBack',
-                            autoClose: 5000 
+                            autoClose: 5000
                         });
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-                         
+
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
                 },
-                error: function(jqXHR, textStatus, errorThrown) 
+                error: function(jqXHR, textStatus, errorThrown)
                 {
-                    alert(textStatus + "," + errorThrown);     
+                    alert(textStatus + "," + errorThrown);
                 }
             });
             e.preventDefault();
@@ -2720,29 +2733,29 @@ $("#iletisim_kayit").submit(function(e)
                 url : formURL,
                 type: "POST",
                 data : postData,
-                success:function(data, textStatus, jqXHR) 
+                success:function(data, textStatus, jqXHR)
                 {
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-                        
+
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
                             transitionClose: 'slideBack',
-                            autoClose: 5000 
+                            autoClose: 5000
                         });
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-                         
+
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
                 },
-                error: function(jqXHR, textStatus, errorThrown) 
+                error: function(jqXHR, textStatus, errorThrown)
                 {
-                    alert(textStatus + "," + errorThrown);     
+                    alert(textStatus + "," + errorThrown);
                 }
             });
             e.preventDefault();
@@ -2759,29 +2772,29 @@ $("#iletisim_kayit").submit(function(e)
                 url : formURL,
                 type: "POST",
                 data : postData,
-                success:function(data, textStatus, jqXHR) 
+                success:function(data, textStatus, jqXHR)
                 {
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-                        
+
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
                             transitionClose: 'slideBack',
-                            autoClose: 5000 
+                            autoClose: 5000
                         });
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-                         
+
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
                 },
-                error: function(jqXHR, textStatus, errorThrown) 
+                error: function(jqXHR, textStatus, errorThrown)
                 {
-                    alert(textStatus + "," + errorThrown);     
+                    alert(textStatus + "," + errorThrown);
                 }
             });
             e.preventDefault();
@@ -2798,29 +2811,29 @@ $("#iletisim_kayit").submit(function(e)
                 url : formURL,
                 type: "POST",
                 data : postData,
-                success:function(data, textStatus, jqXHR) 
+                success:function(data, textStatus, jqXHR)
                 {
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-                        
+
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
                             transitionClose: 'slideBack',
-                            autoClose: 5000 
+                            autoClose: 5000
                         });
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-                         
+
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
                 },
-                error: function(jqXHR, textStatus, errorThrown) 
+                error: function(jqXHR, textStatus, errorThrown)
                 {
-                    alert(textStatus + "," + errorThrown);     
+                    alert(textStatus + "," + errorThrown);
                 }
             });
             e.preventDefault();
@@ -2837,29 +2850,29 @@ $("#iletisim_kayit").submit(function(e)
                 url : formURL,
                 type: "POST",
                 data : postData,
-                success:function(data, textStatus, jqXHR) 
+                success:function(data, textStatus, jqXHR)
                 {
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-                        
+
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
                             transitionClose: 'slideBack',
-                            autoClose: 5000 
+                            autoClose: 5000
                         });
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-                         
+
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
                 },
-                error: function(jqXHR, textStatus, errorThrown) 
+                error: function(jqXHR, textStatus, errorThrown)
                 {
-                    alert(textStatus + "," + errorThrown);     
+                    alert(textStatus + "," + errorThrown);
                 }
             });
             e.preventDefault();
