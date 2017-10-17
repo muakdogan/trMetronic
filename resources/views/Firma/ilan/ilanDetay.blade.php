@@ -38,7 +38,6 @@
             text-align: left;
             padding: 5px;
         }
-
         .button {
             background-color: #2b91af;
             border-radius: 10px;
@@ -229,7 +228,7 @@
             color: #000;
             border-width: 0px 0px 1px 0px;
             border-radius: 0px;
-            border:0px solid #ccc;
+            border:1px solid #ccc;
             outline: 0;
             resize: none;
             margin: 0;
