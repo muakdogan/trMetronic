@@ -1,6 +1,6 @@
 @extends('layouts.appUser')
 
-@section('baslik') {{$firma->adi}} Profili @endsection
+@section('baslik') Firma Profili @endsection
 
 @section('aciklama') @endsection
 
@@ -240,6 +240,7 @@
         text-decoration: none;
     }
 </style>
+<link href="{{asset('MetronicFiles/pages/css/profile.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -250,400 +251,656 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
-   <div class="container">
-    <div class="row">
-     <div class="col-sm-8" >
 
-       <div  class="panel-group" id="accordion">
-           <div  class="form-group">
-               <div class="row">
-                   <div class="col-sm-5" >
-                       @if($firma->logo != "")
-                           <img id="logo1" src="{{asset('uploads')}}/{{$firma->logo}}" alt="Firma Logo" style="width:128px;height:128px;">
-                       @else
-                           <img id="logo1" src="{{asset('uploads/logo/defaultFirmaLogo.png')}}" alt="Firma Logo" style="width:128px;height:128px;">
-                       @endif
-                        <br />
-                       <button class="btn btn-primary btn-xs btn-detail " id="btn-add-image" onclick="" value="{{$firma->id}}">Düzenle</button>
-                   </div>
-                   <div class="col-sm-7">
-                       <div class="panel panel-default">
-                           <div  class="panel-heading">
-                               <h4 class="panel-title">
-                                   <a data-toggle="collapse" data-parent="#accordion" href="#collapse0"><img width="20" height="20" src="{{asset('images/islem.png')}}">&nbsp;<strong>Sektorler</strong></a>
-                               </h4>
-                           </div>
-                           <div class="panel-body">
-                               <ul>
-                                   @foreach($firmaSektorleri as $firmaSektor)
-                                   <li>{{$firmaSektor->adi}}</li>
-                                   @endforeach
-                               </ul>
-                           </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="profile-sidebar">
+                <!-- PORTLET MAIN -->
+                <div class="portlet light profile-sidebar-portlet ">
+                    <!-- SIDEBAR USERPIC -->
+                    <div class="profile-userpic">
+                        @if($firma->logo != "")
+                            <img id="logo1" src="{{asset('uploads')}}/{{$firma->logo}}" alt="Firma Logo" class="img-responsive">
+                        @else
+                            <img id="logo1" src="{{asset('uploads/logo/defaultFirmaLogo.png')}}" alt="Firma Logo" class="img-responsive">
+                    @endif
+                    </div>
+                    <!-- END SIDEBAR USERPIC -->
+
+                    <!-- SIDEBAR BUTTONS -->
+                    <div class="profile-userbuttons">
+                        <button id="btn-add-image" value="{{$firma->id}}" type="button" class="btn btn-circle red btn-sm">Düzenle</button>
+                    </div>
+                    <!-- END SIDEBAR BUTTONS -->
+
+                    <!-- SIDEBAR USER TITLE -->
+                    <div class="profile-usertitle">
+                        <div class="profile-usertitle-name"> {{$firma->adi}} </div>
+                    </div>
+                    <!-- END SIDEBAR USER TITLE -->
+
+                    <!-- SIDEBAR MENU -->
+                    <div class="profile-usermenu">
+
+                            <ul><h4 class="profile-desc-title">Sektörler</h4>
+                                @foreach($firmaSektorleri as $firmaSektor)
+                                    <li>{{$firmaSektor->adi}}</li>
+                                @endforeach
+                            </ul>
+
+                    </div>
+                    <!-- END MENU -->
+                </div>
+                <!-- END PORTLET MAIN -->
+
+            </div>
+
+            <div class="profile-content">
+                <div class="row">
+                    <div class="col-md-8">
+                        <!-- BEGIN PORTLET -->
+                        <div class="portlet light ">
+                            <div class="portlet-title">
+                                <div class="caption caption-md">
+                                    <i class="fa fa-phone theme-font"></i>
+                                    <span class="caption-subject font-blue-madison bold uppercase">İletişim Bilgileri</span>
+                                </div>
+                                <div class="actions">
+                                    <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                        <label class="btn btn-transparent grey-salsa btn-circle btn-sm active">
+                                            <input type="radio" name="options" class="toggle" id="option1">Düzenle</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="table-scrollable table-scrollable-borderless">
+                                    <table class="table table-light">
+                                        <tr>
+                                            <td><strong>Adres</strong></td>
+                                            <td>:
+                                                Adres
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>İl</strong></td>
+                                            <td>:
+                                                Adres
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>İlçe</strong></td>
+                                            <td>:
+                                                Adres
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Semt</strong></td>
+                                            <td>:
+                                                Adres
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Telefon</strong></td>
+                                            <td>:
+                                                Adres
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Fax</strong></td>
+                                            <td>:
+                                                Adres
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Web Sitesi</strong></td>
+                                            <td>:
+                                                Adres
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END PORTLET -->
+                    </div>
+                    <div class="col-md-4">
+                        <!-- BEGIN PORTLET -->
+                        <div class="portlet light ">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="icon-cursor font-dark hide"></i>
+                                    <span class="caption-subject font-blue-madison bold uppercase">Profil Doluluk</span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="easy-pie-chart">
+                                            <div class="number transactions" data-percent="55">
+                                                <span>55</span>% </div>
+                                            <a class="title" href="javascript:;"> Doluluk
+                                                <i class="icon-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END PORTLET -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <!-- BEGIN PROFILE CONTENT -->
+            <div class="profile-content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <!-- BEGIN PORTLET -->
+                            <div class="portlet light ">
+                                <div class="portlet-title">
+                                    <div class="caption caption-md">
+                                        <i class="fa fa-pencil theme-font"></i>
+                                        <span class="caption-subject font-blue-madison bold uppercase">Tanıtım Yazısı</span>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                            <label class="btn btn-transparent grey-salsa btn-circle btn-sm active">
+                                                <input type="radio" name="options" class="toggle" id="option1">Düzenle</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="table-scrollable table-scrollable-borderless">
+                                        <span class="profile-desc-text"> Henüz tanıtım yazısı eklenmemiş. </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END PORTLET -->
+                        </div>
+                        <div class="col-md-12">
+                            <!-- BEGIN PORTLET -->
+                            <div class="portlet light ">
+                                <div class="portlet-title">
+                                    <div class="caption caption-md">
+                                        <i class="fa fa-phone theme-font"></i>
+                                        <span class="caption-subject font-blue-madison bold uppercase">Mali Bilgiler</span>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                            <label class="btn btn-transparent grey-salsa btn-circle btn-sm active">
+                                                <input type="radio" name="options" class="toggle" id="option1">Düzenle</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="table-scrollable table-scrollable-borderless">
+                                        <table class="table table-light">
+                                            <tr>
+                                                <td><strong>Firma Ünvanı</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Şirket Türü</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Fatura Adresi</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>İli</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>İlçesi</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Vergi Dairesi</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Vergi Numarası</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Yıllık Cirosu</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Sermayesi</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END PORTLET -->
+                        </div>
+                        <div class="col-md-12">
+                            <!-- BEGIN PORTLET -->
+                            <div class="portlet light ">
+                                <div class="portlet-title">
+                                    <div class="caption caption-md">
+                                        <i class="fa fa-phone theme-font"></i>
+                                        <span class="caption-subject font-blue-madison bold uppercase">Ticari Bilgiler</span>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                            <label class="btn btn-transparent grey-salsa btn-circle btn-sm active">
+                                                <input type="radio" name="options" class="toggle" id="option1">Düzenle</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="table-scrollable table-scrollable-borderless">
+                                        <table class="table table-light">
+                                            <tr>
+                                                <td><strong>Ticaret Sicil No</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Ticaret Odası</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Faaliyet Türü</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Üst Sektör</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Faaliyet Gösterilen Sektörler</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Firmanın Ürettiği Markalar</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Firmanın Sattığı Markalar</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END PORTLET -->
+                        </div>
+                        <div class="col-md-12">
+                            <!-- BEGIN PORTLET -->
+                            <div class="portlet light ">
+                                <div class="portlet-title">
+                                    <div class="caption caption-md">
+                                        <i class="fa fa-phone theme-font"></i>
+                                        <span class="caption-subject font-blue-madison bold uppercase">Bilgilendirme Tercihi</span>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                            <label class="btn btn-transparent grey-salsa btn-circle btn-sm active">
+                                                <input type="radio" name="options" class="toggle" id="option1">Düzenle</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+																	<span class="profile-desc-text">
+																		<input type="checkbox" class="bilgilendirmeOnTaraf"  id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Sms" disabled/>Sms <br>
+																		<input type="checkbox" class="bilgilendirmeOnTaraf" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Mail" disabled/>Mail <br>
+																		<input type="checkbox" class="bilgilendirmeOnTaraf" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Telefon" disabled/>Telefon <br>
+																		<input type="checkbox" class="bilgilendirmeOnTaraf" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Bilgilendirme İstemiyorum" disabled/>Bilgilendirme İstemiyorum
+																	</span>
+                                </div>
+                            </div>
+                            <!-- END PORTLET -->
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <!-- BEGIN PORTLET -->
+                            <div class="portlet light ">
+                                <div class="portlet-title">
+                                    <div class="caption caption-md">
+                                        <i class="fa fa-phone theme-font"></i>
+                                        <span class="caption-subject font-blue-madison bold uppercase">Firma Broşürü</span>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                            <label class="btn btn-transparent grey-salsa btn-circle btn-sm active">
+                                                <input type="radio" name="options" class="toggle" id="option1">Düzenle</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="table-scrollable table-scrollable-borderless">
+                                        <table class="table table-light">
+                                            <tr>
+                                                <td><strong>Ticaret Sicil No</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Ticaret Odası</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Faaliyet Türü</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Üst Sektör</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Faaliyet Gösterilen Sektörler</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Firmanın Ürettiği Markalar</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Firmanın Sattığı Markalar</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END PORTLET -->
+                        </div>
+                        <div class="col-md-12">
+                            <!-- BEGIN PORTLET -->
+                            <div class="portlet light ">
+                                <div class="portlet-title">
+                                    <div class="caption caption-md">
+                                        <i class="fa fa-phone theme-font"></i>
+                                        <span class="caption-subject font-blue-madison bold uppercase">İdari Bilgiler</span>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                            <label class="btn btn-transparent grey-salsa btn-circle btn-sm active">
+                                                <input type="radio" name="options" class="toggle" id="option1">Düzenle</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="table-scrollable table-scrollable-borderless">
+                                        <table class="table table-light">
+                                            <tr>
+                                                <td><strong>Çalışma Günleri</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Çalışma Saatleri</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Çalışan Profili</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Çalışan Sayısı</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Firma Departmanları</strong></td>
+                                                <td>:
+                                                    Adres
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END PORTLET -->
+                        </div>
+
+                        <div class="col-md-12">
+                            <!-- BEGIN PORTLET -->
+                            <div class="portlet light ">
+                                <div class="portlet-title">
+                                    <div class="caption caption-md">
+                                        <i class="fa fa-phone theme-font"></i>
+                                        <span class="caption-subject font-blue-madison bold uppercase">Kalite Belgeleri ve Referanslar</span>
+                                    </div>
+                                    <div class="actions">
+                                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                                            <label class="btn btn-transparent grey-salsa btn-circle btn-sm active">
+                                                <input type="radio" name="options" class="toggle" id="option1">Düzenle</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    Düzeltilecek</div>
+                            </div>
+                            <!-- END PORTLET -->
+                        </div>
+                    </div>
+                </div>
+                <!-- END PROFILE CONTENT -->
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+    <div class="row">
+    <div class="col-sm-8" >
+
+    <div  class="panel-group" id="accordion">
+       <div  class="form-group">
+           <div class="row">
+               <div class="col-sm-5" >
+                   @if($firma->logo != "")
+                       <img id="logo1" src="{{asset('uploads')}}/{{$firma->logo}}" alt="Firma Logo" style="width:128px;height:128px;">
+                   @else
+                       <img id="logo1" src="{{asset('uploads/logo/defaultFirmaLogo.png')}}" alt="Firma Logo" style="width:128px;height:128px;">
+                   @endif
+                    <br />
+                   <button class="btn btn-primary btn-xs btn-detail " id="btn-add-image" onclick="" value="{{$firma->id}}">Düzenle</button>
+               </div>
+               <div class="col-sm-7">
+                   <div class="panel panel-default">
+                       <div  class="panel-heading">
+                           <h4 class="panel-title">
+                               <a data-toggle="collapse" data-parent="#accordion" href="#collapse0"><img width="20" height="20" src="{{asset('images/islem.png')}}">&nbsp;<strong>Sektorler</strong></a>
+                           </h4>
+                       </div>
+                       <div class="panel-body">
+                           <ul>
+                               @foreach($firmaSektorleri as $firmaSektor)
+                               <li>{{$firmaSektor->adi}}</li>
+                               @endforeach
+                           </ul>
                        </div>
                    </div>
                </div>
-               <div class="modal fade" id="myModal-image" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                   <div class="modal-dialog">
-                       <div class="modal-content">
-                           <div class="modal-header">
-                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                               <h4 class="modal-title" id="myModalLabel">Firma Logonu Güncelle</h4>
-                           </div>
-                           <div class="modal-body">
-                               <div class="span7 offset1">
-                                   {!! Form::open(array('url'=>'firmaProfili/uploadImage/'.$firma->id,'method'=>'POST', 'files'=>true)) !!}
-                                   <div class="control-group">
-                                       <div class="controls">
-                                           <div class="container-fuild">
-                                               <div class="row">
-                                                   <div class="col-sm-4" >
-                                                       <div class="secure"><strong>Mevcut Logonuz</strong></div>
-                                                       <br>
-                                                       <div style="width:128px;height:128px;"class="image-wrapper">
-                                                           @if($firma->logo != "")
-                                                               <img src="{{asset('uploads')}}/{{$firma->logo}}" alt="Firma Logo" style="width:128px;height:128px;">
-                                                           @else
-                                                               <img src="{{asset('uploads/logo/defaultFirmaLogo.png')}}" alt="Firma Logo" style="width:128px;height:128px;">
-                                                               Henüz Logonuz Yok!
-                                                           @endif
+           </div>
+           <div class="modal fade" id="myModal-image" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+               <div class="modal-dialog">
+                   <div class="modal-content">
+                       <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                           <h4 class="modal-title" id="myModalLabel">Firma Logonu Güncelle</h4>
+                       </div>
+                       <div class="modal-body">
+                           <div class="span7 offset1">
+                               {!! Form::open(array('url'=>'firmaProfili/uploadImage/'.$firma->id,'method'=>'POST', 'files'=>true)) !!}
+                               <div class="control-group">
+                                   <div class="controls">
+                                       <div class="container-fuild">
+                                           <div class="row">
+                                               <div class="col-sm-4" >
+                                                   <div class="secure"><strong>Mevcut Logonuz</strong></div>
+                                                   <br>
+                                                   <div style="width:128px;height:128px;"class="image-wrapper">
+                                                       @if($firma->logo != "")
+                                                           <img src="{{asset('uploads')}}/{{$firma->logo}}" alt="Firma Logo" style="width:128px;height:128px;">
+                                                       @else
+                                                           <img src="{{asset('uploads/logo/defaultFirmaLogo.png')}}" alt="Firma Logo" style="width:128px;height:128px;">
+                                                           Henüz Logonuz Yok!
+                                                       @endif
 
-                                                       </div>
-                                                   </div>
-                                                   <div class="col-sm-8" >
-                                                       <div class="secure"><strong>Logonuzu Değiştirin</strong></div>
-                                                       <div class="wrapper">
-                                                           {!! Form::file('logo', ['id' => 'addImage']) !!}
-                                                       </div>
                                                    </div>
                                                </div>
-                                               <br>
-                                               <p class="errors">{!!$errors->first('image')!!}</p>
-                                               @if(Session::has('error'))
-                                                   <p class="errors">{!! Session::get('error') !!}</p>
-                                               @endif
+                                               <div class="col-sm-8" >
+                                                   <div class="secure"><strong>Logonuzu Değiştirin</strong></div>
+                                                   <div class="wrapper">
+                                                       {!! Form::file('logo', ['id' => 'addImage']) !!}
+                                                   </div>
+                                               </div>
                                            </div>
+                                           <br>
+                                           <p class="errors">{!!$errors->first('image')!!}</p>
+                                           @if(Session::has('error'))
+                                               <p class="errors">{!! Session::get('error') !!}</p>
+                                           @endif
                                        </div>
-                                       <div id="success">
-                                       </div>
-                                       {!! Form::submit('Logo Yükle', array('url'=>'firmaProfili/uploadImage'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
-                                       {!! Form::close() !!}
-                                       @if($firma->logo != "")
-                                           {{ Form::open(array('url'=>'firmaProfili/deleteImage/'.$firma->id,'method' => 'DELETE', 'files'=>true)) }}
-                                           {{ Form::hidden('id', $firma->logo) }}
-                                           {{ Form::submit('Logo Sil', ['style'=>'float:right' ,'class' => 'btn btn-danger']) }}
-                                           {{ Form::close() }}
-                                       @endif
-                                       <br>
-                                       <br>
-                                       <br>
                                    </div>
+                                   <div id="success">
+                                   </div>
+                                   {!! Form::submit('Logo Yükle', array('url'=>'firmaProfili/uploadImage'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                   {!! Form::close() !!}
+                                   @if($firma->logo != "")
+                                       {{ Form::open(array('url'=>'firmaProfili/deleteImage/'.$firma->id,'method' => 'DELETE', 'files'=>true)) }}
+                                       {{ Form::hidden('id', $firma->logo) }}
+                                       {{ Form::submit('Logo Sil', ['style'=>'float:right' ,'class' => 'btn btn-danger']) }}
+                                       {{ Form::close() }}
+                                   @endif
+                                   <br>
+                                   <br>
+                                   <br>
                                </div>
-                               <div class="modal-footer">
-                               </div>
+                           </div>
+                           <div class="modal-footer">
                            </div>
                        </div>
                    </div>
                </div>
            </div>
+       </div>
 
-           <div class="panel panel-default">
-               <div  class="panel-heading">
-                   <h4 class="panel-title">
-                       <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><img src="{{asset('images/phone.png')}}">&nbsp;<strong>İletişim Bilgileri</strong></a>
-                       <button style="float:right" id="btn-add" name="btn-add" onclick="populateDD()" class="btn btn-primary btn-xs" >Ekle / Düzenle</button>
-                   </h4>
-               </div>
-                   <div class="panel-body">
-                       <table class="table" >
-                           <thead id="tasks-list" name="tasks-list">
-                               <tr>
-                                   <td><strong>Adres</strong></td>
-                                   <td><strong>:</strong>  {{$firmaAdres->adres}}</td>
-
-                               </tr>
-                               <tr>
-                                   <td  width="25%"><strong>İli</strong></td>
-                                   <td id="il_id_td" width="75%"><strong>:</strong> {{$firmaAdres->iller->adi}}</td>
-
-                               </tr>
-                               <tr>
-                                   <td><strong>İlçesi</strong></td>
-                                   <td id="ilce_id_td"><strong>:</strong> {{$firmaAdres->ilceler->adi}}</td>
-
-                               </tr>
-                               <tr>
-                                   <td><strong>Semt</strong></td>
-                                   <td  id="semt_id_td"><strong>:</strong> {{$firmaAdres->semtler->adi}}</td>
-
-                               </tr>
-                               <tr>
-                                   <td><strong>Telefon</strong></td>
-                                   <td><strong>:</strong> {{$firma->iletisim_bilgileri->telefon}}</td>
-
-                               </tr>
-                               <tr>
-                                   <td><strong>Fax</strong></td>
-                                   <td><strong>:</strong> {{$firma->iletisim_bilgileri->fax}}</td>
-
-                               </tr>
-                               <tr>
-                                   <td><strong>Web Sayfası</strong></td>
-                                   <td><strong>:</strong> {{$firma->iletisim_bilgileri->web_sayfasi}}</td>
-
-                               </tr>
-                               </tr>
-                           </thead>
-                       </table>
-                       <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                           <div class="modal-dialog">
-                               <div class="modal-content">
-                                   <div class="modal-header">
-                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                       <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>İletişim Bilgileri</strong></h4>
-                                   </div>
-                                   <div class="modal-body">
-                                       {!! Form::open(array('id'=>'iletisim_kayit','url'=>'firmaProfili/iletisimAdd/'.$firma->id, 'class' => 'form-horizontal', 'method' => 'POST')) !!}
-
-                                       <div class="form-group error">
-                                           <label for="inputTask" class="col-sm-1 control-label"></label>
-                                           <label for="inputTask" class="col-sm-3 control-label">Şehir</label>
-                                           <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
-                                           <div class="col-sm-7">
-                                               <select class="form-control il_id" name="il_id" id="il_id" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                                   <option selected disabled>Seçiniz</option>
-                                                   @foreach($iller as $il)
-                                                   <option  value="{{$il->id}}" >{{$il->adi}}</option>
-                                                   @endforeach
-                                               </select>
-                                           </div>
-                                       </div>
-                                       <div class="form-group error">
-                                           <label for="inputTask" class="col-sm-1 control-label"></label>
-                                           <label for="inputTask" class="col-sm-3 control-label">İlçe</label>
-                                           <label for="inputTask" style="text-align: left" class="col-sm-1 control-label">:</label>
-                                           <div class="col-sm-7">
-                                               <select class="form-control" name="ilce_id" id="ilce_id" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                                   <option selected disabled>Seçiniz</option>
-                                               </select>
-                                           </div>
-                                       </div>
-                                       <div class="form-group error">
-                                           <label for="inputTask" class="col-sm-1 control-label"></label>
-                                           <label for="inputTask" class="col-sm-3 control-label">Semt</label>
-                                           <label for="inputTask" style="text-align: left" class="col-sm-1 control-label">:</label>
-                                           <div class="col-sm-7">
-                                               <select class="form-control" name="semt_id" id="semt_id" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                                   <option selected disabled>Seçiniz</option>
-                                               </select>
-                                           </div>
-                                       </div>
-                                       <div class="form-group">
-                                            <label for="inputTask" class="col-sm-1 control-label"></label>
-                                           <label for="inputEmail3" class="col-sm-3 control-label">Adres</label>
-                                            <label for="inputTask"style="text-align: left" class="col-sm-1 control-label">:</label>
-                                           <div class="col-sm-7">
-                                               <input type="text" class="form-control" id="adres" name="adres" placeholder="Adres" value="{{$firmaAdres->adres}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                           </div>
-                                       </div>
-                                       <div class="form-group">
-                                            <label for="inputTask" class="col-sm-1 control-label"></label>
-                                           <label for="inputEmail3" class="col-sm-3 control-label">Telefon</label>
-                                            <label for="inputTask" style="text-align: left" class="col-sm-1 control-label">:</label>
-                                           <div class="col-sm-7">
-                                               <input type="text" class="form-control" id="telefon" name="telefon" placeholder="Telefon" value="{{$firma->iletisim_bilgileri->telefon}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                           </div>
-                                       </div>
-                                       <div class="form-group">
-                                            <label for="inputTask" class="col-sm-1 control-label"></label>
-                                           <label for="inputEmail3" class="col-sm-3 control-label">Fax</label>
-                                            <label for="inputTask" style="text-align: left" class="col-sm-1 control-label">:</label>
-                                           <div class="col-sm-7">
-                                               <input type="text" class="form-control" id="fax" name="fax" placeholder="Fax" value="{{$firma->iletisim_bilgileri->fax}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                           </div>
-                                       </div>
-                                       <div class="form-group">
-                                            <label for="inputTask" class="col-sm-1 control-label"></label>
-                                           <label for="inputEmail3" class="col-sm-3 control-label">Web Sayfası</label>
-                                            <label for="inputTask" style="text-align: left" class="col-sm-1 control-label">:</label>
-                                           <div class="col-sm-7">
-                                               <input type="text" class="form-control" id="web_sayfasi" name="web_sayfasi" placeholder="Web Sayfası" value="{{$firma->iletisim_bilgileri->web_sayfasi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                           </div>
-                                       </div>
-                                       {!! Form::submit('Kaydet', array('url'=>'firmaProfili/iletisimAdd/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
-                                       <br>
-                                       <br>
-                                       {!! Form::close() !!}
-                                   </div>
-                                   <div class="modal-footer">
-                                       <input type="hidden" id="iletisimbilgisi_id" name="iletisimbilgisi_id" value="{{$firma->iletisim_bilgileri->id}}">
-                                   </div>
-                               </div>
-                           </div>
-                       </div>
-
-                   </div>
-
+       <div class="panel panel-default">
+           <div  class="panel-heading">
+               <h4 class="panel-title">
+                   <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><img src="{{asset('images/phone.png')}}">&nbsp;<strong>İletişim Bilgileri</strong></a>
+                   <button style="float:right" id="btn-add" name="btn-add" onclick="populateDD()" class="btn btn-primary btn-xs" >Ekle / Düzenle</button>
+               </h4>
            </div>
-           <div class="panel panel-default">
-               <div style="border-bottom: 3px solid transparent;border-color:#ddd" class="panel-heading">
-                   <h4 class="panel-title">
-                       <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><img src="{{asset('images/yazi.png')}}">&nbsp;<strong>Firma Tanıtım Yazısı</strong></a>
-                        @if($firma->tanitim_yazisi=="")
-
-                        @else
-                         <button style="float:right" id="btn-add-tanıtımyazısı" name="btn-add-tanıtımyazısı" class="btn btn-primary btn-xs" >Ekle / Düzenle</button>
-                        @endif
-                   </h4>
-               </div>
-                   <div class="panel-body">
-                       @if($firma->tanitim_yazisi=="")
-                        <div class="bilgiEkle">
-                            <button style="margin-top:20px" id="btn-add-tanıtımyazısı" name="btn-add-tanıtımyazısı" class="btn btn-primary btn-xs" ><img src="{{asset('images/plus.png')}}">&nbsp;Bilgilerinizi Ekleyin</button>
-                        </div>
-                       @else
-                       <table class="table" >
-                           <thead id="tasks-list" name="tasks-list">
-                               <tr id="firma{{$firma->id}}">
-                               <tr>
-                                   <td width="25%"><strong>Tanıtım Yazısı</strong></td>
-                                   <td id="tanitim_id_td" width="75%"><strong>:</strong>
-                                       <?php echo $firma->tanitim_yazisi;?>
-                                   </td>
-                               </tr>
-                               </tr>
-                           </thead>
-                       </table>
-                       @endif
-                       <div class="modal fade" id="myModal-tanıtımyazısı" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                           <div class="modal-dialog">
-                               <div class="modal-content">
-                                   <div class="modal-header">
-                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                       <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Firma Tanıtım Yazısı</strong></h4>
-                                   </div>
-                                   <div class="modal-body">
-                                       {!! Form::open(array('id'=>'tanitim_kayit','url'=>'firmaProfili/tanitim/'.$firma->id,'method'=>'POST', 'files'=>true)) !!}
-                                       <div class="form-group">
-                                           <label for="inputEmail3" class="col-sm-3 control-label">Tanıtım Yazısı</label>
-                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                           <div class="col-sm-8">
-                                               <textarea id="tanitim_yazisi" name="tanitim_yazisi" rows="5" class="form-control ckeditor"  placeholder="{{$firma->tanitim_yazisi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">&lt;p&gt; &lt;/p&gt; <?php echo $firma->tanitim_yazisi;?></textarea>
-                                                <br>
-                                                <br>
-                                           </div>
-                                       </div>
-                                       {!! Form::submit('Kaydet', array('url'=>'firmaProfili/tanitim/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
-                                       <br>
-                                       <br>
-                                       {!! Form::close() !!}
-                                   </div>
-                                   <br> <br><br><br><br><br><br><br><br><br><br><br><br>
-                                   <div class="modal-footer">
-                                   </div>
-                               </div>
-                           </div>
-                       </div>
-                    </div>
-            </div>
-           <div class="panel panel-default">
-               <div style="border-bottom: 3px solid transparent;border-color:#ddd" class="panel-heading">
-                   <h4 class="panel-title">
-                       <a data-toggle="collapse" data-parent="#accordion" href="#collapse3"><img src="{{asset('images/mali.png')}}">&nbsp;<strong>Mali Bilgiler</strong></a>
-                       <?php
-                            if (!$firma->mali_bilgiler) {
-                                $mali_bilgi = "boş";
-                                $checkboxCiro = 1;
-                                $checkboxSermaye =1;
-                                $firma->mali_bilgiler = new App\MaliBilgi();
-                            }
-                            else{
-                                $mali_bilgi="dolu";
-                                $checkboxCiro=$firma->mali_bilgiler->ciro_goster;
-                                $checkboxSermaye=$firma->mali_bilgiler->sermaye_goster;
-                            }
-                       ?>
-                       @if($firma->mali_bilgiler->firma_id==0)
-                       @else
-                            <button style="float:right" id="btn-add-malibilgiler" name="btn-add-malibilgiler" onclick="populateMaliDD()" class="btn btn-primary btn-xs">Ekle / Düzenle</button>
-                       @endif
-                   </h4>
-               </div>
-
                <div class="panel-body">
-                   @if($firma->mali_bilgiler->firma_id==0)
-                   <div class="bilgiEkle">
-                       <button style="margin-top:20px" id="btn-add-malibilgiler" name="btn-add-malibilgiler" class="btn btn-primary btn-xs"><img src="{{asset('images/plus.png')}}">&nbsp;Bilgilerinizi Ekleyin</button>
-                   </div>
-                   @else
                    <table class="table" >
                        <thead id="tasks-list" name="tasks-list">
                            <tr>
-                               <td width="25%"><strong>Firma Ünvanı</strong></td>
-                               <td width="75%"><strong>:</strong>{{$firma->mali_bilgiler->unvani}}</td>
+                               <td><strong>Adres</strong></td>
+                               <td><strong>:</strong>  {{$firmaAdres->adres}}</td>
+
                            </tr>
                            <tr>
-                               <td><strong>Şirket Türü</strong></td>
-                               @foreach($sirketTurleri as $sirket)
-                                @if($sirket->id == $firma->sirket_turu)
-                                    <td id="sirket_id_td"><strong>:</strong>  {{$sirket->adi}}</td>
-                                @endif
-                               @endforeach
-                           </tr>
-                           <tr>
-                               <td><strong>Fatura Adresi</strong></td>
-                               <td><strong>:</strong>{{$firmaFatura->adres}}</td>
-                           </tr>
-                           <tr>
-                               <td><strong>İli</strong></td>
-                               <td id="mali_il_td"><strong>:</strong>  {{$firmaFatura->iller->adi}}</td>
+                               <td  width="25%"><strong>İli</strong></td>
+                               <td id="il_id_td" width="75%"><strong>:</strong> {{$firmaAdres->iller->adi}}</td>
+
                            </tr>
                            <tr>
                                <td><strong>İlçesi</strong></td>
-                               <td id="mali_ilce_td"><strong>:</strong>  {{$firmaFatura->ilceler->adi}}</td>
+                               <td id="ilce_id_td"><strong>:</strong> {{$firmaAdres->ilceler->adi}}</td>
+
                            </tr>
                            <tr>
-                               <td><strong>Vergi Dairesi</strong></td>
-                               <td id="vergi_id_td"><strong>:</strong>  {{$firma->mali_bilgiler->vergi_daireleri->adi}}</td>
+                               <td><strong>Semt</strong></td>
+                               <td  id="semt_id_td"><strong>:</strong> {{$firmaAdres->semtler->adi}}</td>
+
                            </tr>
                            <tr>
-                               <td  ><strong>Vergi Numarası</strong></td>
-                               <td><strong>:</strong>  {{$firma->mali_bilgiler->vergi_numarasi}}</td>
+                               <td><strong>Telefon</strong></td>
+                               <td><strong>:</strong> {{$firma->iletisim_bilgileri->telefon}}</td>
+
                            </tr>
                            <tr>
-                               <td><strong>Yıllık Ciro</strong></td>
-                               <td id="ciro_id_td"><strong>:</strong>  {{$firma->mali_bilgiler->yillik_cirosu}}</td>
+                               <td><strong>Fax</strong></td>
+                               <td><strong>:</strong> {{$firma->iletisim_bilgileri->fax}}</td>
+
                            </tr>
                            <tr>
-                               <td><strong>Sermayesi</strong></td>
-                               <td><strong>:</strong>  {{$firma->mali_bilgiler->sermayesi}}</</td>
+                               <td><strong>Web Sayfası</strong></td>
+                               <td><strong>:</strong> {{$firma->iletisim_bilgileri->web_sayfasi}}</td>
+
+                           </tr>
                            </tr>
                        </thead>
                    </table>
-                   @endif
-                   <div class="modal fade" id="myModal-malibilgiler" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                        <div class="modal-dialog">
                            <div class="modal-content">
                                <div class="modal-header">
                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                   <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Mali Bilgiler</strong></h4>
+                                   <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>İletişim Bilgileri</strong></h4>
                                </div>
                                <div class="modal-body">
-                                   {!! Form::open(array('id'=>'mali_kayit','url'=>'firmaProfili/malibilgi/'.$firma->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
-                                   <div class="form-group">
-                                        <label for="inputTask" class="col-sm-1 control-label"></label>
-                                       <label for="inputEmail3" class="col-sm-3 control-label">Fatura Adresi</label>
-                                        <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                       <div class="col-sm-7">
-                                           <input type="text" class="form-control" id="fatura_adresi" name="fatura_adresi" placeholder="Fatura Adresi" value="{{$firmaFatura->adres}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                       </div>
-                                   </div>
+                                   {!! Form::open(array('id'=>'iletisim_kayit','url'=>'firmaProfili/iletisimAdd/'.$firma->id, 'class' => 'form-horizontal', 'method' => 'POST')) !!}
+
                                    <div class="form-group error">
                                        <label for="inputTask" class="col-sm-1 control-label"></label>
-                                       <label for="inputTask" class="col-sm-3 control-label">İl</label>
-                                       <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                       <label for="inputTask" class="col-sm-3 control-label">Şehir</label>
+                                       <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
                                        <div class="col-sm-7">
-                                           <select class="form-control il_id"  name="mali_il_id" id="mali_il_id" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                           <select class="form-control il_id" name="il_id" id="il_id" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                                <option selected disabled>Seçiniz</option>
                                                @foreach($iller as $il)
                                                <option  value="{{$il->id}}" >{{$il->adi}}</option>
@@ -654,95 +911,62 @@
                                    <div class="form-group error">
                                        <label for="inputTask" class="col-sm-1 control-label"></label>
                                        <label for="inputTask" class="col-sm-3 control-label">İlçe</label>
-                                       <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                       <label for="inputTask" style="text-align: left" class="col-sm-1 control-label">:</label>
                                        <div class="col-sm-7">
-                                           <select class="form-control" name="mali_ilce_id" id="mali_ilce_id" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                           <select class="form-control" name="ilce_id" id="ilce_id" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                                <option selected disabled>Seçiniz</option>
-
+                                           </select>
+                                       </div>
+                                   </div>
+                                   <div class="form-group error">
+                                       <label for="inputTask" class="col-sm-1 control-label"></label>
+                                       <label for="inputTask" class="col-sm-3 control-label">Semt</label>
+                                       <label for="inputTask" style="text-align: left" class="col-sm-1 control-label">:</label>
+                                       <div class="col-sm-7">
+                                           <select class="form-control" name="semt_id" id="semt_id" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                               <option selected disabled>Seçiniz</option>
                                            </select>
                                        </div>
                                    </div>
                                    <div class="form-group">
-                                       <label for="inputTask" class="col-sm-1 control-label"></label>
-                                       <label for="inputEmail3" class="col-sm-3 control-label">Firma Ünvanı</label>
-                                       <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                        <label for="inputTask" class="col-sm-1 control-label"></label>
+                                       <label for="inputEmail3" class="col-sm-3 control-label">Adres</label>
+                                        <label for="inputTask"style="text-align: left" class="col-sm-1 control-label">:</label>
                                        <div class="col-sm-7">
-                                           <input type="text" class="form-control" id="unvani" name="unvani" placeholder="Firma Ünvanı" value="{{$firma->mali_bilgiler->unvani}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                           <input type="text" class="form-control" id="adres" name="adres" placeholder="Adres" value="{{$firmaAdres->adres}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                        </div>
                                    </div>
                                    <div class="form-group">
-                                       <label for="inputTask" class="col-sm-1 control-label"></label>
-                                       <label for="inputEmail3" class="col-sm-3 control-label">Şirket Türü</label>
-                                       <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                        <label for="inputTask" class="col-sm-1 control-label"></label>
+                                       <label for="inputEmail3" class="col-sm-3 control-label">Telefon</label>
+                                        <label for="inputTask" style="text-align: left" class="col-sm-1 control-label">:</label>
                                        <div class="col-sm-7">
-                                           <select class="form-control" name="sirket_turu" id="sirket_turu" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                               <option selected disabled>Seçiniz</option>
-                                               @foreach($sirketTurleri as $tur)
-                                               <option  value="{{$tur->id}}" >{{$tur->adi}}</option>
-                                               @endforeach
-                                           </select>
+                                           <input type="text" class="form-control" id="telefon" name="telefon" placeholder="Telefon" value="{{$firma->iletisim_bilgileri->telefon}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                        </div>
                                    </div>
                                    <div class="form-group">
-                                       <label for="inputTask" class="col-sm-1 control-label"></label>
-                                       <label for="inputEmail3" class="col-sm-3 control-label">Vergi Dairesi</label>
-                                       <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                        <label for="inputTask" class="col-sm-1 control-label"></label>
+                                       <label for="inputEmail3" class="col-sm-3 control-label">Fax</label>
+                                        <label for="inputTask" style="text-align: left" class="col-sm-1 control-label">:</label>
                                        <div class="col-sm-7">
-                                           <select class="form-control" name="vergi_dairesi_id" id="vergi_dairesi_id" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                               <option selected disabled>Seçiniz</option>
-
-                                           </select>
+                                           <input type="text" class="form-control" id="fax" name="fax" placeholder="Fax" value="{{$firma->iletisim_bilgileri->fax}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                        </div>
                                    </div>
                                    <div class="form-group">
-                                       <label for="inputTask" class="col-sm-1 control-label"></label>
-                                       <label for="inputTask" class="col-sm-3 control-label">Vergi Numarası</label>
-                                       <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                        <label for="inputTask" class="col-sm-1 control-label"></label>
+                                       <label for="inputEmail3" class="col-sm-3 control-label">Web Sayfası</label>
+                                        <label for="inputTask" style="text-align: left" class="col-sm-1 control-label">:</label>
                                        <div class="col-sm-7">
-                                           <input type="text" class="form-control" id="vergi_numarasi" name="vergi_numarasi" placeholder="Vergi Numarası" value="{{$firma->mali_bilgiler->vergi_numarasi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                           <input type="text" class="form-control" id="web_sayfasi" name="web_sayfasi" placeholder="Web Sayfası" value="{{$firma->iletisim_bilgileri->web_sayfasi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                        </div>
                                    </div>
-                                   <div class="form-group">
-                                       <label for="inputTask" class="col-sm-1 control-label"></label>
-                                       <label for="inputEmail3" class="col-sm-3 control-label">Yıllık Ciro</label>
-                                       <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                       <div class="col-sm-7">
-                                           <select class="form-control" name="yillik_cirosu" id="yillik_cirosu" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                               <option selected disabled>Seçiniz</option>
-                                               <option  value="0-300.000" >0-300.000</option>
-                                               <option  value="300.001-1.000.000" >300.001-1.000.000</option>
-                                               <option  value="1.000.001-8.000.000" >1.000.001-8.000.000</option>
-                                               <option  value="8.000.001-40.000.000" >8.000.001-40.000.000</option>
-                                               <option  value="40.000.000 ve üzeri" >40.000.000 ve üzeri</option>
-                                            </select>
-                                               <label>Gösterme</label>
-                                               <label class="switch" style="margin-bottom: -5px;">
-                                                    <input type="checkbox" id="ciro_goster" name="ciro_goster" checked>
-                                                    <div class="slider round"></div>
-                                               </label>
-                                                <label>Göster</label>
-                                       </div>
-                                   </div>
-                                   <div class="form-group">
-                                       <label for="inputTask" class="col-sm-1 control-label"></label>
-                                       <label for="inputEmail3" class="col-sm-3 control-label">Sermayesi</label>
-                                       <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                       <div class="col-sm-7">
-                                           <input type="text" class="form-control" id="sermayesi" name="sermayesi" placeholder="Sermayesi" value="{{$firma->mali_bilgiler->sermayesi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
-                                           <label>Gösterme</label>
-                                           <label class="switch" style="margin-bottom: -5px;">
-                                                <input type="checkbox" id="sermaye_goster" name="sermaye_goster" checked>
-                                                <div class="slider round"></div>
-                                           </label>
-                                            <label>Göster</label>
-                                       </div>
-                                   </div>
-                                   {!! Form::submit('Kaydet', array('url'=>'firmaProfili/malibilgi/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                   {!! Form::submit('Kaydet', array('url'=>'firmaProfili/iletisimAdd/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
                                    <br>
                                    <br>
                                    {!! Form::close() !!}
                                </div>
                                <div class="modal-footer">
+                                   <input type="hidden" id="iletisimbilgisi_id" name="iletisimbilgisi_id" value="{{$firma->iletisim_bilgileri->id}}">
                                </div>
                            </div>
                        </div>
@@ -750,393 +974,770 @@
 
                </div>
 
+       </div>
+       <div class="panel panel-default">
+           <div style="border-bottom: 3px solid transparent;border-color:#ddd" class="panel-heading">
+               <h4 class="panel-title">
+                   <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><img src="{{asset('images/yazi.png')}}">&nbsp;<strong>Firma Tanıtım Yazısı</strong></a>
+                    @if($firma->tanitim_yazisi=="")
+
+                    @else
+                     <button style="float:right" id="btn-add-tanıtımyazısı" name="btn-add-tanıtımyazısı" class="btn btn-primary btn-xs" >Ekle / Düzenle</button>
+                    @endif
+               </h4>
            </div>
-           <div class="panel panel-default">
-               <div style="border-bottom: 3px solid transparent;border-color:#ddd" class="panel-heading">
-                   <h4 class="panel-title">
-                       <a data-toggle="collapse" data-parent="#accordion" href="#collapse4"><img src="{{asset('images/tl.png')}}">&nbsp;<strong>Ticari Bilgiler</strong></a>
-                       <button  style="float:right" id="btn-add-ticaribilgiler" onclick="populateTicaretDD()" name="btn-add-ticaribilgiler" class="btn btn-primary btn-xs">Ekle / Düzenle</button>
-                   </h4>
-               </div>
                <div class="panel-body">
+                   @if($firma->tanitim_yazisi=="")
+                    <div class="bilgiEkle">
+                        <button style="margin-top:20px" id="btn-add-tanıtımyazısı" name="btn-add-tanıtımyazısı" class="btn btn-primary btn-xs" ><img src="{{asset('images/plus.png')}}">&nbsp;Bilgilerinizi Ekleyin</button>
+                    </div>
+                   @else
                    <table class="table" >
                        <thead id="tasks-list" name="tasks-list">
+                           <tr id="firma{{$firma->id}}">
                            <tr>
-                               <td width="25%"><strong>Ticaret Sicil No</strong></td>
-                               <td width="75%"><strong>:</strong>  {{$firma->ticari_bilgiler->tic_sicil_no}}</td>
-                           </tr>
-                           <tr>
-                               <td><strong>Ticaret Odası</strong></td>
-                               <td id="odasi_id_td"><strong>:</strong>  {{$firma->ticari_bilgiler->ticaret_odalari->adi}}</td>
-                           </tr>
-                           <tr>
-                               <td><strong>Faaliyet Türü</strong></td>
-                               <td id="faaliyet_id_td" ><strong>:</strong>
-                                   @foreach($firma->faaliyetler as $faaliyet)
-                                    {{$faaliyet->adi}}
-                                   @endforeach
+                               <td width="25%"><strong>Tanıtım Yazısı</strong></td>
+                               <td id="tanitim_id_td" width="75%"><strong>:</strong>
+                                   <?php echo $firma->tanitim_yazisi;?>
                                </td>
                            </tr>
-                           <tr>
-                              <td><strong>Üst Sektör</strong></td>
-                              <td id="ust_id_td"> <strong>:</strong>{{$firma->getUstSektor()}}</td>
-                           </tr>
-                           <tr>
-                               <td><strong>Faaliyet Gösterilen Sektörler</strong></td>
-                               <td  id="gfaaliyet_id_td"><strong>:</strong>
-                                   @foreach($firma->sektorler as $sektor)
-                                    {{$sektor->adi}}
-                                   @endforeach
-                               </td>
-                           </tr>
-
-                           <tr>
-                                <td><strong>Kuruluş Tarihi</strong></td>
-                                <td><strong>:</strong>
-                                    @if($firma->kurulus_tarihi != null)
-                                        {{$firma->kurulus_tarihi}}
-                                    @endif
-                                </td>
-                           </tr>
-                           <tr>
-                               <td><strong>Firmanın Ürettiği Markalar</strong></td>
-                               <td  id="urettigi_id_td"><strong>:</strong>
-                                   @foreach($uretilenMarka as $marka)
-                                        {{$marka->adi}}
-                                   @endforeach
-                               </td>
-                           </tr>
-                           <tr>
-                               <td><strong>Firmanın Sattığı Markalar</strong></td>
-                               <td id="sattıgı_id_td"><strong>:</strong>
-                                    @if(count($satilanMarka) > 1)
-                                        @foreach($firma->$satilanMarka as $satMarka)
-                                            {{$satMarka->satilan_marka_adi}}
-                                        @endforeach
-                                    @endif
-                               </td>
                            </tr>
                        </thead>
                    </table>
-
-                   <div class="modal fade" id="myModal-ticaribilgiler" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                   @endif
+                   <div class="modal fade" id="myModal-tanıtımyazısı" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                        <div class="modal-dialog">
                            <div class="modal-content">
                                <div class="modal-header">
                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                   <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Ticari Bilgiler</strong></h4>
+                                   <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Firma Tanıtım Yazısı</strong></h4>
                                </div>
                                <div class="modal-body">
-                                   {!! Form::open(array('id'=>'ticari_kayit','url'=>'firmaProfili/ticaribilgi/'.$firma->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
+                                   {!! Form::open(array('id'=>'tanitim_kayit','url'=>'firmaProfili/tanitim/'.$firma->id,'method'=>'POST', 'files'=>true)) !!}
                                    <div class="form-group">
-                                       <label for="inputTask" class="col-sm-1 control-label"></label>
-                                       <label for="inputEmail3" class="col-sm-4 control-label">Ticaret Sicil NO</label>
-                                       <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
-                                       <div class="col-sm-6">
-                                           <input type="text" class="form-control" id="ticaret_sicil_no" name="ticaret_sicil_no" placeholder="Ticaret Sicil No" value="{{$firma->ticari_bilgiler->tic_sicil_no}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                       <label for="inputEmail3" class="col-sm-3 control-label">Tanıtım Yazısı</label>
+                                         <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                       <div class="col-sm-8">
+                                           <textarea id="tanitim_yazisi" name="tanitim_yazisi" rows="5" class="form-control ckeditor"  placeholder="{{$firma->tanitim_yazisi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">&lt;p&gt; &lt;/p&gt; <?php echo $firma->tanitim_yazisi;?></textarea>
+                                            <br>
+                                            <br>
                                        </div>
                                    </div>
-                                   <div class="form-group">
-                                       <label for="inputTask" class="col-sm-1 control-label"></label>
-                                       <label for="inputEmail3" class="col-sm-4 control-label">Ticaret Odası</label>
-                                       <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
-                                       <div class="col-sm-6">
-                                           <select class="form-control" name="ticaret_odasi" id="ticaret_odasi" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                               <option selected disabled>Seçiniz</option>
-                                               @foreach($ticaretodasi as $ticaret)
-                                                    <option  value="{{$ticaret->id}}" >{{$ticaret->adi}}</option>
-                                               @endforeach
-                                           </select>
-                                       </div>
-                                   </div>
-                                   <div class="form-group">
-                                        <label for="inputTask" class="col-sm-1 control-label"></label>
-                                        <label for="inputEmail3" class="col-sm-4 control-label">Faaliyet Türü</label>
-                                        <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
-                                        <div class="col-sm-6">
-                                            @foreach($faaliyetler as $faaliyet)
-                                                <input type="checkbox" class="firma_faaliyet_turu" id="firma_faaliyet_turu" name="firma_faaliyet_turu[]" value="{{$faaliyet->id}}"  data-validation="checkbox_group" data-validation-qty="min1" data-validation-error-msg="En az bir tanesini seçiniz!">{{$faaliyet->adi}}
-                                            @endforeach
-                                        </div>
-                                   </div>
-                                   <div class="form-group">
-                                         <label for="inputTask" class="col-sm-1 control-label"></label>
-                                         <label for="inputEmail3" class="col-sm-4 control-label">Üst Sektör</label>
-                                         <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
-                                       <div class="col-sm-6">
-                                           <select class="form-control" name="ust_sektor" id="ust_sektor" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                               <option selected disabled>Seçiniz</option>
-                                               <option  value="1" >Sanayi</option>
-                                               <option  value="2" >Tarım</option>
-                                               <option  value="3" >Hizmet</option>
-                                           </select>
-                                       </div>
-                                   </div>
-                                   <div class="form-group">
-                                         <label for="inputTask" class="col-sm-1 control-label"></label>
-                                       <label for="inputEmail3" class="col-sm-4 control-label">Faaliyet Gösterilen Sektörler</label>
-                                         <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
-                                       <div class="col-sm-6">
-                                           <select class="form-control deneme"   name="faaliyet_sektorleri[]" id="custom-headers" multiple='multiple' >
-                                                <?php $sektorler=DB::table('sektorler')->orderBy('adi','ASC')->get();  ?>
-                                                @foreach($ustsektor as $sektor)
-                                                    <option  value="{{$sektor->id}}" >{{$sektor->adi}}</option>
-                                                @endforeach
-                                          </select>
-
-                                       </div>
-                                   </div>
-                                   <div class="form-group">
-                                         <label for="inputTask" class="col-sm-1 control-label"></label>
-                                       <label for="inputEmail3" class="col-sm-4 control-label">Kuruluş Tarihi</label>
-                                         <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
-                                       <div class="col-sm-6">
-                                           <input type="text" class="form-control date" id="kurulus_tarihi" name="kurulus_tarihi" placeholder="Kuruluş Tarihi" value="{{$firma->kurulus_tarihi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                       </div>
-                                   </div>
-                                   <div class="form-group" id="uretilenDiv">
-                                         <label for="inputTask" class="col-sm-1 control-label"></label>
-                                       <label for="inputEmail3" class="col-sm-4 control-label">Üretilen Markalar</label>
-                                         <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
-                                       <div class="col-sm-6">
-                                           <div class="input_fields_wrap">
-                                               <button  class="add_field_button btn btn-danger">Ekle</button>
-                                               @foreach($uretilenMarka as $markas)
-                                                    <div><input type="text" id="firmanin_urettigi_markalar" name="firmanin_urettigi_markalar[]"  value="{{$markas->adi}}" data-validation-error-msg="Lütfen bu alanı doldurunuz!"><a href="#" class="remove_field">Sil</a></div>
-                                               @endforeach
-
-                                            </div>
-                                       </div>
-                                   </div>
-                                   <div class="form-group" id="sattigiDiv">
-                                        <label for="inputTask" class="col-sm-1 control-label"></label>
-                                        <label for="inputEmail3" class="col-sm-4 control-label">Firmanın Sattığı Markalari</label>
-                                        <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
-                                        <div class="col-sm-6">
-                                            <div class="input_fields_sattigi_wrap">
-                                                <button  class="add_field_sattigi_button btn btn-danger">Ekle</button>
-                                                @foreach($satilanMarka as $markaSatilan)
-                                                    <div><input type="text" id="firmanin_sattigi_markalar"  name="firmanin_sattigi_markalar[]" value="{{$markaSatilan->adi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!" ><a href="#" class="remove_field">Sil</a></div>
-                                                @endforeach
-                                                <div><input type="text" id="firmanin_sattigi_markalar"  name="firmanin_sattigi_markalar[]" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!" ><a href="#" class="remove_field">Sil</a></div>
-                                            </div>
-                                        </div>
-                                   </div>
-                                   {!! Form::submit('Kaydet', array('url'=>'firmaProfili/ticaribilgi/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                   {!! Form::submit('Kaydet', array('url'=>'firmaProfili/tanitim/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
                                    <br>
                                    <br>
                                    {!! Form::close() !!}
                                </div>
+                               <br> <br><br><br><br><br><br><br><br><br><br><br><br>
                                <div class="modal-footer">
                                </div>
                            </div>
                        </div>
                    </div>
+                </div>
+        </div>
+       <div class="panel panel-default">
+           <div style="border-bottom: 3px solid transparent;border-color:#ddd" class="panel-heading">
+               <h4 class="panel-title">
+                   <a data-toggle="collapse" data-parent="#accordion" href="#collapse3"><img src="{{asset('images/mali.png')}}">&nbsp;<strong>Mali Bilgiler</strong></a>
+                   <?php
+                        if (!$firma->mali_bilgiler) {
+                            $mali_bilgi = "boş";
+                            $checkboxCiro = 1;
+                            $checkboxSermaye =1;
+                            $firma->mali_bilgiler = new App\MaliBilgi();
+                        }
+                        else{
+                            $mali_bilgi="dolu";
+                            $checkboxCiro=$firma->mali_bilgiler->ciro_goster;
+                            $checkboxSermaye=$firma->mali_bilgiler->sermaye_goster;
+                        }
+                   ?>
+                   @if($firma->mali_bilgiler->firma_id==0)
+                   @else
+                        <button style="float:right" id="btn-add-malibilgiler" name="btn-add-malibilgiler" onclick="populateMaliDD()" class="btn btn-primary btn-xs">Ekle / Düzenle</button>
+                   @endif
+               </h4>
+           </div>
+
+           <div class="panel-body">
+               @if($firma->mali_bilgiler->firma_id==0)
+               <div class="bilgiEkle">
+                   <button style="margin-top:20px" id="btn-add-malibilgiler" name="btn-add-malibilgiler" class="btn btn-primary btn-xs"><img src="{{asset('images/plus.png')}}">&nbsp;Bilgilerinizi Ekleyin</button>
+               </div>
+               @else
+               <table class="table" >
+                   <thead id="tasks-list" name="tasks-list">
+                       <tr>
+                           <td width="25%"><strong>Firma Ünvanı</strong></td>
+                           <td width="75%"><strong>:</strong>{{$firma->mali_bilgiler->unvani}}</td>
+                       </tr>
+                       <tr>
+                           <td><strong>Şirket Türü</strong></td>
+                           @foreach($sirketTurleri as $sirket)
+                            @if($sirket->id == $firma->sirket_turu)
+                                <td id="sirket_id_td"><strong>:</strong>  {{$sirket->adi}}</td>
+                            @endif
+                           @endforeach
+                       </tr>
+                       <tr>
+                           <td><strong>Fatura Adresi</strong></td>
+                           <td><strong>:</strong>{{$firmaFatura->adres}}</td>
+                       </tr>
+                       <tr>
+                           <td><strong>İli</strong></td>
+                           <td id="mali_il_td"><strong>:</strong>  {{$firmaFatura->iller->adi}}</td>
+                       </tr>
+                       <tr>
+                           <td><strong>İlçesi</strong></td>
+                           <td id="mali_ilce_td"><strong>:</strong>  {{$firmaFatura->ilceler->adi}}</td>
+                       </tr>
+                       <tr>
+                           <td><strong>Vergi Dairesi</strong></td>
+                           <td id="vergi_id_td"><strong>:</strong>  {{$firma->mali_bilgiler->vergi_daireleri->adi}}</td>
+                       </tr>
+                       <tr>
+                           <td  ><strong>Vergi Numarası</strong></td>
+                           <td><strong>:</strong>  {{$firma->mali_bilgiler->vergi_numarasi}}</td>
+                       </tr>
+                       <tr>
+                           <td><strong>Yıllık Ciro</strong></td>
+                           <td id="ciro_id_td"><strong>:</strong>  {{$firma->mali_bilgiler->yillik_cirosu}}</td>
+                       </tr>
+                       <tr>
+                           <td><strong>Sermayesi</strong></td>
+                           <td><strong>:</strong>  {{$firma->mali_bilgiler->sermayesi}}</</td>
+                       </tr>
+                   </thead>
+               </table>
+               @endif
+               <div class="modal fade" id="myModal-malibilgiler" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                   <div class="modal-dialog">
+                       <div class="modal-content">
+                           <div class="modal-header">
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                               <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Mali Bilgiler</strong></h4>
+                           </div>
+                           <div class="modal-body">
+                               {!! Form::open(array('id'=>'mali_kayit','url'=>'firmaProfili/malibilgi/'.$firma->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
+                               <div class="form-group">
+                                    <label for="inputTask" class="col-sm-1 control-label"></label>
+                                   <label for="inputEmail3" class="col-sm-3 control-label">Fatura Adresi</label>
+                                    <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-7">
+                                       <input type="text" class="form-control" id="fatura_adresi" name="fatura_adresi" placeholder="Fatura Adresi" value="{{$firmaFatura->adres}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                   </div>
+                               </div>
+                               <div class="form-group error">
+                                   <label for="inputTask" class="col-sm-1 control-label"></label>
+                                   <label for="inputTask" class="col-sm-3 control-label">İl</label>
+                                   <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-7">
+                                       <select class="form-control il_id"  name="mali_il_id" id="mali_il_id" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                           <option selected disabled>Seçiniz</option>
+                                           @foreach($iller as $il)
+                                           <option  value="{{$il->id}}" >{{$il->adi}}</option>
+                                           @endforeach
+                                       </select>
+                                   </div>
+                               </div>
+                               <div class="form-group error">
+                                   <label for="inputTask" class="col-sm-1 control-label"></label>
+                                   <label for="inputTask" class="col-sm-3 control-label">İlçe</label>
+                                   <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-7">
+                                       <select class="form-control" name="mali_ilce_id" id="mali_ilce_id" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                           <option selected disabled>Seçiniz</option>
+
+                                       </select>
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                   <label for="inputTask" class="col-sm-1 control-label"></label>
+                                   <label for="inputEmail3" class="col-sm-3 control-label">Firma Ünvanı</label>
+                                   <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-7">
+                                       <input type="text" class="form-control" id="unvani" name="unvani" placeholder="Firma Ünvanı" value="{{$firma->mali_bilgiler->unvani}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                   <label for="inputTask" class="col-sm-1 control-label"></label>
+                                   <label for="inputEmail3" class="col-sm-3 control-label">Şirket Türü</label>
+                                   <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-7">
+                                       <select class="form-control" name="sirket_turu" id="sirket_turu" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                           <option selected disabled>Seçiniz</option>
+                                           @foreach($sirketTurleri as $tur)
+                                           <option  value="{{$tur->id}}" >{{$tur->adi}}</option>
+                                           @endforeach
+                                       </select>
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                   <label for="inputTask" class="col-sm-1 control-label"></label>
+                                   <label for="inputEmail3" class="col-sm-3 control-label">Vergi Dairesi</label>
+                                   <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-7">
+                                       <select class="form-control" name="vergi_dairesi_id" id="vergi_dairesi_id" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                           <option selected disabled>Seçiniz</option>
+
+                                       </select>
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                   <label for="inputTask" class="col-sm-1 control-label"></label>
+                                   <label for="inputTask" class="col-sm-3 control-label">Vergi Numarası</label>
+                                   <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-7">
+                                       <input type="text" class="form-control" id="vergi_numarasi" name="vergi_numarasi" placeholder="Vergi Numarası" value="{{$firma->mali_bilgiler->vergi_numarasi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                   <label for="inputTask" class="col-sm-1 control-label"></label>
+                                   <label for="inputEmail3" class="col-sm-3 control-label">Yıllık Ciro</label>
+                                   <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-7">
+                                       <select class="form-control" name="yillik_cirosu" id="yillik_cirosu" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                           <option selected disabled>Seçiniz</option>
+                                           <option  value="0-300.000" >0-300.000</option>
+                                           <option  value="300.001-1.000.000" >300.001-1.000.000</option>
+                                           <option  value="1.000.001-8.000.000" >1.000.001-8.000.000</option>
+                                           <option  value="8.000.001-40.000.000" >8.000.001-40.000.000</option>
+                                           <option  value="40.000.000 ve üzeri" >40.000.000 ve üzeri</option>
+                                        </select>
+                                           <label>Gösterme</label>
+                                           <label class="switch" style="margin-bottom: -5px;">
+                                                <input type="checkbox" id="ciro_goster" name="ciro_goster" checked>
+                                                <div class="slider round"></div>
+                                           </label>
+                                            <label>Göster</label>
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                   <label for="inputTask" class="col-sm-1 control-label"></label>
+                                   <label for="inputEmail3" class="col-sm-3 control-label">Sermayesi</label>
+                                   <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-7">
+                                       <input type="text" class="form-control" id="sermayesi" name="sermayesi" placeholder="Sermayesi" value="{{$firma->mali_bilgiler->sermayesi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                       <label>Gösterme</label>
+                                       <label class="switch" style="margin-bottom: -5px;">
+                                            <input type="checkbox" id="sermaye_goster" name="sermaye_goster" checked>
+                                            <div class="slider round"></div>
+                                       </label>
+                                        <label>Göster</label>
+                                   </div>
+                               </div>
+                               {!! Form::submit('Kaydet', array('url'=>'firmaProfili/malibilgi/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                               <br>
+                               <br>
+                               {!! Form::close() !!}
+                           </div>
+                           <div class="modal-footer">
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+           </div>
+
+       </div>
+       <div class="panel panel-default">
+           <div style="border-bottom: 3px solid transparent;border-color:#ddd" class="panel-heading">
+               <h4 class="panel-title">
+                   <a data-toggle="collapse" data-parent="#accordion" href="#collapse4"><img src="{{asset('images/tl.png')}}">&nbsp;<strong>Ticari Bilgiler</strong></a>
+                   <button  style="float:right" id="btn-add-ticaribilgiler" onclick="populateTicaretDD()" name="btn-add-ticaribilgiler" class="btn btn-primary btn-xs">Ekle / Düzenle</button>
+               </h4>
+           </div>
+           <div class="panel-body">
+               <table class="table" >
+                   <thead id="tasks-list" name="tasks-list">
+                       <tr>
+                           <td width="25%"><strong>Ticaret Sicil No</strong></td>
+                           <td width="75%"><strong>:</strong>  {{$firma->ticari_bilgiler->tic_sicil_no}}</td>
+                       </tr>
+                       <tr>
+                           <td><strong>Ticaret Odası</strong></td>
+                           <td id="odasi_id_td"><strong>:</strong>  {{$firma->ticari_bilgiler->ticaret_odalari->adi}}</td>
+                       </tr>
+                       <tr>
+                           <td><strong>Faaliyet Türü</strong></td>
+                           <td id="faaliyet_id_td" ><strong>:</strong>
+                               @foreach($firma->faaliyetler as $faaliyet)
+                                {{$faaliyet->adi}}
+                               @endforeach
+                           </td>
+                       </tr>
+                       <tr>
+                          <td><strong>Üst Sektör</strong></td>
+                          <td id="ust_id_td"> <strong>:</strong>{{$firma->getUstSektor()}}</td>
+                       </tr>
+                       <tr>
+                           <td><strong>Faaliyet Gösterilen Sektörler</strong></td>
+                           <td  id="gfaaliyet_id_td"><strong>:</strong>
+                               @foreach($firma->sektorler as $sektor)
+                                {{$sektor->adi}}
+                               @endforeach
+                           </td>
+                       </tr>
+
+                       <tr>
+                            <td><strong>Kuruluş Tarihi</strong></td>
+                            <td><strong>:</strong>
+                                @if($firma->kurulus_tarihi != null)
+                                    {{$firma->kurulus_tarihi}}
+                                @endif
+                            </td>
+                       </tr>
+                       <tr>
+                           <td><strong>Firmanın Ürettiği Markalar</strong></td>
+                           <td  id="urettigi_id_td"><strong>:</strong>
+                               @foreach($uretilenMarka as $marka)
+                                    {{$marka->adi}}
+                               @endforeach
+                           </td>
+                       </tr>
+                       <tr>
+                           <td><strong>Firmanın Sattığı Markalar</strong></td>
+                           <td id="sattıgı_id_td"><strong>:</strong>
+                                @if(count($satilanMarka) > 1)
+                                    @foreach($firma->$satilanMarka as $satMarka)
+                                        {{$satMarka->satilan_marka_adi}}
+                                    @endforeach
+                                @endif
+                           </td>
+                       </tr>
+                   </thead>
+               </table>
+
+               <div class="modal fade" id="myModal-ticaribilgiler" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                   <div class="modal-dialog">
+                       <div class="modal-content">
+                           <div class="modal-header">
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                               <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Ticari Bilgiler</strong></h4>
+                           </div>
+                           <div class="modal-body">
+                               {!! Form::open(array('id'=>'ticari_kayit','url'=>'firmaProfili/ticaribilgi/'.$firma->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
+                               <div class="form-group">
+                                   <label for="inputTask" class="col-sm-1 control-label"></label>
+                                   <label for="inputEmail3" class="col-sm-4 control-label">Ticaret Sicil NO</label>
+                                   <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-6">
+                                       <input type="text" class="form-control" id="ticaret_sicil_no" name="ticaret_sicil_no" placeholder="Ticaret Sicil No" value="{{$firma->ticari_bilgiler->tic_sicil_no}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                   <label for="inputTask" class="col-sm-1 control-label"></label>
+                                   <label for="inputEmail3" class="col-sm-4 control-label">Ticaret Odası</label>
+                                   <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-6">
+                                       <select class="form-control" name="ticaret_odasi" id="ticaret_odasi" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                           <option selected disabled>Seçiniz</option>
+                                           @foreach($ticaretodasi as $ticaret)
+                                                <option  value="{{$ticaret->id}}" >{{$ticaret->adi}}</option>
+                                           @endforeach
+                                       </select>
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                    <label for="inputTask" class="col-sm-1 control-label"></label>
+                                    <label for="inputEmail3" class="col-sm-4 control-label">Faaliyet Türü</label>
+                                    <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
+                                    <div class="col-sm-6">
+                                        @foreach($faaliyetler as $faaliyet)
+                                            <input type="checkbox" class="firma_faaliyet_turu" id="firma_faaliyet_turu" name="firma_faaliyet_turu[]" value="{{$faaliyet->id}}"  data-validation="checkbox_group" data-validation-qty="min1" data-validation-error-msg="En az bir tanesini seçiniz!">{{$faaliyet->adi}}
+                                        @endforeach
+                                    </div>
+                               </div>
+                               <div class="form-group">
+                                     <label for="inputTask" class="col-sm-1 control-label"></label>
+                                     <label for="inputEmail3" class="col-sm-4 control-label">Üst Sektör</label>
+                                     <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-6">
+                                       <select class="form-control" name="ust_sektor" id="ust_sektor" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                           <option selected disabled>Seçiniz</option>
+                                           <option  value="1" >Sanayi</option>
+                                           <option  value="2" >Tarım</option>
+                                           <option  value="3" >Hizmet</option>
+                                       </select>
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                     <label for="inputTask" class="col-sm-1 control-label"></label>
+                                   <label for="inputEmail3" class="col-sm-4 control-label">Faaliyet Gösterilen Sektörler</label>
+                                     <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-6">
+                                       <select class="form-control deneme"   name="faaliyet_sektorleri[]" id="custom-headers" multiple='multiple' >
+                                            <?php $sektorler=DB::table('sektorler')->orderBy('adi','ASC')->get();  ?>
+                                            @foreach($ustsektor as $sektor)
+                                                <option  value="{{$sektor->id}}" >{{$sektor->adi}}</option>
+                                            @endforeach
+                                      </select>
+
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                     <label for="inputTask" class="col-sm-1 control-label"></label>
+                                   <label for="inputEmail3" class="col-sm-4 control-label">Kuruluş Tarihi</label>
+                                     <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-6">
+                                       <input type="text" class="form-control date" id="kurulus_tarihi" name="kurulus_tarihi" placeholder="Kuruluş Tarihi" value="{{$firma->kurulus_tarihi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                   </div>
+                               </div>
+                               <div class="form-group" id="uretilenDiv">
+                                     <label for="inputTask" class="col-sm-1 control-label"></label>
+                                   <label for="inputEmail3" class="col-sm-4 control-label">Üretilen Markalar</label>
+                                     <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-6">
+                                       <div class="input_fields_wrap">
+                                           <button  class="add_field_button btn btn-danger">Ekle</button>
+                                           @foreach($uretilenMarka as $markas)
+                                                <div><input type="text" id="firmanin_urettigi_markalar" name="firmanin_urettigi_markalar[]"  value="{{$markas->adi}}" data-validation-error-msg="Lütfen bu alanı doldurunuz!"><a href="#" class="remove_field">Sil</a></div>
+                                           @endforeach
+
+                                        </div>
+                                   </div>
+                               </div>
+                               <div class="form-group" id="sattigiDiv">
+                                    <label for="inputTask" class="col-sm-1 control-label"></label>
+                                    <label for="inputEmail3" class="col-sm-4 control-label">Firmanın Sattığı Markalari</label>
+                                    <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
+                                    <div class="col-sm-6">
+                                        <div class="input_fields_sattigi_wrap">
+                                            <button  class="add_field_sattigi_button btn btn-danger">Ekle</button>
+                                            @foreach($satilanMarka as $markaSatilan)
+                                                <div><input type="text" id="firmanin_sattigi_markalar"  name="firmanin_sattigi_markalar[]" value="{{$markaSatilan->adi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!" ><a href="#" class="remove_field">Sil</a></div>
+                                            @endforeach
+                                            <div><input type="text" id="firmanin_sattigi_markalar"  name="firmanin_sattigi_markalar[]" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!" ><a href="#" class="remove_field">Sil</a></div>
+                                        </div>
+                                    </div>
+                               </div>
+                               {!! Form::submit('Kaydet', array('url'=>'firmaProfili/ticaribilgi/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                               <br>
+                               <br>
+                               {!! Form::close() !!}
+                           </div>
+                           <div class="modal-footer">
+                           </div>
+                       </div>
+                   </div>
                </div>
            </div>
-           <div class="panel panel-default">
-               <div  class="panel-heading">
-                   <h4 class="panel-title">
-                       <a data-toggle="collapse" data-parent="#accordion" href="#collapse5"><img src="{{asset('images/kalite.png')}}">&nbsp;<strong>Kalite Belgeleri ve Referanslar</strong></a>
-                   </h4>
-               </div>
-                   <div class="panel-body">
-                       <div class="panel-footer"><strong>Kalite Belgeleri</strong>
-                        @if($kaliteBelge==null)
-                            <div class="bilgiEkle">
-                                <button style="margin-top:20px" id="btn-add-kalite" name="btn-add-kalite" class="btn btn-primary btn-xs"><img src="{{asset('images/plus.png')}}">&nbsp;Kalite Belgeleirnizi  Ekleyin</button>
-                            </div>
-                        @else
-                           <button style="float:right" id="btn-add-kalite" name="btn-add-kalite" class="btn btn-primary btn-xs" >Ekle</button>
-                           <table class="table" >
-                               <thead id="tasks-list" name="tasks-list">
-                                       <th>Kalite Belgesi:</th>
-                                       <th>Belge NO:</th>
+       </div>
+       <div class="panel panel-default">
+           <div  class="panel-heading">
+               <h4 class="panel-title">
+                   <a data-toggle="collapse" data-parent="#accordion" href="#collapse5"><img src="{{asset('images/kalite.png')}}">&nbsp;<strong>Kalite Belgeleri ve Referanslar</strong></a>
+               </h4>
+           </div>
+               <div class="panel-body">
+                   <div class="panel-footer"><strong>Kalite Belgeleri</strong>
+                    @if($kaliteBelge==null)
+                        <div class="bilgiEkle">
+                            <button style="margin-top:20px" id="btn-add-kalite" name="btn-add-kalite" class="btn btn-primary btn-xs"><img src="{{asset('images/plus.png')}}">&nbsp;Kalite Belgeleirnizi  Ekleyin</button>
+                        </div>
+                    @else
+                       <button style="float:right" id="btn-add-kalite" name="btn-add-kalite" class="btn btn-primary btn-xs" >Ekle</button>
+                       <table class="table" >
+                           <thead id="tasks-list" name="tasks-list">
+                                   <th>Kalite Belgesi:</th>
+                                   <th>Belge NO:</th>
 
-                                   @foreach($firma->kalite_belgeleri as $kalite_belgesi)
-                                    <tr>
-                                       <td id="kalite_id_td">
-                                           {{$kalite_belgesi->adi}}
-                                       </td>
-                                       <td>
-                                           {{$kalite_belgesi->pivot->belge_no}}
-                                       </td>
-                                       <td>
+                               @foreach($firma->kalite_belgeleri as $kalite_belgesi)
+                                <tr>
+                                   <td id="kalite_id_td">
+                                       {{$kalite_belgesi->adi}}
+                                   </td>
+                                   <td>
+                                       {{$kalite_belgesi->pivot->belge_no}}
+                                   </td>
+                                   <td>
 
-                                       <button name="open-modal-kaliteGuncelle"  style="float:right" value="{{$kalite_belgesi->id}}" class="btn btn-primary btn-xs open-modal-kaliteGuncelle" >Düzenle</button>
-                                       </td>
+                                   <button name="open-modal-kaliteGuncelle"  style="float:right" value="{{$kalite_belgesi->id}}" class="btn btn-primary btn-xs open-modal-kaliteGuncelle" >Düzenle</button>
+                                   </td>
 
-                                        <td>
+                                    <td>
 
-                                            {{ Form::open(array('url'=>'firmaProfili/kaliteSil/'.$kalite_belgesi->id,'method' => 'DELETE')) }}
-                                            <input type="hidden" name="firma_id"  id="firma_id" value="{{$firma->id}}">
-                                            {{ Form::submit('Sil', ['class' => 'btn btn-primary btn-xs']) }}
-                                            {{ Form::close() }}
+                                        {{ Form::open(array('url'=>'firmaProfili/kaliteSil/'.$kalite_belgesi->id,'method' => 'DELETE')) }}
+                                        <input type="hidden" name="firma_id"  id="firma_id" value="{{$firma->id}}">
+                                        {{ Form::submit('Sil', ['class' => 'btn btn-primary btn-xs']) }}
+                                        {{ Form::close() }}
 
-                                        </td>
+                                    </td>
 
-                                   </tr>
-                           <div class="modal fade" id="myModal-kaliteGuncelle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                               <div class="modal-dialog">
-                                   <div class="modal-content">
-                                       <div class="modal-header">
-                                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                           <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Kalite Belgeleri</strong> </h4>
-                                       </div>
-                                       <div class="modal-body">
-                                           {!! Form::open(array('id'=>'kalite_up_kayit','url'=>'firmaProfili/kaliteGuncelle/'.$firma->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
+                               </tr>
+                       <div class="modal fade" id="myModal-kaliteGuncelle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                           <div class="modal-dialog">
+                               <div class="modal-content">
+                                   <div class="modal-header">
+                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                       <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Kalite Belgeleri</strong> </h4>
+                                   </div>
+                                   <div class="modal-body">
+                                       {!! Form::open(array('id'=>'kalite_up_kayit','url'=>'firmaProfili/kaliteGuncelle/'.$firma->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
 
-                                           <div class="form-group">
-                                                 <label for="inputTask" class="col-sm-1 control-label"></label>
-                                               <label for="inputEmail3" class="col-sm-3 control-label">Kalite Belgesi</label>
-                                                 <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                               <div class="col-sm-7">
-                                                    <select class="form-control" name="kalite_belgeleri" id="kalite_belgeleri" required>
-                                                        <option selected disabled>Seçiniz</option>
-                                                        @foreach($kalite_belgeleri as $kalite)
-                                                        <option  value="{{$kalite->id}}">{{$kalite->adi}}</option>
-                                                        @endforeach
-                                                    </select>
-                                               </div>
+                                       <div class="form-group">
+                                             <label for="inputTask" class="col-sm-1 control-label"></label>
+                                           <label for="inputEmail3" class="col-sm-3 control-label">Kalite Belgesi</label>
+                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                           <div class="col-sm-7">
+                                                <select class="form-control" name="kalite_belgeleri" id="kalite_belgeleri" required>
+                                                    <option selected disabled>Seçiniz</option>
+                                                    @foreach($kalite_belgeleri as $kalite)
+                                                    <option  value="{{$kalite->id}}">{{$kalite->adi}}</option>
+                                                    @endforeach
+                                                </select>
                                            </div>
-                                           <div class="form-group">
-                                                 <label for="inputTask" class="col-sm-1 control-label"></label>
-                                               <label for="inputEmail3" class="col-sm-3 control-label">Belge No</label>
-                                                 <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                               <div class="col-sm-7">
-                                                   <input type="text" class="form-control " id="belge_no" name="belge_no" placeholder="Belge No" value="{{$kalite_belgesi->pivot->belge_no}}" required/>
-                                               </div>
+                                       </div>
+                                       <div class="form-group">
+                                             <label for="inputTask" class="col-sm-1 control-label"></label>
+                                           <label for="inputEmail3" class="col-sm-3 control-label">Belge No</label>
+                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                           <div class="col-sm-7">
+                                               <input type="text" class="form-control " id="belge_no" name="belge_no" placeholder="Belge No" value="{{$kalite_belgesi->pivot->belge_no}}" required/>
                                            </div>
-                                           <br>
-                                           <br>
-                                           <input type="hidden" name="kalite_id"  id="kalite_id" value="{{$kalite_belgesi->id}}">
-                                           {!! Form::submit('Kaydet', array('url'=>'firmaProfili/kaliteGuncelle/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
-                                           {!! Form::close() !!}
                                        </div>
                                        <br>
                                        <br>
-                                       <br>
-                                       <div class="modal-footer">
-                                       </div>
+                                       <input type="hidden" name="kalite_id"  id="kalite_id" value="{{$kalite_belgesi->id}}">
+                                       {!! Form::submit('Kaydet', array('url'=>'firmaProfili/kaliteGuncelle/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                       {!! Form::close() !!}
+                                   </div>
+                                   <br>
+                                   <br>
+                                   <br>
+                                   <div class="modal-footer">
                                    </div>
                                </div>
                            </div>
-                               @endforeach
-                            </thead>
-                           </table>
-                        @endif
-                           <div class="modal fade" id="myModal-kalite" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                               <div class="modal-dialog">
-                                   <div class="modal-content">
-                                       <div class="modal-header">
-                                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                           <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Kalite Belgeleri</strong> </h4>
-                                       </div>
-                                       <div class="modal-body">
-                                           {!! Form::open(array('id'=>'kalite_add_kayit','url'=>'firmaProfili/kalite/'.$firma->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
-
-                                           <div class="form-group">
-                                                 <label for="inputTask" class="col-sm-1 control-label"></label>
-                                               <label for="inputEmail3" class="col-sm-3 control-label">Kalite Belgesi</label>
-                                                 <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                               <div class="col-sm-7">
-                                                    <select class="form-control" name="kalite_belgeleri" id="kalite_belgeleri" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                                        <option selected disabled>Seçiniz</option>
-                                                        @foreach($kalite_belgeleri as $kalite)
-                                                            <option  value="{{$kalite->id}}">{{$kalite->adi}}</option>
-                                                        @endforeach
-                                                    </select>
-                                               </div>
-                                           </div>
-                                           <div class="form-group">
-                                                 <label for="inputTask" class="col-sm-1 control-label"></label>
-                                               <label for="inputEmail3" class="col-sm-3 control-label">Belge No</label>
-                                                 <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                               <div class="col-sm-7">
-                                                   <input type="text" class="form-control " id="belge_no" name="belge_no" placeholder="Belge No" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
-                                               </div>
-                                           </div>
-                                           {!! Form::submit('Kaydet', array('url'=>'firmaProfili/kalite/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
-                                           <br>
-                                           <br>
-                                           {!! Form::close() !!}
-                                       </div>
-                                       <div class="modal-footer">
-                                       </div>
-
-                                   </div>
-                               </div>
-                           </div>
-
                        </div>
-                       <div class="panel-footer "><strong>Referanslar</strong>
-                           @if($referans==null)
-                            <div class="bilgiEkle">
-                                <button style="margin-top:20px" id="btn-add-referanslar" name="btn-add-referanslar" class="btn btn-primary btn-xs"><img src="{{asset('images/plus.png')}}">&nbsp;Referanslarınızı  Ekleyin</button>
-                            </div>
-                           @else
-                           <button style="float:right" id="btn-add-referanslar" name="btn-add-referanslar" class="btn btn-primary btn-xs" >Ekle</button>
-                           <br>
-                           <br>
-                           <table class="table" >
-                               <thead id="tasks-list" name="tasks-list">
-                                   <tr id="firma{{$firma->id}}">
-                                   <tr>
-                                       <th>Firma Adı:</th>
-                                       <th>Yapılan İşin Adı:</th>
-                                       <th>İşin Türü:</th>
-                                       <th>Çalişma Süresi:</th>
-                                       <th>Yetkili Kişi Adı:</th>
-                                       <th>Yetkili Kişi Email Adresi:</th>
-                                       <th>Yetkili Kişi Telefon:</th>
-                                       <th>Referans Türü:</th>
-                                       <th>İşin Yılı:</th>
-                                       <th></th>
-                                   </tr>
-                                   @foreach($firmaReferanslar as $firmaReferans)
-                                   <tr>
-                                       <td>
-                                           {{$firmaReferans->adi}}
-                                       </td>
-                                       <td>
-                                           {{$firmaReferans->is_adi}}
-                                       </td>
-                                       <td id="is_turu_id_td">
-                                           {{$firmaReferans->is_turu}}
-                                       </td>
-                                       <td>
-                                           {{$firmaReferans->calisma_suresi}}
-                                       </td>
-                                       <td>
-                                           {{$firmaReferans->yetkili_adi}}
-                                       </td>
-                                       <td>
-                                           {{$firmaReferans->yetkili_email}}
-                                       </td>
-                                       <td>
-                                           {{$firmaReferans->yetkili_telefon}}
-                                       </td>
-                                       <td id="ref_turu_id_td">
-                                           {{$firmaReferans->ref_turu}}
-                                       </td>
-                                       <td>
-                                           @if($firmaReferans->is_yili=="0000-00-00")
+                           @endforeach
+                        </thead>
+                       </table>
+                    @endif
+                       <div class="modal fade" id="myModal-kalite" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                           <div class="modal-dialog">
+                               <div class="modal-content">
+                                   <div class="modal-header">
+                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                       <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Kalite Belgeleri</strong> </h4>
+                                   </div>
+                                   <div class="modal-body">
+                                       {!! Form::open(array('id'=>'kalite_add_kayit','url'=>'firmaProfili/kalite/'.$firma->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
 
-                                           @else
-                                           {{$firmaReferans->is_yili}}
-                                           @endif
-                                       </td>
-                                       <td> <button name="open-modal-gecmis"  value="{{$firmaReferans->id}}" class="btn btn-primary btn-xs open-modal-gecmis" >Düzenle</button>
-                                       </td>
-                                       <td>
-                                           {{ Form::open(array('url'=>'firmaProfili/referansSil/'.$firmaReferans->id,'method' => 'DELETE', 'files'=>true))}}
-                                            <input type="hidden" name="firma_id"  id="firma_id" value="{{$firma->id}}">
-                                                {{ Form::submit('Sil', ['class' => 'btn btn-primary btn-xs'])}}
-                                                {{ Form::close()}}
-                                        </td>
-                                                <input type="hidden" name="ref_id"  id="ref_id" value="{{$firmaReferans->id}}">
-                                       </tr>
-                                        <div class="modal fade" id="myModal-referanslarGecmis" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                       <div class="form-group">
+                                             <label for="inputTask" class="col-sm-1 control-label"></label>
+                                           <label for="inputEmail3" class="col-sm-3 control-label">Kalite Belgesi</label>
+                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                           <div class="col-sm-7">
+                                                <select class="form-control" name="kalite_belgeleri" id="kalite_belgeleri" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                                    <option selected disabled>Seçiniz</option>
+                                                    @foreach($kalite_belgeleri as $kalite)
+                                                        <option  value="{{$kalite->id}}">{{$kalite->adi}}</option>
+                                                    @endforeach
+                                                </select>
+                                           </div>
+                                       </div>
+                                       <div class="form-group">
+                                             <label for="inputTask" class="col-sm-1 control-label"></label>
+                                           <label for="inputEmail3" class="col-sm-3 control-label">Belge No</label>
+                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                           <div class="col-sm-7">
+                                               <input type="text" class="form-control " id="belge_no" name="belge_no" placeholder="Belge No" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                           </div>
+                                       </div>
+                                       {!! Form::submit('Kaydet', array('url'=>'firmaProfili/kalite/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                       <br>
+                                       <br>
+                                       {!! Form::close() !!}
+                                   </div>
+                                   <div class="modal-footer">
+                                   </div>
+
+                               </div>
+                           </div>
+                       </div>
+
+                   </div>
+                   <div class="panel-footer "><strong>Referanslar</strong>
+                       @if($referans==null)
+                        <div class="bilgiEkle">
+                            <button style="margin-top:20px" id="btn-add-referanslar" name="btn-add-referanslar" class="btn btn-primary btn-xs"><img src="{{asset('images/plus.png')}}">&nbsp;Referanslarınızı  Ekleyin</button>
+                        </div>
+                       @else
+                       <button style="float:right" id="btn-add-referanslar" name="btn-add-referanslar" class="btn btn-primary btn-xs" >Ekle</button>
+                       <br>
+                       <br>
+                       <table class="table" >
+                           <thead id="tasks-list" name="tasks-list">
+                               <tr id="firma{{$firma->id}}">
+                               <tr>
+                                   <th>Firma Adı:</th>
+                                   <th>Yapılan İşin Adı:</th>
+                                   <th>İşin Türü:</th>
+                                   <th>Çalişma Süresi:</th>
+                                   <th>Yetkili Kişi Adı:</th>
+                                   <th>Yetkili Kişi Email Adresi:</th>
+                                   <th>Yetkili Kişi Telefon:</th>
+                                   <th>Referans Türü:</th>
+                                   <th>İşin Yılı:</th>
+                                   <th></th>
+                               </tr>
+                               @foreach($firmaReferanslar as $firmaReferans)
+                               <tr>
+                                   <td>
+                                       {{$firmaReferans->adi}}
+                                   </td>
+                                   <td>
+                                       {{$firmaReferans->is_adi}}
+                                   </td>
+                                   <td id="is_turu_id_td">
+                                       {{$firmaReferans->is_turu}}
+                                   </td>
+                                   <td>
+                                       {{$firmaReferans->calisma_suresi}}
+                                   </td>
+                                   <td>
+                                       {{$firmaReferans->yetkili_adi}}
+                                   </td>
+                                   <td>
+                                       {{$firmaReferans->yetkili_email}}
+                                   </td>
+                                   <td>
+                                       {{$firmaReferans->yetkili_telefon}}
+                                   </td>
+                                   <td id="ref_turu_id_td">
+                                       {{$firmaReferans->ref_turu}}
+                                   </td>
+                                   <td>
+                                       @if($firmaReferans->is_yili=="0000-00-00")
+
+                                       @else
+                                       {{$firmaReferans->is_yili}}
+                                       @endif
+                                   </td>
+                                   <td> <button name="open-modal-gecmis"  value="{{$firmaReferans->id}}" class="btn btn-primary btn-xs open-modal-gecmis" >Düzenle</button>
+                                   </td>
+                                   <td>
+                                       {{ Form::open(array('url'=>'firmaProfili/referansSil/'.$firmaReferans->id,'method' => 'DELETE', 'files'=>true))}}
+                                        <input type="hidden" name="firma_id"  id="firma_id" value="{{$firma->id}}">
+                                            {{ Form::submit('Sil', ['class' => 'btn btn-primary btn-xs'])}}
+                                            {{ Form::close()}}
+                                    </td>
+                                            <input type="hidden" name="ref_id"  id="ref_id" value="{{$firmaReferans->id}}">
+                                   </tr>
+                                    <div class="modal fade" id="myModal-referanslarGecmis" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                       <div class="modal-dialog">
+                                           <div class="modal-content">
+                                               <div class="modal-header">
+                                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                   <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Referanslar</strong> </h4>
+                                               </div>
+                                               <div class="modal-body">
+                                                   {!! Form::open(array('id'=>'ref_up_kayit','url'=>'firmaProfili/referansUpdate/'. $firmaReferans->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
+
+                                                   <div class="form-group">
+
+                                                       <label for="inputEmail3" class="col-sm-2 control-label">Referans Türü</label>
+                                                         <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+
+                                                       <div class="col-sm-9">
+                                                           <select class="form-control" name="ref_turu" id="ref_turu" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                                               <option selected disabled value="Seçiniz">Seçiniz</option>
+                                                               <option   value="Geçmiş">Geçmiş</option>
+                                                               <option  value="Şuan">Şuan</option>
+                                                           </select>
+                                                       </div>
+                                                   </div>
+                                                   <div class="form-group">
+                                                        <label for="inputTask" class="col-sm-1 control-label"></label>
+                                                        <label for="inputEmail3" class="col-sm-3 control-label">Firma Adı</label>
+                                                        <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                                        <div class="col-sm-7">
+                                                            <input type="text" class="form-control " id="ref_firma_adi" name="ref_firma_adi" placeholder="Firma Adı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                                        </div>
+                                                   </div>
+                                                   <div class="form-group">
+                                                        <label for="inputTask" class="col-sm-1 control-label"></label>
+                                                        <label for="inputEmail3" class="col-sm-3 control-label">Yapılan İşin Adı</label>
+                                                        <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                                        <div class="col-sm-7">
+                                                            <input type="text" class="form-control " id="yapılan_isin_adi" name="yapılan_isin_adi" placeholder="Yapılan İşin Adı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                                        </div>
+                                                   </div>
+                                                   <div class="form-group">
+                                                        <label for="inputTask" class="col-sm-1 control-label"></label>
+                                                        <label for="inputEmail3" class="col-sm-3 control-label">İşin Türü</label>
+                                                        <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                                       <div class="col-sm-7">
+                                                           <select class="form-control" name="isin_turu" id="isin_turu" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                                               <option selected disabled value="Seçiniz">Seçiniz</option>
+                                                               <option   value="Mal Satışı">Mal Satışı</option>
+                                                               <option  value="Hizmet Satışı">Hizmet Satışı</option>
+                                                               <option  value="Yapım İşi">Yapım İşi</option>
+                                                           </select>
+                                                       </div>
+                                                   </div>
+                                                   <div class="form-group">
+                                                        <label for="inputTask" class="col-sm-1 control-label"></label>
+                                                        <label for="inputEmail3" class="col-sm-3 control-label">İşin Yılı</label>
+                                                        <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                                        <div class="col-sm-7">
+                                                            <input type="text" class="form-control " id="is_yili" name="is_yili" placeholder="İş Yılı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                                        </div>
+                                                   </div>
+                                                   <div class="form-group">
+                                                        <label for="inputTask" class="col-sm-1 control-label"></label>
+                                                        <label for="inputEmail3" class="col-sm-3 control-label">Çalışma Süresi</label>
+                                                        <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                                        <div class="col-sm-7">
+                                                            <input type="text" class="form-control " id="calısma_suresi" name="calısma_suresi" placeholder="Çalışma Süresi" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                                        </div>
+                                                   </div>
+                                                   <div class="form-group">
+                                                        <label for="inputTask" class="col-sm-1 control-label"></label>
+                                                        <label for="inputEmail3" class="col-sm-3 control-label">Yetkili Kişi Adı</label>
+                                                        <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                                        <div class="col-sm-7">
+                                                            <input type="text" class="form-control " id="yetkili_kisi_adi" name="yetkili_kisi_adi" placeholder="Yetkili Kişi Adı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                                        </div>
+                                                   </div>
+                                                   <div class="form-group">
+                                                        <label for="inputTask" class="col-sm-1 control-label"></label>
+                                                        <label for="inputEmail3" class="col-sm-3 control-label">Y.K Email Adresi</label>
+                                                        <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                                        <div class="col-sm-7">
+                                                            <input type="email" class="form-control " id="yetkili_kisi_email" name="yetkili_kisi_email" placeholder="Yetkili Kişi Email Adresi" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                                        </div>
+                                                   </div>
+                                                   <div class="form-group">
+                                                        <label for="inputTask" class="col-sm-1 control-label"></label>
+                                                        <label for="inputEmail3" class="col-sm-3 control-label">Y.K Telefon</label>
+                                                        <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                                        <div class="col-sm-7">
+                                                            <input type="text" class="form-control " id="yetkili_kisi_telefon" name="yetkili_kisi_telefon" placeholder="Yetkili Kişi Telefon" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                                        </div>
+                                                   </div>
+                                                   <input type="hidden" name="ref_id"  id="ref_id" value="{{$firmaReferans->id}}">
+
+                                                       {!! Form::submit('Kaydet', array('url'=>'firmaProfili/referansUpdate/'. $firmaReferans->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                                       <br>
+                                                       <br>
+                                                       {!! Form::close() !!}
+                                                       </div>
+                                                       <div class="modal-footer">
+                                                       </div>
+                                               </div>
+                                                <div class="modal-footer">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                            </thead>
+                         </table>
+                       @endif
+                                       <div class="modal fade" id="myModal-referanslar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                            <div class="modal-dialog">
                                                <div class="modal-content">
                                                    <div class="modal-header">
@@ -1144,14 +1745,13 @@
                                                        <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Referanslar</strong> </h4>
                                                    </div>
                                                    <div class="modal-body">
-                                                       {!! Form::open(array('id'=>'ref_up_kayit','url'=>'firmaProfili/referansUpdate/'. $firmaReferans->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
+                                                       {!! Form::open(array('id'=>'ref_add_kayit','url'=>'firmaProfili/referans/'.$firma->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
 
                                                        <div class="form-group">
 
-                                                           <label for="inputEmail3" class="col-sm-2 control-label">Referans Türü</label>
-                                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-
-                                                           <div class="col-sm-9">
+                                                           <label for="inputTask" class="col-sm-4 control-label">Referans Türü</label>
+                                                           <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                                           <div class="col-sm-7">
                                                                <select class="form-control" name="ref_turu" id="ref_turu" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                                                    <option selected disabled value="Seçiniz">Seçiniz</option>
                                                                    <option   value="Geçmiş">Geçmiş</option>
@@ -1160,25 +1760,25 @@
                                                            </div>
                                                        </div>
                                                        <div class="form-group">
-                                                            <label for="inputTask" class="col-sm-1 control-label"></label>
-                                                            <label for="inputEmail3" class="col-sm-3 control-label">Firma Adı</label>
-                                                            <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control " id="ref_firma_adi" name="ref_firma_adi" placeholder="Firma Adı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
-                                                            </div>
+
+                                                           <label for="inputTask" class="col-sm-4 control-label">Firma Adı</label>
+                                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                                           <div class="col-sm-7">
+                                                               <input type="text" class="form-control " id="ref_firma_adi" name="ref_firma_adi" placeholder="Firma Adı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                                           </div>
                                                        </div>
                                                        <div class="form-group">
-                                                            <label for="inputTask" class="col-sm-1 control-label"></label>
-                                                            <label for="inputEmail3" class="col-sm-3 control-label">Yapılan İşin Adı</label>
-                                                            <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control " id="yapılan_isin_adi" name="yapılan_isin_adi" placeholder="Yapılan İşin Adı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
-                                                            </div>
+
+                                                           <label for="inputEmail3" class="col-sm-4 control-label">Yapım İşi Adı</label>
+                                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                                           <div class="col-sm-7">
+                                                               <input type="text" class="form-control " id="yapılan_isin_adi" name="yapılan_isin_adi" placeholder="Yapılan İşin Adı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                                           </div>
                                                        </div>
                                                        <div class="form-group">
-                                                            <label for="inputTask" class="col-sm-1 control-label"></label>
-                                                            <label for="inputEmail3" class="col-sm-3 control-label">İşin Türü</label>
-                                                            <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+
+                                                           <label for="inputEmail3" class="col-sm-4 control-label">İşin Türü</label>
+                                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
                                                            <div class="col-sm-7">
                                                                <select class="form-control" name="isin_turu" id="isin_turu" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                                                    <option selected disabled value="Seçiniz">Seçiniz</option>
@@ -1189,531 +1789,422 @@
                                                            </div>
                                                        </div>
                                                        <div class="form-group">
-                                                            <label for="inputTask" class="col-sm-1 control-label"></label>
-                                                            <label for="inputEmail3" class="col-sm-3 control-label">İşin Yılı</label>
-                                                            <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control " id="is_yili" name="is_yili" placeholder="İş Yılı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
-                                                            </div>
-                                                       </div>
-                                                       <div class="form-group">
-                                                            <label for="inputTask" class="col-sm-1 control-label"></label>
-                                                            <label for="inputEmail3" class="col-sm-3 control-label">Çalışma Süresi</label>
-                                                            <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control " id="calısma_suresi" name="calısma_suresi" placeholder="Çalışma Süresi" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
-                                                            </div>
-                                                       </div>
-                                                       <div class="form-group">
-                                                            <label for="inputTask" class="col-sm-1 control-label"></label>
-                                                            <label for="inputEmail3" class="col-sm-3 control-label">Yetkili Kişi Adı</label>
-                                                            <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control " id="yetkili_kisi_adi" name="yetkili_kisi_adi" placeholder="Yetkili Kişi Adı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
-                                                            </div>
-                                                       </div>
-                                                       <div class="form-group">
-                                                            <label for="inputTask" class="col-sm-1 control-label"></label>
-                                                            <label for="inputEmail3" class="col-sm-3 control-label">Y.K Email Adresi</label>
-                                                            <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="email" class="form-control " id="yetkili_kisi_email" name="yetkili_kisi_email" placeholder="Yetkili Kişi Email Adresi" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
-                                                            </div>
-                                                       </div>
-                                                       <div class="form-group">
-                                                            <label for="inputTask" class="col-sm-1 control-label"></label>
-                                                            <label for="inputEmail3" class="col-sm-3 control-label">Y.K Telefon</label>
-                                                            <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                            <div class="col-sm-7">
-                                                                <input type="text" class="form-control " id="yetkili_kisi_telefon" name="yetkili_kisi_telefon" placeholder="Yetkili Kişi Telefon" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
-                                                            </div>
-                                                       </div>
-                                                       <input type="hidden" name="ref_id"  id="ref_id" value="{{$firmaReferans->id}}">
 
-                                                           {!! Form::submit('Kaydet', array('url'=>'firmaProfili/referansUpdate/'. $firmaReferans->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
-                                                           <br>
-                                                           <br>
-                                                           {!! Form::close() !!}
+                                                           <label for="inputEmail3" class="col-sm-4 control-label">İş Yılı</label>
+                                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                                           <div class="col-sm-7">
+                                                               <input type="text" class="form-control " id="is_yili" name="is_yili" placeholder="İş Yılı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
                                                            </div>
-                                                           <div class="modal-footer">
+                                                       </div>
+                                                       <div class="form-group">
+                                                           <label for="inputEmail3" class="col-sm-4 control-label">Çalışma Süresi</label>
+                                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                                           <div class="col-sm-7">
+                                                               <input type="text" class="form-control " id="calısma_suresi" name="calısma_suresi" placeholder="Çalışma Süresi" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
                                                            </div>
+                                                       </div>
+                                                       <div class="form-group">
+                                                           <label for="inputEmail3" class="col-sm-4 control-label">Yetkili Kişi Adı</label>
+                                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                                           <div class="col-sm-7">
+                                                               <input type="text" class="form-control " id="yetkili_kisi_adi" name="yetkili_kisi_adi" placeholder="Yetkili Kişi Adı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                                           </div>
+                                                       </div>
+                                                       <div class="form-group">
+                                                           <label for="inputEmail3" class="col-sm-4 control-label">Yetkili Kişi Email Adresi</label>
+                                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                                           <div class="col-sm-7">
+                                                               <input type="email" class="form-control " id="yetkili_kisi_email" name="yetkili_kisi_email" placeholder="Yetkili Kişi Email Adresi" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                                           </div>
+                                                       </div>
+                                                       <div class="form-group">
+                                                           <label for="inputEmail3" class="col-sm-4 control-label">Yetkili Kişi Telefon</label>
+                                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                                           <div class="col-sm-7">
+                                                               <input type="text" class="form-control " id="yetkili_kisi_telefon" name="yetkili_kisi_telefon" placeholder="Yetkili Kişi Telefon" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                                           </div>
+                                                       </div>
+
+                                                       {!! Form::submit('Kaydet', array('url'=>'firmaProfili/referans/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                                       <br>
+                                                       <br>
+
+                                                       {!! Form::close() !!}
                                                    </div>
-                                                    <div class="modal-footer">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endforeach
-                                </thead>
-                             </table>
-                           @endif
-                                           <div class="modal fade" id="myModal-referanslar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                               <div class="modal-dialog">
-                                                   <div class="modal-content">
-                                                       <div class="modal-header">
-                                                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                                           <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Referanslar</strong> </h4>
-                                                       </div>
-                                                       <div class="modal-body">
-                                                           {!! Form::open(array('id'=>'ref_add_kayit','url'=>'firmaProfili/referans/'.$firma->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
-
-                                                           <div class="form-group">
-
-                                                               <label for="inputTask" class="col-sm-4 control-label">Referans Türü</label>
-                                                               <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                               <div class="col-sm-7">
-                                                                   <select class="form-control" name="ref_turu" id="ref_turu" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                                                       <option selected disabled value="Seçiniz">Seçiniz</option>
-                                                                       <option   value="Geçmiş">Geçmiş</option>
-                                                                       <option  value="Şuan">Şuan</option>
-                                                                   </select>
-                                                               </div>
-                                                           </div>
-                                                           <div class="form-group">
-
-                                                               <label for="inputTask" class="col-sm-4 control-label">Firma Adı</label>
-                                                                 <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                               <div class="col-sm-7">
-                                                                   <input type="text" class="form-control " id="ref_firma_adi" name="ref_firma_adi" placeholder="Firma Adı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
-                                                               </div>
-                                                           </div>
-                                                           <div class="form-group">
-
-                                                               <label for="inputEmail3" class="col-sm-4 control-label">Yapım İşi Adı</label>
-                                                                 <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                               <div class="col-sm-7">
-                                                                   <input type="text" class="form-control " id="yapılan_isin_adi" name="yapılan_isin_adi" placeholder="Yapılan İşin Adı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
-                                                               </div>
-                                                           </div>
-                                                           <div class="form-group">
-
-                                                               <label for="inputEmail3" class="col-sm-4 control-label">İşin Türü</label>
-                                                                 <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                               <div class="col-sm-7">
-                                                                   <select class="form-control" name="isin_turu" id="isin_turu" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                                                       <option selected disabled value="Seçiniz">Seçiniz</option>
-                                                                       <option   value="Mal Satışı">Mal Satışı</option>
-                                                                       <option  value="Hizmet Satışı">Hizmet Satışı</option>
-                                                                       <option  value="Yapım İşi">Yapım İşi</option>
-                                                                   </select>
-                                                               </div>
-                                                           </div>
-                                                           <div class="form-group">
-
-                                                               <label for="inputEmail3" class="col-sm-4 control-label">İş Yılı</label>
-                                                                 <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                               <div class="col-sm-7">
-                                                                   <input type="text" class="form-control " id="is_yili" name="is_yili" placeholder="İş Yılı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
-                                                               </div>
-                                                           </div>
-                                                           <div class="form-group">
-                                                               <label for="inputEmail3" class="col-sm-4 control-label">Çalışma Süresi</label>
-                                                                 <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                               <div class="col-sm-7">
-                                                                   <input type="text" class="form-control " id="calısma_suresi" name="calısma_suresi" placeholder="Çalışma Süresi" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
-                                                               </div>
-                                                           </div>
-                                                           <div class="form-group">
-                                                               <label for="inputEmail3" class="col-sm-4 control-label">Yetkili Kişi Adı</label>
-                                                                 <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                               <div class="col-sm-7">
-                                                                   <input type="text" class="form-control " id="yetkili_kisi_adi" name="yetkili_kisi_adi" placeholder="Yetkili Kişi Adı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
-                                                               </div>
-                                                           </div>
-                                                           <div class="form-group">
-                                                               <label for="inputEmail3" class="col-sm-4 control-label">Yetkili Kişi Email Adresi</label>
-                                                                 <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                               <div class="col-sm-7">
-                                                                   <input type="email" class="form-control " id="yetkili_kisi_email" name="yetkili_kisi_email" placeholder="Yetkili Kişi Email Adresi" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
-                                                               </div>
-                                                           </div>
-                                                           <div class="form-group">
-                                                               <label for="inputEmail3" class="col-sm-4 control-label">Yetkili Kişi Telefon</label>
-                                                                 <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                               <div class="col-sm-7">
-                                                                   <input type="text" class="form-control " id="yetkili_kisi_telefon" name="yetkili_kisi_telefon" placeholder="Yetkili Kişi Telefon" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
-                                                               </div>
-                                                           </div>
-
-                                                           {!! Form::submit('Kaydet', array('url'=>'firmaProfili/referans/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
-                                                           <br>
-                                                           <br>
-
-                                                           {!! Form::close() !!}
-                                                       </div>
-                                                       <div class="modal-footer">
-                                                       </div>
+                                                   <div class="modal-footer">
                                                    </div>
                                                </div>
                                            </div>
-                                           <input type="hidden" name="add"  id="add" value="add">
                                        </div>
-                   </div>
-
-           </div>
-           <div class="panel panel-default">
-                <div style="border-bottom: 3px solid transparent;border-color:#ddd" class="panel-heading">
-                    <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse6"><img src="{{asset('images/brosur.png')}}">&nbsp;<strong>Firma Broşürü</strong></a>
-                        @if($brosur==null)
-                        @else
-                        <button style="float:right"id="btn-add-firmabrosurEkle" name="btn-add-firmabrosurEkle" class="btn btn-primary btn-xs" >Ekle</button>
-                        @endif
-                    </h4>
-                </div>
-
-                <div class="panel-body">
-                       @if($brosur==null)
-                        <div class="bilgiEkle">
-                                <button style="margin-top:20px" id="btn-add-firmabrosurEkle" name="btn-add-firmabrosurEkle" class="btn btn-primary btn-xs"><img src="{{asset('images/plus.png')}}">&nbsp;Broşürünüzü Ekleyin</button>
-                        </div>
-
-                       @else
-                       <table class="table" >
-                           <thead id="tasks-list" name="tasks-list">
-                                <th>Broşür Adı:</th>
-                                <th>Broşür Pdf:</th>
-
-                                @foreach($firma->firma_brosurler as $firmaBrosur)
-                                    <tr >
-                                       <td>
-                                           {{$firmaBrosur->adi}}
-                                       </td>
-                                       <td data-toggle="tooltip" data-placement="bottom" title="PDF'i görüntülemek için lütfen üstüne tıklayın!">
-                                           <a target="_blank" href="{{ asset('brosur/'.$firmaBrosur->yolu) }}"><img src="{{asset('images/see.png')}}">   {{$firmaBrosur->yolu}}</a>
-                                       </td>
-
-                                    <td><button   value="{{$firmaBrosur->id}}" class="btn btn-primary btn-xs open-modal-brosurGuncelle" >Düzenle</button>
-                                    </td>
-                                    <td>
-                                    {{ Form::open(array('url'=>'firmaProfili/brosurSil/'.$firmaBrosur->id,'method' => 'DELETE', 'files'=>true)) }}
-                                                 <input type="hidden" name="firma_id"  id="firma_id" value="{{$firma->id}}">
-                                              {{ Form::submit('Sil', ['class' => 'btn btn-primary btn-xs']) }}
-                                             {{ Form::close() }}
-                                   </td>
-                                     <input type="hidden" name="brosur_id"  id="brosur_id" value="{{$firmaBrosur->id}}">
-                                    </tr>
-                                    <div class="modal fade" id="myModal-firmabrosurGuncelle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                                    <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Firma Broşürü</strong></h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    {!! Form::open(array('id'=>'brosur_up_kayit','url'=>'firmaProfili/firmaBrosurGuncelle/'.$firmaBrosur->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
-
-                                                    <div class="form-group">
-                                                          <label for="inputTask" class="col-sm-1 control-label"></label>
-                                                        <label for="inputEmail3" class="col-sm-3 control-label">Broşür Adı</label>
-                                                        <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                        <div class="col-sm-7">
-                                                            <input type="text" class="form-control " id="brosur_adi" name="brosur_adi" placeholder="Broşür Adi" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                         <label for="inputTask" class="col-sm-1 control-label"></label>
-                                                        <label for="inputEmail3" class="col-sm-3 control-label">Broşür Dosyası</label>
-                                                        <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                        <div class="col-sm-7">
-                                                            <div class="control-group">
-                                                                <div class="controls">
-                                                                    {!! Form::file('yolu', array('data-validation'=>'required', 'data-validation-error-msg'=>'Lütfen bu alanı doldurunuz!')) !!}
-                                                                    <p class="errors">{!!$errors->first('image')!!}</p>
-                                                                    @if(Session::has('error'))
-                                                                    <p class="errors">{!! Session::get('error') !!}</p>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-                                                            <div id="success">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                     <input type="hidden" name="brosur_id"  id="brosur_id" value="{{$firmaBrosur->id}}">
-                                                    {!! Form::submit('Kaydet', array('url'=>'firmaProfili/firmaBrosurGuncelle/'.$firmaBrosur->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
-                                                    <br>
-                                                    <br>
-                                                    {!! Form::close() !!}
-                                                </div>
-                                                <div class="modal-footer">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                   @endforeach
-                                </thead>
-                            </table>
-                       @endif
-                        <div class="modal fade" id="myModal-firmabrosurEkle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog">
-                                      <div class="modal-content">
-                                          <div class="modal-header">
-                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                              <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Firma Broşürü</strong></h4>
-                                          </div>
-                                          <div class="modal-body">
-                                              {!! Form::open(array('id'=>'brosur_kayit','url'=>'firmaProfili/firmaBrosur/'.$firma->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
-
-                                              <div class="form-group">
-                                                  <label for="inputTask" class="col-sm-1 control-label"></label>
-                                                  <label for="inputEmail3" class="col-sm-3 control-label">Broşür Adı</label>
-                                                  <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                  <div class="col-sm-7">
-                                                      <input type="text" class="form-control " id="brosur_adi" name="brosur_adi" placeholder="Broşür Adi" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
-                                                  </div>
-                                              </div>
-                                              <div class="form-group">
-                                                  <label for="inputTask" class="col-sm-1 control-label"></label>
-                                                  <label for="inputEmail3" class="col-sm-3 control-label">Broşür Dosyası</label>
-                                                  <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                  <div class="col-sm-7">
-                                                      <div class="control-group">
-                                                          <div class="controls">
-                                                              {!! Form::file('yolu',array('data-validation'=>'required', 'data-validation-error-msg'=>'Lütfen bu alanı doldurunuz!')) !!}
-                                                              <p class="errors">{!!$errors->first('image')!!}</p>
-                                                              @if(Session::has('error'))
-                                                              <p class="errors">{!! Session::get('error') !!}</p>
-                                                              @endif
-                                                          </div>
-                                                      </div>
-                                                      <div id="success">
-                                                      </div>
-                                                  </div>
-                                              </div>
-
-                                              {!! Form::submit('Kaydet', array('url'=>'firmaProfili/firmaBrosur/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
-                                              <br>
-                                              <br>
-                                              {!! Form::close() !!}
-                                          </div>
-                                          <div class="modal-footer">
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-                   </div>
-           </div>
-           <div class="panel panel-default">
-               <div class="panel-heading">
-                   <h4 class="panel-title">
-                       <a data-toggle="collapse" data-parent="#accordion" href="#collapse7"><img src="{{asset('images/calisan.png')}}">&nbsp;<strong>İdari Bilgiler</strong></a>
-                       @if($calisan==null)
-                       @else
-                             <button style="float:right" id="btn-add-firmacalisanbilgileri" name="btn-add-firmacalisanbilgileri" class="btn btn-primary btn-xs" >Ekle / Düzenle</button>
-                       @endif
-                   </h4>
+                                       <input type="hidden" name="add"  id="add" value="add">
+                                   </div>
                </div>
 
-               <div class="panel-body">
-                   @if($calisan==null)
+       </div>
+       <div class="panel panel-default">
+            <div style="border-bottom: 3px solid transparent;border-color:#ddd" class="panel-heading">
+                <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse6"><img src="{{asset('images/brosur.png')}}">&nbsp;<strong>Firma Broşürü</strong></a>
+                    @if($brosur==null)
+                    @else
+                    <button style="float:right"id="btn-add-firmabrosurEkle" name="btn-add-firmabrosurEkle" class="btn btn-primary btn-xs" >Ekle</button>
+                    @endif
+                </h4>
+            </div>
+
+            <div class="panel-body">
+                   @if($brosur==null)
                     <div class="bilgiEkle">
-                            <button style="margin-top:20px" id="btn-add-firmacalisanbilgileri" name="btn-add-firmacalisanbilgileri" class="btn btn-primary btn-xs"><img src="{{asset('images/plus.png')}}">&nbsp;Bilgilerinizi Ekleyin</button>
+                            <button style="margin-top:20px" id="btn-add-firmabrosurEkle" name="btn-add-firmabrosurEkle" class="btn btn-primary btn-xs"><img src="{{asset('images/plus.png')}}">&nbsp;Broşürünüzü Ekleyin</button>
                     </div>
+
                    @else
                    <table class="table" >
                        <thead id="tasks-list" name="tasks-list">
-                           <tr>
-                               <td  width="25%"><strong>Çalışma Günleri</strong></td>
-                               <td  id="calisma_id_td" width="75%"><strong>:</strong>  {{$calismaGunu}}</td>
-                           </tr>
-                           <tr>
-                               <td><strong>Çalışma Saatleri</strong></td>
-                               <td><strong>:</strong>  {{$firma->firma_calisma_bilgileri->calisma_saatleri}}</td>
-                           </tr>
-                           <tr>
-                               <td><strong>Çalışan Profili</strong></td>
-                               <td id="profil_id_td"><strong>:</strong> {{$firma->getCalisanProfil()}}</td>
-                           </tr>
-                           <tr>
-                               <td><strong>Çalışan Sayısı</strong></td>
-                               <td><strong>:</strong>  {{$firma->firma_calisma_bilgileri->calisan_sayisi}}</td>
-                           </tr>
-                           <tr>
-                               <td id="departman_id_td"><strong>Firma Departmanları</strong></td>
-                               <td><strong>:</strong>
-                                   @foreach($firma->departmanlar as $departman)
-                                     {{$departman->adi}}
-                                   @endforeach
+                            <th>Broşür Adı:</th>
+                            <th>Broşür Pdf:</th>
+
+                            @foreach($firma->firma_brosurler as $firmaBrosur)
+                                <tr >
+                                   <td>
+                                       {{$firmaBrosur->adi}}
+                                   </td>
+                                   <td data-toggle="tooltip" data-placement="bottom" title="PDF'i görüntülemek için lütfen üstüne tıklayın!">
+                                       <a target="_blank" href="{{ asset('brosur/'.$firmaBrosur->yolu) }}"><img src="{{asset('images/see.png')}}">   {{$firmaBrosur->yolu}}</a>
+                                   </td>
+
+                                <td><button   value="{{$firmaBrosur->id}}" class="btn btn-primary btn-xs open-modal-brosurGuncelle" >Düzenle</button>
+                                </td>
+                                <td>
+                                {{ Form::open(array('url'=>'firmaProfili/brosurSil/'.$firmaBrosur->id,'method' => 'DELETE', 'files'=>true)) }}
+                                             <input type="hidden" name="firma_id"  id="firma_id" value="{{$firma->id}}">
+                                          {{ Form::submit('Sil', ['class' => 'btn btn-primary btn-xs']) }}
+                                         {{ Form::close() }}
                                </td>
+                                 <input type="hidden" name="brosur_id"  id="brosur_id" value="{{$firmaBrosur->id}}">
+                                </tr>
+                                <div class="modal fade" id="myModal-firmabrosurGuncelle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Firma Broşürü</strong></h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                {!! Form::open(array('id'=>'brosur_up_kayit','url'=>'firmaProfili/firmaBrosurGuncelle/'.$firmaBrosur->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
+
+                                                <div class="form-group">
+                                                      <label for="inputTask" class="col-sm-1 control-label"></label>
+                                                    <label for="inputEmail3" class="col-sm-3 control-label">Broşür Adı</label>
+                                                    <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                                    <div class="col-sm-7">
+                                                        <input type="text" class="form-control " id="brosur_adi" name="brosur_adi" placeholder="Broşür Adi" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                     <label for="inputTask" class="col-sm-1 control-label"></label>
+                                                    <label for="inputEmail3" class="col-sm-3 control-label">Broşür Dosyası</label>
+                                                    <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                                    <div class="col-sm-7">
+                                                        <div class="control-group">
+                                                            <div class="controls">
+                                                                {!! Form::file('yolu', array('data-validation'=>'required', 'data-validation-error-msg'=>'Lütfen bu alanı doldurunuz!')) !!}
+                                                                <p class="errors">{!!$errors->first('image')!!}</p>
+                                                                @if(Session::has('error'))
+                                                                <p class="errors">{!! Session::get('error') !!}</p>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                        <div id="success">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                 <input type="hidden" name="brosur_id"  id="brosur_id" value="{{$firmaBrosur->id}}">
+                                                {!! Form::submit('Kaydet', array('url'=>'firmaProfili/firmaBrosurGuncelle/'.$firmaBrosur->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                                <br>
+                                                <br>
+                                                {!! Form::close() !!}
+                                            </div>
+                                            <div class="modal-footer">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               @endforeach
+                            </thead>
+                        </table>
+                   @endif
+                    <div class="modal fade" id="myModal-firmabrosurEkle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                          <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Firma Broşürü</strong></h4>
+                                      </div>
+                                      <div class="modal-body">
+                                          {!! Form::open(array('id'=>'brosur_kayit','url'=>'firmaProfili/firmaBrosur/'.$firma->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
+
+                                          <div class="form-group">
+                                              <label for="inputTask" class="col-sm-1 control-label"></label>
+                                              <label for="inputEmail3" class="col-sm-3 control-label">Broşür Adı</label>
+                                              <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                              <div class="col-sm-7">
+                                                  <input type="text" class="form-control " id="brosur_adi" name="brosur_adi" placeholder="Broşür Adi" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                              </div>
+                                          </div>
+                                          <div class="form-group">
+                                              <label for="inputTask" class="col-sm-1 control-label"></label>
+                                              <label for="inputEmail3" class="col-sm-3 control-label">Broşür Dosyası</label>
+                                              <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                              <div class="col-sm-7">
+                                                  <div class="control-group">
+                                                      <div class="controls">
+                                                          {!! Form::file('yolu',array('data-validation'=>'required', 'data-validation-error-msg'=>'Lütfen bu alanı doldurunuz!')) !!}
+                                                          <p class="errors">{!!$errors->first('image')!!}</p>
+                                                          @if(Session::has('error'))
+                                                          <p class="errors">{!! Session::get('error') !!}</p>
+                                                          @endif
+                                                      </div>
+                                                  </div>
+                                                  <div id="success">
+                                                  </div>
+                                              </div>
+                                          </div>
+
+                                          {!! Form::submit('Kaydet', array('url'=>'firmaProfili/firmaBrosur/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                          <br>
+                                          <br>
+                                          {!! Form::close() !!}
+                                      </div>
+                                      <div class="modal-footer">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+               </div>
+       </div>
+       <div class="panel panel-default">
+           <div class="panel-heading">
+               <h4 class="panel-title">
+                   <a data-toggle="collapse" data-parent="#accordion" href="#collapse7"><img src="{{asset('images/calisan.png')}}">&nbsp;<strong>İdari Bilgiler</strong></a>
+                   @if($calisan==null)
+                   @else
+                         <button style="float:right" id="btn-add-firmacalisanbilgileri" name="btn-add-firmacalisanbilgileri" class="btn btn-primary btn-xs" >Ekle / Düzenle</button>
+                   @endif
+               </h4>
+           </div>
+
+           <div class="panel-body">
+               @if($calisan==null)
+                <div class="bilgiEkle">
+                        <button style="margin-top:20px" id="btn-add-firmacalisanbilgileri" name="btn-add-firmacalisanbilgileri" class="btn btn-primary btn-xs"><img src="{{asset('images/plus.png')}}">&nbsp;Bilgilerinizi Ekleyin</button>
+                </div>
+               @else
+               <table class="table" >
+                   <thead id="tasks-list" name="tasks-list">
+                       <tr>
+                           <td  width="25%"><strong>Çalışma Günleri</strong></td>
+                           <td  id="calisma_id_td" width="75%"><strong>:</strong>  {{$calismaGunu}}</td>
+                       </tr>
+                       <tr>
+                           <td><strong>Çalışma Saatleri</strong></td>
+                           <td><strong>:</strong>  {{$firma->firma_calisma_bilgileri->calisma_saatleri}}</td>
+                       </tr>
+                       <tr>
+                           <td><strong>Çalışan Profili</strong></td>
+                           <td id="profil_id_td"><strong>:</strong> {{$firma->getCalisanProfil()}}</td>
+                       </tr>
+                       <tr>
+                           <td><strong>Çalışan Sayısı</strong></td>
+                           <td><strong>:</strong>  {{$firma->firma_calisma_bilgileri->calisan_sayisi}}</td>
+                       </tr>
+                       <tr>
+                           <td id="departman_id_td"><strong>Firma Departmanları</strong></td>
+                           <td><strong>:</strong>
+                               @foreach($firma->departmanlar as $departman)
+                                 {{$departman->adi}}
+                               @endforeach
+                           </td>
+                       </tr>
+                   </thead>
+               </table>
+               @endif
+               <div class="modal fade" id="myModal-firmacalisanbilgileri" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                   <div class="modal-dialog">
+                       <div class="modal-content">
+                           <div class="modal-header">
+                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                               <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>İdari Bilgiler</strong></h4>
+                           </div>
+                           <div class="modal-body">
+                               {!! Form::open(array('id'=>'calisma_kayit','url'=>'firmaProfili/firmaCalisan/'.$firma->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
+
+                               <div class="form-group">
+                                   <label for="inputTask" class="col-sm-1 control-label"></label>
+                                   <label for="inputEmail3" class="col-sm-3 control-label">Çalışma Günleri</label>
+                                    <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-7">
+                                       <select class="form-control" name="calisma_gunleri" id="calisma_gunleri" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                           <option selected disabled>Seçiniz</option>
+                                           @foreach($calisma_günleri as $günleri)
+                                           <option  value="{{$günleri->id}}">{{$günleri->adi}}</option>
+                                           @endforeach
+                                       </select>
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                   <label for="inputTask" class="col-sm-1 control-label"></label>
+                                   <label for="inputEmail3" class="col-sm-3 control-label">Çalışma Saatleri</label>
+                                   <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-7">
+                                       <input type="text" class="form-control " id="calisma_saatleri" name="calisma_saatleri" placeholder="Çalışma Saatleri" value="{{$firma->firma_calisma_bilgileri->calisma_saatleri}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                   <label for="inputTask" class="col-sm-1 control-label"></label>
+                                   <label for="inputEmail3" class="col-sm-3 control-label">Çalışan Profili</label>
+                                   <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-7">
+                                       <input type="checkbox" class="firma_calisan " name="firma_calisma_profili[]" value="1" data-validation="checkbox_group"  data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1"/>Mavi Yaka
+                                       <input type="checkbox" class="firma_calisan "  name="firma_calisma_profili[]" value="2" data-validation="checkbox_group" data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1"/>Beyaz Yaka
+
+
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                   <label for="inputTask" class="col-sm-1 control-label"></label>
+                                   <label for="inputEmail3" class="col-sm-3 control-label">Çalışan Sayısı</label>
+                                   <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-7">
+                                       <input type="text" class="form-control " id="calisma_sayisi" name="calisma_sayisi" placeholder="Çalışan Sayısı" value="{{$firma->firma_calisma_bilgileri->calisan_sayisi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                     <label for="inputTask" class="col-sm-1 control-label"></label>
+                                   <label for="inputEmail3" class="col-sm-3 control-label">Firma Departmanları</label>
+                                     <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
+                                   <div class="col-sm-6">
+                                       <select id="firma_departmanlari"   name="firma_departmanları[]" multiple="multiple">
+                                            @foreach($departmanlar as $departman)
+                                             <option data-toggle="tooltip" data-placement="bottom" title="{{$departman->adi}}" value="{{$departman->id}}">{{$departman->adi}}</option>
+                                            @endforeach
+                                       </select>
+                                   </div>
+                               </div>
+
+                               {!! Form::submit('Kaydet', array('url'=>'firmaProfili/firmaCalisan/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                               <br>
+                               <br>
+                               {!! Form::close() !!}
+                           </div>
+                           <div class="modal-footer">
+                           </div>
+                       </div>
+                   </div>
+               </div>
+
+           </div>
+
+       </div>
+       <div class="panel panel-default">
+            <div  class="panel-heading">
+               <h4 class="panel-title">
+                   <a data-toggle="collapse" data-parent="#accordion" href="#collapse8"><strong><img src="{{asset('images/bilgilendirme.png')}}">&nbsp;Bilgilendirilme Tercihi</strong></a>
+                    <button style="float:right" id="btn-add-bilgilendirmetercihi" name="btn-add-bilgilendirmetercihi" class="btn btn-primary btn-xs" >Ekle / Düzenle</button>
+                </h4>
+            </div>
+            <div class="panel-body">
+                   <table data-toggle="tooltip" data-placement="bottom" title="Eğer değiştirmek istiyorsanız Ekle/Düzenle butonunu kullanın!" class="table" >
+                       <thead id="tasks-list" name="tasks-list">
+                           <tr id="firma{{$firma->id}}">
+                           <tr>
+                               <td width="25%"><strong>Bilgilendirme Tercihi :</strong></td>
+                               <td width="75%"><input type="checkbox" class="bilgilendirmeOnTaraf"  id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Sms" disabled/>Sms <br>
+                               <input type="checkbox" class="bilgilendirmeOnTaraf" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Mail" disabled/>Mail <br>
+                                           <input type="checkbox" class="bilgilendirmeOnTaraf" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Telefon" disabled/>Telefon <br>
+                                           <input type="checkbox" class="bilgilendirmeOnTaraf" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Bilgilendirme İstemiyorum" disabled/>Bilgilendirme İstemiyorum</td>
+                           </tr>
                            </tr>
                        </thead>
                    </table>
-                   @endif
-                   <div class="modal fade" id="myModal-firmacalisanbilgileri" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                   <div class="modal fade" id="myModal-bilgilendirmetercihi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                        <div class="modal-dialog">
                            <div class="modal-content">
                                <div class="modal-header">
                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                   <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>İdari Bilgiler</strong></h4>
+                                   <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Bilgilendirilme Tercihi</strong></h4>
                                </div>
                                <div class="modal-body">
-                                   {!! Form::open(array('id'=>'calisma_kayit','url'=>'firmaProfili/firmaCalisan/'.$firma->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
+                                   {!! Form::open(array('id'=>'bilgilendirme_kayit','url'=>'firmaProfili/bilgilendirmeTercihi/'.$firma->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
 
                                    <div class="form-group">
-                                       <label for="inputTask" class="col-sm-1 control-label"></label>
-                                       <label for="inputEmail3" class="col-sm-3 control-label">Çalışma Günleri</label>
-                                        <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                       <div class="col-sm-7">
-                                           <select class="form-control" name="calisma_gunleri" id="calisma_gunleri" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                               <option selected disabled>Seçiniz</option>
-                                               @foreach($calisma_günleri as $günleri)
-                                               <option  value="{{$günleri->id}}">{{$günleri->adi}}</option>
-                                               @endforeach
-                                           </select>
-                                       </div>
-                                   </div>
-                                   <div class="form-group">
-                                       <label for="inputTask" class="col-sm-1 control-label"></label>
-                                       <label for="inputEmail3" class="col-sm-3 control-label">Çalışma Saatleri</label>
+                                       <label for="inputEmail3" class="col-sm-4 control-label">Bilgilendirilme Tercihi</label>
                                        <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
                                        <div class="col-sm-7">
-                                           <input type="text" class="form-control " id="calisma_saatleri" name="calisma_saatleri" placeholder="Çalışma Saatleri" value="{{$firma->firma_calisma_bilgileri->calisma_saatleri}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                           <input type="checkbox" class="bilgilendirme"  id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Sms" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>Sms <br>
+                                           <input type="checkbox" class="bilgilendirme" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Mail" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>Mail <br>
+                                           <input type="checkbox" class="bilgilendirme" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Telefon" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>Telefon <br>
+                                           <input type="checkbox" class="bilgilendirme" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Bilgilendirme İstemiyorum" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>Bilgilendirme İstemiyorum
                                        </div>
                                    </div>
-                                   <div class="form-group">
-                                       <label for="inputTask" class="col-sm-1 control-label"></label>
-                                       <label for="inputEmail3" class="col-sm-3 control-label">Çalışan Profili</label>
-                                       <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                       <div class="col-sm-7">
-                                           <input type="checkbox" class="firma_calisan " name="firma_calisma_profili[]" value="1" data-validation="checkbox_group"  data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1"/>Mavi Yaka
-                                           <input type="checkbox" class="firma_calisan "  name="firma_calisma_profili[]" value="2" data-validation="checkbox_group" data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1"/>Beyaz Yaka
-
-
-                                       </div>
-                                   </div>
-                                   <div class="form-group">
-                                       <label for="inputTask" class="col-sm-1 control-label"></label>
-                                       <label for="inputEmail3" class="col-sm-3 control-label">Çalışan Sayısı</label>
-                                       <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                       <div class="col-sm-7">
-                                           <input type="text" class="form-control " id="calisma_sayisi" name="calisma_sayisi" placeholder="Çalışan Sayısı" value="{{$firma->firma_calisma_bilgileri->calisan_sayisi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
-                                       </div>
-                                   </div>
-                                   <div class="form-group">
-                                         <label for="inputTask" class="col-sm-1 control-label"></label>
-                                       <label for="inputEmail3" class="col-sm-3 control-label">Firma Departmanları</label>
-                                         <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                       <div class="col-sm-6">
-                                           <select id="firma_departmanlari"   name="firma_departmanları[]" multiple="multiple">
-                                                @foreach($departmanlar as $departman)
-                                                 <option data-toggle="tooltip" data-placement="bottom" title="{{$departman->adi}}" value="{{$departman->id}}">{{$departman->adi}}</option>
-                                                @endforeach
-                                           </select>
-                                       </div>
-                                   </div>
-
-                                   {!! Form::submit('Kaydet', array('url'=>'firmaProfili/firmaCalisan/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                   {!! Form::submit('Kaydet', array('url'=>'firmaProfili/bilgilendirmeTercihi/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
                                    <br>
                                    <br>
                                    {!! Form::close() !!}
-                               </div>
+                                </div>
                                <div class="modal-footer">
-                               </div>
+                                </div>
                            </div>
                        </div>
-                   </div>
-
-               </div>
-
-           </div>
-           <div class="panel panel-default">
-                <div  class="panel-heading">
-                   <h4 class="panel-title">
-                       <a data-toggle="collapse" data-parent="#accordion" href="#collapse8"><strong><img src="{{asset('images/bilgilendirme.png')}}">&nbsp;Bilgilendirilme Tercihi</strong></a>
-                        <button style="float:right" id="btn-add-bilgilendirmetercihi" name="btn-add-bilgilendirmetercihi" class="btn btn-primary btn-xs" >Ekle / Düzenle</button>
-                    </h4>
-                </div>
-                <div class="panel-body">
-                       <table data-toggle="tooltip" data-placement="bottom" title="Eğer değiştirmek istiyorsanız Ekle/Düzenle butonunu kullanın!" class="table" >
-                           <thead id="tasks-list" name="tasks-list">
-                               <tr id="firma{{$firma->id}}">
-                               <tr>
-                                   <td width="25%"><strong>Bilgilendirme Tercihi :</strong></td>
-                                   <td width="75%"><input type="checkbox" class="bilgilendirmeOnTaraf"  id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Sms" disabled/>Sms <br>
-                                   <input type="checkbox" class="bilgilendirmeOnTaraf" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Mail" disabled/>Mail <br>
-                                               <input type="checkbox" class="bilgilendirmeOnTaraf" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Telefon" disabled/>Telefon <br>
-                                               <input type="checkbox" class="bilgilendirmeOnTaraf" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Bilgilendirme İstemiyorum" disabled/>Bilgilendirme İstemiyorum</td>
-                               </tr>
-                               </tr>
-                           </thead>
-                       </table>
-                       <div class="modal fade" id="myModal-bilgilendirmetercihi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                           <div class="modal-dialog">
-                               <div class="modal-content">
-                                   <div class="modal-header">
-                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                       <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Bilgilendirilme Tercihi</strong></h4>
-                                   </div>
-                                   <div class="modal-body">
-                                       {!! Form::open(array('id'=>'bilgilendirme_kayit','url'=>'firmaProfili/bilgilendirmeTercihi/'.$firma->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
-
-                                       <div class="form-group">
-                                           <label for="inputEmail3" class="col-sm-4 control-label">Bilgilendirilme Tercihi</label>
-                                           <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                           <div class="col-sm-7">
-                                               <input type="checkbox" class="bilgilendirme"  id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Sms" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>Sms <br>
-                                               <input type="checkbox" class="bilgilendirme" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Mail" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>Mail <br>
-                                               <input type="checkbox" class="bilgilendirme" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Telefon" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>Telefon <br>
-                                               <input type="checkbox" class="bilgilendirme" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Bilgilendirme İstemiyorum" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>Bilgilendirme İstemiyorum
-                                           </div>
-                                       </div>
-                                       {!! Form::submit('Kaydet', array('url'=>'firmaProfili/bilgilendirmeTercihi/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
-                                       <br>
-                                       <br>
-                                       {!! Form::close() !!}
-                                    </div>
-                                   <div class="modal-footer">
-                                    </div>
-                               </div>
-                           </div>
-                      </div>
-                 </div>
-           </div>
+                  </div>
+             </div>
        </div>
     </div>
-     <div class="col-sm-4" >
-              <div  class="panel-group">
-                         <div    class="panel panel-default">
-                             <div style="background-color: #e5e5e5" class="panel-heading"><img src="{{asset('images/ayar.png')}}">&nbsp;Firma Profil Görünüm Ayarları</div>
-                             <div class="panel-body">
-                             </div>
+    </div>
+    <div class="col-sm-4" >
+          <div  class="panel-group">
+                     <div    class="panel panel-default">
+                         <div style="background-color: #e5e5e5" class="panel-heading"><img src="{{asset('images/ayar.png')}}">&nbsp;Firma Profil Görünüm Ayarları</div>
+                         <div class="panel-body">
                          </div>
-                         <div class="panel panel-default">
-                                <div  style="background-color: #e5e5e5;" class="panel-heading"><img src="{{asset('images/doluluk.png')}}">&nbsp;Firma Profili Doluluk Oranı</div>
-                                <div class="panel-body">
-                                    <div class="bar_container">
-                                        <div id="main_container">
-                                            <div id="pbar" class="progress-pie-chart" data-percent="0">
-                                                <div class="ppc-progress">
-                                                    <div class="ppc-progress-fill"></div>
-                                                </div>
-                                                <div class="ppc-percents">
-                                                    <div class="pcc-percents-wrapper">
-                                                        <span>%</span>
-                                                    </div>
+                     </div>
+                     <div class="panel panel-default">
+                            <div  style="background-color: #e5e5e5;" class="panel-heading"><img src="{{asset('images/doluluk.png')}}">&nbsp;Firma Profili Doluluk Oranı</div>
+                            <div class="panel-body">
+                                <div class="bar_container">
+                                    <div id="main_container">
+                                        <div id="pbar" class="progress-pie-chart" data-percent="0">
+                                            <div class="ppc-progress">
+                                                <div class="ppc-progress-fill"></div>
+                                            </div>
+                                            <div class="ppc-percents">
+                                                <div class="pcc-percents-wrapper">
+                                                    <span>%</span>
                                                 </div>
                                             </div>
-                                            <progress style="display: none" id="progress_bar" value="0" max="1" >
-                                            </progress>
                                         </div>
+                                        <progress style="display: none" id="progress_bar" value="0" max="1" >
+                                        </progress>
                                     </div>
                                 </div>
+                            </div>
+                     </div>
+                     <div class="panel panel-default">
+                         <div  style="background-color: #e5e5e5;" class="panel-heading"><img src="{{asset('images/islem.png')}}">&nbsp;Firma Profili İşlemleri</div>
+                         <div class="panel-body">
                          </div>
-                         <div class="panel panel-default">
-                             <div  style="background-color: #e5e5e5;" class="panel-heading"><img src="{{asset('images/islem.png')}}">&nbsp;Firma Profili İşlemleri</div>
-                             <div class="panel-body">
-                             </div>
-                         </div>
-             </div>
-        </div>
-     </div>
-       <div id="mesaj" class="popup">
-            <span class="button b-close"><span>X</span></span>
-            <h2 style="color:red"> Üzgünüz.. !!!</h2>
-            <h3>Sistemsel bir hata oluştu.Lütfen daha sonra tekrar deneyin</h3>
-       </div>
+                     </div>
+         </div>
+    </div>
+    </div>
 
-   </div>
+
+    <div id="mesaj" class="popup">
+        <span class="button b-close"><span>X</span></span>
+        <h2 style="color:red"> Üzgünüz.. !!!</h2>
+        <h3>Sistemsel bir hata oluştu.Lütfen daha sonra tekrar deneyin</h3>
+    </div>
+</div>
    <script src="{{asset('js/selectDD.js')}}"></script>
    <script src="{{asset('js/jquery.bpopup-0.11.0.min.js')}}"></script>
 <script>
@@ -2160,10 +2651,10 @@
         $("#yillik_cirosu").val("{{$firma->mali_bilgiler->yillik_cirosu}}");
         $("#vergi_dairesi_id").val({{$firma->mali_bilgiler->vergi_dairesi_id}});
 
-        if( "{{$mali_bilgi}}" == "dolu" && {{$checkboxCiro}} == 0){
+        if( "{{$mali_bilgi}}" == "dolu" && "{{$checkboxCiro}}" == 0){
             $("#ciro_goster").prop('checked',false);
         }
-        if( "{{$mali_bilgi}}" == "dolu" && {{$checkboxSermaye}} == 0){
+        if( "{{$mali_bilgi}}" == "dolu" && "{{$checkboxSermaye}}" == 0){
             $("#sermaye_goster").prop('checked',false);
         }
     }
@@ -2878,4 +3369,10 @@ $("#iletisim_kayit").submit(function(e)
             e.preventDefault();
     });
 </script>
+@endsection
+
+@section('sayfaSonu')
+    <script src="{{asset('MetronicFiles/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('MetronicFiles/pages/scripts/dashboard.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('MetronicFiles/pages/scripts/profile.min.js')}}" type="text/javascript"></script>
 @endsection
