@@ -1,4 +1,4 @@
-@extends('layouts.feMaster')
+@extends('layouts.fe.feMaster')
 <!-- navbar-->
 @include('FrontEnd.ustMenu')
 <!-- *** SIGNUP MODAL ***_________________________________________________________
@@ -25,6 +25,7 @@
   </div>
 </div>
 <!-- *** SIGNUP MODAL END ***-->
+@section('content')
 <section id="intro" class="text-intro no-padding-bottom">
   <div class="container">
     <div class="row">
@@ -398,6 +399,7 @@
     </div>
   </div>
 </footer>
+@endsection
 
 <script>
   var acc = document.getElementsByClassName("accordion");

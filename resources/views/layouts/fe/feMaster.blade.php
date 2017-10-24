@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,11 +21,11 @@
     <link rel="stylesheet" href="{{asset('css_fe/owl.theme.css')}}">
     <!-- plugins-->
     <link rel="stylesheet" href="{{asset('css_fe/simpletextrotator.css')}}">
+    <!--iç sayfalardan head bölümüne ekleme yapmak için-->
+    @yield('head')
     <!-- Favicon-->
     <link rel="shortcut icon" href="favicon.png">
-    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+
   </head>
   <body data-spy="scroll" data-target="#navigation" data-offset="120">
     <div id="all">

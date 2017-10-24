@@ -41,7 +41,7 @@ class FirmaController extends Controller
     }*/
 
 
-     public function showFirma(){
+    public function showFirma(){
         $firma = Firma::find(session()->get('firma_id'));
 
         if (Gate::denies('show', $firma)) {
@@ -109,10 +109,9 @@ class FirmaController extends Controller
                 ->with('uretilenMarka',$uretilenMarka)->with('satilanMarka',$satilanMarka)->with('kaliteBelge',$kaliteBelge)
                 ->with('firmaReferanslar',$firmaReferanslar)->with('referans',$referans)->with('brosur',$brosur)
                 ->with('calismaGunu',$calismaGunu)->with('calisan',$calisan)->with('firmaSektorleri',$firmaSektorleri);
-    }
+     }
 
-    public function firmaDetay($firma_id)
-    {    
+    public function firmaDetay($firma_id){
         $firma=Firma::where('id', $firma_id)->with([
             'firma_satilan_markalar',
             'uretilen_markalar',
@@ -138,15 +137,14 @@ class FirmaController extends Controller
         ->join('puanlamalar', 'yorumlar.firma_id', '=', 'puanlamalar.firma_id')
         ->join('firmalar', 'yorumlar.yorum_yapan_firma_id', '=', 'firmalar.id')//firma isimleri için
         ->get();
-    
+
         if (!$firma)
             abort('404');
-    
+
         return view('Firma.firmaDetay')->with(['firma'=>$firma, 'yorumlar'=>$yorumlar]);
     }
 
-    public function uyelikBilgileri()
-    {
+    public function uyelikBilgileri(){
         $firma = Firma::where('id', session()->get('firma_id'))->with([
             'odemeler'
         ])->first();
@@ -316,6 +314,7 @@ class FirmaController extends Controller
         Session::set('firma_logo', '');
         return Redirect::to('firmaProfili');
     }
+
     public function iletisimAdd(Request $request){
 
         DB::beginTransaction();
@@ -346,6 +345,7 @@ class FirmaController extends Controller
             return Response::json($error);
         }
     }
+
     public function tanitimAdd(Request $request){
 
             $firma = Firma::find($request->id);
@@ -354,11 +354,11 @@ class FirmaController extends Controller
             return redirect('firmaProfili/'.$firma->id);
 
     }
+
     public function maliBilgiAdd(Request $request){
+      DB::beginTransaction();
 
-    DB::beginTransaction();
-
-        try {
+      try {
                 $firma = Firma::find($request->id);
                 $firma->sirket_turu =Str::title(strtolower( $request->sirket_turu));
                 $firma->save();
@@ -392,6 +392,7 @@ class FirmaController extends Controller
         }
         //return redirect('firmaProfili/'.$firma->id);
     }
+
     public function ticariBilgiAdd(Request $request){
 
     DB::beginTransaction();

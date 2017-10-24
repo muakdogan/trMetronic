@@ -289,7 +289,7 @@ Route::get('/firmaKayit', function () {
    $sektorler=DB::table('sektorler')->orderBy('adi','ASC')->get();
 
 
-  return view('Firma.genFirmaKayit')->with('iller', $iller)->with('sektorler',$sektorler)->with('iller_query',$iller_query);
+  return view('FrontEnd.firmaKayit')->with('iller', $iller)->with('sektorler',$sektorler)->with('iller_query',$iller_query);
   // Önceki Hali "Firma.firmaKayit" Güncel Hali "Firma.genFirmaKayit"
 });
 

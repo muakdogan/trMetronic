@@ -17,6 +17,8 @@
 <script src="{{asset('js/ajax-crud-kalite.js')}}"></script>
 <script src="{{asset('js/ajax-crud-firmacalisanlari.js')}}"></script>
 <script src="{{asset('js/ajax-crud-firmabrosur.js')}}"></script>
+<script src="{{asset('MetronicFiles/global/plugins/amcharts/amcharts/amcharts.js')}}" type="text/javascript"></script>
+<script src="{{asset('MetronicFiles/global/plugins/amcharts/amcharts/pie.js')}}" type="text/javascript"></script>
 <link href="{{asset('css/multi-select.css')}}" media="screen" rel="stylesheet" type="text/css"></link>
 <link href="{{asset('css/multiple-select.css')}}" rel="stylesheet"/>
 <style>
@@ -346,7 +348,48 @@
                    </div>
                </div>
            </div>
-
+           <!--Begin new section-->
+           <div class="portlet blue-hoki box">
+               <div class="portlet-title">
+                   <div class="caption">
+                       <i class="fa fa-cogs"></i>İletişim Bilgileri </div>
+                   <div class="actions">
+                       <a onclick="populateDD()" href="javascript:;" class="btn btn-default btn-sm">
+                           <i class="fa fa-pencil"></i> Ekle / Düzenle </a>
+                   </div>
+               </div>
+               <div class="portlet-body">
+                   <div class="row static-info">
+                       <div class="col-md-3 name"> Adres: </div>
+                       <div class="col-md-9 value"> {{$firmaAdres->adres}} </div>
+                   </div>
+                   <div class="row static-info">
+                       <div class="col-md-3 name"> İl: </div>
+                       <div class="col-md-9 value"> {{$firmaAdres->iller->adi}} </div>
+                   </div>
+                   <div class="row static-info">
+                       <div class="col-md-3 name"> İlçe: </div>
+                       <div class="col-md-9 value"> {{$firmaAdres->ilceler->adi}} </div>
+                   </div>
+                   <div class="row static-info">
+                       <div class="col-md-3 name"> Semt: </div>
+                       <div class="col-md-9 value"> {{$firmaAdres->semtler->adi}} </div>
+                   </div>
+                   <div class="row static-info">
+                       <div class="col-md-3 name"> Telefon: </div>
+                       <div class="col-md-9 value"> {{$firma->iletisim_bilgileri->telefon}} </div>
+                   </div>
+                   <div class="row static-info">
+                       <div class="col-md-3 name"> Fax: </div>
+                       <div class="col-md-9 value"> {{$firma->iletisim_bilgileri->fax}} </div>
+                   </div>
+                   <div class="row static-info">
+                       <div class="col-md-3 name"> Web: </div>
+                       <div class="col-md-9 value"> {{$firma->iletisim_bilgileri->web_sayfasi}} </div>
+                   </div>
+               </div>
+           </div>
+           <!--End new section-->
            <div class="panel panel-default">
                <div  class="panel-heading">
                    <h4 class="panel-title">
@@ -1676,6 +1719,13 @@
                          <div    class="panel panel-default">
                              <div style="background-color: #e5e5e5" class="panel-heading"><img src="{{asset('images/ayar.png')}}">&nbsp;Firma Profil Görünüm Ayarları</div>
                              <div class="panel-body">
+                               <div class="easy-pie-chart">
+                                   <div class="number transactions" data-percent="55">
+                                       <span>+55</span>% </div>
+                                   <a class="title" href="javascript:;"> Transactions
+                                       <i class="icon-arrow-right"></i>
+                                   </a>
+                               </div>
                              </div>
                          </div>
                          <div class="panel panel-default">
@@ -2143,7 +2193,6 @@
         GetIlce({{$firmaAdres->iller->id}},"il_id");
         GetSemt({{$firmaAdres->ilceler->id}});
         $("#il_id ").val({{$firmaAdres->iller->id}}).trigger("event");
-        console.log($("#ilce_id").val({{$firmaAdres->ilceler->id}}));
         $("#semt_id").val({{$firmaAdres->semtler->id}});
     }
     function populateTicaretDD(){
