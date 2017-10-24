@@ -216,20 +216,24 @@ window.requestAnimationFrame = window.requestAnimationFrame
     });
 
     function funcLocations(){
-       if(click === 1){ //// sayfa her yüklendiğinde çalışmasın diye bu kontrol gerekli
-           $.ajax({
-                type:"GET",
-                url: "{{asset('set_session')}}",
-                data: { role: selected },
-                }).done(function(data){
-                    console.log(data);
-                    click=0;
-                    location.href="{{asset('firmaIslemleri')}}"+"/"+selected;
+        if (click === 1) { //// sayfa her yüklendiğinde çalışmasın diye bu kontrol gerekli
+            if("{{session()->get('firma_id')}}" != selected) {//zaten seçilmiş firma linkine tıklanırsa boşuna session setlememesi icin
+                $.ajax({
+                    type: "GET",
+                    url: "{{asset('set_session')}}",
+                    data: {role: selected},
+                }).done(function (data) {
+                    click = 0;
+                    location.href = "{{asset('firmaIslemleri')}}" + "/" + selected;
 
-                }).fail(function(){
+                }).fail(function () {
                     alert('Yüklenemiyor !!!  ');
-           });
-       }
+                });
+            }
+            else{
+                location.href = "{{asset('firmaIslemleri')}}" + "/" + selected;
+            }
+        }
     }
     </script>
 </body>
