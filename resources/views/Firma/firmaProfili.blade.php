@@ -14,25 +14,19 @@
 <script src="{{asset('js/ajax-crud-kalite.js')}}"></script>
 <script src="{{asset('js/ajax-crud-firmacalisanlari.js')}}"></script>
 <script src="{{asset('js/ajax-crud-firmabrosur.js')}}"></script>
-<script src="{{asset('MetronicFiles/global/plugins/amcharts/amcharts/amcharts.js')}}" type="text/javascript"></script>
-<script src="{{asset('MetronicFiles/global/plugins/amcharts/amcharts/pie.js')}}" type="text/javascript"></script>
 <link href="{{asset('css/multi-select.css')}}" media="screen" rel="stylesheet" type="text/css"></link>
 <link href="{{asset('css/multiple-select.css')}}" rel="stylesheet"/>
 <style>
-
     .wrapper {
         padding: 25px;
     }
-
     .image-wrapper {
         padding: 5px;
     }
-
     .image-wrapper img {
         max-width:200px;
         height:200px;
     }
-
     .switch {
         position: relative;
         display: inline-block;
@@ -40,9 +34,7 @@
         height: 18px;
         margin-top: 8px;
     }
-
     .switch input {display:none;}
-
     .slider {
         position: absolute;
         cursor: pointer;
@@ -54,7 +46,6 @@
         -webkit-transition: .4s;
         transition: .4s;
     }
-
     .slider:before {
         position: absolute;
         content: "";
@@ -66,26 +57,21 @@
         -webkit-transition: .4s;
         transition: .4s;
     }
-
     input:checked + .slider {
         background-color: #2196F3;
     }
-
     input:focus + .slider {
         box-shadow: 0 0 1px #2196F3;
     }
-
     input:checked + .slider:before {
         -webkit-transform: translateX(26px);
         -ms-transform: translateX(26px);
         transform: translateX(26px);
     }
-
     /* Rounded sliders */
     .slider.round {
         border-radius: 34px;
     }
-
     .slider.round:before {
         border-radius: 50%;
     }
@@ -112,287 +98,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
     <div class="row">
-<<<<<<< HEAD
-     <div class="col-sm-8" >
-
-       <div  class="panel-group" id="accordion">
-           <div  class="form-group">
-               <div class="row">
-                   <div class="col-sm-5" >
-                       @if($firma->logo != "")
-                           <img id="logo1" src="{{asset('uploads')}}/{{$firma->logo}}" alt="Firma Logo" style="width:128px;height:128px;">
-                       @else
-                           <img id="logo1" src="{{asset('uploads/logo/defaultFirmaLogo.png')}}" alt="Firma Logo" style="width:128px;height:128px;">
-                       @endif
-                        <br />
-                       <button class="btn btn-primary btn-xs btn-detail " id="btn-add-image" onclick="" value="{{$firma->id}}">Düzenle</button>
-                   </div>
-                   <div class="col-sm-7">
-                       <div class="panel panel-default">
-                           <div  class="panel-heading">
-                               <h4 class="panel-title">
-                                   <a data-toggle="collapse" data-parent="#accordion" href="#collapse0"><img width="20" height="20" src="{{asset('images/islem.png')}}">&nbsp;<strong>Sektorler</strong></a>
-                               </h4>
-                           </div>
-                           <div class="panel-body">
-                               <ul>
-                                   @foreach($firmaSektorleri as $firmaSektor)
-                                   <li>{{$firmaSektor->adi}}</li>
-                                   @endforeach
-                               </ul>
-                           </div>
-                       </div>
-                   </div>
-               </div>
-               <div class="modal fade" id="myModal-image" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                   <div class="modal-dialog">
-                       <div class="modal-content">
-                           <div class="modal-header">
-                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                               <h4 class="modal-title" id="myModalLabel">Firma Logonu Güncelle</h4>
-                           </div>
-                           <div class="modal-body">
-                               <div class="span7 offset1">
-                                   {!! Form::open(array('url'=>'firmaProfili/uploadImage/'.$firma->id,'method'=>'POST', 'files'=>true)) !!}
-                                   <div class="control-group">
-                                       <div class="controls">
-                                           <div class="container-fuild">
-                                               <div class="row">
-                                                   <div class="col-sm-4" >
-                                                       <div class="secure"><strong>Mevcut Logonuz</strong></div>
-                                                       <br>
-                                                       <div style="width:128px;height:128px;"class="image-wrapper">
-                                                           @if($firma->logo != "")
-                                                               <img src="{{asset('uploads')}}/{{$firma->logo}}" alt="Firma Logo" style="width:128px;height:128px;">
-                                                           @else
-                                                               <img src="{{asset('uploads/logo/defaultFirmaLogo.png')}}" alt="Firma Logo" style="width:128px;height:128px;">
-                                                               Henüz Logonuz Yok!
-                                                           @endif
-
-                                                       </div>
-                                                   </div>
-                                                   <div class="col-sm-8" >
-                                                       <div class="secure"><strong>Logonuzu Değiştirin</strong></div>
-                                                       <div class="wrapper">
-                                                           {!! Form::file('logo', ['id' => 'addImage']) !!}
-                                                       </div>
-                                                   </div>
-                                               </div>
-                                               <br>
-                                               <p class="errors">{!!$errors->first('image')!!}</p>
-                                               @if(Session::has('error'))
-                                                   <p class="errors">{!! Session::get('error') !!}</p>
-                                               @endif
-                                           </div>
-                                       </div>
-                                       <div id="success">
-                                       </div>
-                                       {!! Form::submit('Logo Yükle', array('url'=>'firmaProfili/uploadImage'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
-                                       {!! Form::close() !!}
-                                       @if($firma->logo != "")
-                                           {{ Form::open(array('url'=>'firmaProfili/deleteImage/'.$firma->id,'method' => 'DELETE', 'files'=>true)) }}
-                                           {{ Form::hidden('id', $firma->logo) }}
-                                           {{ Form::submit('Logo Sil', ['style'=>'float:right' ,'class' => 'btn btn-danger']) }}
-                                           {{ Form::close() }}
-                                       @endif
-                                       <br>
-                                       <br>
-                                       <br>
-                                   </div>
-                               </div>
-                               <div class="modal-footer">
-                               </div>
-                           </div>
-                       </div>
-                   </div>
-               </div>
-           </div>
-           <!--Begin new section-->
-           <div class="portlet blue-hoki box">
-               <div class="portlet-title">
-                   <div class="caption">
-                       <i class="fa fa-cogs"></i>İletişim Bilgileri </div>
-                   <div class="actions">
-                       <a onclick="populateDD()" href="javascript:;" class="btn btn-default btn-sm">
-                           <i class="fa fa-pencil"></i> Ekle / Düzenle </a>
-                   </div>
-               </div>
-               <div class="portlet-body">
-                   <div class="row static-info">
-                       <div class="col-md-3 name"> Adres: </div>
-                       <div class="col-md-9 value"> {{$firmaAdres->adres}} </div>
-                   </div>
-                   <div class="row static-info">
-                       <div class="col-md-3 name"> İl: </div>
-                       <div class="col-md-9 value"> {{$firmaAdres->iller->adi}} </div>
-                   </div>
-                   <div class="row static-info">
-                       <div class="col-md-3 name"> İlçe: </div>
-                       <div class="col-md-9 value"> {{$firmaAdres->ilceler->adi}} </div>
-                   </div>
-                   <div class="row static-info">
-                       <div class="col-md-3 name"> Semt: </div>
-                       <div class="col-md-9 value"> {{$firmaAdres->semtler->adi}} </div>
-                   </div>
-                   <div class="row static-info">
-                       <div class="col-md-3 name"> Telefon: </div>
-                       <div class="col-md-9 value"> {{$firma->iletisim_bilgileri->telefon}} </div>
-                   </div>
-                   <div class="row static-info">
-                       <div class="col-md-3 name"> Fax: </div>
-                       <div class="col-md-9 value"> {{$firma->iletisim_bilgileri->fax}} </div>
-                   </div>
-                   <div class="row static-info">
-                       <div class="col-md-3 name"> Web: </div>
-                       <div class="col-md-9 value"> {{$firma->iletisim_bilgileri->web_sayfasi}} </div>
-                   </div>
-               </div>
-           </div>
-           <!--End new section-->
-           <div class="panel panel-default">
-               <div  class="panel-heading">
-                   <h4 class="panel-title">
-                       <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"><img src="{{asset('images/phone.png')}}">&nbsp;<strong>İletişim Bilgileri</strong></a>
-                       <button style="float:right" id="btn-add" name="btn-add" onclick="populateDD()" class="btn btn-primary btn-xs" >Ekle / Düzenle</button>
-                   </h4>
-               </div>
-                   <div class="panel-body">
-                       <table class="table" >
-                           <thead id="tasks-list" name="tasks-list">
-                               <tr>
-                                   <td><strong>Adres</strong></td>
-                                   <td><strong>:</strong>  {{$firmaAdres->adres}}</td>
-
-                               </tr>
-                               <tr>
-                                   <td  width="25%"><strong>İli</strong></td>
-                                   <td id="il_id_td" width="75%"><strong>:</strong> {{$firmaAdres->iller->adi}}</td>
-
-                               </tr>
-                               <tr>
-                                   <td><strong>İlçesi</strong></td>
-                                   <td id="ilce_id_td"><strong>:</strong> {{$firmaAdres->ilceler->adi}}</td>
-
-                               </tr>
-                               <tr>
-                                   <td><strong>Semt</strong></td>
-                                   <td  id="semt_id_td"><strong>:</strong> {{$firmaAdres->semtler->adi}}</td>
-
-                               </tr>
-                               <tr>
-                                   <td><strong>Telefon</strong></td>
-                                   <td><strong>:</strong> {{$firma->iletisim_bilgileri->telefon}}</td>
-
-                               </tr>
-                               <tr>
-                                   <td><strong>Fax</strong></td>
-                                   <td><strong>:</strong> {{$firma->iletisim_bilgileri->fax}}</td>
-
-                               </tr>
-                               <tr>
-                                   <td><strong>Web Sayfası</strong></td>
-                                   <td><strong>:</strong> {{$firma->iletisim_bilgileri->web_sayfasi}}</td>
-
-                               </tr>
-                               </tr>
-                           </thead>
-                       </table>
-                       <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                           <div class="modal-dialog">
-                               <div class="modal-content">
-                                   <div class="modal-header">
-                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                       <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>İletişim Bilgileri</strong></h4>
-                                   </div>
-                                   <div class="modal-body">
-                                       {!! Form::open(array('id'=>'iletisim_kayit','url'=>'firmaProfili/iletisimAdd/'.$firma->id, 'class' => 'form-horizontal', 'method' => 'POST')) !!}
-
-                                       <div class="form-group error">
-                                           <label for="inputTask" class="col-sm-1 control-label"></label>
-                                           <label for="inputTask" class="col-sm-3 control-label">Şehir</label>
-                                           <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
-                                           <div class="col-sm-7">
-                                               <select class="form-control il_id" name="il_id" id="il_id" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                                   <option selected disabled>Seçiniz</option>
-                                                   @foreach($iller as $il)
-                                                   <option  value="{{$il->id}}" >{{$il->adi}}</option>
-                                                   @endforeach
-                                               </select>
-                                           </div>
-                                       </div>
-                                       <div class="form-group error">
-                                           <label for="inputTask" class="col-sm-1 control-label"></label>
-                                           <label for="inputTask" class="col-sm-3 control-label">İlçe</label>
-                                           <label for="inputTask" style="text-align: left" class="col-sm-1 control-label">:</label>
-                                           <div class="col-sm-7">
-                                               <select class="form-control" name="ilce_id" id="ilce_id" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                                   <option selected disabled>Seçiniz</option>
-                                               </select>
-                                           </div>
-                                       </div>
-                                       <div class="form-group error">
-                                           <label for="inputTask" class="col-sm-1 control-label"></label>
-                                           <label for="inputTask" class="col-sm-3 control-label">Semt</label>
-                                           <label for="inputTask" style="text-align: left" class="col-sm-1 control-label">:</label>
-                                           <div class="col-sm-7">
-                                               <select class="form-control" name="semt_id" id="semt_id" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                                   <option selected disabled>Seçiniz</option>
-                                               </select>
-                                           </div>
-                                       </div>
-                                       <div class="form-group">
-                                            <label for="inputTask" class="col-sm-1 control-label"></label>
-                                           <label for="inputEmail3" class="col-sm-3 control-label">Adres</label>
-                                            <label for="inputTask"style="text-align: left" class="col-sm-1 control-label">:</label>
-                                           <div class="col-sm-7">
-                                               <input type="text" class="form-control" id="adres" name="adres" placeholder="Adres" value="{{$firmaAdres->adres}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                           </div>
-                                       </div>
-                                       <div class="form-group">
-                                            <label for="inputTask" class="col-sm-1 control-label"></label>
-                                           <label for="inputEmail3" class="col-sm-3 control-label">Telefon</label>
-                                            <label for="inputTask" style="text-align: left" class="col-sm-1 control-label">:</label>
-                                           <div class="col-sm-7">
-                                               <input type="text" class="form-control" id="telefon" name="telefon" placeholder="Telefon" value="{{$firma->iletisim_bilgileri->telefon}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                           </div>
-                                       </div>
-                                       <div class="form-group">
-                                            <label for="inputTask" class="col-sm-1 control-label"></label>
-                                           <label for="inputEmail3" class="col-sm-3 control-label">Fax</label>
-                                            <label for="inputTask" style="text-align: left" class="col-sm-1 control-label">:</label>
-                                           <div class="col-sm-7">
-                                               <input type="text" class="form-control" id="fax" name="fax" placeholder="Fax" value="{{$firma->iletisim_bilgileri->fax}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                           </div>
-                                       </div>
-                                       <div class="form-group">
-                                            <label for="inputTask" class="col-sm-1 control-label"></label>
-                                           <label for="inputEmail3" class="col-sm-3 control-label">Web Sayfası</label>
-                                            <label for="inputTask" style="text-align: left" class="col-sm-1 control-label">:</label>
-                                           <div class="col-sm-7">
-                                               <input type="text" class="form-control" id="web_sayfasi" name="web_sayfasi" placeholder="Web Sayfası" value="{{$firma->iletisim_bilgileri->web_sayfasi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
-                                           </div>
-                                       </div>
-                                       {!! Form::submit('Kaydet', array('url'=>'firmaProfili/iletisimAdd/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
-                                       <br>
-                                       <br>
-                                       {!! Form::close() !!}
-                                   </div>
-                                   <div class="modal-footer">
-                                       <input type="hidden" id="iletisimbilgisi_id" name="iletisimbilgisi_id" value="{{$firma->iletisim_bilgileri->id}}">
-                                   </div>
-                               </div>
-                           </div>
-                       </div>
-
-                   </div>
-
-           </div>
-           <div class="panel panel-default">
-               <div style="border-bottom: 3px solid transparent;border-color:#ddd" class="panel-heading">
-                   <h4 class="panel-title">
-                       <a data-toggle="collapse" data-parent="#accordion" href="#collapse2"><img src="{{asset('images/yazi.png')}}">&nbsp;<strong>Firma Tanıtım Yazısı</strong></a>
-                        @if($firma->tanitim_yazisi=="")
-=======
         <div class="col-md-12">
             <!-- BEGIN PROFILE CONTENT -->
             <div class="profile-content">
@@ -408,7 +113,6 @@
                             @endif
                         </div>
                         <!-- END SIDEBAR USERPIC -->
->>>>>>> f141d08a387ab9a95723b4c89a7900ca5ba40072
 
                         <!-- SIDEBAR BUTTONS -->
                         <div class="profile-userbuttons">
@@ -1819,43 +1523,6 @@
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                         <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Referanslar</strong> </h4>
                                     </div>
-<<<<<<< HEAD
-                               </div>
-                           </div>
-                      </div>
-                 </div>
-           </div>
-       </div>
-    </div>
-     <div class="col-sm-4" >
-              <div  class="panel-group">
-                         <div    class="panel panel-default">
-                             <div style="background-color: #e5e5e5" class="panel-heading"><img src="{{asset('images/ayar.png')}}">&nbsp;Firma Profil Görünüm Ayarları</div>
-                             <div class="panel-body">
-                               <div class="easy-pie-chart">
-                                   <div class="number transactions" data-percent="55">
-                                       <span>+55</span>% </div>
-                                   <a class="title" href="javascript:;"> Transactions
-                                       <i class="icon-arrow-right"></i>
-                                   </a>
-                               </div>
-                             </div>
-                         </div>
-                         <div class="panel panel-default">
-                                <div  style="background-color: #e5e5e5;" class="panel-heading"><img src="{{asset('images/doluluk.png')}}">&nbsp;Firma Profili Doluluk Oranı</div>
-                                <div class="panel-body">
-                                    <div class="bar_container">
-                                        <div id="main_container">
-                                            <div id="pbar" class="progress-pie-chart" data-percent="0">
-                                                <div class="ppc-progress">
-                                                    <div class="ppc-progress-fill"></div>
-                                                </div>
-                                                <div class="ppc-percents">
-                                                    <div class="pcc-percents-wrapper">
-                                                        <span>%</span>
-                                                    </div>
-                                                </div>
-=======
                                     <div class="modal-body">
                                         {!! Form::open(array('id'=>'ref_add_kayit','url'=>'firmaProfili/referans/'.$firma->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
 
@@ -1877,7 +1544,6 @@
                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
                                             <div class="col-sm-7">
                                                 <input type="text" class="form-control " id="ref_firma_adi" name="ref_firma_adi" placeholder="Firma Adı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
->>>>>>> f141d08a387ab9a95723b4c89a7900ca5ba40072
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -1965,7 +1631,6 @@
             multiple: true,
             multipleWidth: 100
     });
-
     var count = 0;
     $('#custom-headers').multiSelect({
         selectableHeader: "</i><input type='text'  class='search-input col-sm-12 search_icon' autocomplete='off' placeholder='Sektör Seçiniz'></input>",
@@ -1976,7 +1641,6 @@
               $selectionSearch = that.$selectionUl.prev(),
               selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
               selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
-
           that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
           .on('keydown', function(e){
             if (e.which === 40){
@@ -1984,18 +1648,14 @@
               return false;
             }
           });
-
         },
         afterSelect: function(values){
           count++;
-
           if(count>5){
               $('#custom-headers').multiSelect('deselect', values);
           }
           this.qs1.cache();
           this.qs2.cache();
-
-
         },
         afterDeselect: function(){
           count--;
@@ -2054,7 +1714,6 @@
             }
         }
     });
-
   $.validate({
     modules : 'location, date, security, file',
     onModulesLoaded : function() {
@@ -2067,14 +1726,11 @@
           if($(this).val() == falyAdi){
               $(this).prop("checked",true);
             }
-
       <?php } ?>
-
    });
   $('.firma_faaliyet_turu').click(function(){ ///////////faaliyet turu /////////////////
         var sonSecilen;
         var count=0;
-
         jQuery('.firma_faaliyet_turu:checked').each(function(){
             sonSecilen = $(this).val();
             count++;
@@ -2118,7 +1774,6 @@
         });
 */
         $("#calisma_gunleri").val({{$firma->firma_calisma_bilgileri->calisma_gunleri_id}});
-
         $("#ust_sektor").val({{$firma->ticari_bilgiler->ust_sektor}});
         $('[data-toggle="tooltip"]').tooltip();
         var arrayDepartman = new Array();
@@ -2129,7 +1784,6 @@
         var max_fields      = 10; //maximum input boxes allowed
         var wrapper         = $(".input_fields_wrap"); //Fields wrapper
         var add_button      = $(".add_field_button"); //Add button ID
-
         var x = 1; //initlal text box count
         $(add_button).click(function(e){ //on add input button click
             e.preventDefault();
@@ -2138,11 +1792,9 @@
                 $(wrapper).append('<div><input type="text" name="firmanin_urettigi_markalar_[]"/><a href="#" class="remove_field">Sil</a></div>'); //add input box
             }
         });
-
         $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
             e.preventDefault(); $(this).parent('div').remove(); x--;
         });
-
         var s=1;
         var wrapper_sattigi         = $(".input_fields_sattigi_wrap"); //Fields wrapper
         var add_button_sattigi      = $(".add_field_sattigi_button"); //Add button ID
@@ -2153,7 +1805,6 @@
                 $(wrapper_sattigi).append('<div><input type="text" name="firmanin_sattigi_markalar_[]"/><a href="#" class="remove_field">Sil</a></div>'); //add input box
             }
         });
-
         $(wrapper_sattigi).on("click",".remove_field", function(e){ //user click on remove text
             e.preventDefault(); $(this).parent('div').remove(); x--;
         });
@@ -2171,9 +1822,7 @@
         });
         dolulukForm();
     });
-
     function GetIlce(il_id,Id) {
-
         if (il_id > 0) {
             if(Id == "il_id"){
                 $("#ilce_id").get(0).options.length = 0;
@@ -2188,7 +1837,6 @@
                 url: "{{asset('ajax-subcat')}}",
                 data:{il_id:il_id},
                 contentType: "application/json; charset=utf-8",
-
                 success: function(msg) {
                     if(Id == "il_id"){
                         $("#ilce_id").get(0).options.length = 0;
@@ -2231,17 +1879,13 @@
         if (ilce_id > 0) {
             $("#semt_id").get(0).options.length = 0;
             $("#semt_id").get(0).options[0] = new Option("Yükleniyor", "-1");
-
             $.ajax({
                 type: "GET",
                 url: "{{asset('ajax-subcatt?ilce_id=')}}"+ilce_id,
-
                 contentType: "application/json; charset=utf-8",
-
                 success: function(msg) {
                     $("#semt_id").get(0).options.length = 0;
                     $("#semt_id").get(0).options[0] = new Option("Seçiniz", "-1");
-
                     $.each(msg, function(index, semt) {
                         $("#semt_id").get(0).options[$("#semt_id").get(0).options.length] = new Option(semt.adi, semt.id);
                     });
@@ -2261,17 +1905,14 @@
         if (il_id > 0) {
             $("#ticaret_odasi").get(0).options.length = 0;
             $("#ticaret_odasi").get(0).options[0] = new Option("Yükleniyor", "-1");
-
             $.ajax({
                 type: "GET",
                 url: "{{asset('ticaret_odalari')}}",
                 data:{il_id:il_id},
                 contentType: "application/json; charset=utf-8",
-
                 success: function(msg) {
                     $("#ticaret_odasi").get(0).options.length = 0;
                     $("#ticaret_odasi").get(0).options[0] = new Option("Seçiniz", "-1");
-
                     $.each(msg, function(index, ticaret) {
                         $("#ticaret_odasi").get(0).options[$("#ticaret_odasi").get(0).options.length] = new Option(ticaret.adi, ticaret.id);
                     });
@@ -2291,17 +1932,14 @@
         if (il_id > 0) {
             $("#vergi_dairesi_id").get(0).options.length = 0;
             $("#vergi_dairesi_id").get(0).options[0] = new Option("Yükleniyor", "-1");
-
             $.ajax({
                 type: "GET",
                 url: "{{asset('vergi_daireleri')}}",
                 data:{il_id:il_id},
                 contentType: "application/json; charset=utf-8",
-
                 success: function(msg) {
                     $("#vergi_dairesi_id").get(0).options.length = 0;
                     $("#vergi_dairesi_id").get(0).options[0] = new Option("Seçiniz", "-1");
-
                     $.each(msg, function(index, vergi) {
                         $("#vergi_dairesi_id").get(0).options[$("#vergi_dairesi_id").get(0).options.length] = new Option(vergi.adi, vergi.id);
                     });
@@ -2321,6 +1959,7 @@
         GetIlce({{$firmaAdres->iller->id}},"il_id");
         GetSemt({{$firmaAdres->ilceler->id}});
         $("#il_id ").val({{$firmaAdres->iller->id}}).trigger("event");
+        console.log($("#ilce_id").val({{$firmaAdres->ilceler->id}}));
         $("#semt_id").val({{$firmaAdres->semtler->id}});
     }
     function populateTicaretDD(){
@@ -2336,7 +1975,6 @@
         $("#sirket_turu").val({{$firma->sirket_turu}});
         $("#yillik_cirosu").val("{{$firma->mali_bilgiler->yillik_cirosu}}");
         $("#vergi_dairesi_id").val({{$firma->mali_bilgiler->vergi_dairesi_id}});
-
         if( "{{$mali_bilgi}}" == "dolu" && "{{$checkboxCiro}}" == 0){
             $("#ciro_goster").prop('checked',false);
         }
@@ -2349,7 +1987,6 @@
     var imageWrapper = document.querySelector('.image-wrapper');
     var theImage = document.createElement('img');
     imageWrapper.innerHTML = '';
-
     var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
     if (regex.test(selectedImage.name.toLowerCase())) {
       if (typeof(FileReader) != 'undefined') {
@@ -2371,13 +2008,10 @@
       console.log('please select and image file');
     }
   });
-
     var total_row=44;
     var dolu_row=0;
     var total_yuzde=0;
-
 function dolulukForm(){
-
     var logo1 = document.getElementById("logo1").src;
     var ticaret_sicil_no=$('#ticaret_sicil_no').val();
     var ticaret_odasi= $('#odasi_id_td').text();
@@ -2405,7 +2039,6 @@ function dolulukForm(){
     var calisma_profili=$('#profil_id_td').text();
     var calisma_sayisi=$('#calisma_sayisi').val();
     var bilgilendirme_tercihi='dolu';
-
     if(logo1 != null ){
          dolu_row++
     }
@@ -2535,21 +2168,16 @@ function dolulukForm(){
     if(bilgilendirme_tercihi != ""){
          dolu_row++
     }
-
    var total_dolu_row=dolu_row;
-
    var hesaplama=(total_dolu_row/total_row)*100;
    total_yuzde=hesaplama.toFixed(0);
-
    funcDolulukKayıt()
 }
-
    function funcDolulukKayıt(){
     $.ajax({
         type:"POST",
         url: "{{asset('doluluk_orani')}}"+"/"+{{$firma->id}},
         data:{doluluk_orani:total_yuzde},
-
         cache: false,
         success: function(data){
            console.log(data);
@@ -2578,7 +2206,6 @@ $("#iletisim_kayit").submit(function(e)
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-
                         $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
@@ -2588,7 +2215,6 @@ $("#iletisim_kayit").submit(function(e)
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
@@ -2604,7 +2230,6 @@ $("#iletisim_kayit").submit(function(e)
    {
        var postData = $(this).serialize();
             var formURL = $(this).attr('action');
-
             $.ajax(
             {
                 beforeSend: function(){
@@ -2618,7 +2243,6 @@ $("#iletisim_kayit").submit(function(e)
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
@@ -2628,7 +2252,6 @@ $("#iletisim_kayit").submit(function(e)
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
@@ -2657,7 +2280,6 @@ $("#iletisim_kayit").submit(function(e)
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
@@ -2695,7 +2317,6 @@ $("#iletisim_kayit").submit(function(e)
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
@@ -2733,7 +2354,6 @@ $("#iletisim_kayit").submit(function(e)
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
@@ -2743,7 +2363,6 @@ $("#iletisim_kayit").submit(function(e)
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
@@ -2772,7 +2391,6 @@ $("#iletisim_kayit").submit(function(e)
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
@@ -2782,7 +2400,6 @@ $("#iletisim_kayit").submit(function(e)
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
@@ -2811,7 +2428,6 @@ $("#iletisim_kayit").submit(function(e)
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
@@ -2821,7 +2437,6 @@ $("#iletisim_kayit").submit(function(e)
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
@@ -2850,7 +2465,6 @@ $("#iletisim_kayit").submit(function(e)
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
@@ -2860,7 +2474,6 @@ $("#iletisim_kayit").submit(function(e)
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
@@ -2889,7 +2502,6 @@ $("#iletisim_kayit").submit(function(e)
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
@@ -2899,7 +2511,6 @@ $("#iletisim_kayit").submit(function(e)
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
@@ -2928,7 +2539,6 @@ $("#iletisim_kayit").submit(function(e)
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
@@ -2938,7 +2548,6 @@ $("#iletisim_kayit").submit(function(e)
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
@@ -2967,7 +2576,6 @@ $("#iletisim_kayit").submit(function(e)
                     console.log(data);
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
@@ -2977,7 +2585,6 @@ $("#iletisim_kayit").submit(function(e)
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id}, 5000);
                     }
                     else{
-
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"+"/"+firma_id }, 1000);
                     }
                         e.preventDefault();
@@ -2989,30 +2596,22 @@ $("#iletisim_kayit").submit(function(e)
             });
             e.preventDefault();
     });
-
-
     //TANITIM YAZISI SHOW JS
     $('#btn-add-tanitimyazisi').click(function(){
         $('#myModal-tanitimyazisi').modal('show');
     });
-
     //PROFIL FOTO SHOW JS
     $('#btn-add-image').click(function(){
         $('#myModal-image').modal('show');
     });
-
     //MALI BILGILER SHOW JS
     $('#btn-add-malibilgiler').click(function(){
         $('#myModal-malibilgiler').modal('show');
     });
 </script>
 @endsection
-<<<<<<< HEAD
-=======
-
 @section('sayfaSonu')
     <script src="{{asset('MetronicFiles/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('MetronicFiles/pages/scripts/dashboard.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('MetronicFiles/pages/scripts/profile.min.js')}}" type="text/javascript"></script>
 @endsection
->>>>>>> f141d08a387ab9a95723b4c89a7900ca5ba40072
