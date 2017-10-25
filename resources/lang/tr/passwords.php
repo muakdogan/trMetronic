@@ -15,7 +15,7 @@ return [
 
     'password' => 'Şifreler en az 6 karakterden oluşmalı ve kurallara uymalıdır.',
     'reset' => 'Şifreniz yeniden tanımlanmıştır!',
-    'sent' => 'Şifrenizi değiştimeniz için e-mail gönderilmiştir!',
+    'sent' => 'Şifrenizi değiştirmeniz için e-mail gönderilmiştir! Lütfen mailınızı kontrol edin.',
     'token' => 'Bu şifre yenileme anahtarı geçersizdir.',
     'user' => "Bu e-mail adresiyle kayıtlı bir kullanıcı bulunamadı.",
 

@@ -10,20 +10,16 @@
 <link href="{{asset('css/multi-select.css')}}" media="screen" rel="stylesheet" type="text/css"></link>
 <link href="{{asset('css/multiple-select.css')}}" rel="stylesheet"/>
 <style>
-
     .wrapper {
         padding: 25px;
     }
-
     .image-wrapper {
         padding: 5px;
     }
-
     .image-wrapper img {
         max-width:200px;
         height:200px;
     }
-
     .switch {
         position: relative;
         display: inline-block;
@@ -31,9 +27,7 @@
         height: 18px;
         margin-top: 8px;
     }
-
     .switch input {display:none;}
-
     .slider {
         position: absolute;
         cursor: pointer;
@@ -45,7 +39,6 @@
         -webkit-transition: .4s;
         transition: .4s;
     }
-
     .slider:before {
         position: absolute;
         content: "";
@@ -57,26 +50,21 @@
         -webkit-transition: .4s;
         transition: .4s;
     }
-
     input:checked + .slider {
         background-color: #2196F3;
     }
-
     input:focus + .slider {
         box-shadow: 0 0 1px #2196F3;
     }
-
     input:checked + .slider:before {
         -webkit-transform: translateX(26px);
         -ms-transform: translateX(26px);
         transform: translateX(26px);
     }
-
     /* Rounded sliders */
     .slider.round {
         border-radius: 34px;
     }
-
     .slider.round:before {
         border-radius: 50%;
     }
@@ -1613,7 +1601,6 @@
             multiple: true,
             multipleWidth: 100
     });
-
     var count = 0;
     $('#custom-headers').multiSelect({
         selectableHeader: "</i><input type='text'  class='search-input col-sm-12 search_icon' autocomplete='off' placeholder='Sektör Seçiniz'></input>",
@@ -1624,7 +1611,6 @@
               $selectionSearch = that.$selectionUl.prev(),
               selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
               selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
-
           that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
           .on('keydown', function(e){
             if (e.which === 40){
@@ -1632,18 +1618,14 @@
               return false;
             }
           });
-
         },
         afterSelect: function(values){
           count++;
-
           if(count>5){
               $('#custom-headers').multiSelect('deselect', values);
           }
           this.qs1.cache();
           this.qs2.cache();
-
-
         },
         afterDeselect: function(){
           count--;
@@ -1702,7 +1684,6 @@
             }
         }
     });
-
   $.validate({
     modules : 'location, date, security, file',
     onModulesLoaded : function() {
@@ -1715,14 +1696,11 @@
           if($(this).val() == falyAdi){
               $(this).prop("checked",true);
             }
-
       <?php } ?>
-
    });
   $('.firma_faaliyet_turu').click(function(){ ///////////faaliyet turu /////////////////
         var sonSecilen;
         var count=0;
-
         jQuery('.firma_faaliyet_turu:checked').each(function(){
             sonSecilen = $(this).val();
             count++;
@@ -1767,7 +1745,6 @@
         });
 */
         $("#calisma_gunleri").val({{$firma->firma_calisma_bilgileri->calisma_gunleri_id}});
-
         $("#ust_sektor").val({{$firma->ticari_bilgiler->ust_sektor}});
         $('[data-toggle="tooltip"]').tooltip();
         var arrayDepartman = new Array();
@@ -1778,7 +1755,6 @@
         var max_fields      = 10; //maximum input boxes allowed
         var wrapper         = $(".input_fields_wrap"); //Fields wrapper
         var add_button      = $(".add_field_button"); //Add button ID
-
         var x = 1; //initlal text box count
         $(add_button).click(function(e){ //on add input button click
             e.preventDefault();
@@ -1787,11 +1763,9 @@
                 $(wrapper).append('<div><input type="text" name="firmanin_urettigi_markalar[]"/><a href="#" class="remove_field">Sil</a></div>'); //add input box
             }
         });
-
         $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
             e.preventDefault(); $(this).parent('div').remove(); x--;
         });
-
         var s=1;
         var wrapper_sattigi         = $(".input_fields_sattigi_wrap"); //Fields wrapper
         var add_button_sattigi      = $(".add_field_sattigi_button"); //Add button ID
@@ -1802,7 +1776,6 @@
                 $(wrapper_sattigi).append('<div><input type="text" name="firmanin_sattigi_markalar[]"/><a href="#" class="remove_field">Sil</a></div>'); //add input box
             }
         });
-
         $(wrapper_sattigi).on("click",".remove_field", function(e){ //user click on remove text
             e.preventDefault(); $(this).parent('div').remove(); x--;
         });
@@ -1820,9 +1793,7 @@
         });
         dolulukForm();
     });
-
     function GetIlce(il_id,Id) {
-
         if (il_id > 0) {
             if(Id == "il_id"){
                 $("#ilce_id").get(0).options.length = 0;
@@ -1837,7 +1808,6 @@
                 url: "{{asset('ajax-subcat')}}",
                 data:{il_id:il_id},
                 contentType: "application/json; charset=utf-8",
-
                 success: function(msg) {
                     if(Id == "il_id"){
                         $("#ilce_id").get(0).options.length = 0;
@@ -1880,17 +1850,13 @@
         if (ilce_id > 0) {
             $("#semt_id").get(0).options.length = 0;
             $("#semt_id").get(0).options[0] = new Option("Yükleniyor", "-1");
-
             $.ajax({
                 type: "GET",
                 url: "{{asset('ajax-subcatt?ilce_id=')}}"+ilce_id,
-
                 contentType: "application/json; charset=utf-8",
-
                 success: function(msg) {
                     $("#semt_id").get(0).options.length = 0;
                     $("#semt_id").get(0).options[0] = new Option("Seçiniz", "-1");
-
                     $.each(msg, function(index, semt) {
                         $("#semt_id").get(0).options[$("#semt_id").get(0).options.length] = new Option(semt.adi, semt.id);
                     });
@@ -1910,17 +1876,14 @@
         if (il_id > 0) {
             $("#ticaret_odasi").get(0).options.length = 0;
             $("#ticaret_odasi").get(0).options[0] = new Option("Yükleniyor", "-1");
-
             $.ajax({
                 type: "GET",
                 url: "{{asset('ticaret_odalari')}}",
                 data:{il_id:il_id},
                 contentType: "application/json; charset=utf-8",
-
                 success: function(msg) {
                     $("#ticaret_odasi").get(0).options.length = 0;
                     $("#ticaret_odasi").get(0).options[0] = new Option("Seçiniz", "-1");
-
                     $.each(msg, function(index, ticaret) {
                         $("#ticaret_odasi").get(0).options[$("#ticaret_odasi").get(0).options.length] = new Option(ticaret.adi, ticaret.id);
                     });
@@ -1940,17 +1903,14 @@
         if (il_id > 0) {
             $("#vergi_dairesi_id").get(0).options.length = 0;
             $("#vergi_dairesi_id").get(0).options[0] = new Option("Yükleniyor", "-1");
-
             $.ajax({
                 type: "GET",
                 url: "{{asset('vergi_daireleri')}}",
                 data:{il_id:il_id},
                 contentType: "application/json; charset=utf-8",
-
                 success: function(msg) {
                     $("#vergi_dairesi_id").get(0).options.length = 0;
                     $("#vergi_dairesi_id").get(0).options[0] = new Option("Seçiniz", "-1");
-
                     $.each(msg, function(index, vergi) {
                         $("#vergi_dairesi_id").get(0).options[$("#vergi_dairesi_id").get(0).options.length] = new Option(vergi.adi, vergi.id);
                     });
@@ -2007,7 +1967,6 @@
     var imageWrapper = document.querySelector('.image-wrapper');
     var theImage = document.createElement('img');
     imageWrapper.innerHTML = '';
-
     var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
     if (regex.test(selectedImage.name.toLowerCase())) {
       if (typeof(FileReader) != 'undefined') {
@@ -2029,13 +1988,10 @@
       console.log('please select and image file');
     }
   });
-
     var total_row=44;
     var dolu_row=0;
     var total_yuzde=0;
-
 function dolulukForm(){
-
     var logo1 = document.getElementById("logo1").src;
     var ticaret_sicil_no=$('#ticaret_sicil_no').val();
     var ticaret_odasi= $('#odasi_id_td').text();
@@ -2063,7 +2019,6 @@ function dolulukForm(){
     var calisma_profili=$('#profil_id_td').text();
     var calisma_sayisi=$('#calisma_sayisi').val();
     var bilgilendirme_tercihi='dolu';
-
     if(logo1 != null ){
          dolu_row++
     }
@@ -2193,21 +2148,18 @@ function dolulukForm(){
     if(bilgilendirme_tercihi != ""){
          dolu_row++
     }
-
    var total_dolu_row=dolu_row;
-
    var hesaplama=(total_dolu_row/total_row)*100;
    total_yuzde=hesaplama.toFixed(0);
 
+
    //funcDolulukKayıt()
 }
-
    function funcDolulukKayıt(){
     $.ajax({
         type:"POST",
         url: "{{asset('doluluk_orani')}}"+"/"+"{{$firma->id}}",
         data:{doluluk_orani:total_yuzde},
-
         cache: false,
         success: function(data){
            console.log(data);
@@ -2327,6 +2279,7 @@ $("#ticari_kayit").submit(function(e) {
         {
             alert(textStatus + "," + errorThrown);
         }
+
     });
     e.preventDefault();*/
 });
@@ -2347,7 +2300,6 @@ $("#ticari_kayit").submit(function(e) {
                 {
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
@@ -2384,7 +2336,6 @@ $("#ticari_kayit").submit(function(e) {
                 {
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
@@ -2394,7 +2345,6 @@ $("#ticari_kayit").submit(function(e) {
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
                     }
                     else{
-
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
                     }
                         e.preventDefault();
@@ -2422,7 +2372,6 @@ $("#ticari_kayit").submit(function(e) {
                 {
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
@@ -2432,7 +2381,6 @@ $("#ticari_kayit").submit(function(e) {
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
                     }
                     else{
-
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
                     }
                         e.preventDefault();
@@ -2460,7 +2408,6 @@ $("#ticari_kayit").submit(function(e) {
                 {
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
@@ -2470,7 +2417,6 @@ $("#ticari_kayit").submit(function(e) {
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
                     }
                     else{
-
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
                     }
                         e.preventDefault();
@@ -2535,7 +2481,6 @@ $("#ticari_kayit").submit(function(e) {
                 {
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
@@ -2545,7 +2490,6 @@ $("#ticari_kayit").submit(function(e) {
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
                     }
                     else{
-
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
                     }
                         e.preventDefault();
@@ -2574,7 +2518,6 @@ $("#ticari_kayit").submit(function(e) {
                 {
                     $('.ajax-loader').css("visibility", "hidden");
                     if(data=="error"){
-
                          $('#mesaj').bPopup({
                             speed: 650,
                             transition: 'slideIn',
@@ -2584,7 +2527,6 @@ $("#ticari_kayit").submit(function(e) {
                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
                     }
                     else{
-
                          setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
                     }
                         e.preventDefault();
@@ -2820,7 +2762,6 @@ $('.open-modal-gecmis').click(function(){
 
 </script>
 @endsection
-
 @section('sayfaSonu')
     <script src="{{asset('MetronicFiles/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('MetronicFiles/pages/scripts/dashboard.min.js')}}" type="text/javascript"></script>

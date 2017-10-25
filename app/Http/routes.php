@@ -150,9 +150,13 @@ Route::post('/doluluk_orani/{id}', function (Request $request,$id) {
 
 });
 
-Route::get('/', function () {
-  return view('Anasayfa.temelAnasayfa');
+Route::get('/', function() {
+  return view('FrontEnd.index');
 });
+
+/*Route::get('/', function () {
+  return view('Anasayfa.temelAnasayfa');
+});*/
 
 Route::get('/admin/firmaList', 'AdminController@firmaList');
 
@@ -285,7 +289,7 @@ Route::get('/firmaKayit', function () {
    $sektorler=DB::table('sektorler')->orderBy('adi','ASC')->get();
 
 
-  return view('Firma.genFirmaKayit')->with('iller', $iller)->with('sektorler',$sektorler)->with('iller_query',$iller_query);
+  return view('FrontEnd.firmaKayit')->with('iller', $iller)->with('sektorler',$sektorler)->with('iller_query',$iller_query);
   // Önceki Hali "Firma.firmaKayit" Güncel Hali "Firma.genFirmaKayit"
 });
 
@@ -296,7 +300,10 @@ Route::get('/yeniFirmaKaydet' ,function () {
   return view('Firma.yeniFirmaKaydet')->with('iller', $iller)->with('sektorler',$sektorler)->with('kullanici_id',$kullanici_id);
 });
 
-Route::get('/firmaIslemleri/{id}',['middleware'=>'auth', function ($id) {
+Route::get('/firmaIslemleri/{id?}',['middleware'=>'auth', function ($id = null) {
+  //firma işlemlerindeki parametre opsiyonel yapıldı, eğer parametre geçirilmiyorsa sessiondan alınarak atama yapılıyor
+  if($id == null && (session()->has('firma_id')))
+    $id = session()->get('firma_id');
   $firma = Firma::find($id);
 
   if (Gate::denies('show', $firma)) {
