@@ -141,15 +141,6 @@ Route::get('/findChildrenTree/{sektor_id}', function ($sektor_id) {
   return view('admin.dashboard')->with('firmalar',$firmalar);
 });*/
 
-Route::post('/doluluk_orani/{id}', function (Request $request,$id) {
-  $doluluk_orani = Input::get('doluluk_orani');
-  $firma = Firma::find($id);
-  $firma ->doluluk_orani=$doluluk_orani;
-  $firma ->save();
-  return Response::json($firma);
-
-});
-
 Route::get('/', function () {
   return view('Anasayfa.temelAnasayfa');
 });

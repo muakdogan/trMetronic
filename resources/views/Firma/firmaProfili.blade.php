@@ -92,6 +92,7 @@
     }
 </style>
 <link href="{{asset('MetronicFiles/pages/css/profile.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('MetronicFiles/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -99,9 +100,6 @@
     <script src="{{asset('js/jquery.multi-select.js')}}" type="text/javascript"></script>
     <script type="text/javascript" src="{{asset('js/jquery.quicksearch.js')}}"></script>
     <script src="{{asset('js/multiple-select.js')}}"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
-
     <div class="row">
         <div class="col-md-12">
             <!-- BEGIN PROFILE CONTENT -->
@@ -1605,1220 +1603,984 @@
         </div>
     </div>
 
-   <script src="{{asset('js/selectDD.js')}}"></script>
-   <script src="{{asset('js/jquery.bpopup-0.11.0.min.js')}}"></script>
-<script>
-    $("#firma_departmanlari").multipleSelect({
+    <script src="{{asset('js/selectDD.js')}}"></script>
+    <script src="{{asset('js/jquery.bpopup-0.11.0.min.js')}}"></script>
+    <script>
+        $("#firma_departmanlari").multipleSelect({
             width: 260,
             multiple: true,
             multipleWidth: 100
-    });
-
-    var count = 0;
-    $('#custom-headers').multiSelect({
-        selectableHeader: "</i><input type='text'  class='search-input col-sm-12 search_icon' autocomplete='off' placeholder='Sektör Seçiniz'></input>",
-        selectionHeader: "<p style='font-size:12px;color:red'>Max 5 sektör</p>",
-        afterInit: function(ms){
-          var that = this,
-              $selectableSearch = that.$selectableUl.prev(),
-              $selectionSearch = that.$selectionUl.prev(),
-              selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
-              selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
-
-          that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
-          .on('keydown', function(e){
-            if (e.which === 40){
-              that.$selectableUl.focus();
-              return false;
-            }
-          });
-
-        },
-        afterSelect: function(values){
-          count++;
-
-          if(count>5){
-              $('#custom-headers').multiSelect('deselect', values);
-          }
-          this.qs1.cache();
-          this.qs2.cache();
-
-
-        },
-        afterDeselect: function(){
-          count--;
-          this.qs1.cache();
-          this.qs2.cache();
-        }
-    });
-    /////////////Bilgilendirme Checkbox buton kontrolü
-    $('.bilgilendirme').click(function(){
-        jQuery('.bilgilendirme').each(function(){
-            $(this).attr("disabled",false);
         });
-        jQuery('.bilgilendirme:checked').each(function(){
-            if($(this).val() == "Bilgilendirme İstemiyorum"){
-                jQuery('.bilgilendirme').each(function(){
-                    if($(this).val() != "Bilgilendirme İstemiyorum"){
-                        $(this).prop("checked",false);
-                        $(this).attr("disabled",true);
-                    }
-                });
+
+        var count = 0;
+        $('#custom-headers').multiSelect({
+            selectableHeader: "</i><input type='text'  class='search-input col-sm-12 search_icon' autocomplete='off' placeholder='Sektör Seçiniz'></input>",
+            selectionHeader: "<p style='font-size:12px;color:red'>Max 5 sektör</p>",
+            afterInit: function(ms){
+                var that = this,
+                    $selectableSearch = that.$selectableUl.prev(),
+                    $selectionSearch = that.$selectionUl.prev(),
+                    selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
+                    selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
+
+                that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+                    .on('keydown', function(e){
+                        if (e.which === 40){
+                            that.$selectableUl.focus();
+                            return false;
+                        }
+                    });
+
+            },
+            afterSelect: function(values){
+                count++;
+
+                if(count>5){
+                    $('#custom-headers').multiSelect('deselect', values);
+                }
+                this.qs1.cache();
+                this.qs2.cache();
+
+
+            },
+            afterDeselect: function(){
+                count--;
+                this.qs1.cache();
+                this.qs2.cache();
             }
         });
-    });
-    var kontrol=0;
-    jQuery('.bilgilendirmeOnTaraf').each(function(){
-        if($(this).val() == "Sms"){
-            if("{{$firma->sms}}" == "1"){
+        /////////////Bilgilendirme Checkbox buton kontrolü
+        $('.bilgilendirme').click(function(){
+            jQuery('.bilgilendirme').each(function(){
+                $(this).attr("disabled",false);
+            });
+            jQuery('.bilgilendirme:checked').each(function(){
+                if($(this).val() == "Bilgilendirme İstemiyorum"){
+                    jQuery('.bilgilendirme').each(function(){
+                        if($(this).val() != "Bilgilendirme İstemiyorum"){
+                            $(this).prop("checked",false);
+                            $(this).attr("disabled",true);
+                        }
+                    });
+                }
+            });
+        });
+        var kontrol=0;
+        jQuery('.bilgilendirmeOnTaraf').each(function(){
+            if($(this).val() == "Sms"){
+                if("{{$firma->sms}}" == "1"){
+                    $(this).prop("checked",true);
+                    kontrol=1;
+                }
+                else{
+                    $(this).prop("checked",false);
+                }
+            }
+            else if($(this).val() == "Mail"){
+                if("{{$firma->mail}}" == "1"){
+                    $(this).prop("checked",true);
+                    kontrol=1;
+                }
+                else{
+                    $(this).prop("checked",false);
+                }
+            }
+            else if($(this).val() == "Telefon"){
+                if("{{$firma->telefon}}" == "1"){
+                    $(this).prop("checked",true);
+                    kontrol=1;
+                }
+                else{
+                    $(this).prop("checked",false);
+                }
+            }
+            else{
+                if(kontrol == 0){
+                    $(this).prop("checked",true);
+                }
+            }
+        });
+
+        $.validate({
+            modules : 'location, date, security, file',
+            onModulesLoaded : function() {
+                $('#country').suggestCountry();
+            }
+        });
+        jQuery('.firma_faaliyet_turu').each(function(){
+                <?php foreach ($firma->faaliyetler as $flyt){ ?>
+            var falyAdi = "{{$flyt->id}}";
+            if($(this).val() == falyAdi){
                 $(this).prop("checked",true);
-                kontrol=1;
-            }
-            else{
-                $(this).prop("checked",false);
-            }
-        }
-        else if($(this).val() == "Mail"){
-            if("{{$firma->mail}}" == "1"){
-                $(this).prop("checked",true);
-                kontrol=1;
-            }
-            else{
-                $(this).prop("checked",false);
-            }
-        }
-        else if($(this).val() == "Telefon"){
-            if("{{$firma->telefon}}" == "1"){
-                $(this).prop("checked",true);
-                kontrol=1;
-            }
-            else{
-                $(this).prop("checked",false);
-            }
-        }
-        else{
-            if(kontrol == 0){
-                $(this).prop("checked",true);
-            }
-        }
-    });
-
-  $.validate({
-    modules : 'location, date, security, file',
-    onModulesLoaded : function() {
-      $('#country').suggestCountry();
-    }
-  });
-  jQuery('.firma_faaliyet_turu').each(function(){
-      <?php foreach ($firma->faaliyetler as $flyt){ ?>
-              var falyAdi = "{{$flyt->id}}";
-          if($(this).val() == falyAdi){
-              $(this).prop("checked",true);
             }
 
-      <?php } ?>
+            <?php } ?>
 
-   });
-  $('.firma_faaliyet_turu').click(function(){ ///////////faaliyet turu /////////////////
-        var sonSecilen;
-        var count=0;
-
-        jQuery('.firma_faaliyet_turu:checked').each(function(){
-            sonSecilen = $(this).val();
-            count++;
         });
-        if(count == 1){
-            if(sonSecilen == 1){
-                $('#sattigiDiv').hide();
-            }
-            else{
-                $('#uretilenDiv').hide();
-            }
-        }else{
-            $('#sattigiDiv').show();
-            $('#uretilenDiv').show();
-        }
-    });
-  $('#presentation').restrictLength( $('#pres-max-length') );
-    $(document).ready(function() {
-        CKEDITOR.config.autoParagraph = false;
-         /*$.fn.datepicker.dates['tr'] = {
-            days: ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"],
-            daysShort: ["Pz", "Pzt", "Sal", "Çrş", "Prş", "Cu", "Cts", "Pz"],
-            daysMin: ["Pz", "Pzt", "Sa", "Çr", "Pr", "Cu", "Ct", "Pz"],
-            months: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
-            monthsShort: ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"],
-            today: "Bugün"
-	        };
-        $('.datepicker').datepicker({
-            language: 'tr'
-        });
-        var date_input=$('input[class="form-control date"]'); //our date input has the name "date"
-        var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
-        date_input.datepicker({
-            format: 'yyyy',
-            language:"tr",
-            viewMode:"years",
-            minViewMode:"years",
-            container: container,
-            weekStart:1,
-            todayHighlight: true,
-            autoclose: true
-        });
-*/
-        $("#calisma_gunleri").val({{$firma->firma_calisma_bilgileri->calisma_gunleri_id}});
+        $('.firma_faaliyet_turu').click(function(){ ///////////faaliyet turu /////////////////
+            var sonSecilen;
+            var count=0;
 
-        $("#ust_sektor").val({{$firma->ticari_bilgiler->ust_sektor}});
-        $('[data-toggle="tooltip"]').tooltip();
-        var arrayDepartman = new Array();
-        <?php foreach($firma->departmanlar as $departman){ ?>
-             arrayDepartman.push({{$departman->id}});
-        <?php } ?>
-        $("#firma_departmanlari").multipleSelect("setSelects", arrayDepartman);
-        var max_fields      = 10; //maximum input boxes allowed
-        var wrapper         = $(".input_fields_wrap"); //Fields wrapper
-        var add_button      = $(".add_field_button"); //Add button ID
-
-        var x = 1; //initlal text box count
-        $(add_button).click(function(e){ //on add input button click
-            e.preventDefault();
-            if(x < max_fields){ //max input box allowed
-                x++; //text box increment
-                $(wrapper).append('<div><input type="text" name="firmanin_urettigi_markalar[]"/><a href="#" class="remove_field">Sil</a></div>'); //add input box
+            jQuery('.firma_faaliyet_turu:checked').each(function(){
+                sonSecilen = $(this).val();
+                count++;
+            });
+            if(count == 1){
+                if(sonSecilen == 1){
+                    $('#sattigiDiv').hide();
+                }
+                else{
+                    $('#uretilenDiv').hide();
+                }
+            }else{
+                $('#sattigiDiv').show();
+                $('#uretilenDiv').show();
             }
         });
+        $('#presentation').restrictLength( $('#pres-max-length') );
+        $(document).ready(function() {
+            CKEDITOR.config.autoParagraph = false;
+            $('.datepicker').datepicker();
+            $("#calisma_gunleri").val({{$firma->firma_calisma_bilgileri->calisma_gunleri_id}});
+            $("#ust_sektor").val({{$firma->ticari_bilgiler->ust_sektor}});
+            $('[data-toggle="tooltip"]').tooltip();
+            var arrayDepartman = new Array();
+            <?php foreach($firma->departmanlar as $departman){ ?>
+arrayDepartman.push({{$departman->id}});
+            <?php } ?>
+$("#firma_departmanlari").multipleSelect("setSelects", arrayDepartman);
+            var max_fields      = 10; //maximum input boxes allowed
+            var wrapper         = $(".input_fields_wrap"); //Fields wrapper
+            var add_button      = $(".add_field_button"); //Add button ID
 
-        $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-            e.preventDefault(); $(this).parent('div').remove(); x--;
+            var x = 1; //initlal text box count
+            $(add_button).click(function(e){ //on add input button click
+                e.preventDefault();
+                if(x < max_fields){ //max input box allowed
+                    x++; //text box increment
+                    $(wrapper).append('<div><input type="text" name="firmanin_urettigi_markalar[]"/><a href="#" class="remove_field">Sil</a></div>'); //add input box
+                }
+            });
+
+            $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+                e.preventDefault(); $(this).parent('div').remove(); x--;
+            });
+
+            var s=1;
+            var wrapper_sattigi         = $(".input_fields_sattigi_wrap"); //Fields wrapper
+            var add_button_sattigi      = $(".add_field_sattigi_button"); //Add button ID
+            $(add_button_sattigi).click(function(e){ //on add input button click
+                e.preventDefault();
+                if(s < max_fields){ //max input box allowed
+                    s++; //text box increment
+                    $(wrapper_sattigi).append('<div><input type="text" name="firmanin_sattigi_markalar[]"/><a href="#" class="remove_field">Sil</a></div>'); //add input box
+                }
+            });
+
+            $(wrapper_sattigi).on("click",".remove_field", function(e){ //user click on remove text
+                e.preventDefault(); $(this).parent('div').remove(); x--;
+            });
+            $('.il_id').on('change', function (e) {
+                var il_id = e.target.value;
+                GetIlce(il_id,e.target.id);
+                GetVergi(il_id);
+                //popDropDown('ilce_id', 'ajax-subcat?il_id=', il_id);
+                //$("#semt_id")[0].selectedIndex=0;
+            });
+            $('#ilce_id').on('change', function (e) {
+                var ilce_id = e.target.value;
+                GetSemt(ilce_id);
+                //popDropDown('semt_id', 'ajax-subcatt?ilce_id=', ilce_id);
+            });
         });
 
-        var s=1;
-        var wrapper_sattigi         = $(".input_fields_sattigi_wrap"); //Fields wrapper
-        var add_button_sattigi      = $(".add_field_sattigi_button"); //Add button ID
-        $(add_button_sattigi).click(function(e){ //on add input button click
-            e.preventDefault();
-            if(s < max_fields){ //max input box allowed
-                s++; //text box increment
-                $(wrapper_sattigi).append('<div><input type="text" name="firmanin_sattigi_markalar[]"/><a href="#" class="remove_field">Sil</a></div>'); //add input box
-            }
-        });
+        function GetIlce(il_id,Id) {
+            if (il_id > 0) {
+                if(Id == "il_id"){
+                    $("#ilce_id").get(0).options.length = 0;
+                    $("#ilce_id").get(0).options[0] = new Option("Yükleniyor", "-1");
+                }
+                else{
+                    $("#mali_ilce_id").get(0).options.length = 0;
+                    $("#mali_ilce_id").get(0).options[0] = new Option("Yükleniyor", "-1");
+                }
+                $.ajax({
+                    type: "GET",
+                    url: "{{asset('ajax-subcat')}}",
+                    data:{il_id:il_id},
+                    contentType: "application/json; charset=utf-8",
 
-        $(wrapper_sattigi).on("click",".remove_field", function(e){ //user click on remove text
-            e.preventDefault(); $(this).parent('div').remove(); x--;
-        });
-        $('.il_id').on('change', function (e) {
-            var il_id = e.target.value;
-            GetIlce(il_id,e.target.id);
-            GetVergi(il_id);
-            //popDropDown('ilce_id', 'ajax-subcat?il_id=', il_id);
-            //$("#semt_id")[0].selectedIndex=0;
-        });
-        $('#ilce_id').on('change', function (e) {
-            var ilce_id = e.target.value;
-            GetSemt(ilce_id);
-            //popDropDown('semt_id', 'ajax-subcatt?ilce_id=', ilce_id);
-        });
-        dolulukForm();
-    });
-
-    function GetIlce(il_id,Id) {
-
-        if (il_id > 0) {
-            if(Id == "il_id"){
-                $("#ilce_id").get(0).options.length = 0;
-                $("#ilce_id").get(0).options[0] = new Option("Yükleniyor", "-1");
-            }
-            else{
-                $("#mali_ilce_id").get(0).options.length = 0;
-                $("#mali_ilce_id").get(0).options[0] = new Option("Yükleniyor", "-1");
-            }
-            $.ajax({
-                type: "GET",
-                url: "{{asset('ajax-subcat')}}",
-                data:{il_id:il_id},
-                contentType: "application/json; charset=utf-8",
-
-                success: function(msg) {
-                    if(Id == "il_id"){
-                        $("#ilce_id").get(0).options.length = 0;
-                        $("#ilce_id").get(0).options[0] = new Option("Seçiniz", "-1");
-                    }else{
-                        $("#mali_ilce_id").get(0).options.length = 0;
-                        $("#mali_ilce_id").get(0).options[0] = new Option("Seçiniz", "-1");
-                    }
-                    $.each(msg, function(index, ilce) {
+                    success: function(msg) {
                         if(Id == "il_id"){
-                            $("#ilce_id").get(0).options[$("#ilce_id").get(0).options.length] = new Option(ilce.adi, ilce.id);
+                            $("#ilce_id").get(0).options.length = 0;
+                            $("#ilce_id").get(0).options[0] = new Option("Seçiniz", "-1");
+                        }else{
+                            $("#mali_ilce_id").get(0).options.length = 0;
+                            $("#mali_ilce_id").get(0).options[0] = new Option("Seçiniz", "-1");
+                        }
+                        $.each(msg, function(index, ilce) {
+                            if(Id == "il_id"){
+                                $("#ilce_id").get(0).options[$("#ilce_id").get(0).options.length] = new Option(ilce.adi, ilce.id);
+                            }
+                            else{
+                                $("#mali_ilce_id").get(0).options[$("#mali_ilce_id").get(0).options.length] = new Option(ilce.adi, ilce.id);
+                            }
+                        });
+                    },
+                    async: false,
+                    error: function() {
+                        if(Id == "il_id"){
+                            $("#ilce_id").get(0).options.length = 0;
                         }
                         else{
-                            $("#mali_ilce_id").get(0).options[$("#mali_ilce_id").get(0).options.length] = new Option(ilce.adi, ilce.id);
+                            $("#mali_ilce_id").get(0).options.length = 0;
                         }
-                    });
-                },
-                async: false,
-                error: function() {
-                    if(Id == "il_id"){
-                        $("#ilce_id").get(0).options.length = 0;
+                        alert("İlçeler yükelenemedi!!!");
                     }
-                    else{
-                        $("#mali_ilce_id").get(0).options.length = 0;
+                });
+            }
+            else {
+                if(Id == "il_id"){
+                    $("#ilce_id").get(0).options.length = 0;
+                }
+                else{
+                    $("#mali_ilce_id").get(0).options.length = 0;
+                }
+            }
+        }
+        function GetSemt(ilce_id) {
+            if (ilce_id > 0) {
+                $("#semt_id").get(0).options.length = 0;
+                $("#semt_id").get(0).options[0] = new Option("Yükleniyor", "-1");
+
+                $.ajax({
+                    type: "GET",
+                    url: "{{asset('ajax-subcatt?ilce_id=')}}"+ilce_id,
+
+                    contentType: "application/json; charset=utf-8",
+
+                    success: function(msg) {
+                        $("#semt_id").get(0).options.length = 0;
+                        $("#semt_id").get(0).options[0] = new Option("Seçiniz", "-1");
+
+                        $.each(msg, function(index, semt) {
+                            $("#semt_id").get(0).options[$("#semt_id").get(0).options.length] = new Option(semt.adi, semt.id);
+                        });
+                    },
+                    async: false,
+                    error: function() {
+                        $("#semt_id").get(0).options.length = 0;
+                        alert("Semtler yükelenemedi!!!");
                     }
-                    alert("İlçeler yükelenemedi!!!");
-                }
-            });
-        }
-        else {
-            if(Id == "il_id"){
-                $("#ilce_id").get(0).options.length = 0;
-            }
-            else{
-                $("#mali_ilce_id").get(0).options.length = 0;
-            }
-        }
-    }
-    function GetSemt(ilce_id) {
-        if (ilce_id > 0) {
-            $("#semt_id").get(0).options.length = 0;
-            $("#semt_id").get(0).options[0] = new Option("Yükleniyor", "-1");
-
-            $.ajax({
-                type: "GET",
-                url: "{{asset('ajax-subcatt?ilce_id=')}}"+ilce_id,
-
-                contentType: "application/json; charset=utf-8",
-
-                success: function(msg) {
-                    $("#semt_id").get(0).options.length = 0;
-                    $("#semt_id").get(0).options[0] = new Option("Seçiniz", "-1");
-
-                    $.each(msg, function(index, semt) {
-                        $("#semt_id").get(0).options[$("#semt_id").get(0).options.length] = new Option(semt.adi, semt.id);
-                    });
-                },
-                async: false,
-                error: function() {
-                    $("#semt_id").get(0).options.length = 0;
-                    alert("Semtler yükelenemedi!!!");
-                }
-            });
-        }
-        else {
-            $("#semt_id").get(0).options.length = 0;
-        }
-    }
-    function GetTicaret(il_id) {
-        if (il_id > 0) {
-            $("#ticaret_odasi").get(0).options.length = 0;
-            $("#ticaret_odasi").get(0).options[0] = new Option("Yükleniyor", "-1");
-
-            $.ajax({
-                type: "GET",
-                url: "{{asset('ticaret_odalari')}}",
-                data:{il_id:il_id},
-                contentType: "application/json; charset=utf-8",
-
-                success: function(msg) {
-                    $("#ticaret_odasi").get(0).options.length = 0;
-                    $("#ticaret_odasi").get(0).options[0] = new Option("Seçiniz", "-1");
-
-                    $.each(msg, function(index, ticaret) {
-                        $("#ticaret_odasi").get(0).options[$("#ticaret_odasi").get(0).options.length] = new Option(ticaret.adi, ticaret.id);
-                    });
-                },
-                async: false,
-                error: function() {
-                    $("#ticaret_odasi").get(0).options.length = 0;
-                    alert("Vergi Daireleri yükelenemedi!!!");
-                }
-            });
-        }
-        else {
-            $("#ticaret_odasi").get(0).options.length = 0;
-        }
-    }
-    function GetVergi(il_id) {
-        if (il_id > 0) {
-            $("#vergi_dairesi_id").get(0).options.length = 0;
-            $("#vergi_dairesi_id").get(0).options[0] = new Option("Yükleniyor", "-1");
-
-            $.ajax({
-                type: "GET",
-                url: "{{asset('vergi_daireleri')}}",
-                data:{il_id:il_id},
-                contentType: "application/json; charset=utf-8",
-
-                success: function(msg) {
-                    $("#vergi_dairesi_id").get(0).options.length = 0;
-                    $("#vergi_dairesi_id").get(0).options[0] = new Option("Seçiniz", "-1");
-
-                    $.each(msg, function(index, vergi) {
-                        $("#vergi_dairesi_id").get(0).options[$("#vergi_dairesi_id").get(0).options.length] = new Option(vergi.adi, vergi.id);
-                    });
-                },
-                async: false,
-                error: function() {
-                    $("#vergi_dairesi_id").get(0).options.length = 0;
-                    alert("Vergi Daireleri yükelenemedi!!!");
-                }
-            });
-        }
-        else {
-            $("#vergi_dairesi_id").get(0).options.length = 0;
-        }
-    }
-    function populateDD(){
-        GetIlce({{$firmaAdres->iller->id}},"il_id");
-        GetSemt({{$firmaAdres->ilceler->id}});
-        $("#il_id ").val({{$firmaAdres->iller->id}}).trigger("event");
-        console.log($("#ilce_id").val({{$firmaAdres->ilceler->id}}));
-        $("#semt_id").val({{$firmaAdres->semtler->id}});
-    }
-    function populateTicaretDD(){
-        GetTicaret({{$firmaFatura->iller->id}});
-        $("#ticaret_odasi").val({{$firma->ticari_bilgiler->tic_oda_id}});
-    }
-    function populateMaliDD(){
-        var firmaFatura_il_id = "{{$firmaFatura->iller->id}}";
-        GetIlce(firmaFatura_il_id,"mali_il_id");
-        GetVergi(firmaFatura_il_id);
-        $("#mali_il_id").val({{$firmaFatura->iller->id}});
-        $("#mali_ilce_id").val({{$firmaFatura->ilceler->id}});
-        $("#sirket_turu").val({{$firma->sirket_turu}});
-        $("#yillik_cirosu").val("{{$firma->mali_bilgiler->yillik_cirosu}}");
-        $("#vergi_dairesi_id").val({{$firma->mali_bilgiler->vergi_dairesi_id}});
-
-        if("{{$firma->mali_bilgiler->ciro_goster}}" == "1"){
-            $("#ciro_goster").prop('checked',true);
-        }
-        else{
-            $("#ciro_goster").prop('checked',false);
-        }
-
-        if("{{$firma->mali_bilgiler->sermaye_goster}}" == "1"){
-            $("#sermaye_goster").prop('checked',true);
-        }
-        else{
-            $("#sermaye_goster").prop('checked',false);
-        }
-    }
-
-    $('#addImage').on('change', function(evt) {
-    var selectedImage = evt.currentTarget.files[0];
-    var imageWrapper = document.querySelector('.image-wrapper');
-    var theImage = document.createElement('img');
-    imageWrapper.innerHTML = '';
-
-    var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
-    if (regex.test(selectedImage.name.toLowerCase())) {
-      if (typeof(FileReader) != 'undefined') {
-        var reader = new FileReader();
-        reader.onload = function(e) {
-            theImage.id = 'new-selected-image';
-            theImage.src = e.target.result;
-            imageWrapper.appendChild(theImage);
-          }
-          //
-        reader.readAsDataURL(selectedImage);
-      } else {
-        //-- Let the user knwo they cannot peform this as browser out of date
-        console.log('browser support issue');
-      }
-    } else {
-      //-- no image so let the user knwo we need one...
-      $(this).prop('value', null);
-      console.log('please select and image file');
-    }
-  });
-
-    var total_row=44;
-    var dolu_row=0;
-    var total_yuzde=0;
-
-function dolulukForm(){
-
-    var logo1 = document.getElementById("logo1").src;
-    var ticaret_sicil_no=$('#ticaret_sicil_no').val();
-    var ticaret_odasi= $('#odasi_id_td').text();
-    var ust_sektor= $('#ust_id_td').text();
-    var faaliyet_sektorleri=$('#dfaaliyet_id_td').text();
-    var firma_departmanlari=$('#departman_id_td').text();
-    var kurulus_tarihi=$('#kurulus_tarihi').val();
-    var firma_faaliyet_turu=$('#faaliyet_id_td').text();
-    var firmanin_urettigi_markalar=$('#urettigi_id_td').text();
-    var firmanin_sattigi_markalar=$('#sattıgı_id_td').text();
-    var kalite_belgeleri=$('#kalite_id_td').text();
-    var belge_no=$('#belge_no').val();
-    var ref_turu= $('#ref_turu_id_td').text();
-    var ref_firma_adi=$('#ref_firma_adi').val();
-    var yapilan_isin_adi=$('#yapilan_isin_adi').val();
-    var isin_turu= $('#is_turu_id_td').text();
-    var is_yili=$('#is_yili').val();
-    var calisma_suresi=$('#calısma_suresi').val();
-    var yetkili_kisi_adi=$('#yetkili_kisi_adi').val();
-    var yetkili_kisi_email=$('#yetkili_kisi_email').val();
-    var yetkili_kisi_telefon=$('#yetkili_kisi_telefon').val();
-    var brosur_adi=$('#brosur_adi').val();
-    var calisma_gunleri= $('#calisma_id_td').text();
-    var calisma_saatleri=$('#calisma_saatleri').val();
-    var calisma_profili=$('#profil_id_td').text();
-    var calisma_sayisi=$('#calisma_sayisi').val();
-    var bilgilendirme_tercihi='dolu';
-
-    if(logo1 != null ){
-         dolu_row++
-    }
-    if("{{$firmaAdres->iller->adi}}" != "" && "{{$firmaAdres->iller->adi}}" != "Seçiniz"){
-        dolu_row++
-    }
-    if("{{$firmaAdres->ilceler->adi}}" != "" && "{{$firmaAdres->ilceler->adi}}" !="Seçiniz"){
-         dolu_row++
-    }
-    if("{{$firmaAdres->semtler->adi}}" != "" && "{{$firmaAdres->semtler->adi}}" !="Seçiniz"){
-        dolu_row++
-    }
-    if("{{$firmaAdres->adres}}" != ""){
-        dolu_row++
-    }
-    if("{{$firma->iletisim_bilgileri->telefon}}" != ""){
-         dolu_row++
-    }
-    if("{{$firma->iletisim_bilgileri->fax}}" != ""){
-         dolu_row++
-    }
-    if("{{$firma->iletisim_bilgileri->web_sayfasi}}" != ""){
-         dolu_row++
-    }
-    if("{{$firma->tanitim_yazisi}}" != ""){
-         dolu_row++
-    }
-    if("{{$firmaFatura->iller->adi}}" != "" && "{{$firmaFatura->iller->adi}}" != "Seçiniz"){
-         dolu_row++
-    }
-    if("{{$firmaFatura->ilceler->adi}}" != "" && "{{$firmaFatura->ilceler->adi}}" != "Seçiniz"){
-         dolu_row++
-    }
-    if("{{$firma->mali_bilgiler->unvani}}" != ""){
-         dolu_row++
-    }
-    if("{{$sirket->adi}}" != "" && "{{$sirket->adi}}" !="Seçiniz"){
-         dolu_row++
-    }
-    if("{{$firma->mali_bilgiler->vergi_daireleri->adi}}" != "" && "{{$firma->mali_bilgiler->vergi_daireleri->adi}}" !="Seçiniz"){
-         dolu_row++
-    }
-    if("{{$firma->mali_bilgiler->vergi_numarasi}}" != ""){
-         dolu_row++
-    }
-    if("{{$firma->mali_bilgiler->yillik_cirosu}}" != ""){
-         dolu_row++
-    }
-    if("{{$firma->mali_bilgiler->sermayesi}}" != ""){
-         dolu_row++
-    }
-    if(ticaret_sicil_no != ""){
-         dolu_row++
-    }
-    if(ticaret_odasi != "" && ticaret_odasi!="Seçiniz"){
-         dolu_row++
-    }
-    if(ust_sektor != "" && ust_sektor!="Seçiniz"){
-         dolu_row++
-    }
-    if(faaliyet_sektorleri != ""){
-         dolu_row++
-    }
-    if(firma_departmanlari != ""){
-         dolu_row++
-    }
-    if(kurulus_tarihi != ""){
-         dolu_row++
-    }
-    if(firma_faaliyet_turu != ""){
-         dolu_row++
-    }
-    if(firmanin_urettigi_markalar != ""){
-         dolu_row++
-    }
-    if(firmanin_sattigi_markalar != ""){
-         dolu_row++
-    }
-    if(kalite_belgeleri != "" && kalite_belgeleri!="Seçiniz"){
-         dolu_row++
-    }
-    if(belge_no != ""){
-         dolu_row++
-    }
-    if(ref_turu != ""  && ref_turu!="Seçiniz"){
-         dolu_row++
-    }
-    if(ref_firma_adi != ""){
-         dolu_row++
-    }
-    if(yapilan_isin_adi != ""){
-         dolu_row++
-    }
-    if(isin_turu != ""  && isin_turu!="Seçiniz"){
-         dolu_row++
-    }
-    if(is_yili != ""){
-         dolu_row++
-    }
-    if(calisma_suresi != ""){
-         dolu_row++
-    }
-    if(yetkili_kisi_adi != ""){
-         dolu_row++
-    }
-    if(yetkili_kisi_email != ""){
-         dolu_row++
-    }
-    if(yetkili_kisi_telefon != ""){
-         dolu_row++
-    }
-    if(brosur_adi != ""){
-         dolu_row++
-    }
-    if(calisma_gunleri != ""  && calisma_gunleri!="Seçiniz"){
-         dolu_row++
-    }
-    if(calisma_saatleri != ""){
-         dolu_row++
-    }
-    if(calisma_profili != ""){
-         dolu_row++
-    }
-    if(calisma_sayisi != ""){
-         dolu_row++
-    }
-    if(bilgilendirme_tercihi != ""){
-         dolu_row++
-    }
-
-   var total_dolu_row=dolu_row;
-
-   var hesaplama=(total_dolu_row/total_row)*100;
-   total_yuzde=hesaplama.toFixed(0);
-
-   //funcDolulukKayıt()
-}
-
-   function funcDolulukKayıt(){
-    $.ajax({
-        type:"POST",
-        url: "{{asset('doluluk_orani')}}"+"/"+"{{$firma->id}}",
-        data:{doluluk_orani:total_yuzde},
-
-        cache: false,
-        success: function(data){
-           console.log(data);
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            alert("Status: " + textStatus); alert("Error: " + errorThrown);
-        }
-    });
-   }
-////transection controollerinde çıkan sistemsel hatanın ekrana bastırılması.
-var firma_id='{{$firma->id}}';
-
-$("#iletisim_kayit").submit(function(e) {
-    var postData = $(this).serialize();
-    var formURL = $(this).attr('action');
-    $.ajax(
-    {
-        beforeSend: function(){
-            $('.ajax-loader').css("visibility", "visible");
-        },
-        url : formURL,
-        type: "POST",
-        data : postData,
-        success:function(data, textStatus, jqXHR)
-        {
-            $('.ajax-loader').css("visibility", "hidden");
-            if(data=="error"){
-
-                $('#mesaj').bPopup({
-                    speed: 650,
-                    transition: 'slideIn',
-                    transitionClose: 'slideBack',
-                    autoClose: 5000
                 });
-                setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
             }
-            else{
-                 setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
+            else {
+                $("#semt_id").get(0).options.length = 0;
             }
-                e.preventDefault();
-        },
-        error: function(jqXHR, textStatus, errorThrown)
-        {
-            alert(textStatus + "," + errorThrown);
         }
-    });
-    e.preventDefault();
-});
+        function GetTicaret(il_id) {
+            if (il_id > 0) {
+                $("#ticaret_odasi").get(0).options.length = 0;
+                $("#ticaret_odasi").get(0).options[0] = new Option("Yükleniyor", "-1");
 
- $("#mali_kayit").submit(function(e) {
-    var postData = $(this).serialize();
-    var formURL = $(this).attr('action');
+                $.ajax({
+                    type: "GET",
+                    url: "{{asset('ticaret_odalari')}}",
+                    data:{il_id:il_id},
+                    contentType: "application/json; charset=utf-8",
 
-    $.ajax(
-    {
-        beforeSend: function(){
-            $('.ajax-loader').css("visibility", "visible");
-        },
-        url : formURL,
-        type: "POST",
-        data : postData,
-        success:function(data, textStatus, jqXHR)
-        {
-            $('.ajax-loader').css("visibility", "hidden");
-            if(data=="error"){
-                 $('#mesaj').bPopup({
-                    speed: 650,
-                    transition: 'slideIn',
-                    transitionClose: 'slideBack',
-                    autoClose: 5000
+                    success: function(msg) {
+                        $("#ticaret_odasi").get(0).options.length = 0;
+                        $("#ticaret_odasi").get(0).options[0] = new Option("Seçiniz", "-1");
+
+                        $.each(msg, function(index, ticaret) {
+                            $("#ticaret_odasi").get(0).options[$("#ticaret_odasi").get(0).options.length] = new Option(ticaret.adi, ticaret.id);
+                        });
+                    },
+                    async: false,
+                    error: function() {
+                        $("#ticaret_odasi").get(0).options.length = 0;
+                        alert("Vergi Daireleri yükelenemedi!!!");
+                    }
                 });
-                setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
             }
-            else{
-                 setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
+            else {
+                $("#ticaret_odasi").get(0).options.length = 0;
             }
-                e.preventDefault();
-        },
-        error: function(jqXHR, textStatus, errorThrown)
-        {
-            alert(textStatus + "," + errorThrown);
         }
-    });
-    e.preventDefault();
- });
+        function GetVergi(il_id) {
+            if (il_id > 0) {
+                $("#vergi_dairesi_id").get(0).options.length = 0;
+                $("#vergi_dairesi_id").get(0).options[0] = new Option("Yükleniyor", "-1");
 
-$("#ticari_kayit").submit(function(e) {
-    var postData = $(this).serialize();
-    alert(postData);
-    /*var formURL = $(this).attr('action');
-    $.ajax(
-    {
-        beforeSend: function(){
-            $('.ajax-loader').css("visibility", "visible");
-        },
-        url : formURL,
-        type: "POST",
-        data : postData,
-        success:function(data, textStatus, jqXHR)
-        {
-            $('.ajax-loader').css("visibility", "hidden");
-            if(data=="error"){
-                 $('#mesaj').bPopup({
-                    speed: 650,
-                    transition: 'slideIn',
-                    transitionClose: 'slideBack',
-                    autoClose: 5000
+                $.ajax({
+                    type: "GET",
+                    url: "{{asset('vergi_daireleri')}}",
+                    data:{il_id:il_id},
+                    contentType: "application/json; charset=utf-8",
+
+                    success: function(msg) {
+                        $("#vergi_dairesi_id").get(0).options.length = 0;
+                        $("#vergi_dairesi_id").get(0).options[0] = new Option("Seçiniz", "-1");
+
+                        $.each(msg, function(index, vergi) {
+                            $("#vergi_dairesi_id").get(0).options[$("#vergi_dairesi_id").get(0).options.length] = new Option(vergi.adi, vergi.id);
+                        });
+                    },
+                    async: false,
+                    error: function() {
+                        $("#vergi_dairesi_id").get(0).options.length = 0;
+                        alert("Vergi Daireleri yükelenemedi!!!");
+                    }
                 });
-                setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
+            }
+            else {
+                $("#vergi_dairesi_id").get(0).options.length = 0;
+            }
+        }
+        function populateDD(){
+            GetIlce("{{$firmaAdres->iller->id}}","il_id");
+            GetSemt("{{$firmaAdres->ilceler->id}}");
+            $("#il_id ").val({{$firmaAdres->iller->id}}).trigger("event");
+            $("#semt_id").val({{$firmaAdres->semtler->id}});
+        }
+        function populateTicaretDD(){
+            GetTicaret({{$firmaFatura->iller->id}});
+            $("#ticaret_odasi").val({{$firma->ticari_bilgiler->tic_oda_id}});
+        }
+        function populateMaliDD(){
+            var firmaFatura_il_id = "{{$firmaFatura->iller->id}}";
+            GetIlce(firmaFatura_il_id,"mali_il_id");
+            GetVergi(firmaFatura_il_id);
+            $("#mali_il_id").val({{$firmaFatura->iller->id}});
+            $("#mali_ilce_id").val({{$firmaFatura->ilceler->id}});
+            $("#sirket_turu").val({{$firma->sirket_turu}});
+            $("#yillik_cirosu").val("{{$firma->mali_bilgiler->yillik_cirosu}}");
+            $("#vergi_dairesi_id").val({{$firma->mali_bilgiler->vergi_dairesi_id}});
+
+            if("{{$firma->mali_bilgiler->ciro_goster}}" == "1"){
+                $("#ciro_goster").prop('checked',true);
             }
             else{
-                 setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
+                $("#ciro_goster").prop('checked',false);
             }
-                e.preventDefault();
-        },
-        error: function(jqXHR, textStatus, errorThrown)
-        {
-            alert(textStatus + "," + errorThrown);
-        }
-    });
-    e.preventDefault();*/
-});
 
-  $("#kalite_add_kayit").submit(function(e)
-   {
-       var postData = $(this).serialize();
+            if("{{$firma->mali_bilgiler->sermaye_goster}}" == "1"){
+                $("#sermaye_goster").prop('checked',true);
+            }
+            else{
+                $("#sermaye_goster").prop('checked',false);
+            }
+        }
+
+        $('#addImage').on('change', function(evt) {
+            var selectedImage = evt.currentTarget.files[0];
+            var imageWrapper = document.querySelector('.image-wrapper');
+            var theImage = document.createElement('img');
+            imageWrapper.innerHTML = '';
+
+            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+            if (regex.test(selectedImage.name.toLowerCase())) {
+                if (typeof(FileReader) != 'undefined') {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        theImage.id = 'new-selected-image';
+                        theImage.src = e.target.result;
+                        imageWrapper.appendChild(theImage);
+                    }
+                    //
+                    reader.readAsDataURL(selectedImage);
+                } else {
+                    //-- Let the user knwo they cannot peform this as browser out of date
+                    console.log('browser support issue');
+                }
+            } else {
+                //-- no image so let the user knwo we need one...
+                $(this).prop('value', null);
+                console.log('please select and image file');
+            }
+        });
+
+        ////transection controollerinde çıkan sistemsel hatanın ekrana bastırılması.
+        var firma_id='{{$firma->id}}';
+
+        $("#iletisim_kayit").submit(function(e) {
+            var postData = $(this).serialize();
             var formURL = $(this).attr('action');
             $.ajax(
-            {
-                beforeSend: function(){
-                    $('.ajax-loader').css("visibility", "visible");
-                },
-                url : formURL,
-                type: "POST",
-                data : postData,
-                success:function(data, textStatus, jqXHR)
                 {
-                    $('.ajax-loader').css("visibility", "hidden");
-                    if(data=="error"){
+                    beforeSend: function(){
+                        $('.ajax-loader').css("visibility", "visible");
+                    },
+                    url : formURL,
+                    type: "POST",
+                    data : postData,
+                    success:function(data, textStatus, jqXHR)
+                    {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        if(data=="error"){
 
-                         $('#mesaj').bPopup({
-                            speed: 650,
-                            transition: 'slideIn',
-                            transitionClose: 'slideBack',
-                            autoClose: 5000
-                        });
-                        setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
-                    }
-                    else{
-                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
-                    }
+                            $('#mesaj').bPopup({
+                                speed: 650,
+                                transition: 'slideIn',
+                                transitionClose: 'slideBack',
+                                autoClose: 5000
+                            });
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
+                        }
+                        else{
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
+                        }
                         e.preventDefault();
-                },
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                    alert(textStatus + "," + errorThrown);
-                }
-            });
-            e.preventDefault();
-    });
-  $("#kalite_up_kayit").submit(function(e)
-   {
-       var postData = $(this).serialize();
-            var formURL = $(this).attr('action');
-            $.ajax(
-            {
-                beforeSend: function(){
-                    $('.ajax-loader').css("visibility", "visible");
-                },
-                url : formURL,
-                type: "POST",
-                data : postData,
-                success:function(data, textStatus, jqXHR)
-                {
-                    $('.ajax-loader').css("visibility", "hidden");
-                    if(data=="error"){
-
-                         $('#mesaj').bPopup({
-                            speed: 650,
-                            transition: 'slideIn',
-                            transitionClose: 'slideBack',
-                            autoClose: 5000
-                        });
-                        setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        alert(textStatus + "," + errorThrown);
                     }
-                    else{
-
-                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
-                    }
-                        e.preventDefault();
-                },
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                    alert(textStatus + "," + errorThrown);
-                }
-            });
-            e.preventDefault();
-    });
-  $("#ref_up_kayit").submit(function(e)
-   {
-       var postData = $(this).serialize();
-            var formURL = $(this).attr('action');
-            $.ajax(
-            {
-                beforeSend: function(){
-                    $('.ajax-loader').css("visibility", "visible");
-                },
-                url : formURL,
-                type: "POST",
-                data : postData,
-                success:function(data, textStatus, jqXHR)
-                {
-                    $('.ajax-loader').css("visibility", "hidden");
-                    if(data=="error"){
-
-                         $('#mesaj').bPopup({
-                            speed: 650,
-                            transition: 'slideIn',
-                            transitionClose: 'slideBack',
-                            autoClose: 5000
-                        });
-                        setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
-                    }
-                    else{
-
-                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
-                    }
-                        e.preventDefault();
-                },
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                    alert(textStatus + "," + errorThrown);
-                }
-            });
-            e.preventDefault();
-    });
-  $("#ref_add_kayit").submit(function(e)
-   {
-       var postData = $(this).serialize();
-            var formURL = $(this).attr('action');
-            $.ajax(
-            {
-                beforeSend: function(){
-                    $('.ajax-loader').css("visibility", "visible");
-                },
-                url : formURL,
-                type: "POST",
-                data : postData,
-                success:function(data, textStatus, jqXHR)
-                {
-                    $('.ajax-loader').css("visibility", "hidden");
-                    if(data=="error"){
-
-                         $('#mesaj').bPopup({
-                            speed: 650,
-                            transition: 'slideIn',
-                            transitionClose: 'slideBack',
-                            autoClose: 5000
-                        });
-                        setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
-                    }
-                    else{
-
-                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
-                    }
-                        e.preventDefault();
-                },
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                    alert(textStatus + "," + errorThrown);
-                }
-            });
-            e.preventDefault();
-    });
-
- $("#brosur_kayit").submit(function(e) {
-    var postData = new FormData($(this)[0]);
-    var formURL = $(this).attr('action');
-    $.ajax(
-    {
-        beforeSend: function(){
-            $('.ajax-loader').css("visibility", "visible");
-        },
-        url : formURL,
-        type: "POST",
-        data : postData,
-        success:function(data, textStatus, jqXHR)
-        {
-            $('.ajax-loader').css("visibility", "hidden");
-            if(data=="error"){
-                $('#mesaj').bPopup({
-                    speed: 650,
-                    transition: 'slideIn',
-                    transitionClose: 'slideBack',
-                    autoClose: 5000
                 });
-                setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
-            }
-            else{
-                setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
-            }
             e.preventDefault();
-        },
-        error: function(jqXHR, textStatus, errorThrown)
-        {
-            alert(textStatus + "," + errorThrown);
-        }
-    });
-    e.preventDefault();
-});
+        });
 
-  $("#brosur_up_kayit").submit(function(e)
-   {
-       var postData = $(this).serialize();
-       var formURL = $(this).attr('action');
+        $("#mali_kayit").submit(function(e) {
+            var postData = $(this).serialize();
+            var formURL = $(this).attr('action');
+
             $.ajax(
-            {
-                beforeSend: function(){
-                    $('.ajax-loader').css("visibility", "visible");
-                },
-                url : formURL,
-                type: "POST",
-                data : postData,
-                success:function(data, textStatus, jqXHR)
                 {
-                    $('.ajax-loader').css("visibility", "hidden");
-                    if(data=="error"){
-
-                         $('#mesaj').bPopup({
-                            speed: 650,
-                            transition: 'slideIn',
-                            transitionClose: 'slideBack',
-                            autoClose: 5000
-                        });
-                        setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
-                    }
-                    else{
-
-                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
-                    }
+                    beforeSend: function(){
+                        $('.ajax-loader').css("visibility", "visible");
+                    },
+                    url : formURL,
+                    type: "POST",
+                    data : postData,
+                    success:function(data, textStatus, jqXHR)
+                    {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        if(data=="error"){
+                            $('#mesaj').bPopup({
+                                speed: 650,
+                                transition: 'slideIn',
+                                transitionClose: 'slideBack',
+                                autoClose: 5000
+                            });
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
+                        }
+                        else{
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
+                        }
                         e.preventDefault();
-                },
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                    alert(textStatus + "," + errorThrown);
-                }
-            });
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        alert(textStatus + "," + errorThrown);
+                    }
+                });
             e.preventDefault();
-    });
+        });
 
-   $("#calisma_kayit").submit(function(e)
-   {
-       var postData = $(this).serialize();
+        $("#ticari_kayit").submit(function(e) {
+            var postData = $(this).serialize();
             var formURL = $(this).attr('action');
             $.ajax(
-            {
-                beforeSend: function(){
-                    $('.ajax-loader').css("visibility", "visible");
-                },
-                url : formURL,
-                type: "POST",
-                data : postData,
-                success:function(data, textStatus, jqXHR)
                 {
-                    $('.ajax-loader').css("visibility", "hidden");
-                    if(data=="error"){
-
-                         $('#mesaj').bPopup({
-                            speed: 650,
-                            transition: 'slideIn',
-                            transitionClose: 'slideBack',
-                            autoClose: 5000
-                        });
-                        setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
-                    }
-                    else{
-
-                         setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
-                    }
+                    beforeSend: function(){
+                        $('.ajax-loader').css("visibility", "visible");
+                    },
+                    url : formURL,
+                    type: "POST",
+                    data : postData,
+                    success:function(data, textStatus, jqXHR)
+                    {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        if(data=="error"){
+                            $('#mesaj').bPopup({
+                                speed: 650,
+                                transition: 'slideIn',
+                                transitionClose: 'slideBack',
+                                autoClose: 5000
+                            });
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
+                        }
+                        else{
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
+                        }
                         e.preventDefault();
-                },
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                    alert(textStatus + "," + errorThrown);
-                }
-            });
-            e.preventDefault();
-    });
-
-$("#bilgilendirme_kayit").submit(function(e) {
-    var postData = $(this).serialize();
-    var formURL = $(this).attr('action');
-    $.ajax(
-    {
-        beforeSend: function(){
-            $('.ajax-loader').css("visibility", "visible");
-        },
-        url : formURL,
-        type: "POST",
-        data : postData,
-        success:function(data, textStatus, jqXHR)
-        {
-            $('.ajax-loader').css("visibility", "hidden");
-            if(data=="error"){
-                 $('#mesaj').bPopup({
-                    speed: 650,
-                    transition: 'slideIn',
-                    transitionClose: 'slideBack',
-                    autoClose: 5000
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        alert(textStatus + "," + errorThrown);
+                    }
                 });
-                setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
-            }
-            else{
-                 setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
-            }
-                e.preventDefault();
-        },
-        error: function(jqXHR, textStatus, errorThrown)
+            e.preventDefault();
+        });
+
+        $("#kalite_add_kayit").submit(function(e)
         {
-            alert(textStatus + "," + errorThrown);
-        }
-    });
-    e.preventDefault();
-});
+            var postData = $(this).serialize();
+            var formURL = $(this).attr('action');
+            $.ajax(
+                {
+                    beforeSend: function(){
+                        $('.ajax-loader').css("visibility", "visible");
+                    },
+                    url : formURL,
+                    type: "POST",
+                    data : postData,
+                    success:function(data, textStatus, jqXHR)
+                    {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        if(data=="error"){
 
-//TANITIM YAZISI SHOW JS
-$('#btn-add-tanitimyazisi').click(function(){
-    $('#myModal-tanitimyazisi').modal('show');
-});
+                            $('#mesaj').bPopup({
+                                speed: 650,
+                                transition: 'slideIn',
+                                transitionClose: 'slideBack',
+                                autoClose: 5000
+                            });
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
+                        }
+                        else{
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
+                        }
+                        e.preventDefault();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        alert(textStatus + "," + errorThrown);
+                    }
+                });
+            e.preventDefault();
+        });
+        $("#kalite_up_kayit").submit(function(e)
+        {
+            var postData = $(this).serialize();
+            var formURL = $(this).attr('action');
+            $.ajax(
+                {
+                    beforeSend: function(){
+                        $('.ajax-loader').css("visibility", "visible");
+                    },
+                    url : formURL,
+                    type: "POST",
+                    data : postData,
+                    success:function(data, textStatus, jqXHR)
+                    {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        if(data=="error"){
 
-//PROFIL FOTO SHOW JS
-$('#btn-add-image').click(function(){
-    $('#myModal-image').modal('show');
-});
+                            $('#mesaj').bPopup({
+                                speed: 650,
+                                transition: 'slideIn',
+                                transitionClose: 'slideBack',
+                                autoClose: 5000
+                            });
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
+                        }
+                        else{
 
-//MALI BILGILER SHOW JS
-$('#btn-add-malibilgiler').click(function(){
-    $('#myModal-malibilgiler').modal('show');
-});
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
+                        }
+                        e.preventDefault();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        alert(textStatus + "," + errorThrown);
+                    }
+                });
+            e.preventDefault();
+        });
+        $("#ref_up_kayit").submit(function(e)
+        {
+            var postData = $(this).serialize();
+            var formURL = $(this).attr('action');
+            $.ajax(
+                {
+                    beforeSend: function(){
+                        $('.ajax-loader').css("visibility", "visible");
+                    },
+                    url : formURL,
+                    type: "POST",
+                    data : postData,
+                    success:function(data, textStatus, jqXHR)
+                    {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        if(data=="error"){
 
-//BILGILENDIRME TERCIHI SHOW JS
-$('#btn-add-bilgilendirmetercihi').click(function(){
-    $('#myModal-bilgilendirmetercihi').modal('show');
-});
+                            $('#mesaj').bPopup({
+                                speed: 650,
+                                transition: 'slideIn',
+                                transitionClose: 'slideBack',
+                                autoClose: 5000
+                            });
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
+                        }
+                        else{
 
-//TICARI BILGILER SHOW JS
-$('#btn-add-ticaribilgiler').click(function(){
-    $('#myModal-ticaribilgiler').modal('show');
-});
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
+                        }
+                        e.preventDefault();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        alert(textStatus + "," + errorThrown);
+                    }
+                });
+            e.preventDefault();
+        });
+        $("#ref_add_kayit").submit(function(e)
+        {
+            var postData = $(this).serialize();
+            var formURL = $(this).attr('action');
+            $.ajax(
+                {
+                    beforeSend: function(){
+                        $('.ajax-loader').css("visibility", "visible");
+                    },
+                    url : formURL,
+                    type: "POST",
+                    data : postData,
+                    success:function(data, textStatus, jqXHR)
+                    {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        if(data=="error"){
 
-//FIRMA BROSUR SHOW JS
-$('#btn-add-firmabrosurEkle').click(function(){
-    $('#myModal-firmabrosurEkle').modal('show');
-});
+                            $('#mesaj').bPopup({
+                                speed: 650,
+                                transition: 'slideIn',
+                                transitionClose: 'slideBack',
+                                autoClose: 5000
+                            });
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
+                        }
+                        else{
 
-//MALI BILGILER SHOW JS
-$('#btn-add-malibilgiler').click(function(){
-    $('#myModal-malibilgiler').modal('show');
-});
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
+                        }
+                        e.preventDefault();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        alert(textStatus + "," + errorThrown);
+                    }
+                });
+            e.preventDefault();
+        });
 
-//REFERANSLAR SHOW JS
-$('#btn-add-referanslar').click(function(){
-    $('#myModal-referanslar').modal('show');
-});
+        $("#brosur_kayit").submit(function(e) {
+            var postData = new FormData($(this)[0]);
+            var formURL = $(this).attr('action');
+            $.ajax(
+                {
+                    beforeSend: function(){
+                        $('.ajax-loader').css("visibility", "visible");
+                    },
+                    url : formURL,
+                    type: "POST",
+                    data : postData,
+                    success:function(data, textStatus, jqXHR)
+                    {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        if(data=="error"){
+                            $('#mesaj').bPopup({
+                                speed: 650,
+                                transition: 'slideIn',
+                                transitionClose: 'slideBack',
+                                autoClose: 5000
+                            });
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
+                        }
+                        else{
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
+                        }
+                        e.preventDefault();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        alert(textStatus + "," + errorThrown);
+                    }
+                });
+            e.preventDefault();
+        });
 
-//KALITE SHOW JS
-$('#btn-add-kalite').click(function(){
-    $('#btn-save-kalite').val("add");
-    $('#myModal-kalite').modal('show');
-});
+        $("#brosur_up_kayit").submit(function(e)
+        {
+            var postData = $(this).serialize();
+            var formURL = $(this).attr('action');
+            $.ajax(
+                {
+                    beforeSend: function(){
+                        $('.ajax-loader').css("visibility", "visible");
+                    },
+                    url : formURL,
+                    type: "POST",
+                    data : postData,
+                    success:function(data, textStatus, jqXHR)
+                    {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        if(data=="error"){
 
-$('.open-modal-kaliteGuncelle').click(function(){
-    $('#myModal-kaliteGuncelle').modal('show');
-    $('#kalite_belgeleri').val($(this).val());
-});
+                            $('#mesaj').bPopup({
+                                speed: 650,
+                                transition: 'slideIn',
+                                transitionClose: 'slideBack',
+                                autoClose: 5000
+                            });
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
+                        }
+                        else{
 
-//FIRMA CALISANLARI SHOW JS
-$('#btn-add-firmacalisanbilgileri').click(function(){
-    $('#myModal-firmacalisanbilgileri').modal('show');
-});
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
+                        }
+                        e.preventDefault();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        alert(textStatus + "," + errorThrown);
+                    }
+                });
+            e.preventDefault();
+        });
 
-$('.open-modal-brosurGuncelle').click(function(){
-    $('#myModal-firmabrosurGuncelle').modal('show');
-});
+        $("#calisma_kayit").submit(function(e)
+        {
+            var postData = $(this).serialize();
+            var formURL = $(this).attr('action');
+            $.ajax(
+                {
+                    beforeSend: function(){
+                        $('.ajax-loader').css("visibility", "visible");
+                    },
+                    url : formURL,
+                    type: "POST",
+                    data : postData,
+                    success:function(data, textStatus, jqXHR)
+                    {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        if(data=="error"){
 
-// REFERANS GECMIS JS
-var url = "{{asset('firma')}}";
-$('.open-modal-gecmis').click(function(){
-    var ref_id = $(this).val();
-    $.get(url + '/'  + ref_id, function (data) {
-        $('#ref_id').val(data.id);
-        $('#ref_turu').val(data.ref_turu);
-        $('#ref_firma_adi').val(data.adi);
-        $('#yapilan_isin_adi').val(data.is_adi);
-        $('#isin_turu').val(data.is_turu);
-        $('#is_yili').val(data.is_yili);
-        $('#calısma_suresi').val(data.calisma_suresi);
-        $('#yetkili_kisi_adi').val(data.yetkili_adi);
-        $('#yetkili_kisi_email').val(data.yetkili_email);
-        $('#yetkili_kisi_telefon').val(data.yetkili_telefon);
-        $('#myModal-referanslarGecmis').modal('show');
-    })
-});
+                            $('#mesaj').bPopup({
+                                speed: 650,
+                                transition: 'slideIn',
+                                transitionClose: 'slideBack',
+                                autoClose: 5000
+                            });
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
+                        }
+                        else{
 
-    //AJAX CRUD JS
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
+                        }
+                        e.preventDefault();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        alert(textStatus + "," + errorThrown);
+                    }
+                });
+            e.preventDefault();
+        });
 
-    var url = "{{asset('firma')}}";
+        $("#bilgilendirme_kayit").submit(function(e) {
+            var postData = $(this).serialize();
+            var formURL = $(this).attr('action');
+            $.ajax(
+                {
+                    beforeSend: function(){
+                        $('.ajax-loader').css("visibility", "visible");
+                    },
+                    url : formURL,
+                    type: "POST",
+                    data : postData,
+                    success:function(data, textStatus, jqXHR)
+                    {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        if(data=="error"){
+                            $('#mesaj').bPopup({
+                                speed: 650,
+                                transition: 'slideIn',
+                                transitionClose: 'slideBack',
+                                autoClose: 5000
+                            });
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
+                        }
+                        else{
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 1000);
+                        }
+                        e.preventDefault();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        alert(textStatus + "," + errorThrown);
+                    }
+                });
+            e.preventDefault();
+        });
 
-    //display modal form for task editing
-    $('.open-modal').click(function(){
-        var iletisimbilgisi_id = $(this).val();
+        //TANITIM YAZISI SHOW JS
+        $('#btn-add-tanitimyazisi').click(function(){
+            $('#myModal-tanitimyazisi').modal('show');
+        });
 
-        $.get(url + '/' + iletisimbilgisi_id, function (data) {
-            //success data
-            console.log(data);
-            $('#il_id').val(data.il_id);
-            $('#ilce_id').val(data.ilce_id);
-            $('#semt_id').val(data.semt_id);
-            $('#adres').val(data.adres);
-            $('#telefon').val(data.telefon);
-            $('#fax').val(data.fax);
-            $('#web_sayfası').val(data.web_sayfası);
-            $('#btn-save').val("update");
+        //PROFIL FOTO SHOW JS
+        $('#btn-add-image').click(function(){
+            $('#myModal-image').modal('show');
+        });
+
+        //MALI BILGILER SHOW JS
+        $('#btn-add-malibilgiler').click(function(){
+            $('#myModal-malibilgiler').modal('show');
+        });
+
+        //BILGILENDIRME TERCIHI SHOW JS
+        $('#btn-add-bilgilendirmetercihi').click(function(){
+            $('#myModal-bilgilendirmetercihi').modal('show');
+        });
+
+        //TICARI BILGILER SHOW JS
+        $('#btn-add-ticaribilgiler').click(function(){
+            $('#myModal-ticaribilgiler').modal('show');
+        });
+
+        //FIRMA BROSUR SHOW JS
+        $('#btn-add-firmabrosurEkle').click(function(){
+            $('#myModal-firmabrosurEkle').modal('show');
+        });
+
+        //MALI BILGILER SHOW JS
+        $('#btn-add-malibilgiler').click(function(){
+            $('#myModal-malibilgiler').modal('show');
+        });
+
+        //REFERANSLAR SHOW JS
+        $('#btn-add-referanslar').click(function(){
+            $('#myModal-referanslar').modal('show');
+        });
+
+        //KALITE SHOW JS
+        $('#btn-add-kalite').click(function(){
+            $('#btn-save-kalite').val("add");
+            $('#myModal-kalite').modal('show');
+        });
+
+        $('.open-modal-kaliteGuncelle').click(function(){
+            $('#myModal-kaliteGuncelle').modal('show');
+            $('#kalite_belgeleri').val($(this).val());
+        });
+
+        //FIRMA CALISANLARI SHOW JS
+        $('#btn-add-firmacalisanbilgileri').click(function(){
+            $('#myModal-firmacalisanbilgileri').modal('show');
+        });
+
+        $('.open-modal-brosurGuncelle').click(function(){
+            $('#myModal-firmabrosurGuncelle').modal('show');
+        });
+
+        // REFERANS GECMIS JS
+        var url = "{{asset('firma')}}";
+        $('.open-modal-gecmis').click(function(){
+            var ref_id = $(this).val();
+            $.get(url + '/'  + ref_id, function (data) {
+                $('#ref_id').val(data.id);
+                $('#ref_turu').val(data.ref_turu);
+                $('#ref_firma_adi').val(data.adi);
+                $('#yapilan_isin_adi').val(data.is_adi);
+                $('#isin_turu').val(data.is_turu);
+                $('#is_yili').val(data.is_yili);
+                $('#calısma_suresi').val(data.calisma_suresi);
+                $('#yetkili_kisi_adi').val(data.yetkili_adi);
+                $('#yetkili_kisi_email').val(data.yetkili_email);
+                $('#yetkili_kisi_telefon').val(data.yetkili_telefon);
+                $('#myModal-referanslarGecmis').modal('show');
+            })
+        });
+
+        //AJAX CRUD JS
+        var url = "{{asset('firma')}}";
+        $('.open-modal').click(function(){
+            var iletisimbilgisi_id = $(this).val();
+
+            $.get(url + '/' + iletisimbilgisi_id, function (data) {
+                //success data
+                $('#il_id').val(data.il_id);
+                $('#ilce_id').val(data.ilce_id);
+                $('#semt_id').val(data.semt_id);
+                $('#adres').val(data.adres);
+                $('#telefon').val(data.telefon);
+                $('#fax').val(data.fax);
+                $('#web_sayfası').val(data.web_sayfası);
+                $('#btn-save').val("update");
+                $('#myModal').modal('show');
+            })
+        });
+
+        $('#btn-add').click(function(){
             $('#myModal').modal('show');
-
-        })
-    });
-    //display modal form for task editing
-
-
-    //display modal form for creating new task
-    $('#btn-add').click(function(){
-        $('#myModal').modal('show');
-    });
-
-    //delete task and remove it from list
-    $('.delete-task').click(function(){
-        var commucation_id = $(this).val();
-
-        $.ajax({
-
-            type: "DELETE",
-            url: url + '/' + commucation_id,
-            success: function (data) {
-                console.log(data);
-
-                $("#task" + commucation_id).remove(); //task yerine ne yazmam lazım ?? o task html adı???
-            },
-            error: function (data) {
-                console.log('Error:', data);
-            }
-        });
-    });
-
-    //create new task / update existing task
-    $("#btn-save").click(function (e) {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-
-            }
         });
 
-        e.preventDefault();
+        //delete task and remove it from list
+        $('.delete-task').click(function(){
+            var commucation_id = $(this).val();
 
-        var formData = {
-            il_id: $('#il_id').val(),
-            ilce_id: $('#ilce_id').val(),
-            semt_id: $('#semt_id').val(),
-            adres: $('#adres').val(),
-            telefon: $('#telefon').val(),
-            fax: $('#fax').val(),
-            web_sayfası: $('#web_sayfası').val(),
-        }
-
-        //used to determine the http verb to use [add=POST], [update=PUT]
-        var state = $('#btn-save').val();
-
-        var type = "POST"; //for creating new resource
-        var commucation_id = $('#commucation_id').val();
-        var my_url = url;
-
-
-        if (state == "update"){
-            type = "PUT"; //for updating existing resource
-            my_url += '/' + commucation_id;
-        }
-
-        console.log(formData);
-
-        $.ajax({
-
-            type: type,
-            url: my_url,
-            data: formData,
-            dataType: 'json',
-            success: function (data) {
-                console.log(data);
-
-
-                $('#frmTasks').trigger("reset");
-
-                $('#myModal').modal('hide')
-            },
-            error: function (data) {
-                console.log('Error:', data);
-            }
+            $.ajax({
+                type: "DELETE",
+                url: url + '/' + commucation_id,
+                success: function (data) {
+                    $("#task" + commucation_id).remove(); //task yerine ne yazmam lazım ?? o task html adı???
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                }
+            });
         });
-    });
 
-</script>
+        //create new task / update existing task
+        $("#btn-save").click(function (e) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            });
+
+            e.preventDefault();
+
+            var formData = {
+                il_id: $('#il_id').val(),
+                ilce_id: $('#ilce_id').val(),
+                semt_id: $('#semt_id').val(),
+                adres: $('#adres').val(),
+                telefon: $('#telefon').val(),
+                fax: $('#fax').val(),
+                web_sayfası: $('#web_sayfası').val(),
+            }
+
+            //used to determine the http verb to use [add=POST], [update=PUT]
+            var state = $('#btn-save').val();
+
+            var type = "POST"; //for creating new resource
+            var commucation_id = $('#commucation_id').val();
+            var my_url = url;
+
+            if (state == "update"){
+                type = "PUT"; //for updating existing resource
+                my_url += '/' + commucation_id;
+            }
+
+            $.ajax({
+                type: type,
+                url: my_url,
+                data: formData,
+                dataType: 'json',
+                success: function (data) {
+                    $('#frmTasks').trigger("reset");
+                    $('#myModal').modal('hide')
+                },
+                error: function (data) {
+                    console.log('Error:', data);
+                }
+            });
+        });
+    </script>
 @endsection
 
 @section('sayfaSonu')

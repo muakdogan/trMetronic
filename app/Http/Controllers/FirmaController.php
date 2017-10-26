@@ -296,6 +296,9 @@ class FirmaController extends Controller{
 
                 Session::flash('success', 'Upload successfully');
                 File::delete("uploads/$oldName");
+                if(session()->get('firma_id')!=''){
+                    FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+                }
                 return true;
             }
             else {
@@ -312,6 +315,9 @@ class FirmaController extends Controller{
     $item->save();
     File::delete("uploads/$oldName");
     Session::set('firma_logo', '');
+        if(session()->get('firma_id')!=''){
+            FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+        }
     return Redirect::to('firmaProfili');
     }
 
@@ -337,10 +343,16 @@ class FirmaController extends Controller{
         $adres->tur_id = $tur;
         $firma->adresler()->save($adres);
         DB::commit();
+        if(session()->get('firma_id')!=''){
+            FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+        }
         // all good
     } catch (\Exception $e) {
         $error="error";
         DB::rollback();
+        if(session()->get('firma_id')!=''){
+            FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+        }
         return Response::json($error);
     }
     }
@@ -349,6 +361,9 @@ class FirmaController extends Controller{
         $firma = Firma::find($request->id);
         $firma->tanitim_yazisi = Str::title(strtolower($request->tanitim_yazisi));
         $firma->save();
+        if(session()->get('firma_id')!=''){
+            FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+        }
         return redirect('firmaProfili');
     }
 
@@ -391,10 +406,16 @@ class FirmaController extends Controller{
             $firma->adresler()->save($adres);
 
      DB::commit();
+        if(session()->get('firma_id')!=''){
+            FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+        }
         // all good
     } catch (\Exception $e) {
         $error="error";
         DB::rollback();
+        if(session()->get('firma_id')!=''){
+            FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+        }
         return Response::json($error);
     }
     }
@@ -403,7 +424,7 @@ class FirmaController extends Controller{
 
     DB::beginTransaction();
 
-    //try {
+    try {
 
         $firma = Firma::find($request->id);
         $firma->kurulus_tarihi=$request->kurulus_tarihi;
@@ -465,13 +486,20 @@ class FirmaController extends Controller{
         else{
 
         }
+
        DB::commit();
+        if(session()->get('firma_id')!=''){
+            FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+        }
         // all good
-    /*} catch (\Exception $e) {
+    } catch (\Exception $e) {
         $error="error";
         DB::rollback();
+        if(session()->get('firma_id')!=''){
+            FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+        }
         return Response::json($error);
-    }*/
+    }
     }
 
     public function kaliteAdd(Request $request){
@@ -483,10 +511,16 @@ class FirmaController extends Controller{
             $firma->kalite_belgeleri()->attach($request->kalite_belgeleri,['belge_no'=>$request->belge_no]);
 
            DB::commit();
+            if(session()->get('firma_id')!=''){
+                FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+            }
             // all good
         } catch (\Exception $e) {
             $error="error";
             DB::rollback();
+            if(session()->get('firma_id')!=''){
+                FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+            }
             return Response::json($error);
         }
     }
@@ -516,10 +550,16 @@ class FirmaController extends Controller{
         $firma->firma_referanslar()->save( $firmaReferans);
 
        DB::commit();
+        if(session()->get('firma_id')!=''){
+            FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+        }
         // all good
     } catch (\Exception $e) {
         $error="error";
         DB::rollback();
+        if(session()->get('firma_id')!=''){
+            FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+        }
         return Response::json($error);
     }
     }
@@ -539,9 +579,15 @@ class FirmaController extends Controller{
         $referans->yetkili_telefon=Str::title(strtolower($request->yetkili_kisi_telefon));
         $referans->save( );
         DB::commit();
+            if(session()->get('firma_id')!=''){
+                FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+            }
         } catch (\Exception $e) {
             $error="error";
             DB::rollback();
+            if(session()->get('firma_id')!=''){
+                FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+            }
             return Response::json($error);
         }
         return redirect('firmaProfili');
@@ -554,10 +600,16 @@ class FirmaController extends Controller{
             $firma = Firma::find($request->id);
             $firma->kalite_belgeleri()->attach($request->kalite_belgeleri,['belge_no'=>$request->belge_no]);
            DB::commit();
+            if(session()->get('firma_id')!=''){
+                FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+            }
             // all good
         } catch (\Exception $e) {
             $error="error";
             DB::rollback();
+            if(session()->get('firma_id')!=''){
+                FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+            }
             return Response::json($error);
         }
     }
@@ -566,6 +618,9 @@ class FirmaController extends Controller{
         $brosur = \App\FirmaBrosur::find($id);
         $brosur->adi=Str::title(strtolower($request->brosur_adi));
         $brosur->save( );
+        if(session()->get('firma_id')!=''){
+            FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+        }
         return Redirect::to('firmaProfili');
     }
 
@@ -602,10 +657,16 @@ class FirmaController extends Controller{
     $firma->firma_calisma_bilgileri()->save( $firma_calisan);
 
         DB::commit();
+        if(session()->get('firma_id')!=''){
+            FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+        }
         // all good
     } catch (\Exception $e) {
         $error="error";
         DB::rollback();
+        if(session()->get('firma_id')!=''){
+            FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+        }
         return Response::json($error);
     }
     }
@@ -633,10 +694,16 @@ class FirmaController extends Controller{
         $firma->save();
 
         DB::commit();
+        if(session()->get('firma_id')!=''){
+            FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+        }
         // all good
     } catch (\Exception $e) {
         $error="error";
         DB::rollback();
+        if(session()->get('firma_id')!=''){
+            FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+        }
         return Response::json($error);
     }
     }
@@ -679,11 +746,17 @@ class FirmaController extends Controller{
 
             File::delete("brosur/$oldName");
             }*/
+            if(session()->get('firma_id')!=''){
+                FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+            }
             return Redirect::to('firmaProfili');
             //return  Redirect::route('commucations')->with('fileName', $fileName);
         } else {
             // sending back with error message.
             Session::flash('error', 'uploaded file is not valid');
+            if(session()->get('firma_id')!=''){
+                FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+            }
             return false;
         }
     }
@@ -692,12 +765,18 @@ class FirmaController extends Controller{
 
     public function deleteKalite(Request $request,$id){
         \App\FirmaKaliteBelgesi::where('belge_id',$id)->where('firma_id',$request->firma_id)->where('belge_no',$request->belge_no)->delete();
+        if(session()->get('firma_id')!=''){
+            FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+        }
         return redirect('firmaProfili');
     }
 
     public function deleteReferans(Request $request,$id){
         $referans = \App\FirmaReferans::find($id);
         $referans->delete();
+        if(session()->get('firma_id')!=''){
+            FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+        }
         return redirect('firmaProfili');
     }
 
@@ -705,9 +784,137 @@ class FirmaController extends Controller{
         $brosur = \App\FirmaBrosur::find($id);
         File::delete("brosur/$brosur->yolu");
         $brosur->delete();
+        if(session()->get('firma_id')!=''){
+            FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
+        }
         return redirect('firmaProfili');
     }
 
+    public function firmaProfilDolulukHesapla($firmaID){
+        $firma = Firma::find($firmaID);
+        $toplamOzellik = 30;
+        $doluOzellik = 0;
+
+        //ILETISIM BILGILERI
+        if ($firma->iletisim_bilgileri->telefon != ""){
+            $doluOzellik++;
+        }
+        if ($firma->iletisim_bilgileri->fax != ""){
+            $doluOzellik++;
+        }
+        if ($firma->iletisim_bilgileri->web_sayfasi != ""){
+            $doluOzellik++;
+        }
+        $firmaAdresi=$firma->adresler()->where('tur_id', '=', '1')->first();
+        if ($firmaAdresi){
+            $doluOzellik++;
+        }
+        $firmaFaturaAdresi=$firma->adresler()->where('tur_id', '=', '2')->first();
+        if ($firmaFaturaAdresi){
+            $doluOzellik++;
+        }
+        //TANITIM YAZISI
+        if ($firma->tanitim_yazisi != ""){
+            $doluOzellik++;
+        }
+        //BROSUR
+        if (count($firma->firma_brosurler)!=0){
+            $doluOzellik++;
+        }
+        //MALI BILGILER
+        if($firma->mali_bilgiler!=null){
+            if ($firma->mali_bilgiler->unvani != ""){
+                $doluOzellik++;
+            }
+            if ($firma->mali_bilgiler->vergi_daireleri->adi != ""){
+                $doluOzellik++;
+            }
+            if ($firma->mali_bilgiler->vergi_numarasi != ""){
+                $doluOzellik++;
+            }
+            if ($firma->mali_bilgiler->yillik_cirosu != ""){
+                $doluOzellik++;
+            }
+            if ($firma->mali_bilgiler->sermayesi != ""){
+                $doluOzellik++;
+            }
+            if ($firma->sirket_turu != ""){
+                $doluOzellik++;
+            }
+        }
+
+        //TICARI BILGILER
+        if($firma->ticari_bilgiler!=null){
+            if ($firma->ticari_bilgiler->tic_sicil_no != ""){
+                $doluOzellik++;
+            }
+            if ($firma->ticari_bilgiler->ticaret_odalari!=null && $firma->ticari_bilgiler->ticaret_odalari->adi != ""){
+                $doluOzellik++;
+            }
+        }
+
+        if ($firma->kurulus_tarihi){
+            $doluOzellik++;
+        }
+        $ustSektor=$firma->getUstSektor();
+        if ($ustSektor != ""){
+            $doluOzellik++;
+        }
+        if (count($firma->sektorler) != 0){
+            $doluOzellik++;
+        }
+        $countUretilenMarka = DB::table('uretilen_markalar')->where('firma_id', '=', $firma->id)->count();
+        if ($countUretilenMarka != 0){
+            $doluOzellik++;
+        }
+        $countSatilanMarka = FirmaSatilanMarka::where('firma_id', '=', $firma->id)->count();
+        if ($countSatilanMarka != 0){
+            $doluOzellik++;
+        }
+        //IDARI BILGILER
+        if($firma->firma_calisma_bilgileri!=null){
+            if ($firma->firma_calisma_bilgileri->calisma_gunleri!=null && $firma->firma_calisma_bilgileri->calisma_gunleri->adi != ""){
+                $doluOzellik++;
+            }
+            if ($firma->firma_calisma_bilgileri->calisma_saatleri != ""){
+                $doluOzellik++;
+            }
+            if ($firma->firma_calisma_bilgileri->calisan_sayisi != ""){
+                $doluOzellik++;
+            }
+        }
+
+        $calisanProfili = $firma->getCalisanProfil();
+        if ($calisanProfili != ""){
+            $doluOzellik++;
+        }
+        if (count($firma->departmanlar) != ""){
+            $doluOzellik++;
+        }
+        //KALITE BELGESI
+        if (count($firma->kalite_belgeleri)!=0){
+            $doluOzellik++;
+        }
+        //REFERANS
+        if (count($firma->firma_referanslar)!=0){
+            $doluOzellik++;
+        }
+        //BILGILENDIRME TERCIHI
+        if ($firma->sms != 0){
+            $doluOzellik++;
+        }
+        if ($firma->mail != 0){
+            $doluOzellik++;
+        }
+        if ($firma->telefon != 0){
+            $doluOzellik++;
+        }
+
+        $sonuc = ($doluOzellik / $toplamOzellik) * 100;
+
+        $firma ->doluluk_orani= (int) $sonuc;
+        $firma ->save();
+    }
     //eski fonksiyonlar...suan kullanılmıyorlar
     public function firma(Request $request){
     $firma = new Firma();
