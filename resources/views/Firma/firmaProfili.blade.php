@@ -10,20 +10,16 @@
 <link href="{{asset('css/multi-select.css')}}" media="screen" rel="stylesheet" type="text/css"></link>
 <link href="{{asset('css/multiple-select.css')}}" rel="stylesheet"/>
 <style>
-
     .wrapper {
         padding: 25px;
     }
-
     .image-wrapper {
         padding: 5px;
     }
-
     .image-wrapper img {
         max-width:200px;
         height:200px;
     }
-
     .switch {
         position: relative;
         display: inline-block;
@@ -31,9 +27,7 @@
         height: 18px;
         margin-top: 8px;
     }
-
     .switch input {display:none;}
-
     .slider {
         position: absolute;
         cursor: pointer;
@@ -45,7 +39,6 @@
         -webkit-transition: .4s;
         transition: .4s;
     }
-
     .slider:before {
         position: absolute;
         content: "";
@@ -57,26 +50,21 @@
         -webkit-transition: .4s;
         transition: .4s;
     }
-
     input:checked + .slider {
         background-color: #2196F3;
     }
-
     input:focus + .slider {
         box-shadow: 0 0 1px #2196F3;
     }
-
     input:checked + .slider:before {
         -webkit-transform: translateX(26px);
         -ms-transform: translateX(26px);
         transform: translateX(26px);
     }
-
     /* Rounded sliders */
     .slider.round {
         border-radius: 34px;
     }
-
     .slider.round:before {
         border-radius: 50%;
     }
@@ -92,7 +80,6 @@
     }
 </style>
 <link href="{{asset('MetronicFiles/pages/css/profile.min.css')}}" rel="stylesheet" type="text/css" />
-<link href="{{asset('MetronicFiles/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -2582,7 +2569,6 @@ $("#firma_departmanlari").multipleSelect("setSelects", arrayDepartman);
         });
     </script>
 @endsection
-
 @section('sayfaSonu')
     <script src="{{asset('MetronicFiles/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('MetronicFiles/pages/scripts/dashboard.min.js')}}" type="text/javascript"></script>

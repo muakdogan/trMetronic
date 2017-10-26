@@ -41,113 +41,113 @@ class FirmaController extends Controller{
     }*/
 
     public function showFirma(){
-    $firma = Firma::find(session()->get('firma_id'));
-    if (Gate::denies('show', $firma)) {
-        return Redirect::to('/');
+        $firma = Firma::find(session()->get('firma_id'));
+
+        if (Gate::denies('show', $firma)) {
+            return Redirect::to('/');
+        }
+
+        $firmaSektorleri=$firma->sektorler()->get();
+
+        $firmaFatura = $firma->adresler()->where('tur_id', '=', '2')->first();
+        if (!$firmaFatura) {
+               $firmaFatura = new Adres();
+               $firmaFatura->iller = new Il();
+               $firmaFatura->ilceler = new Ilce();
+               $firmaFatura->semtler = new Semt();
+        }
+        $firmaAdres = $firma->adresler()->where('tur_id', '=', '1')->first();
+        if (!$firmaAdres) {
+               $firmaAdres = new Adres();
+               $firmaAdres->iller = new Il();
+               $firmaAdres->ilceler = new Ilce();
+               $firmaAdres->semtler = new Semt();
+        }
+        if (!$firma->ticari_bilgiler) {
+                $firma->ticari_bilgiler = new TicariBilgi();
+                $firma->ticari_bilgiler->ticaret_odalari = new TicaretOdasi();
+                $firma->ticari_bilgiler->sektorler = new Sektor();
+        }
+         if (!$firma->kalite_belgeleri) {
+                      $firma->firma_kalite_belgeleri = new App\FirmaKaliteBelgesi();
+        }
+        if (!$firma->firma_referanslar) {
+           $firma->firma_referanslar = new App\FirmaReferans();
+        } else {
+           $firmaReferanslar = $firma->firma_referanslar()->orderBy('ref_turu', 'desc')->orderBy('is_yili', 'desc')->get();
+        }
+        if (!$firma->firma_brosurler) {
+                 $firma->firma_brosurler = new App\FirmaBrosur();
+        }
+        if (!$firma->firma_calisma_bilgileri) {
+               $firma->firma_calisma_bilgileri = new \App\FirmaCalismaBilgisi();
+               $calismaGunu = '';
+        } else{
+               $calismaGunu = $firma->firma_calisma_bilgileri->calisma_gunleri->adi;
+        }
+        $calisan= DB::table('firma_calisma_bilgileri')->where('firma_id', $firma->id)->count();
+        $brosur=DB::table('firma_brosurler')->where('firma_id',$firma->id )->count();
+        $referans= DB::table('firma_referanslar')->where('firma_id', $firma->id)->count();
+        $uretilenMarka = DB::table('uretilen_markalar')->where('firma_id', '=', $firma->id)->get();
+        $satilanMarka = FirmaSatilanMarka::where('firma_id', '=', $firma->id)->get();
+        $kaliteBelge= DB::table('firma_kalite_belgeleri')->where('firma_id', $firma->id)->count();
+        $iller = Il::all();
+        $sirketTurleri=  SirketTuru::all();
+        $vergiDaireleri= \App\VergiDairesi::all();
+        $ticaretodasi=  \App\TicaretOdasi::all();
+        $ustsektor=  Sektor::all();
+        $departmanlar=  \App\Departman::all();
+        $faaliyetler= \App\Faaliyet::all();
+        $kalite_belgeleri= \App\KaliteBelgesi::all();
+        $calisma_günleri= \App\CalismaGunu::all();
+        return view('Firma.firmaProfili', ['firma' => $firma], ['iller' => $iller])->with('sirketTurleri',$sirketTurleri)
+                ->with('vergiDaireleri',$vergiDaireleri)->with('ustsektor',$ustsektor)
+                ->with('ticaretodasi',$ticaretodasi)->with('departmanlar',$departmanlar)
+                ->with('faaliyetler',$faaliyetler)->with('kalite_belgeleri',$kalite_belgeleri)
+                ->with('calisma_günleri',$calisma_günleri)->with('firmaFatura',$firmaFatura)->with('firmaAdres',$firmaAdres)
+                ->with('uretilenMarka',$uretilenMarka)->with('satilanMarka',$satilanMarka)->with('kaliteBelge',$kaliteBelge)
+                ->with('firmaReferanslar',$firmaReferanslar)->with('referans',$referans)->with('brosur',$brosur)
+                ->with('calismaGunu',$calismaGunu)->with('calisan',$calisan)->with('firmaSektorleri',$firmaSektorleri);
+     }
+
+    public function firmaDetay($firma_id){
+        $firma=Firma::where('id', $firma_id)->with([
+            'firma_satilan_markalar',
+            'uretilen_markalar',
+            'adresler' => function($query) use ($firma_id){
+            $query->where('tur_id', '1')->union(DB::table('adresler')->where('firma_id', $firma_id)->where('tur_id', '2'))->orderBy('tur_id', 'ASC');
+            },
+            'adresler.iller',
+            'adresler.ilceler',
+            'adresler.semtler',
+            'mali_bilgiler',
+            'ticari_bilgiler',
+            'departmanlar',
+            'faaliyetler',
+            'sirket_turleri',
+            'kalite_belgeleri',
+            'firma_referanslar' => function($query){$query->orderBy('ref_turu', 'desc')->orderBy('is_yili', 'desc');},
+            'firma_brosurler',
+            'firma_calisma_bilgileri'
+        ])->first();
+
+        //yorumlar ve puanlar arasında eloquent ilişkisi olmadığı için query builder.
+        $yorumlar = DB::table('yorumlar')->where('yorumlar.firma_id', $firma_id)->orderBy('yorumlar.tarih', 'DESC')
+        ->join('puanlamalar', 'yorumlar.firma_id', '=', 'puanlamalar.firma_id')
+        ->join('firmalar', 'yorumlar.yorum_yapan_firma_id', '=', 'firmalar.id')//firma isimleri için
+        ->get();
+
+        if (!$firma)
+            abort('404');
+
+        return view('Firma.firmaDetay')->with(['firma'=>$firma, 'yorumlar'=>$yorumlar]);
     }
 
-    $firmaSektorleri=$firma->sektorler()->get();
+    public function uyelikBilgileri(){
+        $firma = Firma::where('id', session()->get('firma_id'))->with([
+            'odemeler'
+        ])->first();
 
-    $firmaFatura = $firma->adresler()->where('tur_id', '=', '2')->first();
-    if (!$firmaFatura) {
-           $firmaFatura = new Adres();
-           $firmaFatura->iller = new Il();
-           $firmaFatura->ilceler = new Ilce();
-           $firmaFatura->semtler = new Semt();
-    }
-    $firmaAdres = $firma->adresler()->where('tur_id', '=', '1')->first();
-    if (!$firmaAdres) {
-           $firmaAdres = new Adres();
-           $firmaAdres->iller = new Il();
-           $firmaAdres->ilceler = new Ilce();
-           $firmaAdres->semtler = new Semt();
-    }
-    if (!$firma->ticari_bilgiler) {
-            $firma->ticari_bilgiler = new TicariBilgi();
-            $firma->ticari_bilgiler->ticaret_odalari = new TicaretOdasi();
-            $firma->ticari_bilgiler->sektorler = new Sektor();
-    }
-     if (!$firma->kalite_belgeleri) {
-                  $firma->firma_kalite_belgeleri = new App\FirmaKaliteBelgesi();
-    }
-    if (!$firma->firma_referanslar) {
-       $firma->firma_referanslar = new App\FirmaReferans();
-    } else {
-       $firmaReferanslar = $firma->firma_referanslar()->orderBy('ref_turu', 'desc')->orderBy('is_yili', 'desc')->get();
-    }
-    if (!$firma->firma_brosurler) {
-             $firma->firma_brosurler = new App\FirmaBrosur();
-    }
-    if (!$firma->firma_calisma_bilgileri) {
-           $firma->firma_calisma_bilgileri = new \App\FirmaCalismaBilgisi();
-           $calismaGunu = '';
-    } else{
-           $calismaGunu = $firma->firma_calisma_bilgileri->calisma_gunleri->adi;
-    }
-    $calisan= DB::table('firma_calisma_bilgileri')->where('firma_id', $firma->id)->count();
-    $brosur=DB::table('firma_brosurler')->where('firma_id',$firma->id )->count();
-    $referans= DB::table('firma_referanslar')->where('firma_id', $firma->id)->count();
-    $uretilenMarka = DB::table('uretilen_markalar')->where('firma_id', '=', $firma->id)->get();
-    $satilanMarka = FirmaSatilanMarka::where('firma_id', '=', $firma->id)->get();
-    $kaliteBelge= DB::table('firma_kalite_belgeleri')->where('firma_id', $firma->id)->count();
-    $iller = Il::all();
-    $sirketTurleri=  SirketTuru::all();
-    $vergiDaireleri= \App\VergiDairesi::all();
-    $ticaretodasi=  \App\TicaretOdasi::all();
-    $ustsektor=  Sektor::all();
-    $departmanlar=  \App\Departman::all();
-    $faaliyetler= \App\Faaliyet::all();
-    $kalite_belgeleri= \App\KaliteBelgesi::all();
-    $calisma_günleri= \App\CalismaGunu::all();
-    return view('Firma.firmaProfili', ['firma' => $firma], ['iller' => $iller])->with('sirketTurleri',$sirketTurleri)
-            ->with('vergiDaireleri',$vergiDaireleri)->with('ustsektor',$ustsektor)
-            ->with('ticaretodasi',$ticaretodasi)->with('departmanlar',$departmanlar)
-            ->with('faaliyetler',$faaliyetler)->with('kalite_belgeleri',$kalite_belgeleri)
-            ->with('calisma_günleri',$calisma_günleri)->with('firmaFatura',$firmaFatura)->with('firmaAdres',$firmaAdres)
-            ->with('uretilenMarka',$uretilenMarka)->with('satilanMarka',$satilanMarka)->with('kaliteBelge',$kaliteBelge)
-            ->with('firmaReferanslar',$firmaReferanslar)->with('referans',$referans)->with('brosur',$brosur)
-            ->with('calismaGunu',$calismaGunu)->with('calisan',$calisan)->with('firmaSektorleri',$firmaSektorleri);
-    }
-
-    public function firmaDetay($firma_id)
-    {
-    $firma=Firma::where('id', $firma_id)->with([
-        'firma_satilan_markalar',
-        'uretilen_markalar',
-        'adresler' => function($query) use ($firma_id){
-        $query->where('tur_id', '1')->union(DB::table('adresler')->where('firma_id', $firma_id)->where('tur_id', '2'))->orderBy('tur_id', 'ASC');
-        },
-        'adresler.iller',
-        'adresler.ilceler',
-        'adresler.semtler',
-        'mali_bilgiler',
-        'ticari_bilgiler',
-        'departmanlar',
-        'faaliyetler',
-        'sirket_turleri',
-        'kalite_belgeleri',
-        'firma_referanslar' => function($query){$query->orderBy('ref_turu', 'desc')->orderBy('is_yili', 'desc');},
-        'firma_brosurler',
-        'firma_calisma_bilgileri'
-    ])->first();
-
-    //yorumlar ve puanlar arasında eloquent ilişkisi olmadığı için query builder.
-    $yorumlar = DB::table('yorumlar')->where('yorumlar.firma_id', $firma_id)->orderBy('yorumlar.tarih', 'DESC')
-    ->join('puanlamalar', 'yorumlar.firma_id', '=', 'puanlamalar.firma_id')
-    ->join('firmalar', 'yorumlar.yorum_yapan_firma_id', '=', 'firmalar.id')//firma isimleri için
-    ->get();
-
-    if (!$firma)
-        abort('404');
-
-    return view('Firma.firmaDetay')->with(['firma'=>$firma, 'yorumlar'=>$yorumlar]);
-    }
-
-    public function uyelikBilgileri()
-    {
-    $firma = Firma::where('id', session()->get('firma_id'))->with([
-        'odemeler'
-    ])->first();
 
     return view('Firma.uyelikBilgileri', ['firma' => $firma]);
     }
@@ -394,7 +394,6 @@ class FirmaController extends Controller{
             }
 
             $firma->mali_bilgiler()->save($maliBilgi);
-
 
             $adres = $firma->adresler()->where('tur_id', '=', '2')->first() ?: new Adres();
             $adres->il_id = $request->mali_il_id;
