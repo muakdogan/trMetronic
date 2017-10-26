@@ -619,10 +619,10 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="inputTask" class="col-sm-1 control-label"></label>
-                                            <label for="inputEmail3" class="col-sm-4 control-label">Kuruluş Tarihi</label>
+                                            <label for="inputEmail3" class="col-sm-4 control-label">Kuruluş Yılı</label>
                                             <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control date" id="kurulus_tarihi" name="kurulus_tarihi" placeholder="Kuruluş Tarihi" value="{{$firma->kurulus_tarihi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                                <input type="number"  min="1000" max="3000" class="form-control" id="kurulus_tarihi" name="kurulus_tarihi" placeholder="Kuruluş Tarihi" value="{{$firma->kurulus_tarihi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                             </div>
                                         </div>
                                         <div class="form-group" id="uretilenDiv">
@@ -647,10 +647,8 @@
                                                 <div class="input_fields_sattigi_wrap">
                                                     <button  class="add_field_sattigi_button btn btn-danger">Ekle</button>
                                                     @foreach($satilanMarka as $markaSatilan)
-                                                        <div><input type="text" id="firmanin_sattigi_markalar"  name="firmanin_sattigi_markalar[]" value="{{$markaSatilan->adi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!" ><a href="#" class="remove_field">Sil</a></div>
-                                                        <?php Debugbar::info($markaSatilan); ?>
+                                                        <div><input type="text" id="firmanin_sattigi_markalar"  name="firmanin_sattigi_markalar[]" value="{{$markaSatilan->satilan_marka_adi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!" ><a href="#" class="remove_field">Sil</a></div>
                                                     @endforeach
-                                                    <div><input type="text" id="firmanin_sattigi_markalar"  name="firmanin_sattigi_markalar[]" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!" ><a href="#" class="remove_field">Sil</a></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1431,7 +1429,7 @@
                                                         <label for="inputEmail3" class="col-sm-3 control-label">İşin Yılı</label>
                                                         <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
                                                         <div class="col-sm-7">
-                                                            <input type="text" class="form-control " id="is_yili" name="is_yili" placeholder="İş Yılı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                                            <input  type="number"  min="1000" max="3000" id="is_yili" name="is_yili" placeholder="İş Yılı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
