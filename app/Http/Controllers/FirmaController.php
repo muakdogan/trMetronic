@@ -73,7 +73,8 @@ class FirmaController extends Controller{
         }
         if (!$firma->firma_referanslar) {
            $firma->firma_referanslar = new App\FirmaReferans();
-        } else {
+        }
+        else {
            $firmaReferanslar = $firma->firma_referanslar()->orderBy('ref_turu', 'desc')->orderBy('is_yili', 'desc')->get();
         }
         if (!$firma->firma_brosurler) {
@@ -452,38 +453,29 @@ class FirmaController extends Controller{
             }
         }
 
-
         foreach($request->firma_faaliyet_turu as $faaliyetTur){
             $kayitKontrol = \App\FirmaFaaliyet::where('firma_id',$firma->id)->where('faaliyet_id',$faaliyetTur)->get();
             if(count($kayitKontrol) == 0){
                 $firma->faaliyetler()->attach($faaliyetTur);
             }
         }
+
+        $firma->uretilen_markalar()->delete();
         if(isset($request->firmanin_urettigi_markalar)){
-            $uretilenMarka = new \App\UretilenMarka();
-            echo count($request->firmanin_urettigi_markalar);
             foreach($request->firmanin_urettigi_markalar as $urettigiMarka){
-                $kayitKontrol=  \App\UretilenMarka::where('adi',$urettigiMarka)->get();
-                if(count($kayitKontrol) == 0){
-                    $uretilenMarka->adi = $urettigiMarka;
-                    $firma->uretilen_markalar()->save($uretilenMarka);
-                }
+                $uretilenMarka = new \App\UretilenMarka();
+                $uretilenMarka->adi = $urettigiMarka;
+                $firma->uretilen_markalar()->save($uretilenMarka);
             }
         }
-        else{
-            $firma->uretilen_markalar()->delete();
-        }
 
+        $firma->firma_satilan_markalar()->delete();
         if (isset($request->firmanin_sattigi_markalar)){
-            foreach($request->firmanin_sattigi_markalar as $marka){
-                $satilan = new \App\FirmaSatilanMarka();
-                $satilan->firma_id = $firma->id;
-                $satilan->satilan_marka_adi = $marka;
-                $satilan->save();
+            foreach($request->firmanin_sattigi_markalar as $sattigiMarka){
+                $satilanMarka = new \App\FirmaSatilanMarka();
+                $satilanMarka->satilan_marka_adi = $sattigiMarka;
+                $firma->firma_satilan_markalar()->save($satilanMarka);
             }
-        }
-        else{
-
         }
 
        DB::commit();
