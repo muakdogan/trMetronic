@@ -384,14 +384,14 @@ class FirmaController extends Controller{
             $maliBilgi->sermayesi = Str::title(strtolower($request ->sermayesi));
             $maliBilgi->yillik_cirosu = Str::title(strtolower($request ->yillik_cirosu));
 
-            $maliBilgi->ciro_goster=0;
-            if($request->ciro_goster==1){
-            $maliBilgi->ciro_goster = 1;
+            $maliBilgi->ciro_goster= '0';
+            if(isset($request->ciro_goster)){
+            $maliBilgi->ciro_goster = '1';
             }
 
-            $maliBilgi->sermaye_goster = 0;
-            if ($request->sermaye_goster==1){
-                $maliBilgi->sermaye_goster=1;
+            $maliBilgi->sermaye_goster = '0';
+            if (isset($request->sermaye_goster)){
+                $maliBilgi->sermaye_goster='1';
             }
 
             $firma->mali_bilgiler()->save($maliBilgi);

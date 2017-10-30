@@ -106,7 +106,7 @@
 
                         <!-- SIDEBAR BUTTONS -->
                         <div class="profile-userbuttons">
-                            <button id="btn-add-image" value="{{$firma->id}}" type="button" class="btn btn-circle red btn-sm">Düzenle</button>
+                            <button id="btn-add-image" value="{{$firma->id}}" type="button" class="btn btn-circle purple btn-sm">Düzenle</button>
                         </div>
                         <!-- END SIDEBAR BUTTONS -->
 
@@ -153,12 +153,12 @@
                                                 </div>
                                                 <div id="success">
                                                 </div>
-                                                {!! Form::submit('Logo Yükle', array('url'=>'firmaProfili/uploadImage'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                                {!! Form::submit('Logo Yükle', array('url'=>'firmaProfili/uploadImage'.$firma->id,'style'=>'float:right','class'=>'btn purple')) !!}
                                                 {!! Form::close() !!}
                                                 @if($firma->logo != "")
                                                     {{ Form::open(array('url'=>'firmaProfili/deleteImage/'.$firma->id,'method' => 'DELETE', 'files'=>true)) }}
                                                     {{ Form::hidden('id', $firma->logo) }}
-                                                    {{ Form::submit('Logo Sil', ['style'=>'float:right' ,'class' => 'btn btn-danger']) }}
+                                                    {{ Form::submit('Logo Sil', ['style'=>'float:right' ,'class' => 'btn purple']) }}
                                                     {{ Form::close() }}
                                                 @endif
                                                 <br>
@@ -181,7 +181,7 @@
 
                         <div class="row">
                             <div class="col-md-6 col-sm-6">
-                                <h4 class="profile-desc-title" style="text-align: center;">Sektörler</h4>
+                                <h4 class="profile-desc-title theme-font" style="text-align: center;">Sektörler</h4>
                                 <ul>
                                     @foreach($firmaSektorleri as $firmaSektor)
                                         <li style="border-bottom:1px solid #f0f4f7">{{$firmaSektor->adi}}</li>
@@ -191,7 +191,7 @@
                             <div class="col-md-6 col-sm-6">
 
                                 <div class="caption caption-md">
-                                    <h4 class="profile-desc-title" style="text-align: center;">Profil Doluluk</h4>
+                                    <h4 class="profile-desc-title theme-font" style="text-align: center;">Profil Doluluk</h4>
                                 </div>
                                 <div class="easy-pie-chart">
                                     <div class="number transactions" data-percent="{{$firma->doluluk_orani}}">
@@ -209,11 +209,11 @@
                         <div class="portlet-title">
                             <div class="caption caption-md">
                                 <i class="fa fa-pencil theme-font"></i>
-                                <span class="caption-subject font-blue-madison bold uppercase">Tanıtım Yazısı</span>
+                                <span class="caption-subject theme-font bold uppercase">Tanıtım Yazısı</span>
                             </div>
                             <div class="actions">
                                 <div class="btn-group btn-group-devided" data-toggle="buttons">
-                                    <label id="btn-add-tanitimyazisi" class="btn btn-transparent grey-salsa btn-circle btn-sm active">
+                                    <label id="btn-add-tanitimyazisi" class="btn purple btn-circle btn-sm">
                                         <input type="radio" name="options" class="toggle" id="option1">Düzenle</label>
                                 </div>
                             </div>
@@ -237,7 +237,7 @@
                                         <textarea id="tanitim_yazisi" name="tanitim_yazisi" rows="5" class="form-control ckeditor"  placeholder="{{$firma->tanitim_yazisi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">{{$firma->tanitim_yazisi}}</textarea>
                                     </div>
                                     <div class="modal-footer">
-                                        {!! Form::submit('Kaydet', array('url'=>'firmaProfili/tanitim/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                        {!! Form::submit('Kaydet', array('url'=>'firmaProfili/tanitim/'.$firma->id,'style'=>'float:right','class'=>'btn purple')) !!}
                                     </div>
                                     {!! Form::close() !!}
                                 </div>
@@ -250,11 +250,11 @@
                         <div class="portlet-title">
                             <div class="caption caption-md">
                                 <i class="icon-calculator theme-font"></i>
-                                <span class="caption-subject font-blue-madison bold uppercase">Mali Bilgiler</span>
+                                <span class="caption-subject theme-font bold uppercase">Mali Bilgiler</span>
                             </div>
                             <div class="actions">
                                 <div class="btn-group btn-group-devided" data-toggle="buttons">
-                                    <label id="btn-add-malibilgiler" onclick="populateMaliDD()" class="btn btn-transparent grey-salsa btn-circle btn-sm active">
+                                    <label id="btn-add-malibilgiler" onclick="populateMaliDD()" class="btn purple btn-circle btn-sm">
                                         <input type="radio" name="options" class="toggle" id="option1">Düzenle</label>
                                 </div>
                             </div>
@@ -435,12 +435,15 @@
                                                     <option  value="8.000.001-40.000.000" >8.000.001-40.000.000</option>
                                                     <option  value="40.000.000 ve üzeri" >40.000.000 ve üzeri</option>
                                                 </select>
-                                                <label>Gösterme</label>
-                                                <label class="switch" style="margin-bottom: -5px;">
-                                                    <input type="checkbox" id="ciro_goster" name="ciro_goster" value="1" checked>
-                                                    <div class="slider round"></div>
-                                                </label>
                                                 <label>Göster</label>
+                                                <label  style="margin-bottom: -5px;">
+                                                    @if($firma->mali_bilgiler->ciro_goster == '1')
+                                                        <input type="checkbox" class="make-switch" name="ciro_goster" data-on-color="success" data-off-color="danger" data-size="mini" checked data-on-text="<i class='fa fa-check'></i>" data-off-text="<i class='fa fa-times'></i>">
+                                                    @else
+                                                        <input type="checkbox" class="make-switch" name="ciro_goster" data-on-color="success" data-off-color="danger" data-size="mini" data-on-text="<i class='fa fa-check'></i>" data-off-text="<i class='fa fa-times'></i>">
+                                                    @endif
+                                                </label>
+                                                <label>Gösterme</label>
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -449,15 +452,18 @@
                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
                                             <div class="col-sm-7">
                                                 <input type="text" class="form-control" id="sermayesi" name="sermayesi" placeholder="Sermayesi" value="{{$firma->mali_bilgiler->sermayesi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
-                                                <label>Gösterme</label>
-                                                <label class="switch" style="margin-bottom: -5px;">
-                                                    <input type="checkbox" id="sermaye_goster" name="sermaye_goster" value="1" checked>
-                                                    <div class="slider round"></div>
-                                                </label>
                                                 <label>Göster</label>
+                                                <label style="margin-bottom: -5px;">
+                                                    @if($firma->mali_bilgiler->sermaye_goster == '1')
+                                                        <input type="checkbox" class="make-switch" data-on-color="success" data-off-color="danger" data-size="mini" name="sermaye_goster" checked data-on-text="<i class='fa fa-check'></i>" data-off-text="<i class='fa fa-times'></i>">
+                                                    @else
+                                                        <input type="checkbox" class="make-switch" data-on-color="success" data-off-color="danger" data-size="mini" name="sermaye_goster" data-on-text="<i class='fa fa-check'></i>" data-off-text="<i class='fa fa-times'></i>">
+                                                    @endif
+                                                </label>
+                                                <label>Gösterme</label>
                                             </div>
                                         </div>
-                                        {!! Form::submit('Kaydet', array('url'=>'firmaProfili/malibilgi/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                        {!! Form::submit('Kaydet', array('url'=>'firmaProfili/malibilgi/'.$firma->id,'style'=>'float:right','class'=>'btn purple')) !!}
                                         <br>
                                         <br>
                                         {!! Form::close() !!}
@@ -475,11 +481,11 @@
                         <div class="portlet-title">
                             <div class="caption caption-md">
                                 <i class="icon-share theme-font"></i>
-                                <span class="caption-subject font-blue-madison bold uppercase">Ticari Bilgiler</span>
+                                <span class="caption-subject theme-font bold uppercase">Ticari Bilgiler</span>
                             </div>
                             <div class="actions">
                                 <div class="btn-group btn-group-devided" data-toggle="buttons">
-                                    <label id="btn-add-ticaribilgiler" onclick="populateTicaretDD()"  class="btn btn-transparent grey-salsa btn-circle btn-sm active">
+                                    <label id="btn-add-ticaribilgiler" onclick="populateTicaretDD()"  class="btn purple btn-circle btn-sm">
                                         <input type="radio" name="options" class="toggle" id="option1">Düzenle</label>
                                 </div>
                             </div>
@@ -514,14 +520,6 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td><strong>Faaliyet Gösterilen Sektörler</strong></td>
-                                        <td>:
-                                            @foreach($firma->sektorler as $sektor)
-                                                {{$sektor->adi}}
-                                            @endforeach
-                                        </td>
-                                    </tr>
-                                    <tr>
                                         <td><strong>Kuruluş Tarihi</strong></td>
                                         <td>:
                                             @if($firma->kurulus_tarihi != null)
@@ -540,11 +538,9 @@
                                     <tr>
                                         <td><strong>Firmanın Sattığı Markalar</strong></td>
                                         <td>:
-                                            @if(count($satilanMarka) > 1)
-                                                @foreach($satilanMarka as $satMarka)
-                                                    {{$satMarka->satilan_marka_adi}}
-                                                @endforeach
-                                            @endif
+                                            @foreach($satilanMarka as $satMarka)
+                                                {{$satMarka->satilan_marka_adi}}
+                                            @endforeach
                                         </td>
                                     </tr>
                                 </table>
@@ -586,7 +582,7 @@
                                             <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
                                             <div class="col-sm-6">
                                                 @foreach($faaliyetler as $faaliyet)
-                                                    <input type="checkbox" class="firma_faaliyet_turu" id="firma_faaliyet_turu" name="firma_faaliyet_turu[]" value="{{$faaliyet->id}}"  data-validation="checkbox_group" data-validation-qty="min1" data-validation-error-msg="En az bir tanesini seçiniz!">{{$faaliyet->adi}}
+                                                    <input type="checkbox" class="firma_faaliyet_turu" id="firma_faaliyet_turu" name="firma_faaliyet_turu[]" value="{{$faaliyet->id}}"  data-validation="checkbox_group" data-validation-qty="min1" data-validation-error-msg="En az bir tanesini seçiniz!">&nbsp;&nbsp;{{$faaliyet->adi}}&nbsp;&nbsp;&nbsp;
                                                 @endforeach
                                             </div>
                                         </div>
@@ -605,20 +601,6 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="inputTask" class="col-sm-1 control-label"></label>
-                                            <label for="inputEmail3" class="col-sm-4 control-label">Faaliyet Gösterilen Sektörler</label>
-                                            <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
-                                            <div class="col-sm-6">
-                                                <select class="form-control deneme"   name="faaliyet_sektorleri[]" id="custom-headers" multiple='multiple' >
-                                                    <?php $sektorler=DB::table('sektorler')->orderBy('adi','ASC')->get();  ?>
-                                                    @foreach($ustsektor as $sektor)
-                                                        <option  value="{{$sektor->id}}" >{{$sektor->adi}}</option>
-                                                    @endforeach
-                                                </select>
-
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputTask" class="col-sm-1 control-label"></label>
                                             <label for="inputEmail3" class="col-sm-4 control-label">Kuruluş Yılı</label>
                                             <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
                                             <div class="col-sm-6">
@@ -631,11 +613,15 @@
                                             <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
                                             <div class="col-sm-6">
                                                 <div class="input_fields_wrap">
-                                                    <button  class="add_field_button btn btn-danger">Ekle</button>
                                                     @foreach($uretilenMarka as $markas)
-                                                        <div><input type="text" id="firmanin_urettigi_markalar" name="firmanin_urettigi_markalar[]"  value="{{$markas->adi}}" data-validation-error-msg="Lütfen bu alanı doldurunuz!"><a href="#" class="remove_field">Sil</a></div>
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <input class="form-control" type="text" id="firmanin_urettigi_markalar" name="firmanin_urettigi_markalar[]"  value="{{$markas->adi}}" data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                                            </div>
+                                                            <a href="#" class="remove_field btn purple btn-sm">Sil</a>
+                                                        </div>
                                                     @endforeach
-
+                                                    <button  class="add_field_button btn purple btn-sm">Ekle</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -645,20 +631,23 @@
                                             <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
                                             <div class="col-sm-6">
                                                 <div class="input_fields_sattigi_wrap">
-                                                    <button  class="add_field_sattigi_button btn btn-danger">Ekle</button>
                                                     @foreach($satilanMarka as $markaSatilan)
-                                                        <div><input type="text" id="firmanin_sattigi_markalar"  name="firmanin_sattigi_markalar[]" value="{{$markaSatilan->satilan_marka_adi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!" ><a href="#" class="remove_field">Sil</a></div>
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <input class="form-control" type="text" id="firmanin_sattigi_markalar"  name="firmanin_sattigi_markalar[]" value="{{$markaSatilan->satilan_marka_adi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!" >
+                                                            </div>
+                                                                <a href="#" class="remove_field btn purple btn-sm">Sil</a>
+                                                        </div>
                                                     @endforeach
+                                                        <button  class="add_field_sattigi_button btn purple btn-sm">Ekle</button>
                                                 </div>
                                             </div>
                                         </div>
-                                        {!! Form::submit('Kaydet', array('url'=>'firmaProfili/ticaribilgi/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
-                                        <br>
-                                        <br>
-                                        {!! Form::close() !!}
                                     </div>
                                     <div class="modal-footer">
+                                        {!! Form::submit('Kaydet', array('url'=>'firmaProfili/ticaribilgi/'.$firma->id,'style'=>'float:right','class'=>'btn purple')) !!}
                                     </div>
+                                    {!! Form::close() !!}
                                 </div>
                             </div>
                         </div>
@@ -670,21 +659,21 @@
                         <div class="portlet-title">
                             <div class="caption caption-md">
                                 <i class="icon-info theme-font"></i>
-                                <span class="caption-subject font-blue-madison bold uppercase">Bilgilendirme Tercihi</span>
+                                <span class="caption-subject theme-font bold uppercase">Bilgilendirme Tercihi</span>
                             </div>
                             <div class="actions">
                                 <div class="btn-group btn-group-devided" data-toggle="buttons">
-                                    <label id="btn-add-bilgilendirmetercihi" class="btn btn-transparent grey-salsa btn-circle btn-sm active">
+                                    <label id="btn-add-bilgilendirmetercihi" class="btn purple btn-circle btn-sm">
                                         <input type="radio" name="options" class="toggle" id="option1">Düzenle</label>
                                 </div>
                             </div>
                         </div>
                         <div class="portlet-body">
                             <span class="profile-desc-text">
-                                <input type="checkbox" class="bilgilendirmeOnTaraf"  id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Sms" disabled/> Sms <br>
-                                <input type="checkbox" class="bilgilendirmeOnTaraf" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Mail" disabled/> Mail <br>
-                                <input type="checkbox" class="bilgilendirmeOnTaraf" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Telefon" disabled/> Telefon <br>
-                                <input type="checkbox" class="bilgilendirmeOnTaraf" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Bilgilendirme İstemiyorum" disabled/> Bilgilendirme İstemiyorum
+                                <input type="checkbox" class="bilgilendirmeOnTaraf"  id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Sms" disabled/>&nbsp;&nbsp;&nbsp;Sms <br>
+                                <input type="checkbox" class="bilgilendirmeOnTaraf" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Mail" disabled/>&nbsp;&nbsp;&nbsp;Mail <br>
+                                <input type="checkbox" class="bilgilendirmeOnTaraf" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Telefon" disabled/>&nbsp;&nbsp;&nbsp;Telefon <br>
+                                <input type="checkbox" class="bilgilendirmeOnTaraf" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" value="Bilgilendirme İstemiyorum" disabled/>&nbsp;&nbsp;&nbsp;Bilgilendirme İstemiyorum
                             </span>
                         </div>
                         <div class="modal fade" id="myModal-bilgilendirmetercihi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -702,28 +691,28 @@
                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
                                             <div class="col-sm-7">
                                                 @if($firma->sms)
-                                                    <input type="checkbox" class="bilgilendirme"  id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Sms" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!" checked/>Sms <br>
+                                                    <input type="checkbox" class="bilgilendirme"  id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Sms" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!" checked/>&nbsp;&nbsp;&nbsp;Sms <br>
                                                 @else
-                                                    <input type="checkbox" class="bilgilendirme"  id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Sms" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>Sms <br>
+                                                    <input type="checkbox" class="bilgilendirme"  id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Sms" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>&nbsp;&nbsp;&nbsp;Sms <br>
                                                 @endif
                                                 @if($firma->mail)
-                                                    <input type="checkbox" class="bilgilendirme" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Mail" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!" checked/>Mail <br>
+                                                    <input type="checkbox" class="bilgilendirme" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Mail" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!" checked/>&nbsp;&nbsp;&nbsp;Mail <br>
                                                 @else
-                                                    <input type="checkbox" class="bilgilendirme" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Mail" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>Mail <br>
+                                                    <input type="checkbox" class="bilgilendirme" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Mail" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>&nbsp;&nbsp;&nbsp;Mail <br>
                                                 @endif
                                                 @if($firma->telefon)
-                                                    <input type="checkbox" class="bilgilendirme" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Telefon" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!" checked/>Telefon <br>
+                                                    <input type="checkbox" class="bilgilendirme" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Telefon" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!" checked/>&nbsp;&nbsp;&nbsp;Telefon <br>
                                                 @else
-                                                    <input type="checkbox" class="bilgilendirme" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Telefon" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>Telefon <br>
+                                                    <input type="checkbox" class="bilgilendirme" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Telefon" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>&nbsp;&nbsp;&nbsp;Telefon <br>
                                                 @endif
                                                 @if(!$firma->sms && !$firma->mail && !$firma->telefon)
-                                                    <input type="checkbox" class="bilgilendirme" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Bilgilendirme İstemiyorum" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!" checked/>Bilgilendirme İstemiyorum
+                                                    <input type="checkbox" class="bilgilendirme" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Bilgilendirme İstemiyorum" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!" checked/>&nbsp;&nbsp;&nbsp;Bilgilendirme İstemiyorum
                                                 @else
-                                                    <input type="checkbox" class="bilgilendirme" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Bilgilendirme İstemiyorum" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>Bilgilendirme İstemiyorum
+                                                    <input type="checkbox" class="bilgilendirme" id="bilgilendirme_tercihi" name="bilgilendirme_tercihi[]" data-validation="checkbox_group" value="Bilgilendirme İstemiyorum" data-validation-qty="min1" data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>&nbsp;&nbsp;&nbsp;Bilgilendirme İstemiyorum
                                                 @endif
                                             </div>
                                         </div>
-                                        {!! Form::submit('Kaydet', array('url'=>'firmaProfili/bilgilendirmeTercihi/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                        {!! Form::submit('Kaydet', array('url'=>'firmaProfili/bilgilendirmeTercihi/'.$firma->id,'style'=>'float:right','class'=>'btn purple')) !!}
                                         <br>
                                         <br>
                                         {!! Form::close() !!}
@@ -743,11 +732,11 @@
                         <div class="portlet-title">
                             <div class="caption caption-md">
                                 <i class="fa fa-phone theme-font"></i>
-                                <span class="caption-subject font-blue-madison bold uppercase">İletişim Bilgileri</span>
+                                <span class="caption-subject theme-font bold uppercase">İletişim Bilgileri</span>
                             </div>
                             <div class="actions">
                                 <div class="btn-group btn-group-devided" data-toggle="buttons">
-                                    <label id="btn-add" onclick="populateDD()" class="btn btn-transparent grey-salsa btn-circle btn-sm active">
+                                    <label id="btn-add" onclick="populateDD()" class="btn purple btn-circle btn-sm">
                                         <input type="radio" name="options" class="toggle" id="option1">Düzenle</label>
                                 </div>
                             </div>
@@ -875,7 +864,7 @@
                                                 <input type="text" class="form-control" id="web_sayfasi" name="web_sayfasi" placeholder="Web Sayfası" value="{{$firma->iletisim_bilgileri->web_sayfasi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                             </div>
                                         </div>
-                                        {!! Form::submit('Kaydet', array('url'=>'firmaProfili/iletisimAdd/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                        {!! Form::submit('Kaydet', array('url'=>'firmaProfili/iletisimAdd/'.$firma->id,'style'=>'float:right','class'=>'btn purple')) !!}
                                         <br>
                                         <br>
                                         {!! Form::close() !!}
@@ -893,11 +882,11 @@
                         <div class="portlet-title">
                             <div class="caption caption-md">
                                 <i class="icon-picture theme-font"></i>
-                                <span class="caption-subject font-blue-madison bold uppercase">Firma Broşürü</span>
+                                <span class="caption-subject theme-font bold uppercase">Firma Broşürü</span>
                             </div>
                             <div class="actions">
                                 <div class="btn-group btn-group-devided" data-toggle="buttons">
-                                    <label id="btn-add-firmabrosurEkle" class="btn btn-transparent grey-salsa btn-circle btn-sm active">
+                                    <label id="btn-add-firmabrosurEkle" class="btn purple btn-circle btn-sm">
                                         <input type="radio" name="options" class="toggle" id="option1">Ekle</label>
                                 </div>
                             </div>
@@ -923,7 +912,7 @@
                                                     <a  data-toggle="tooltip" title="PDF'i görüntülemek için tıklayınız!" target="_blank" href="{{ asset('brosur/'.$firmaBrosur->yolu) }}"><img src="{{asset('images/see.png')}}">{{$firmaBrosur->yolu}}</a>
                                                 </td>
                                                 <td>
-                                                    <button value="{{$firmaBrosur->id}}" class="btn btn-default btn-xs open-modal-brosurGuncelle" >Düzenle</button>
+                                                    <button value="{{$firmaBrosur->id}}" class="btn purple btn-xs open-modal-brosurGuncelle" >Düzenle</button>
                                                     <div class="modal fade" id="myModal-firmabrosurGuncelle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
@@ -938,7 +927,7 @@
                                                                     <input type="hidden" name="brosur_id" value="{{$firmaBrosur->id}}">
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    {!! Form::submit('Kaydet', array('url'=>'firmaProfili/firmaBrosurGuncelle/'.$firmaBrosur->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                                                    {!! Form::submit('Kaydet', array('url'=>'firmaProfili/firmaBrosurGuncelle/'.$firmaBrosur->id,'style'=>'float:right','class'=>'btn purple')) !!}
                                                                 </div>
                                                                 {!! Form::close() !!}
                                                             </div>
@@ -947,7 +936,7 @@
 
                                                     {{ Form::open(array('url'=>'firmaProfili/brosurSil/'.$firmaBrosur->id,'method' => 'DELETE', 'files'=>true)) }}
                                                     <input type="hidden" name="firma_id"  id="firma_id" value="{{$firma->id}}">
-                                                    {{ Form::submit('Sil', ['class' => 'btn btn-default btn-xs']) }}
+                                                    {{ Form::submit('Sil', ['class' => 'btn purple btn-xs']) }}
                                                     {{ Form::close() }}
                                                 </td>
                                             </tr>
@@ -994,7 +983,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        {!! Form::submit('Kaydet', array('url'=>'firmaProfili/firmaBrosur/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                        {!! Form::submit('Kaydet', array('url'=>'firmaProfili/firmaBrosur/'.$firma->id,'style'=>'float:right','class'=>'btn purple')) !!}
                                     </div>
                                     {!! Form::close() !!}
                                 </div>
@@ -1008,11 +997,11 @@
                         <div class="portlet-title">
                             <div class="caption caption-md">
                                 <i class="icon-directions theme-font"></i>
-                                <span class="caption-subject font-blue-madison bold uppercase">İdari Bilgiler</span>
+                                <span class="caption-subject theme-font bold uppercase">İdari Bilgiler</span>
                             </div>
                             <div class="actions">
                                 <div class="btn-group btn-group-devided" data-toggle="buttons">
-                                    <label id="btn-add-firmacalisanbilgileri" class="btn btn-transparent grey-salsa btn-circle btn-sm active">
+                                    <label id="btn-add-firmacalisanbilgileri" class="btn purple btn-circle btn-sm">
                                         <input type="radio" name="options" class="toggle" id="option1">Düzenle</label>
                                 </div>
                             </div>
@@ -1098,14 +1087,14 @@
                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
                                             <div class="col-sm-7">
                                                 @if($calisan_profili == 'Beyaz Yaka')
-                                                    <input type="checkbox" class="firma_calisan " name="firma_calisma_profili[]" value="1" data-validation="checkbox_group"  data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1"/>Mavi Yaka
-                                                    <input type="checkbox" class="firma_calisan "  name="firma_calisma_profili[]" value="2" data-validation="checkbox_group" data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1" checked/>Beyaz Yaka
+                                                    <input type="checkbox" class="firma_calisan " name="firma_calisma_profili[]" value="1" data-validation="checkbox_group"  data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1"/>&nbsp;&nbsp;Mavi Yaka&nbsp;&nbsp;-&nbsp;&nbsp;
+                                                    <input type="checkbox" class="firma_calisan "  name="firma_calisma_profili[]" value="2" data-validation="checkbox_group" data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1" checked/>&nbsp;&nbsp;Beyaz Yaka
                                                 @elseif($calisan_profili == 'Mavi Yaka')
-                                                    <input type="checkbox" class="firma_calisan " name="firma_calisma_profili[]" value="1" data-validation="checkbox_group"  data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1" checked/>Mavi Yaka
-                                                    <input type="checkbox" class="firma_calisan "  name="firma_calisma_profili[]" value="2" data-validation="checkbox_group" data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1"/>Beyaz Yaka
+                                                    <input type="checkbox" class="firma_calisan " name="firma_calisma_profili[]" value="1" data-validation="checkbox_group"  data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1" checked/>&nbsp;&nbsp;Mavi Yaka&nbsp;&nbsp;-&nbsp;&nbsp;
+                                                    <input type="checkbox" class="firma_calisan "  name="firma_calisma_profili[]" value="2" data-validation="checkbox_group" data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1"/>&nbsp;&nbsp;Beyaz Yaka
                                                 @else
-                                                    <input type="checkbox" class="firma_calisan " name="firma_calisma_profili[]" value="1" data-validation="checkbox_group"  data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1" checked/>Mavi Yaka
-                                                    <input type="checkbox" class="firma_calisan "  name="firma_calisma_profili[]" value="2" data-validation="checkbox_group" data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1" checked/>Beyaz Yaka
+                                                    <input type="checkbox" class="firma_calisan " name="firma_calisma_profili[]" value="1" data-validation="checkbox_group"  data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1" checked/>&nbsp;&nbsp;Mavi Yaka&nbsp;&nbsp;-&nbsp;&nbsp;
+                                                    <input type="checkbox" class="firma_calisan "  name="firma_calisma_profili[]" value="2" data-validation="checkbox_group" data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1" checked/>&nbsp;&nbsp;Beyaz Yaka
                                                 @endif
                                             </div>
                                         </div>
@@ -1121,8 +1110,8 @@
                                             <label for="inputTask" class="col-sm-1 control-label"></label>
                                             <label for="inputEmail3" class="col-sm-3 control-label">Firma Departmanları</label>
                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                            <div class="col-sm-6">
-                                                <select id="firma_departmanlari"   name="firma_departmanları[]" multiple="multiple">
+                                            <div class="col-sm-7">
+                                                <select id="firma_departmanlari" name="firma_departmanları[]" multiple="multiple">
                                                     @foreach($departmanlar as $departman)
                                                         <option data-toggle="tooltip" data-placement="bottom" title="{{$departman->adi}}" value="{{$departman->id}}">{{$departman->adi}}</option>
                                                     @endforeach
@@ -1130,7 +1119,7 @@
                                             </div>
                                         </div>
 
-                                        {!! Form::submit('Kaydet', array('url'=>'firmaProfili/firmaCalisan/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                        {!! Form::submit('Kaydet', array('url'=>'firmaProfili/firmaCalisan/'.$firma->id,'style'=>'float:right','class'=>'btn purple')) !!}
                                         <br>
                                         <br>
                                         {!! Form::close() !!}
@@ -1148,11 +1137,11 @@
                         <div class="portlet-title">
                             <div class="caption caption-md">
                                 <i class="icon-graph theme-font"></i>
-                                <span class="caption-subject font-blue-madison bold uppercase">Kalite Belgeleri</span>
+                                <span class="caption-subject theme-font bold uppercase">Kalite Belgeleri</span>
                             </div>
                             <div class="actions">
                                 <div class="btn-group btn-group-devided" data-toggle="buttons">
-                                    <label id="btn-add-kalite" class="btn btn-transparent grey-salsa btn-circle btn-sm active">
+                                    <label id="btn-add-kalite" class="btn purple btn-circle btn-sm">
                                         <input type="radio" name="options" class="toggle" id="option1">Ekle</label>
                                 </div>
                             </div>
@@ -1177,12 +1166,12 @@
                                                     {{$kalite_belgesi->pivot->belge_no}}
                                                 </td>
                                                 <td>
-                                                    <button name="open-modal-kaliteGuncelle" value="{{$kalite_belgesi->id}}" class="btn btn-default btn-xs open-modal-kaliteGuncelle">Düzenle</button>
+                                                    <button name="open-modal-kaliteGuncelle" value="{{$kalite_belgesi->id}}" class="btn purple btn-xs open-modal-kaliteGuncelle">Düzenle</button>
 
                                                     {{ Form::open(array('url'=>'firmaProfili/kaliteSil/'.$kalite_belgesi->id,'method' => 'DELETE')) }}
                                                     <input type="hidden" name="firma_id"  id="firma_id" value="{{$firma->id}}">
                                                     <input type="hidden" name="belge_no" value="{{$kalite_belgesi->pivot->belge_no}}">
-                                                    {{ Form::submit('Sil', ['class' => 'btn btn-default btn-xs']) }}
+                                                    {{ Form::submit('Sil', ['class' => 'btn purple btn-xs']) }}
                                                     {{ Form::close() }}
                                                 </td>
                                             </tr>
@@ -1223,7 +1212,7 @@
                                                             <input type="hidden" name="eski_belge_no" value="{{$kalite_belgesi->pivot->belge_no}}">
                                                         </div>
                                                         <div class="modal-footer">
-                                                            {!! Form::submit('Kaydet', array('url'=>'firmaProfili/kaliteGuncelle/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                                            {!! Form::submit('Kaydet', array('url'=>'firmaProfili/kaliteGuncelle/'.$firma->id,'style'=>'float:right','class'=>'btn purple')) !!}
 
                                                         </div>
                                                         {!! Form::close() !!}
@@ -1267,7 +1256,7 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        {!! Form::submit('Kaydet', array('url'=>'firmaProfili/kalite/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                        {!! Form::submit('Kaydet', array('url'=>'firmaProfili/kalite/'.$firma->id,'style'=>'float:right','class'=>'btn purple')) !!}
                                     </div>
                                     {!! Form::close() !!}
                                 </div>
@@ -1280,11 +1269,11 @@
                         <div class="portlet-title">
                             <div class="caption caption-md">
                                 <i class="icon-like theme-font"></i>
-                                <span class="caption-subject font-blue-madison bold uppercase">Referanslar</span>
+                                <span class="caption-subject theme-font bold uppercase">Referanslar</span>
                             </div>
                             <div class="actions">
                                 <div class="btn-group btn-group-devided" data-toggle="buttons">
-                                    <label id="btn-add-referanslar" class="btn btn-transparent grey-salsa btn-circle btn-sm active">
+                                    <label id="btn-add-referanslar" class="btn purple btn-circle btn-sm">
                                         <input type="radio" name="options" class="toggle" id="option1">Ekle</label>
                                 </div>
                             </div>
@@ -1295,11 +1284,11 @@
                         @else
                         @foreach($firmaReferanslar as $firmaReferans)
                                 <!-- BEGIN Tekil Referans-->
-                                <div class="portlet light bg-inverse">
+                                <div class="portlet box purple">
                                     <div class="portlet-title">
                                         <div class="caption">
-                                            <i class="icon-like theme-font"></i>
-                                            <span class="caption-subject font-blue-madison uppercase"> {{$firmaReferans->adi}} </span>
+                                            <i class="icon-like"></i>
+                                            {{$firmaReferans->adi}}
                                         </div>
                                         <div class="tools">
                                             Detaylar <a href="javascript:;" class="expand" data-original-title="" title=""> </a>
@@ -1364,10 +1353,10 @@
                                                 </td>
                                             </tr>
                                             <td></td>
-                                            <td><button name="open-modal-gecmis"  value="{{$firmaReferans->id}}" class="btn btn-default btn-xs open-modal-gecmis" >Düzenle</button>
+                                            <td><button name="open-modal-gecmis"  value="{{$firmaReferans->id}}" class="btn purple btn-xs open-modal-gecmis" >Düzenle</button>
                                                 {{ Form::open(array('url'=>'firmaProfili/referansSil/'.$firmaReferans->id,'method' => 'DELETE', 'files'=>true))}}
                                                 <input type="hidden" name="firma_id"  id="firma_id" value="{{$firma->id}}">
-                                                {{ Form::submit('Sil', ['class' => 'btn btn-default btn-xs'])}}
+                                                {{ Form::submit('Sil', ['class' => 'btn purple btn-xs'])}}
                                                 {{ Form::close()}}
                                             </td>
                                             </tr>
@@ -1385,9 +1374,10 @@
                                                     {!! Form::open(array('id'=>'ref_up_kayit','url'=>'firmaProfili/referansUpdate/'. $firmaReferans->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
 
                                                     <div class="form-group">
-                                                        <label for="inputEmail3" class="col-sm-2 control-label">Referans Türü</label>
+                                                        <label for="inputTask" class="col-sm-1 control-label"></label>
+                                                        <label for="inputEmail3" class="col-sm-3 control-label">Referans Türü</label>
                                                         <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
-                                                        <div class="col-sm-9">
+                                                        <div class="col-sm-7">
                                                             <select class="form-control" name="ref_turu" id="ref_turu" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                                                 <option selected disabled value="Seçiniz">Seçiniz</option>
                                                                 <option   value="Geçmiş">Geçmiş</option>
@@ -1429,7 +1419,7 @@
                                                         <label for="inputEmail3" class="col-sm-3 control-label">İşin Yılı</label>
                                                         <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
                                                         <div class="col-sm-7">
-                                                            <input  type="number"  min="1000" max="3000" id="is_yili" name="is_yili" placeholder="İş Yılı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
+                                                            <input class="form-control" type="number"  min="1000" max="3000" id="is_yili" name="is_yili" placeholder="İş Yılı" value="" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!"/>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -1466,7 +1456,7 @@
                                                     </div>
                                                     <input type="hidden" name="ref_id"  id="ref_id" value="{{$firmaReferans->id}}">
 
-                                                    {!! Form::submit('Kaydet', array('url'=>'firmaProfili/referansUpdate/'. $firmaReferans->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                                    {!! Form::submit('Kaydet', array('url'=>'firmaProfili/referansUpdate/'. $firmaReferans->id,'style'=>'float:right','class'=>'btn purple')) !!}
                                                     <br>
                                                     <br>
                                                     {!! Form::close() !!}
@@ -1569,7 +1559,7 @@
                                             </div>
                                         </div>
 
-                                        {!! Form::submit('Kaydet', array('url'=>'firmaProfili/referans/'.$firma->id,'style'=>'float:right','class'=>'btn btn-danger')) !!}
+                                        {!! Form::submit('Kaydet', array('url'=>'firmaProfili/referans/'.$firma->id,'style'=>'float:right','class'=>'btn purple')) !!}
                                         <br>
                                         <br>
 
@@ -1592,7 +1582,7 @@
     <script src="{{asset('js/jquery.bpopup-0.11.0.min.js')}}"></script>
     <script>
         $("#firma_departmanlari").multipleSelect({
-            width: 260,
+            width: '100%',
             multiple: true,
             multipleWidth: 100
         });
@@ -1743,7 +1733,7 @@ $("#firma_departmanlari").multipleSelect("setSelects", arrayDepartman);
                 e.preventDefault();
                 if(x < max_fields){ //max input box allowed
                     x++; //text box increment
-                    $(wrapper).append('<div><input type="text" name="firmanin_urettigi_markalar[]"/><a href="#" class="remove_field">Sil</a></div>'); //add input box
+                    $(wrapper).append('<div><input type="text" name="firmanin_urettigi_markalar[]"/><a href="#" class="remove_field btn purple btn-xs">Sil</a></div>'); //add input box
                 }
             });
 
@@ -1758,7 +1748,7 @@ $("#firma_departmanlari").multipleSelect("setSelects", arrayDepartman);
                 e.preventDefault();
                 if(s < max_fields){ //max input box allowed
                     s++; //text box increment
-                    $(wrapper_sattigi).append('<div><input type="text" name="firmanin_sattigi_markalar[]"/><a href="#" class="remove_field">Sil</a></div>'); //add input box
+                    $(wrapper_sattigi).append('<div><input type="text" name="firmanin_sattigi_markalar[]"/><a href="#" class="remove_field btn purple btn-xs">Sil</a></div>'); //add input box
                 }
             });
 
@@ -1942,20 +1932,6 @@ $("#firma_departmanlari").multipleSelect("setSelects", arrayDepartman);
             $("#sirket_turu").val({{$firma->sirket_turu}});
             $("#yillik_cirosu").val("{{$firma->mali_bilgiler->yillik_cirosu}}");
             $("#vergi_dairesi_id").val({{$firma->mali_bilgiler->vergi_dairesi_id}});
-
-            if("{{$firma->mali_bilgiler->ciro_goster}}" == "1"){
-                $("#ciro_goster").prop('checked',true);
-            }
-            else{
-                $("#ciro_goster").prop('checked',false);
-            }
-
-            if("{{$firma->mali_bilgiler->sermaye_goster}}" == "1"){
-                $("#sermaye_goster").prop('checked',true);
-            }
-            else{
-                $("#sermaye_goster").prop('checked',false);
-            }
         }
 
         $('#addImage').on('change', function(evt) {
