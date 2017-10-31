@@ -300,7 +300,7 @@ class FirmaController extends Controller{
                 if(session()->get('firma_id')!=''){
                     FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
                 }
-                return true;
+                return Redirect::to('firmaProfili');
             }
             else {
                 Session::flash('error', 'uploaded file is not valid');
