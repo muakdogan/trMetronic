@@ -20,54 +20,6 @@
         max-width:200px;
         height:200px;
     }
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 40px;
-        height: 18px;
-        margin-top: 8px;
-    }
-    .switch input {display:none;}
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 16px;
-        width: 20px;
-        left: 0px;
-        bottom: 2px;
-        background-color: white;
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
-    input:checked + .slider {
-        background-color: #2196F3;
-    }
-    input:focus + .slider {
-        box-shadow: 0 0 1px #2196F3;
-    }
-    input:checked + .slider:before {
-        -webkit-transform: translateX(26px);
-        -ms-transform: translateX(26px);
-        transform: translateX(26px);
-    }
-    /* Rounded sliders */
-    .slider.round {
-        border-radius: 34px;
-    }
-    .slider.round:before {
-        border-radius: 50%;
-    }
     .test + .tooltip > .tooltip-inner {
         background-color: #73AD21;
         color: #FFFFFF;
@@ -618,11 +570,11 @@
                                                             <div class="col-sm-10">
                                                                 <input class="form-control" type="text" id="firmanin_urettigi_markalar" name="firmanin_urettigi_markalar[]"  value="{{$markas->adi}}" data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                                             </div>
-                                                            <a href="#" class="remove_field btn purple btn-sm">Sil</a>
+                                                            <a href="#" class="remove_field btn purple btn-sm"><i class="fa fa-times"></i></a>
                                                         </div>
                                                     @endforeach
-                                                    <button  class="add_field_button btn purple btn-sm">Ekle</button>
                                                 </div>
+                                                <button  class="add_field_button btn purple btn-sm"><i class="fa fa-plus"></i> Ekle</button>
                                             </div>
                                         </div>
                                         <div class="form-group" id="sattigiDiv">
@@ -636,11 +588,11 @@
                                                             <div class="col-sm-10">
                                                                 <input class="form-control" type="text" id="firmanin_sattigi_markalar"  name="firmanin_sattigi_markalar[]" value="{{$markaSatilan->satilan_marka_adi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!" >
                                                             </div>
-                                                                <a href="#" class="remove_field btn purple btn-sm">Sil</a>
+                                                                <a href="#" class="remove_field btn purple btn-sm"><i class="fa fa-times"></i></a>
                                                         </div>
                                                     @endforeach
-                                                        <button  class="add_field_sattigi_button btn purple btn-sm">Ekle</button>
                                                 </div>
+                                                <button  class="add_field_sattigi_button btn purple btn-sm"><i class="fa fa-plus"></i> Ekle</button>
                                             </div>
                                         </div>
                                     </div>
@@ -912,7 +864,15 @@
                                                     <a  data-toggle="tooltip" title="PDF'i görüntülemek için tıklayınız!" target="_blank" href="{{ asset('brosur/'.$firmaBrosur->yolu) }}"><img src="{{asset('images/see.png')}}">{{$firmaBrosur->yolu}}</a>
                                                 </td>
                                                 <td>
-                                                    <button value="{{$firmaBrosur->id}}" class="btn purple btn-xs open-modal-brosurGuncelle" >Düzenle</button>
+                                                    <div class="col-md-3">
+                                                        <button value="{{$firmaBrosur->id}}" class="btn purple btn-icon-only btn-sm open-modal-brosurGuncelle" data-toggle="tooltip" data-original-title="Düzenle"><i class="fa fa-edit"></i></button>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        {{ Form::open(array('url'=>'firmaProfili/brosurSil/'.$firmaBrosur->id,'method' => 'DELETE', 'files'=>true)) }}
+                                                        <input type="hidden" name="firma_id"  id="firma_id" value="{{$firma->id}}">
+                                                        <button type="submit" class="btn purple btn-icon-only btn-sm"  data-toggle="tooltip" data-original-title="Sil"><i class="fa fa-times"></i></button>
+                                                        {{ Form::close() }}
+                                                    </div>
                                                     <div class="modal fade" id="myModal-firmabrosurGuncelle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
@@ -934,10 +894,6 @@
                                                         </div>
                                                     </div>
 
-                                                    {{ Form::open(array('url'=>'firmaProfili/brosurSil/'.$firmaBrosur->id,'method' => 'DELETE', 'files'=>true)) }}
-                                                    <input type="hidden" name="firma_id"  id="firma_id" value="{{$firma->id}}">
-                                                    {{ Form::submit('Sil', ['class' => 'btn purple btn-xs']) }}
-                                                    {{ Form::close() }}
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -1173,13 +1129,16 @@
                                                     {{$kalite_belgesi->pivot->belge_no}}
                                                 </td>
                                                 <td>
-                                                    <button name="open-modal-kaliteGuncelle" value="{{$kalite_belgesi->id}}" class="btn purple btn-xs open-modal-kaliteGuncelle">Düzenle</button>
-
-                                                    {{ Form::open(array('url'=>'firmaProfili/kaliteSil/'.$kalite_belgesi->id,'method' => 'DELETE')) }}
-                                                    <input type="hidden" name="firma_id"  id="firma_id" value="{{$firma->id}}">
-                                                    <input type="hidden" name="belge_no" value="{{$kalite_belgesi->pivot->belge_no}}">
-                                                    {{ Form::submit('Sil', ['class' => 'btn purple btn-xs']) }}
-                                                    {{ Form::close() }}
+                                                    <div class="col-md-3">
+                                                        <button name="open-modal-kaliteGuncelle" value="{{$kalite_belgesi->id}}" class="btn purple btn-icon-only open-modal-kaliteGuncelle" data-toggle="tooltip" data-original-title="Düzenle"><i class="fa fa-edit"></i></button>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        {{ Form::open(array('url'=>'firmaProfili/kaliteSil/'.$kalite_belgesi->id,'method' => 'DELETE')) }}
+                                                        <input type="hidden" name="firma_id"  id="firma_id" value="{{$firma->id}}">
+                                                        <input type="hidden" name="belge_no" value="{{$kalite_belgesi->pivot->belge_no}}">
+                                                        <button type="submit" class="btn purple btn-icon-only btn-sm"  data-toggle="tooltip" data-original-title="Sil"><i class="fa fa-times"></i></button>
+                                                        {{ Form::close() }}
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <div class="modal fade" id="myModal-kaliteGuncelle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -1360,11 +1319,16 @@
                                                 </td>
                                             </tr>
                                             <td></td>
-                                            <td><button name="open-modal-gecmis"  value="{{$firmaReferans->id}}" class="btn purple btn-xs open-modal-gecmis" >Düzenle</button>
-                                                {{ Form::open(array('url'=>'firmaProfili/referansSil/'.$firmaReferans->id,'method' => 'DELETE', 'files'=>true))}}
-                                                <input type="hidden" name="firma_id"  id="firma_id" value="{{$firma->id}}">
-                                                {{ Form::submit('Sil', ['class' => 'btn purple btn-xs'])}}
-                                                {{ Form::close()}}
+                                            <td>
+                                                <div class="col-md-3">
+                                                    <button name="open-modal-gecmis"  value="{{$firmaReferans->id}}" class="btn purple btn-icon-only btn-sm open-modal-gecmis"  data-toggle="tooltip" data-original-title="Düzenle"><i class="fa fa-edit"></i></button>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    {{ Form::open(array('url'=>'firmaProfili/referansSil/'.$firmaReferans->id,'method' => 'DELETE', 'files'=>true))}}
+                                                    <input type="hidden" name="firma_id"  id="firma_id" value="{{$firma->id}}">
+                                                    <button type="submit" class="btn purple btn-icon-only btn-sm" data-toggle="tooltip" data-original-title="Sil"><i class="fa fa-times"></i></button>
+                                                    {{ Form::close()}}
+                                                </div>
                                             </td>
                                             </tr>
                                         </table>
@@ -1740,8 +1704,13 @@ $("#firma_departmanlari").multipleSelect("setSelects", arrayDepartman);
                 e.preventDefault();
                 if(x < max_fields){ //max input box allowed
                     x++; //text box increment
-                    $(wrapper).append('<div><input type="text" name="firmanin_urettigi_markalar[]"/><a href="#" class="remove_field btn purple btn-xs">Sil</a></div>'); //add input box
-                }
+                    $(wrapper).append('<div class="row">'+
+                        '<div class="col-sm-10">'+
+                        '<input class="form-control" type="text" id="firmanin_urettigi_markalar" name="firmanin_urettigi_markalar[]" data-validation-error-msg="Lütfen bu alanı doldurunuz!">'+
+                        '</div>'+
+                        '<a href="#" class="remove_field btn purple btn-sm"><i class="fa fa-times"></i></a>'+
+                        '</div>'); //add input box
+                    }
             });
 
             $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
@@ -1755,8 +1724,13 @@ $("#firma_departmanlari").multipleSelect("setSelects", arrayDepartman);
                 e.preventDefault();
                 if(s < max_fields){ //max input box allowed
                     s++; //text box increment
-                    $(wrapper_sattigi).append('<div><input type="text" name="firmanin_sattigi_markalar[]"/><a href="#" class="remove_field btn purple btn-xs">Sil</a></div>'); //add input box
-                }
+                    $(wrapper_sattigi).append('<div class="row">'+
+                        '<div class="col-sm-10">'+
+                        '<input class="form-control" type="text" id="firmanin_sattigi_markalar"  name="firmanin_sattigi_markalar[]" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!" >'+
+                        '</div>'+
+                        '<a href="#" class="remove_field btn purple btn-sm"><i class="fa fa-times"></i></a>'+
+                        '</div>'); //add input box
+                 }
             });
 
             $(wrapper_sattigi).on("click",".remove_field", function(e){ //user click on remove text
