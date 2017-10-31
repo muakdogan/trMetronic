@@ -1027,7 +1027,9 @@
                                     <tr>
                                         <td><strong>Çalışan Profili</strong></td>
                                         <td>:
-                                            <?php $calisan_profili = $firma->getCalisanProfil(); ?>
+                                            <?php
+                                            $calisan_profili = $firma->getCalisanProfil();
+                                            ?>
                                             {{$calisan_profili}}
                                         </td>
                                     </tr>
@@ -1086,15 +1088,20 @@
                                             <label for="inputEmail3" class="col-sm-3 control-label">Çalışan Profili</label>
                                             <label for="inputTask" style="text-align: right"class="col-sm-1 control-label">:</label>
                                             <div class="col-sm-7">
-                                                @if($calisan_profili == 'Beyaz Yaka')
+                                                @if($calisan==null)
                                                     <input type="checkbox" class="firma_calisan " name="firma_calisma_profili[]" value="1" data-validation="checkbox_group"  data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1"/>&nbsp;&nbsp;Mavi Yaka&nbsp;&nbsp;-&nbsp;&nbsp;
-                                                    <input type="checkbox" class="firma_calisan "  name="firma_calisma_profili[]" value="2" data-validation="checkbox_group" data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1" checked/>&nbsp;&nbsp;Beyaz Yaka
-                                                @elseif($calisan_profili == 'Mavi Yaka')
-                                                    <input type="checkbox" class="firma_calisan " name="firma_calisma_profili[]" value="1" data-validation="checkbox_group"  data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1" checked/>&nbsp;&nbsp;Mavi Yaka&nbsp;&nbsp;-&nbsp;&nbsp;
                                                     <input type="checkbox" class="firma_calisan "  name="firma_calisma_profili[]" value="2" data-validation="checkbox_group" data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1"/>&nbsp;&nbsp;Beyaz Yaka
                                                 @else
-                                                    <input type="checkbox" class="firma_calisan " name="firma_calisma_profili[]" value="1" data-validation="checkbox_group"  data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1" checked/>&nbsp;&nbsp;Mavi Yaka&nbsp;&nbsp;-&nbsp;&nbsp;
-                                                    <input type="checkbox" class="firma_calisan "  name="firma_calisma_profili[]" value="2" data-validation="checkbox_group" data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1" checked/>&nbsp;&nbsp;Beyaz Yaka
+                                                    @if($calisan_profili == 'Beyaz Yaka')
+                                                        <input type="checkbox" class="firma_calisan " name="firma_calisma_profili[]" value="1" data-validation="checkbox_group"  data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1"/>&nbsp;&nbsp;Mavi Yaka&nbsp;&nbsp;-&nbsp;&nbsp;
+                                                        <input type="checkbox" class="firma_calisan "  name="firma_calisma_profili[]" value="2" data-validation="checkbox_group" data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1" checked/>&nbsp;&nbsp;Beyaz Yaka
+                                                    @elseif($calisan_profili == 'Mavi Yaka')
+                                                        <input type="checkbox" class="firma_calisan " name="firma_calisma_profili[]" value="1" data-validation="checkbox_group"  data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1" checked/>&nbsp;&nbsp;Mavi Yaka&nbsp;&nbsp;-&nbsp;&nbsp;
+                                                        <input type="checkbox" class="firma_calisan "  name="firma_calisma_profili[]" value="2" data-validation="checkbox_group" data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1"/>&nbsp;&nbsp;Beyaz Yaka
+                                                    @else
+                                                        <input type="checkbox" class="firma_calisan " name="firma_calisma_profili[]" value="1" data-validation="checkbox_group"  data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1" checked/>&nbsp;&nbsp;Mavi Yaka&nbsp;&nbsp;-&nbsp;&nbsp;
+                                                        <input type="checkbox" class="firma_calisan "  name="firma_calisma_profili[]" value="2" data-validation="checkbox_group" data-validation-error-msg="Lütfen birini seçiniz!"  data-validation-qty="min1" checked/>&nbsp;&nbsp;Beyaz Yaka
+                                                    @endif
                                                 @endif
                                             </div>
                                         </div>
