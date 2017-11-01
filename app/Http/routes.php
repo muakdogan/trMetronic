@@ -292,20 +292,31 @@ Route::get('/yeniFirmaKaydet' ,function () {
 });
 
 Route::get('/firmaIslemleri/{id?}',['middleware'=>'auth', function ($id = null) {
-  //firma işlemlerindeki parametre opsiyonel yapıldı, eğer parametre geçirilmiyorsa sessiondan alınarak atama yapılıyor
-  if($id == null && (session()->has('firma_id')))
+    //firma işlemlerindeki parametre opsiyonel yapıldı, eğer parametre geçirilmiyorsa sessiondan alınarak atama yapılıyor
+    if($id == null && (session()->has('firma_id')))
     $id = session()->get('firma_id');
-  $firma = Firma::find($id);
+    $firma = Firma::find($id);
 
-  if (Gate::denies('show', $firma)) {
+    if (Gate::denies('show', $firma)) {
     return Redirect::to('/');
-  }
-  $davetEdilIlanlar = App\BelirliIstekli::where('firma_id',$firma->id)->get();
-  $ilanlarFirma = $firma->ilanlar()->orderBy('yayin_tarihi','desc')->limit('5')->get();
-  $teklifler= Teklif::where('firma_id',$firma->id)->limit(5)->get();
-  $tekliflerCount= DB::table('teklifler')->where('firma_id',$firma->id)->count();
+    }
 
-  return view('Firma.firmaIslemleri')->with('firma',$firma)->with('davetEdilIlanlar', $davetEdilIlanlar)
+    $davetEdilIlanlar=DB::table('belirli_istekliler')
+        ->join('ilanlar', 'ilanlar.id', '=', 'belirli_istekliler.ilan_id')
+        ->join('firmalar', 'firmalar.id', '=', 'ilanlar.firma_id')
+        ->select('ilanlar.id as ilan_id','ilanlar.adi as ilan_adi','ilanlar.kapanma_tarihi as ilan_kapanma_tarihi','firmalar.adi as firma_adi','firmalar.id as firma_id')
+        ->where( 'kapanma_tarihi','>=', date('Y-m-d'))->where('belirli_istekliler.firma_id', $id)
+        ->distinct()
+        ->limit(5)
+        ->get();
+
+    $ilanlarFirma = $firma->ilanlar()->orderBy('yayin_tarihi','desc')->limit('5')->get();
+
+    $teklifler= $firma->teklifler()->limit(5)->get();
+
+    $tekliflerCount= $firma->teklifler()->count();
+
+    return view('Firma.firmaIslemleri')->with('firma',$firma)->with('davetEdilIlanlar', $davetEdilIlanlar)
           ->with('ilanlarFirma', $ilanlarFirma)->with('teklifler', $teklifler)->with('tekliflerCount', $tekliflerCount);
 }]);
 
