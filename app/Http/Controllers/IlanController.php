@@ -48,8 +48,9 @@ class IlanController extends Controller
         $firma = Firma::find($id);
         $ilan = Ilan::find($ilan_id);
         $teklifler = $ilan->teklif_hareketler()->whereRaw('tarih IN (select MAX(tarih) FROM teklif_hareketler GROUP BY teklif_id)')->paginate();
-        Debugbar::info($teklifler);
 
+
+        Debugbar::info($teklifler);
         if (!$ilan)
             $firma->ilanlar = new Ilan();
         if (!$ilan->ilan_mallar)

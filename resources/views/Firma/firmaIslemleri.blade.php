@@ -15,17 +15,16 @@
                     <div class="portlet light ">
                         <div class="portlet-title">
                             <div class="caption caption-md">
-                                <i class="fa fa-pencil theme-font"></i>
-                                <span class="caption-subject theme-font bold uppercase">Davet Edildiğim İlanlar</span>
+                                <i class="icon-envelope-open theme-font"></i>
+                                <span class="caption-subject theme-font bold uppercase">Son 5 Davet Edildiğim İlan</span>
                             </div>
                         </div>
                         <div class="portlet-body">
-                            <table data-toggle="table" data-sort-name="name" data-sort-order="asc" class="table-striped" >
+                            <table data-toggle="table" data-sort-name="tarih" data-sort-order="asc" class="table-striped" >
                                 <thead>
                                 <tr>
                                     <th data-align="center" data-sortable="true">Firma Adı</th>
-                                    <th data-align="center" data-field="name" data-sortable="true">İlan Adı</th>
-                                    <th data-align="center" data-sortable="true">Başvuru Sayısı</th>
+                                    <th data-align="center" data-field="tarih" data-sortable="true">İlan Adı</th>
                                     <th data-align="center" data-sortable="true">Kapanma Tarihi</th>
                                     <th data-align="center">Başvur</th>
                                 </tr>
@@ -33,17 +32,17 @@
                                 <tbody>
                                 @foreach($davetEdilIlanlar as $dvtIlan)
                                     <tr>
-                                        <td><a href="javascript:;">firma adı</a></td>
-                                        <td><a href="{{ URL::to('teklifGor', array($firma->id,$dvtIlan->id), false) }}">{{$dvtIlan->ilanlar->adi}}</a></td>
-                                        <td>{{$dvtIlan->ilanlar->teklifler()->count()}}</td>
-                                        <td>kapanma</td>
+                                        <td><a href="{{URL::to('firmaDetay', array($dvtIlan->firma_id), false)}}">{{$dvtIlan->firma_adi}}</a></td>
+                                        <td><a href="{{URL::to('teklifGor', array($dvtIlan->firma_id,$dvtIlan->ilan_id), false)}}">{{$dvtIlan->ilan_adi}}</a></td>
+                                        <td>{{date("d-m-Y", strtotime($dvtIlan->ilan_kapanma_tarihi))}}</td>
                                         <td>
-                                            <a href="{{ URL::to('teklifGor', array($firma->id,$dvtIlan->id), false) }}" class="btn btn-circle bold btn-icon-only purple">
+                                            <a href="{{URL::to('teklifGor', array($dvtIlan->firma_id,$dvtIlan->ilan_id), false)}}" class="btn btn-circle bold btn-icon-only purple">
                                                 <i class="icon-arrow-right"></i>
                                             </a>
                                         </td>
                                     </tr>
                                 @endforeach
+                                </tbody>
                                 <tfoot>
                                 <tr>
                                     <td colspan="5">
@@ -60,29 +59,42 @@
                     <div class="portlet light ">
                         <div class="portlet-title">
                             <div class="caption caption-md">
-                                <i class="fa fa-pencil theme-font"></i>
-                                <span class="caption-subject theme-font bold uppercase">Son İlanlarım</span>
+                                <i class="icon-paper-plane theme-font"></i>
+                                <span class="caption-subject theme-font bold uppercase">Son 5 İlanım</span>
                             </div>
                         </div>
                         <div class="portlet-body">
-                            <div class="table-scrollable table-scrollable-borderless">
-                                <table class="table table-light">
+                            <table data-toggle="table" data-sort-name="tarih" data-sort-order="asc" class="table-striped" >
+                                <thead>
                                 <tr>
-                                    <th>İlan İsmi</th>
-                                    <th>Başvuru Sayısı</th>
-                                    <th></th>
+                                    <th data-align="center" data-field="tarih" data-sortable="true">İlan Adı</th>
+                                    <th data-align="center" data-sortable="true">Başvuru Sayısı</th>
+                                    <th data-align="center" data-sortable="true">Kapanma Tarihi</th>
+                                    <th data-align="center">Git</th>
                                 </tr>
+                                </thead>
+                                <tbody>
                                 @foreach($ilanlarFirma as $ilan)
                                     <tr>
-                                        <td>{{$ilan->adi}}</td>
+                                        <td><a href="{{URL::to('teklifGor', array($firma->id,$ilan->id), false)}}">{{$ilan->adi}}</a></td>
                                         <td>{{$ilan->teklifler()->count()}}</td>
-                                        @if($ilan->yayinlanma_tarihi > time())
-                                            <td><a href="{{ URL::to('firmaIlanOlustur', array($firma->id,$ilan->id), false) }}"><button class="btn">Düzenle</button></a></td>
-                                        @endif
+                                        <td>{{date("d-m-Y", strtotime($ilan->kapanma_tarihi))}}</td>
+                                        <td>
+                                            <a href="{{URL::to('teklifGor', array($firma->id,$ilan->id), false)}}" class="btn btn-circle bold btn-icon-only purple">
+                                                <i class="icon-arrow-right"></i>
+                                            </a>
+                                        </td>
                                     </tr>
                                 @endforeach
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="4">
+                                        <a href="{{URL::to('ilanlarim', array($firma->id), false)}}"><span style="color: purple;">Tüm İlanlarımı Görüntüle <i class="icon-arrow-right"></i></span></a>
+                                    </td>
+                                </tr>
+                                </tfoot>
                             </table>
-                            </div>
                         </div>
                     </div>
                     <!-- END SON ILANLARIM -->
@@ -91,118 +103,81 @@
                     <div class="portlet light ">
                         <div class="portlet-title">
                             <div class="caption caption-md">
-                                <i class="fa fa-pencil theme-font"></i>
-                                <span class="caption-subject theme-font bold uppercase">Son Başvurularım</span>
+                                <i class="icon-note theme-font"></i>
+                                <span class="caption-subject theme-font bold uppercase">Son 5 Başvurum</span>
                             </div>
                         </div>
                         <div class="portlet-body">
-                            <div class="table-scrollable table-scrollable-borderless">
-                                <table class="table table-light">
-                                    <tr>
-                                        <th>Başvuru İlan İsmi</th>
-                                        <th>Başvuru Sayısı</th>
-                                        <th></th>
-                                    </tr>
-                                    @foreach($teklifler as $teklif)
-                                        <tr>
-                                            <td>{{$teklif->ilanlar->adi}}</td>
-                                            <td>{{$teklif->getIlanTeklifSayisi()}}</td>
-                                            <td><button class="btn">Düzenle</button></td>
-                                        </tr>
-                                    @endforeach
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END SON BASVURULARIM -->
-
-                    <!-- BEGIN DENEME -->
-                    <div class="portlet light ">
-                        <div class="portlet-title">
-                            <div class="caption caption-md">
-                                <i class="fa fa-pencil theme-font"></i>
-                                <span class="caption-subject theme-font bold uppercase">DENEME</span>
-                            </div>
-                        </div>
-                        <div class="portlet-body">
-                            <table data-toggle="table" data-sort-name="name" data-sort-order="asc">
+                            <table data-toggle="table" data-sort-name="tarih" data-sort-order="asc" class="table-striped" >
                                 <thead>
                                 <tr>
-                                    <th data-align="right" data-sortable="true">Firma Adı</th>
-                                    <th data-align="center" data-field="name" data-sortable="true">İlan Adı</th>
-                                    <th data-align="right" data-sortable="true">Başvuru Sayısı</th>
+                                    <th data-align="center" data-sortable="true">Firma Adı</th>
+                                    <th data-align="center" data-field="tarih" data-sortable="true">İlan Adı</th>
+                                    <th data-align="center" data-sortable="true">Başvuru Sayısı</th>
                                     <th data-align="center" data-sortable="true">Kapanma Tarihi</th>
-                                    <th data-align="center">Başvur</th>
+                                    <th data-align="center">Güncelle</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-
-                                <tr>
-                                    <td>a</td>
-                                    <td>b</td>
-                                    <td>c</td>
-                                    <td>b</td>
-                                    <td><a href="javascript:;" class="btn btn-circle bold btn-icon-only purple">
-                                            <i class="icon-arrow-right"></i>
-                                        </a></td>
-                                </tr>
-                                <tr>
-                                    <td>d</td>
-                                    <td>e</td>
-                                    <td>f</td>
-                                    <td>b</td>
-                                    <td><i class="icon-arrow-right theme-font"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>d</td>
-                                    <td>e</td>
-                                    <td>f</td>
-                                    <td>b</td>
-                                    <td><i class="icon-arrow-right theme-font"></i></td>
-                                </tr>
+                                @foreach($teklifler as $teklif)
+                                    <tr>
+                                        <td><a href="{{URL::to('firmaDetay', array($teklif->ilanlar->firmalar->id), false)}}">{{$teklif->ilanlar->firmalar->adi}}</a></td>
+                                        <td><a href="{{URL::to('teklifGor', array($teklif->ilanlar->firmalar->id,$teklif->ilanlar->id), false)}}">{{$teklif->ilanlar->adi}}</a></td>
+                                        <td>{{$teklif->getIlanTeklifSayisi()}}</td>
+                                        <td>{{date("d-m-Y", strtotime($teklif->ilanlar->kapanma_tarihi))}}</td>
+                                        <td>
+                                            <a href="{{URL::to('teklifGor', array($teklif->ilanlar->firmalar->id,$teklif->ilanlar->id), false)}}" class="btn btn-circle bold btn-icon-only purple">
+                                                <i class="icon-arrow-right"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                                 <tfoot>
                                 <tr>
                                     <td colspan="5">
-                                        deneme
+                                        <a href="{{URL::to('basvurularim', array($firma->id), false)}}"><span style="color: purple;">Tüm Başvurularımı Görüntüle <i class="icon-arrow-right"></i></span></a>
                                     </td>
                                 </tr>
                                 </tfoot>
                             </table>
                         </div>
                     </div>
-                    <!-- END DENEME -->
+                    <!-- END SON BASVURULARIM -->
                 </div>
                 <div class="col-md-3">
                     <!-- BEGIN WIDGET THUMB -->
                     <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                        <h4 class="widget-thumb-heading">Toplam İlan Sayım</h4>
+                        <h4 class="widget-thumb-heading">Toplam İlanım</h4>
                         <div class="widget-thumb-wrap">
-                            <i class="widget-thumb-icon bg-purple icon-bulb"></i>
+                            <i class="widget-thumb-icon bg-red-pink icon-bar-chart"></i>
                             <div class="widget-thumb-body">
-                                <span class="widget-thumb-body-stat" data-counter="counterup" data-value="10">{{$firma->ilanlar()->count()}}</span>
+                                <span class="widget-thumb-body-stat" data-counter="counterup" data-value="{{$firma->ilanlar()->count()}}"></span>
                             </div>
                         </div>
                     </div>
                     <!-- END WIDGET THUMB -->
                     <!-- BEGIN WIDGET THUMB -->
                     <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                        <h4 class="widget-thumb-heading">Toplam Başvuru Sayım</h4>
+                        <h4 class="widget-thumb-heading">Toplam Başvurum</h4>
                         <div class="widget-thumb-wrap">
-                            <i class="widget-thumb-icon bg-purple icon-bulb"></i>
+                            <i class="widget-thumb-icon bg-blue icon-graph"></i>
                             <div class="widget-thumb-body">
-                                <span class="widget-thumb-body-stat" data-counter="counterup" data-value="7,644">{{$tekliflerCount}}</span>
+                                <span class="widget-thumb-body-stat" data-counter="counterup" data-value="{{$tekliflerCount}}"></span>
                             </div>
                         </div>
                     </div>
                     <!-- END WIDGET THUMB -->
                     <!-- BEGIN WIDGET THUMB -->
                     <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
-                        <h4 class="widget-thumb-heading">Profil Doluluk Oranı</h4>
+                        <h4 class="widget-thumb-heading">Profil Doluluk Oranım</h4>
                         <div class="widget-thumb-wrap">
-                            <i class="widget-thumb-icon bg-purple icon-bulb"></i>
                             <div class="widget-thumb-body">
-                                <span class="widget-thumb-body-stat" data-counter="counterup" data-value="7,644">%{{$firma->doluluk_orani}}</span>
+                                <div class="easy-pie-chart">
+                                    <div class="number transactions" data-percent="{{$firma->doluluk_orani}}">
+                                        %<span>{{$firma->doluluk_orani}}</span></div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -216,4 +191,7 @@
 @section('sayfaSonu')
     <script src="{{asset('MetronicFiles/global/plugins/bootstrap-table/bootstrap-table.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('MetronicFiles/pages/scripts/table-bootstrap.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('MetronicFiles/global/plugins/counterup/jquery.waypoints.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('MetronicFiles/global/plugins/counterup/jquery.counterup.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('MetronicFiles/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js')}}" type="text/javascript"></script>
 @endsection
