@@ -69,9 +69,10 @@
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                         <h4 class="modal-title" id="myModalLabel">Firma Logonu Güncelle</h4>
                                     </div>
+                                    {!! Form::open(array('url'=>'firmaProfili/uploadImage/'.$firma->id,'method'=>'POST', 'files'=>true)) !!}
                                     <div class="modal-body">
                                         <div class="span7 offset1">
-                                            {!! Form::open(array('url'=>'firmaProfili/uploadImage/'.$firma->id,'method'=>'POST', 'files'=>true)) !!}
+
                                             <div class="control-group">
                                                 <div class="controls">
                                                     <div class="container-fuild">
@@ -79,7 +80,7 @@
                                                             <div class="col-sm-4" >
                                                                 <div class="secure"><strong>Mevcut Logonuz</strong></div>
                                                                 <br>
-                                                                <div style="width:128px;height:128px;"class="image-wrapper">
+                                                                <div style="width:128px;height:128px;" class="image-wrapper">
                                                                     @if($firma->logo != "")
                                                                         <img src="{{asset('uploads')}}/{{$firma->logo}}" alt="Firma Logo" style="width:128px;height:128px;">
                                                                     @else
@@ -103,21 +104,20 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                <div id="success">
-                                                </div>
-                                                {!! Form::submit('Logo Yükle', array('url'=>'firmaProfili/uploadImage'.$firma->id,'style'=>'float:right','class'=>'btn purple')) !!}
-                                                {!! Form::close() !!}
-                                                @if($firma->logo != "")
-                                                    {{ Form::open(array('url'=>'firmaProfili/deleteImage/'.$firma->id,'method' => 'DELETE', 'files'=>true)) }}
-                                                    {{ Form::hidden('id', $firma->logo) }}
-                                                    {{ Form::submit('Logo Sil', ['style'=>'float:right' ,'class' => 'btn purple']) }}
-                                                    {{ Form::close() }}
-                                                @endif
-                                                <br>
-                                                <br>
-                                                <br>
                                             </div>
+
+                                            {!! Form::submit('Logo Yükle', array('url'=>'firmaProfili/uploadImage'.$firma->id,'style'=>'float:right','class'=>'btn purple')) !!}
+                                            {!! Form::close() !!}
+                                        @if($firma->logo != "")
+                                        <div style="float: left;">
+                                                {{ Form::open(array('url'=>'firmaProfili/deleteImage/'.$firma->id,'method' => 'DELETE', 'files'=>true)) }}
+                                                {{ Form::hidden('id', $firma->logo) }}
+                                                {{ Form::submit('Logo Sil', ['style'=>'float:right' ,'class' => 'btn purple']) }}
+                                                {{ Form::close() }}
                                         </div>
+                                        @endif
+                                        </div>
+
                                         <div class="modal-footer">
                                         </div>
                                     </div>

@@ -113,21 +113,27 @@ class Firma extends Model
     }
     public function getUstSektor()
     {
-      if($this->ticari_bilgiler->ust_sektor==1)
-        return 'Sanayi';
-      else if ($this->ticari_bilgiler->ust_sektor==2)
-        return 'Tarım';
-      else if ($this->ticari_bilgiler->ust_sektor==3)
-        return 'Hizmet';
+        if($this->ticari_bilgiler){
+            if($this->ticari_bilgiler->ust_sektor==1)
+                return 'Sanayi';
+            else if ($this->ticari_bilgiler->ust_sektor==2)
+                return 'Tarım';
+            else if ($this->ticari_bilgiler->ust_sektor==3)
+                return 'Hizmet';
+        }
+
+      return '';
     }
     public function getCalisanProfil()
     {
-      if($this->firma_calisma_bilgileri->calisan_profili==1)
-        return 'Mavi Yaka';
-      else if ($this->firma_calisma_bilgileri->calisan_profili==2)
-        return 'Beyaz Yaka';
-      else if ($this->firma_calisma_bilgileri->calisan_profili==3)
-        return 'Mavi Yaka,Beyaz Yaka';
+        if($this->firma_calisma_bilgileri) {
+            if ($this->firma_calisma_bilgileri->calisan_profili == 1)
+                return 'Mavi Yaka';
+            else if ($this->firma_calisma_bilgileri->calisan_profili == 2)
+                return 'Beyaz Yaka';
+            else if ($this->firma_calisma_bilgileri->calisan_profili == 3)
+                return 'Mavi Yaka,Beyaz Yaka';
+        }
     }
     public function puanlamaOrtalama(){
         /*$puan = Puanlama::select( array(DB::raw("avg(kriter1+kriter2+kriter3+kriter4)/4 as ortalama")))

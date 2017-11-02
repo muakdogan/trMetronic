@@ -134,10 +134,8 @@ $i=1;
     <div class="portlet light " id="form_wizard_1">
         <div class="portlet-title">
             <div class="caption">
-                <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red bold uppercase"> İlan Oluştur -
-                                                                <span class="step-title"> Step 1 of 3 </span>
-                                                            </span>
+                <i class=" icon-layers theme-font"></i>
+                <span class="caption-subject theme-font bold uppercase">İlan Oluştur</span>
             </div>
 
         </div>
@@ -773,7 +771,7 @@ $i=1;
                                     </table>
                                 </div>
 
-                                <input style="float:right" type="button" class="action-button" id="btn2" value="Kalem Ekle" />
+                                <input style="float:right" type="button" class="btn purple" id="btn2" value="Kalem Ekle" />
                                 </fieldset>
                             </div>
                             <div class="tab-pane" id="tab3">
@@ -783,19 +781,19 @@ $i=1;
                                 <div class="info-box eula-container ">
                                     <h3>İlan Bilgileri</h3>
                                 </div>
-                                <input type="checkbox"  id='sozlesme_onay' name="sozlesme_onay" value="1"><strong>Sözleşmeyi Okudum Onaylıyorum</strong>
+                                <input type="checkbox"  id='sozlesme_onay' name="sozlesme_onay" value="1" class="required"><strong>Sözleşmeyi Okudum Onaylıyorum</strong>
                             </div>
                         </div>
                     </div>
                     <div class="form-actions">
                         <div class="row">
-                            <div class="col-md-offset-3 col-md-9">
+                            <div class="col-md-offset-9 col-md-3">
                                 <a href="javascript:;" class="btn default button-previous">
                                     <i class="fa fa-angle-left"></i> Geri </a>
-                                <a href="javascript:;" class="btn btn-outline green button-next next"> İleri
+                                <a href="javascript:;" class="btn btn-outline purple button-next next"> İleri
                                     <i class="fa fa-angle-right"></i>
                                 </a>
-                                <a href="javascript:;" class="btn green button-submit" id="onayButton">Onayla ve Gönder
+                                <a href="javascript:;" class="btn purple button-submit" id="onayButton">Gönder
                                     <i class="fa fa-check"></i>
                                 </a>
                             </div>
@@ -822,10 +820,14 @@ $i=1;
     $("#onayButton").unbind().click(function(e){
         for ( instance in CKEDITOR.instances )
             CKEDITOR.instances[instance].updateElement();
+        var form = $("#submit_form");
+        var postData = new FormData(form[0]);
+        var formURL = form.attr('action');
 
-        var postData = new FormData($("#submit_form")[0]);
-        var formURL = $("#submit_form").attr('action');
-        console.log(postData);
+        if( !form.validate()){
+            return false;
+        }
+
         $.ajax(
             {
                 beforeSend: function(){
@@ -838,7 +840,7 @@ $i=1;
                 data : postData,
                 success:function(data, textStatus, jqXHR)
                 {
-                    var form = $('#submit_form');
+
                     // let the browser natively reset defaults
                     form[0].reset();
                     setTimeout(function(){
