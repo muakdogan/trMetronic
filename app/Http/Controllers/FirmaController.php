@@ -891,13 +891,7 @@ class FirmaController extends Controller{
             $doluOzellik++;
         }
         //BILGILENDIRME TERCIHI
-        if ($firma->sms != 0){
-            $doluOzellik++;
-        }
-        if ($firma->mail != 0){
-            $doluOzellik++;
-        }
-        if ($firma->telefon != 0){
+        if ($firma->sms == 0 || $firma->sms == 1){
             $doluOzellik++;
         }
 

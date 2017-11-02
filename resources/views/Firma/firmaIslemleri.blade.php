@@ -16,7 +16,7 @@
                         <div class="portlet-title">
                             <div class="caption caption-md">
                                 <i class="icon-envelope-open theme-font"></i>
-                                <span class="caption-subject theme-font bold uppercase">Son 5 Davet Edildiğim İlan</span>
+                                <span class="caption-subject theme-font bold uppercase">Davet Edildiğim Son 3 İlan</span>
                             </div>
                         </div>
                         <div class="portlet-body">
@@ -32,8 +32,8 @@
                                 <tbody>
                                 @foreach($davetEdilIlanlar as $dvtIlan)
                                     <tr>
-                                        <td><a href="{{URL::to('firmaDetay', array($dvtIlan->firma_id), false)}}">{{$dvtIlan->firma_adi}}</a></td>
-                                        <td><a href="{{URL::to('teklifGor', array($dvtIlan->firma_id,$dvtIlan->ilan_id), false)}}">{{$dvtIlan->ilan_adi}}</a></td>
+                                        <td><a class="btn" href="{{URL::to('firmaDetay', array($dvtIlan->firma_id), false)}}">{{$dvtIlan->firma_adi}}</a></td>
+                                        <td><a class="btn" href="{{URL::to('teklifGor', array($dvtIlan->firma_id,$dvtIlan->ilan_id), false)}}">{{$dvtIlan->ilan_adi}}</a></td>
                                         <td>{{date("d-m-Y", strtotime($dvtIlan->ilan_kapanma_tarihi))}}</td>
                                         <td>
                                             <a href="{{URL::to('teklifGor', array($dvtIlan->firma_id,$dvtIlan->ilan_id), false)}}" class="btn btn-circle bold btn-icon-only purple">
@@ -46,7 +46,7 @@
                                 <tfoot>
                                 <tr>
                                     <td colspan="5">
-                                        <a href="{{URL::to('davetEdildigim')}}"><span style="color: purple;">Tüm Davet Edildiğim İlanları Görüntüle <i class="icon-arrow-right"></i></span></a>
+                                        <a class="btn bold" href="{{URL::to('davetEdildigim')}}"><span  style="color: purple;">Davet Edildiğim Tüm İlanları Görüntüle <i class="icon-arrow-right"></i></span></a>
                                     </td>
                                 </tr>
                                 </tfoot>
@@ -60,7 +60,7 @@
                         <div class="portlet-title">
                             <div class="caption caption-md">
                                 <i class="icon-paper-plane theme-font"></i>
-                                <span class="caption-subject theme-font bold uppercase">Son 5 İlanım</span>
+                                <span class="caption-subject theme-font bold uppercase">Son 3 İlanım</span>
                             </div>
                         </div>
                         <div class="portlet-body">
@@ -76,7 +76,7 @@
                                 <tbody>
                                 @foreach($ilanlarFirma as $ilan)
                                     <tr>
-                                        <td><a href="{{URL::to('teklifGor', array($firma->id,$ilan->id), false)}}">{{$ilan->adi}}</a></td>
+                                        <td><a class="btn" href="{{URL::to('teklifGor', array($firma->id,$ilan->id), false)}}">{{$ilan->adi}}</a></td>
                                         <td>{{$ilan->teklifler()->count()}}</td>
                                         <td>{{date("d-m-Y", strtotime($ilan->kapanma_tarihi))}}</td>
                                         <td>
@@ -90,7 +90,9 @@
                                 <tfoot>
                                 <tr>
                                     <td colspan="4">
-                                        <a href="{{URL::to('ilanlarim', array($firma->id), false)}}"><span style="color: purple;">Tüm İlanlarımı Görüntüle <i class="icon-arrow-right"></i></span></a>
+                                        <a class="btn bold" href="{{URL::to('ilanlarim', array($firma->id), false)}}"><span style="color: purple;">Tüm İlanlarımı Görüntüle <i class="icon-arrow-right"></i></span></a>
+                                    <div style="float: right"><a class="btn bold" href="{{URL::to('ilanOlustur', array($firma->id), false)}}"><span style="color: purple;">Yeni İlan Oluştur <i class="icon-plus"></i></span></a>
+                                    </div>
                                     </td>
                                 </tr>
                                 </tfoot>
@@ -104,7 +106,7 @@
                         <div class="portlet-title">
                             <div class="caption caption-md">
                                 <i class="icon-note theme-font"></i>
-                                <span class="caption-subject theme-font bold uppercase">Son 5 Başvurum</span>
+                                <span class="caption-subject theme-font bold uppercase">Son 3 Başvurum</span>
                             </div>
                         </div>
                         <div class="portlet-body">
@@ -121,8 +123,8 @@
                                 <tbody>
                                 @foreach($teklifler as $teklif)
                                     <tr>
-                                        <td><a href="{{URL::to('firmaDetay', array($teklif->ilanlar->firmalar->id), false)}}">{{$teklif->ilanlar->firmalar->adi}}</a></td>
-                                        <td><a href="{{URL::to('teklifGor', array($teklif->ilanlar->firmalar->id,$teklif->ilanlar->id), false)}}">{{$teklif->ilanlar->adi}}</a></td>
+                                        <td><a class="btn" href="{{URL::to('firmaDetay', array($teklif->ilanlar->firmalar->id), false)}}">{{$teklif->ilanlar->firmalar->adi}}</a></td>
+                                        <td><a class="btn" href="{{URL::to('teklifGor', array($teklif->ilanlar->firmalar->id,$teklif->ilanlar->id), false)}}">{{$teklif->ilanlar->adi}}</a></td>
                                         <td>{{$teklif->getIlanTeklifSayisi()}}</td>
                                         <td>{{date("d-m-Y", strtotime($teklif->ilanlar->kapanma_tarihi))}}</td>
                                         <td>
@@ -136,7 +138,10 @@
                                 <tfoot>
                                 <tr>
                                     <td colspan="5">
-                                        <a href="{{URL::to('basvurularim', array($firma->id), false)}}"><span style="color: purple;">Tüm Başvurularımı Görüntüle <i class="icon-arrow-right"></i></span></a>
+                                        <a class="btn bold" href="{{URL::to('basvurularim', array($firma->id), false)}}"><span style="color: purple;">Tüm Başvurularımı Görüntüle <i class="icon-arrow-right"></i></span></a>
+                                        <div style="float: right">
+                                            <a class="btn bold" href="{{URL::to('ilanAra', false)}}"><span style="color: purple;">İlan Ara <i class="icon-magnifier"></i></span></a>
+                                        </div>
                                     </td>
                                 </tr>
                                 </tfoot>

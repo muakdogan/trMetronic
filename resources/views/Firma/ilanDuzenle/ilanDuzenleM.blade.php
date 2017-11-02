@@ -3,10 +3,8 @@
 <div class="portlet light " id="form_wizard_1">
     <div class="portlet-title">
         <div class="caption">
-            <i class=" icon-layers font-red"></i>
-            <span class="caption-subject font-red bold uppercase"> İlan Düzenle -
-                                                                <span class="step-title"> 2 Adım </span>
-                                                            </span>
+            <i class=" icon-layers theme-font"></i>
+            <span class="caption-subject theme-font bold uppercase">İlan Düzenle</span>
         </div>
     </div>
     <div class="portlet-body form">
@@ -394,7 +392,7 @@
                             @endif
                             @include('Firma.ilanDuzenle.KalemGoturu')
 
-                            <input style="float:left" type="button" class="action-button" id="kalem_ekle" value="Kalem Ekle" />
+                            <input style="float:left" type="button" class="btn purple" id="kalem_ekle" value="Kalem Ekle" />
 
                         </fieldset>
                     </div>
@@ -402,13 +400,13 @@
             </div>
             <div class="form-actions">
                 <div class="row">
-                    <div class="col-md-offset-3 col-md-9">
+                    <div class="col-md-offset-9 col-md-3">
                         <a href="javascript:;" class="btn default button-previous">
                             <i class="fa fa-angle-left"></i> Geri </a>
-                        <a href="javascript:;" class="btn btn-outline green button-next next">İleri
+                        <a href="javascript:;" class="btn btn-outline purple button-next next">İleri
                             <i class="fa fa-angle-right"></i>
                         </a>
-                        <a href="javascript:;" class="btn green button-submit" id="onayButton">Gönder
+                        <a href="javascript:;" class="btn purple button-submit" id="onayButton">Gönder
                             <i class="fa fa-check"></i>
                         </a>
                     </div>
@@ -421,8 +419,6 @@
     <!--kalemler tree modalı -->
     @include('Firma.ilan.kalemAgaci')
 </div>
-
-
 
 <script charset="utf-8">
     //jQuery time

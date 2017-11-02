@@ -15,7 +15,7 @@
                               </div>
                           </div>
                    </div>
-              <input style="float:right" type="button" class="action-button btn" id="tamamBtn" value=" Tamam" />
+              <input style="float:right" type="button" class="btn purple" id="tamamBtn" value=" Tamam" />
               <input type="hidden" name="input_mal_id"  id="input_mal_id" value=""><!--hangi inputa atama olacak id-->
               <input type="hidden" name="input_hizmet_id"  id="input_hizmet_id" value=""><!--hangi inputa atama olacak id-->
               <input type="hidden" name="input_goturu_id"  id="input_goturu_id" value=""><!--hangi inputa atama olacak id-->

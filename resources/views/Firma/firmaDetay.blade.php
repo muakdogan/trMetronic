@@ -245,19 +245,19 @@
                                                     @if ($firma->adresler[1])
                                                     <tr>
                                                         <td><strong>Fatura Adresi</strong></td>
-                                                        <td><strong>:</strong>  {{$firma->adresler[1]->adres}}</td>
+                                                        <td><strong>:</strong>  {{$firma->adresler[0]->adres}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>İli</strong></td>
-                                                        <td><strong>:</strong>  {{$firma->adresler[1]->iller->adi}}</td>
+                                                        <td><strong>:</strong>  {{$firma->adresler[0]->iller->adi}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>İlçesi</strong></td>
-                                                        <td><strong>:</strong>  {{$firma->adresler[1]->ilceler->adi}}</td>
+                                                        <td><strong>:</strong>  {{$firma->adresler[0]->ilceler->adi}}</td>
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Semt</strong></td>
-                                                        <td><strong>:</strong>  {{$firma->adresler[1]->semtler->adi}}</td>
+                                                        <td><strong>:</strong>  {{$firma->adresler[0]->semtler->adi}}</td>
                                                     </tr>
                                                     @endif
                                                     <tr>
@@ -274,7 +274,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td><strong>Sermayesi</strong></td>
-                                                        <td><strong>:</strong>  {{$firma->mali_bilgiler->sermayesi}}</</td>
+                                                        <td><strong>:</strong>  {{$firma->mali_bilgiler->sermayesi}}</td>
                                                     </tr>
                                                 </thead>
                                             </table>

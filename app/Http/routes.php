@@ -307,20 +307,18 @@ Route::get('/firmaIslemleri/{id?}',['middleware'=>'auth', function ($id = null) 
         ->select('ilanlar.id as ilan_id','ilanlar.adi as ilan_adi','ilanlar.kapanma_tarihi as ilan_kapanma_tarihi','firmalar.adi as firma_adi','firmalar.id as firma_id')
         ->where( 'kapanma_tarihi','>=', date('Y-m-d'))->where('belirli_istekliler.firma_id', $id)
         ->distinct()
-        ->limit(5)
+        ->limit(3)
         ->get();
 
-    $ilanlarFirma = $firma->ilanlar()->orderBy('yayin_tarihi','desc')->limit('5')->get();
+    $ilanlarFirma = $firma->ilanlar()->orderBy('yayin_tarihi','desc')->limit(3)->get();
 
-    $teklifler= $firma->teklifler()->limit(5)->get();
+    $teklifler= $firma->teklifler()->limit(3)->get();
 
     $tekliflerCount= $firma->teklifler()->count();
 
     return view('Firma.firmaIslemleri')->with('firma',$firma)->with('davetEdilIlanlar', $davetEdilIlanlar)
           ->with('ilanlarFirma', $ilanlarFirma)->with('teklifler', $teklifler)->with('tekliflerCount', $tekliflerCount);
 }]);
-
-
 
 Route::post('/ilanAra', 'IlanController@showIlan');
 Route::get('/ilanAra', 'IlanController@showIlan');
@@ -335,14 +333,10 @@ Route::get('/onayliTedarikcilerim',  'FirmaController@onayliTedarikcilerim'); //
 
 Route::get('/kullaniciFirma',function () {
   $kullanici_id=Input::get('kullanici_id');
-  $kullaniciFirma=  \App\Kullanici::find($kullanici_id);
-
-
   $querys = DB::table('firma_kullanicilar')
   ->where( 'firma_kullanicilar.kullanici_id', '=',  $kullanici_id)
   ->join('firmalar', 'firma_kullanicilar.firma_id', '=', 'firmalar.id')
   ->select('firmalar.adi');
-
   $querys=$querys->get();
   return Response::json($querys);
 });

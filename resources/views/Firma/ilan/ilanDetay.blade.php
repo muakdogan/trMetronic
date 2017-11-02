@@ -1,8 +1,8 @@
 @extends('layouts.appUser')
 
-@section('baslik') {{$ilan->adi}} ilanı @endsection
+@section('baslik') @endsection
 
-@section('aciklama')  @endsection
+@section('aciklama') İlanlar > {{$ilan->adi}}  @endsection
 
 @section('head') <!-- Osman Kutlu - jQuery confirm icin gerekli -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.3/jquery-confirm.min.css">
@@ -547,9 +547,8 @@
         <div class="ajax-loader">
             <img src="{{asset('images/200w.gif')}}" class="img-responsive" />
         </div>
-        <div class="panel panel-warning">
-                <div class="panel-heading" >
-
+        <div class="panel ">
+                <div class="panel-heading">
                     <h4><strong>{{$ilan->adi}}</strong> ilanı
                         @if($ilan->statu==0)
                             <span id="ilanStatu" style="color:yellowgreen">(Aktif)</span>
@@ -678,7 +677,7 @@
                     </div>
                 </div>
                 <div class="col-lg-3">
-                    <div class="panel panel-warning" >
+                    <div class="panel">
                         <div class="panel-heading">{{$ilan->firmalar->adi}} Profili</div>
                         <div class="panel-body">
                             <div class="" align="center"><img src="{{asset('uploads')}}/{{$ilan->firmalar->logo}}" alt="HTML5 Icon" style="width:128px;height:128px;"></div>
@@ -688,7 +687,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-warning kismiDiv">
+                    <div class="panel kismiDiv">
                         <div class="panel-heading">Rekabet</div>
                         <div class="panel-body rekabet">
                             @include('Firma.ilan.rekabet')
