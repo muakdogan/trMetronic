@@ -49,8 +49,6 @@ class IlanController extends Controller
         $ilan = Ilan::find($ilan_id);
         $teklifler = $ilan->teklif_hareketler()->whereRaw('tarih IN (select MAX(tarih) FROM teklif_hareketler GROUP BY teklif_id)')->paginate();
 
-
-        Debugbar::info($teklifler);
         if (!$ilan)
             $firma->ilanlar = new Ilan();
         if (!$ilan->ilan_mallar)
@@ -67,6 +65,7 @@ class IlanController extends Controller
         if($firma_id == $ilan->firmalar->id){
             $ilanSahibi=1;
         }
+
         $kullanici_id = Auth::user()->kullanici_id;
         $teklif = Teklif::where('firma_id',$firma_id)->where('ilan_id',$ilan->id)->get();
 
