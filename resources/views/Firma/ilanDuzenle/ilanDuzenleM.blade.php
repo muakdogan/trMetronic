@@ -429,7 +429,7 @@
     // updated ve deleted arrayleri include edilen kalem sayfalarinda push edilir!
     var updated_array = []; var deleted_array = [];
 
-    var sektor = {{$ilan->ilan_sektor}};
+    var sektor = "{{$ilan->ilan_sektor}}";
     var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
 
     $( ".box" ).click(function() {
@@ -723,7 +723,7 @@
             url: "{{asset('onayli')}}",
             data:{
                 sektorOnayli:sektor,
-                ilanID:{{$ilan->id}},
+                ilanID:"{{$ilan->id}}",
                 mod:'duzenle'},
             cache: false,
             success: function(data){
@@ -774,7 +774,7 @@
             url: "{{asset('belirli')}}",
             data:{
                 sektorOnayli:sektor,
-                ilanID:{{$ilan->id}},
+                ilanID:"{{$ilan->id}}",
                 mod:'duzenle'
                 },
             cache: false,
@@ -1311,7 +1311,7 @@
         }
         $("#firma_sektor").val({{$ilan->ilan_sektor}});
         $("#firma_sektor_label").val("{{$ilan_sektor->adi}}");
-        if({{$ilan->goster}}){
+        if("{{$ilan->goster}}"){
             $("#firma_adi_goster").attr('checked', true);
         }
         else{

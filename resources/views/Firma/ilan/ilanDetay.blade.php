@@ -1,3 +1,9 @@
+<?php
+use Barryvdh\Debugbar\Facade as Debugbar;
+
+DebugBar::info($ilan);
+?>
+
 @extends('layouts.appUser')
 
 @section('baslik') @endsection
@@ -38,34 +44,7 @@
             text-align: left;
             padding: 5px;
         }
-        .button {
-            background-color: #2b91af;
-            border-radius: 10px;
-            box-shadow: 0 2px 3px rgba(0,0,0,0.3);
-            color: #fff;
-            cursor: pointer;
-            display: inline-block;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            border: none;
-            font-size: 13px;
-            margin: 4px 2px;
-            float:right;
-        }
-        .button1 {
-            background-color: #555555; /* Green */
-            border: none;
-            color: white;
-            padding: 10px 22px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 13px;
-            margin: 4px 2px;
-            cursor: pointer;
-            float:left;
-        }
+
         .popup, .popup2, .bMulti {
             background-color: #fff;
             border-radius: 10px 10px 10px 10px;
@@ -89,17 +68,6 @@
             top: -7px;
         }
 
-        .puanlama {
-            background: #dddddd;
-            width: 140px;
-            height:65px;
-            border-radius: 3px;
-            position: relative;
-            margin: auto;
-            margin-left:8px;
-            text-align: center;
-            color: white;
-        }
         point {
             display: block;
             font-size: 1.49em;
@@ -585,11 +553,15 @@
                             <table class="table" >
                                 <tr>
                                     <td>Firma Adı:</td>
-                                    <td>{{$ilan->getFirmaAdi()}}</td>
+                                    <td><a href="{{URL::to('firmaDetay', array($ilan->firmalar->id), false)}}">{{$ilan->getFirmaAdi()}}</a></td>
                                 </tr>
                                 <tr>
                                     <td>İlan Adı:</td>
                                     <td>{{$ilan->adi}}</td>
+                                </tr>
+                                <tr>
+                                    <td>ilan Türü:</td>
+                                    <td>{{$ilan->getIlanTuru()}}</td>
                                 </tr>
                                 <tr>
                                     <td>İlan Sektor:</td>
@@ -604,35 +576,6 @@
                                     <td>{{date('d-m-Y', strtotime($ilan->kapanma_tarihi))}}</td>
                                 </tr>
                                 <tr>
-                                    <td>İlan Açıklaması:</td>
-                                    <td>{{$ilan->aciklama}}</td>
-                                </tr>
-                                <tr>
-                                    <td>ilan Türü:</td>
-                                    <td>{{$ilan->getIlanTuru()}}</td>
-                                </tr>
-                                <tr>
-                                    <td>İlan Usulü:</td>
-                                    <td>{{$ilan->getRekabet()}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Sözleşme Türü:</td>
-
-                                    <td>{{$ilan->getSozlesmeTuru()}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Teknik Şartname:</td>
-                                    <td>{{$ilan->teknik_sartname}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Yaklaşık Maliyet:</td>
-                                    <td>{{$ilan->yaklasik_maliyet}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Teslim Yeri:</td>
-                                    <td>{{$ilan->teslim_yeri_satici_firma}}</td>
-                                </tr>
-                                <tr>
                                     <td>İşin Süresi:</td>
                                     <td>{{$ilan->isin_suresi}}</td>
                                 </tr>
@@ -643,6 +586,78 @@
                                 <tr>
                                     <td>İş Bitiş Tarihi:</td>
                                     <td>{{date('d-m-Y', strtotime($ilan->is_bitis_tarihi))}}</td>
+                                </tr>
+                                @if($ilan->teknik_sartname=='')
+                                    <tr>
+                                        <td>Teknik Şartname:</td>
+                                        <td>Teknik şartname yüklenmemiş!</td>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <td>Teknik Şartname:</td>
+                                        <td>{{$ilan->teknik_sartname}}</td>
+                                    </tr>
+                                @endif
+                                @if($ilan->getKatilimciTur()=='Tüm Firmalar')
+                                    <tr>
+                                        <td>Katılımcılar:</td>
+                                        <td>Tüm Firmalar</td>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <td>Katılımcılar:</td>
+                                        <td>
+                                            <ul>
+                                                @foreach($ilan->getKatilimciFirmalar() as $katilimciFirma)
+                                                <li><a href="{{URL::to('firmaDetay', array($katilimciFirma->id), false)}}">{{$katilimciFirma->adi}}</a></li>
+                                                @endforeach
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                @endif
+                                <tr>
+                                    <td>Rekabet Şekli:</td>
+                                    <td>{{$ilan->getRekabet()}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Sözleşme Türü:</td>
+                                    <td>{{$ilan->getSozlesmeTuru()}}</td>
+                                </tr>
+                                @if($ilan->getSozlesmeTuru()=='Birim Fiyatlı')
+                                <tr>
+                                    <td>Fiyatlandirma Şekli:</td>
+                                    <td>{{$ilan->getFytSekli()}}</td>
+                                </tr>
+                                @endif
+                                <tr>
+                                    <td>Yaklaşık Maliyet:</td>
+                                    <td>{{$ilan->maliyetler->aralik}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Ödeme Türü:</td>
+                                    <td>{{$ilan->odeme_turleri->adi}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Para Birimi:</td>
+                                    <td>{{$ilan->para_birimleri->adi}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Teslim Yeri:</td>
+                                    <td>{{$ilan->teslim_yeri_satici_firma}}</td>
+                                </tr>
+                                @if($ilan->teslim_yeri_satici_firma=='Adrese Teslim')
+                                <tr>
+                                    <td>Teslim İli:</td>
+                                    <td>{{$ilan->iller->adi}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Teslim İlcesi:</td>
+                                    <td>{{$ilan->ilceler->adi}}</td>
+                                </tr>
+                                @endif
+                                <tr>
+                                    <td>İlan Açıklaması:</td>
+                                    <td>{{$ilan->aciklama}}</td>
                                 </tr>
                             </table>
 
