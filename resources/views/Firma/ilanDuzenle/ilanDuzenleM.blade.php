@@ -624,6 +624,7 @@
                     $.each(msg, function(index, ilce) {
                         $("#ilce_id").get(0).options[$("#ilce_id").get(0).options.length] = new Option(ilce.adi, ilce.id);
                     });
+                    $('.selectpicker').selectpicker('refresh');
                 },
                 async: false,
                 error: function() {
