@@ -16,7 +16,7 @@ $i=1;
         <link href="{{asset('css/skin-bootstrap/ui.fancytree.css')}}" rel="stylesheet" class="skinswitcher">
 
         <!--kalem agacı -->
-         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
         <script src="//cdn.jsdelivr.net/jquery.ui-contextmenu/1/jquery.ui-contextmenu.min.js"></script>
         <script src="{{asset('js/jquery.fancytree.js')}}"></script>
         <script src="{{asset('js/jquery.fancytree.glyph.js')}}"></script>
@@ -793,9 +793,8 @@ $i=1;
                                 <a href="javascript:;" class="btn btn-outline purple button-next next"> İleri
                                     <i class="fa fa-angle-right"></i>
                                 </a>
-                                <a href="javascript:;" class="btn purple button-submit" id="onayButton">Gönder
-                                    <i class="fa fa-check"></i>
-                                </a>
+                                <button class="btn purple button-submit" type="submit">Gönder <i class="fa fa-check"></i></button>
+
                             </div>
                         </div>
                     </div>
@@ -815,50 +814,6 @@ $i=1;
 
 <script charset="utf-8">
 
-    //FORM SUBMIT
-    //Ilan guncelle buton
-    $("#onayButton").unbind().click(function(e){
-        for ( instance in CKEDITOR.instances )
-            CKEDITOR.instances[instance].updateElement();
-        var form = $("#submit_form");
-        var postData = new FormData(form[0]);
-        var formURL = form.attr('action');
-
-        if( !form.validate()){
-            return false;
-        }
-
-        $.ajax(
-            {
-                beforeSend: function(){
-                    $('.ajax-loader').css("visibility", "visible");
-                },
-                url : formURL,
-                type: "POST",
-                contentType: false,
-                processData: false,
-                data : postData,
-                success:function(data, textStatus, jqXHR)
-                {
-
-                    // let the browser natively reset defaults
-                    form[0].reset();
-                    setTimeout(function(){
-                        window.location = "{{asset('ilanlarim')}}/{{$firma->id}}";
-                    }, 5);
-
-                    e.preventDefault();
-                },
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                    console.log(jqXHR);
-                    alert(textStatus + "," + errorThrown+","+jqXHR);
-                    $('.ajax-loader').css("visibility", "hidden");
-                }
-            });
-        e.preventDefault(); //STOP default action
-    });
-
     $('#btn-add-ilanBilgileri').click(function () {
         $('#btn-save-ilanBilgileri').val("add");
         $('#myModal-ilanBilgileri').modal('show');
@@ -873,26 +828,6 @@ $i=1;
         $("#sartnameGozat").val('');
     });
 var findName;
-
-$(".next2").click(function(){
-
-    $(".info-box").append('<li style="list-style-type:circle">Firma Adi Göster: '+$("input[type='radio']:checked").next('label:first').html+'</li>');
-    $(".info-box").append('<li style="list-style-type:circle">İlan Adı: '+$("#ilan_adi").val()+'</li>');
-    $(".info-box").append('<li style="list-style-type:circle">İlan Türü: '+$( "#ilan_turu option:selected" ).text()+'</li>');
-    $(".info-box").append('<li style="list-style-type:circle">İlan Sektörü: '+$( "#firma_sektor option:selected" ).text()+'</li>');
-    $(".info-box").append('<li style="list-style-type:circle">İlan Yayın-Kapanma Tarihi: '+$( "#ilan_tarihi_araligi option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">İş Süresi: '+$( "#isin_suresi option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">İş Başlama-Bitiş Tarihi: '+$( "#is_tarihi_araligi option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">Teknik Şartname: '+$( "#teknik" ).val()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">Katılımcılar: '+$( "#katilimcilar option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">Rekabet Şekli: '+$( "#rekabet_sekli option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">Sözleşme Türü: '+$( "#sozlesme_turu option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">Fiyatlandırma Şekli: '+$( "#kismi_fiyat option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">Yaklaşık Maliyet: '+$( "#yaklasik_maliyet option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">Ödeme Türü: '+ $("#odeme_turu option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">Para Birimi: '+ $("#para_birimi option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">Teslim Yeri: '+ $( "#teslim_yeri option:selected" ).text()+'</li>');
-});
 
 var firmaCount = 0;
 var sektor = 0;
@@ -911,8 +846,6 @@ $(document).ready(function(){
      $('#il_id').on('change', function (e) {
          var il_id = e.target.value;
          GetIlce(il_id);
-         //popDropDown('ilce_id', 'ajax-subcat?il_id=', il_id);
-         //$("#semt_id")[0].selectedIndex=0;
      });
     jQuery.validator.methods["date"] = function (value, element) { return true; };
     jQuery.validator.addMethod("multiselectOnay", function(value, element) {
@@ -972,36 +905,6 @@ $(".next").click(function(){
        $('#goturu').hide();
        $('#mal').hide();
     }
-/*
-    var form = $("#submit_form");
-        form.validate({
-                errorElement: 'span',
-                errorClass: 'help-block',
-                highlight: function(element, errorClass, validClass) {
-                        $(element).closest('.form-group').addClass("has-error");
-                },
-                unhighlight: function(element, errorClass, validClass) {
-                        $(element).closest('.form-group').removeClass("has-error");
-                },
-                rules: {
-                        sozlesme_onay: {
-                                required: true
-                        },
-                },
-
-        });
-        if (form.valid() === true){
-                if ($('#ilan').is(":visible")){
-                        current_fs = $('#ilan');
-                        next_fs = $('#kalem');
-                }else if($('#kalem').is(":visible")){
-                        current_fs = $('#kalem');
-                        next_fs = $('#onay');
-                }
-                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                 next_fs.show();
-                 current_fs.hide();
-        }*/
 });
 $('.previous').click(function(){
         if($('#kalem').is(":visible")){
@@ -1033,6 +936,7 @@ function GetIlce(il_id) {
                     $.each(msg, function(index, ilce) {
                         $("#ilce_id").get(0).options[$("#ilce_id").get(0).options.length] = new Option(ilce.adi, ilce.id);
                     });
+                    $('.selectpicker').selectpicker('refresh');
                 },
                 async: false,
                 error: function() {
@@ -1701,11 +1605,246 @@ $(function() {
                 endDate: dt
      });
 });
+
+//FORM WIZARD VALIDATION, SOZLESME VE SUBMIT
+    var FormWizard = function () {
+        return {
+            //main function to initiate the module
+            init: function () {
+                if (!jQuery().bootstrapWizard) {
+                    return;
+                }
+
+                function format(state) {
+                    return state.text;
+                }
+
+                var form = $('#submit_form');
+                var error = $('.alert-danger', form);
+                var success = $('.alert-success', form);
+
+                form.validate({
+                    doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    rules: {
+                        sozlesme_onay: {
+                            required: true
+                        },
+                    },
+
+                    messages: {
+                        sozlesme_onay: {
+                            required: "Sözleşmeyi Onaylamanız Gerekmektedir",
+                        }
+                    },
+
+                    errorPlacement: function (error, element) { // render error placement for each input type
+                        if (element.attr("name") == "gender") { // for uniform radio buttons, insert the after the given container
+                            error.insertAfter("#form_gender_error");
+                        } else if (element.attr("name") == "payment[]") { // for uniform checkboxes, insert the after the given container
+                            error.insertAfter("#form_payment_error");
+                        } else {
+                            error.insertAfter(element); // for other inputs, just perform default behavior
+                        }
+                    },
+
+                    invalidHandler: function (event, validator) { //display error alert on form submit
+                        success.hide();
+                        error.show();
+                        App.scrollTo(error, -200);
+                    },
+
+                    highlight: function (element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+                    },
+
+                    unhighlight: function (element) { // revert the change done by hightlight
+                        $(element)
+                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    },
+
+                    success: function (label) {
+                        if (label.attr("for") == "gender" || label.attr("for") == "payment[]") { // for checkboxes and radio buttons, no need to show OK icon
+                            label
+                                .closest('.form-group').removeClass('has-error').addClass('has-success');
+                            label.remove(); // remove error label here
+                        } else { // display success icon for other inputs
+                            label
+                                .addClass('valid') // mark the current input as valid and display OK icon
+                                .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                        }
+                    },
+
+                    submitHandler: function (form) {
+                        success.show();
+                        error.hide();
+
+                        for ( instance in CKEDITOR.instances )
+                            CKEDITOR.instances[instance].updateElement();
+                        var postData = new FormData(form[0]);
+                        var formURL = form.attr('action');
+
+                        $.ajax(
+                            {
+                                beforeSend: function(){
+                                    $('.ajax-loader').css("visibility", "visible");
+                                },
+                                url : formURL,
+                                type: "POST",
+                                contentType: false,
+                                processData: false,
+                                data : postData,
+                                success:function(data, textStatus, jqXHR)
+                                {
+
+                                    // let the browser natively reset defaults
+                                    form[0].reset();
+                                    setTimeout(function(){
+                                        window.location = "{{asset('ilanlarim')}}/{{$firma->id}}";
+                                    }, 5);
+
+                                    e.preventDefault();
+                                },
+                                error: function(jqXHR, textStatus, errorThrown)
+                                {
+                                    console.log(jqXHR);
+                                    alert(textStatus + "," + errorThrown+","+jqXHR);
+                                    $('.ajax-loader').css("visibility", "hidden");
+                                }
+                            });
+                        e.preventDefault(); //STOP default action
+                    }
+                });
+
+                var displayConfirm = function() {
+                    $('#tab4 .form-control-static', form).each(function(){
+                        var input = $('[name="'+$(this).attr("data-display")+'"]', form);
+                        if (input.is(":radio")) {
+                            input = $('[name="'+$(this).attr("data-display")+'"]:checked', form);
+                        }
+                        if (input.is(":text") || input.is("textarea")) {
+                            $(this).html(input.val());
+                        } else if (input.is("select")) {
+                            $(this).html(input.find('option:selected').text());
+                        } else if (input.is(":radio") && input.is(":checked")) {
+                            $(this).html(input.attr("data-title"));
+                        } else if ($(this).attr("data-display") == 'payment[]') {
+                            var payment = [];
+                            $('[name="payment[]"]:checked', form).each(function(){
+                                payment.push($(this).attr('data-title'));
+                            });
+                            $(this).html(payment.join("<br>"));
+                        }
+                    });
+                }
+
+                var handleTitle = function(tab, navigation, index) {
+                    var total = navigation.find('li').length;
+                    var current = index + 1;
+                    // set wizard title
+                    $('.step-title', $('#form_wizard_1')).text('Step ' + (index + 1) + ' of ' + total);
+                    // set done steps
+                    jQuery('li', $('#form_wizard_1')).removeClass("done");
+                    var li_list = navigation.find('li');
+                    for (var i = 0; i < index; i++) {
+                        jQuery(li_list[i]).addClass("done");
+                    }
+
+                    if (current == 1) {
+                        $('#form_wizard_1').find('.button-previous').hide();
+                    } else {
+                        $('#form_wizard_1').find('.button-previous').show();
+                    }
+
+                    if (current >= total) {
+                        $('#form_wizard_1').find('.button-next').hide();
+                        $('#form_wizard_1').find('.button-submit').show();
+                        $(".info-box").append('<li style="list-style-type:circle">Firma Adi Göster: '+$("input[type='radio']:checked").next('label:first').html+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">İlan Adı: '+$("#ilan_adi").val()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">İlan Türü: '+$( "#ilan_turu option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">İlan Sektörü: '+$( "#firma_sektor option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">İlan Yayın-Kapanma Tarihi: '+$( "#ilan_tarihi_araligi option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">İş Süresi: '+$( "#isin_suresi option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">İş Başlama-Bitiş Tarihi: '+$( "#is_tarihi_araligi option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">Teknik Şartname: '+$( "#teknik" ).val()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">Katılımcılar: '+$( "#katilimcilar option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">Rekabet Şekli: '+$( "#rekabet_sekli option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">Sözleşme Türü: '+$( "#sozlesme_turu option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">Fiyatlandırma Şekli: '+$( "#kismi_fiyat option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">Yaklaşık Maliyet: '+$( "#yaklasik_maliyet option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">Ödeme Türü: '+ $("#odeme_turu option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">Para Birimi: '+ $("#para_birimi option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">Teslim Yeri: '+ $( "#teslim_yeri option:selected" ).text()+'</li>');
+                        displayConfirm();
+                    } else {
+                        $('#form_wizard_1').find('.button-next').show();
+                        $('#form_wizard_1').find('.button-submit').hide();
+                    }
+                    App.scrollTo($('.page-title'));
+                }
+
+                // default form wizard
+                $('#form_wizard_1').bootstrapWizard({
+                    'nextSelector': '.button-next',
+                    'previousSelector': '.button-previous',
+                    onTabClick: function (tab, navigation, index, clickedIndex) {
+                        return false;
+
+                        success.hide();
+                        error.hide();
+                        if (form.valid() == false) {
+                            return false;
+                        }
+
+                        handleTitle(tab, navigation, clickedIndex);
+                    },
+                    onNext: function (tab, navigation, index) {
+                        success.hide();
+                        error.hide();
+
+                        if (form.valid() == false) {
+                            return false;
+                        }
+
+                        handleTitle(tab, navigation, index);
+                    },
+                    onPrevious: function (tab, navigation, index) {
+                        success.hide();
+                        error.hide();
+
+                        handleTitle(tab, navigation, index);
+                    },
+                    onTabShow: function (tab, navigation, index) {
+                        var total = navigation.find('li').length;
+                        var current = index + 1;
+                        var $percent = (current / total) * 100;
+                        $('#form_wizard_1').find('.progress-bar').css({
+                            width: $percent + '%'
+                        });
+                    }
+                });
+
+                $('#form_wizard_1').find('.button-previous').hide();
+                $('#form_wizard_1 .button-submit').hide();
+
+                //apply validation on select2 dropdown value change, this only needed for chosen dropdown integration.
+                $('#country_list', form).change(function () {
+                    form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
+                });
+            }
+        };
+    }();
+
+    jQuery(document).ready(function() {
+        FormWizard.init();
+    });
 </script>
 @endsection
 
 @section('sayfaSonu')
     <script src="{{asset('MetronicFiles/global/plugins/select2/js/select2.full.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('MetronicFiles/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('MetronicFiles/pages/scripts/form-wizard.min.js')}}" type="text/javascript"></script>
 @endsection
