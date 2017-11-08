@@ -47,6 +47,9 @@ class IlanController extends Controller
     public function teklifGor ($id,$ilan_id) {
         $firma = Firma::find($id);
         $ilan = Ilan::find($ilan_id);
+        if($firma->id!=$ilan->firmalar->id){
+            abort('404');
+        }
         $teklifler = $ilan->teklif_hareketler()->whereRaw('tarih IN (select MAX(tarih) FROM teklif_hareketler GROUP BY teklif_id)')->paginate();
 
         if (!$ilan)
