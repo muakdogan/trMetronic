@@ -74,7 +74,6 @@ class IlanHizmet extends Model
     } 
     public function kisKazananFirmaId(){
         $kazanan = KismiAcikKazanan::where("ilan_id",$this->ilanlar->id)->where("kalem_id",$this->id)->first();
-        
         return $kazanan->kazanan_firma_id;
     }
 }

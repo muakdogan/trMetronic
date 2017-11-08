@@ -28,15 +28,12 @@ $i=1;
         <script src="//cdn.ckeditor.com/4.5.10/basic/ckeditor.js"></script>
 
         <style>
-
             table {
                 font-family: arial, sans-serif;
                 border-collapse: collapse;
                 width: 100%;
             }
-
             td, th {
-
                 text-align: center;
                 padding: 5px;
             }
@@ -49,39 +46,6 @@ $i=1;
             }
             .test + .tooltip.bottom > .tooltip-arrow {
                 border-bottom: 5px solid green;
-            }
-
-            /*custom font*/
-
-
-            #msform {
-                width: 100%;
-
-
-                position: relative;
-            }
-            #msform fieldset {
-
-            }
-            /*Hide all except first fieldset*/
-            #msform fieldset:not(:first-of-type) {
-                display: none;
-            }
-
-            /*buttons*/
-            .action-button {
-                width: 100px;
-                background: #27AE60;
-                font-weight: bold;
-                color: white;
-                border: 0 none;
-                border-radius: 1px;
-                cursor: pointer;
-                padding: 10px 5px;
-                margin: 10px 5px;
-            }
-            .action-button:hover, #msform .action-button:focus {
-                box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
             }
             /*headings*/
             .fs-title {
@@ -114,7 +78,6 @@ $i=1;
                 position:relative;
                 top:80px;
             }
-
         </style>
 @endsection
 @section('content')
