@@ -486,8 +486,6 @@ Route::get('/basvuruDetay/',function (){
   return Response::json($detaylar);
 });
 
-Route::get('/onayli/','IlanController@getOnayliTedarikciler');
-
 Route::get('/belirli/','IlanController@getBelirliFirmalar');
 
 Route::get('/basvuruControl/',function (){

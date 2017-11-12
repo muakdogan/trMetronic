@@ -53,7 +53,7 @@
 <script src="{{asset('MetronicFiles/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
 <!-- END CORE PLUGINS -->
 <!-- BEGIN THEME GLOBAL SCRIPTS -->
-<script src="{{asset('MetronicFiles/')}}../assets/global/scripts/app.min.js" type="text/javascript"></script>
+<script src="{{asset('MetronicFiles/global/scripts/app.min.js')}}" type="text/javascript"></script>
 <!-- END THEME GLOBAL SCRIPTS -->
 <!-- BEGIN THEME LAYOUT SCRIPTS -->
 <!-- END THEME LAYOUT SCRIPTS -->
