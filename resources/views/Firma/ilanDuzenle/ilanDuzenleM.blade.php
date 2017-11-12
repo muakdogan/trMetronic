@@ -757,8 +757,11 @@
     $( "#teslim_yeri" ).change(function() {
         var teslim_yeri= $('#teslim_yeri').val();
         if(teslim_yeri=="Satıcı Firma"){
+            $('#il_id').prop('selectedIndex',0);
+            $('#ilce_id').prop('selectedIndex',0);
             $('.teslim_il').hide();
             $('.teslim_ilce').hide();
+            $('.selectpicker').selectpicker('refresh');
         }
         else if(teslim_yeri=="Adrese Teslim"){
             $('.teslim_il').show();
