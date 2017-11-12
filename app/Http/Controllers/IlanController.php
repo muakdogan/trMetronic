@@ -435,15 +435,6 @@ class IlanController extends Controller
             }
         }
 
-        if(Input::get('onayli_tedarikciler')!=null){
-            foreach(Input::get('onayli_tedarikciler') as $onayli){
-                $belirli_istekliler= new \App\BelirliIstekli();
-                $belirli_istekliler->ilan_id = $ilan->id;
-                $belirli_istekliler->firma_id=$onayli;
-                $belirli_istekliler->save();
-            }
-        }
-
         //kalem bilgileri kaydediliyor ilan türüne ve sözleşme türüne göre.
 
         if($ilan->sozlesme_turu==1){//GOTURU ILAN TURU
@@ -869,16 +860,6 @@ class IlanController extends Controller
             $belirli_istekliler->firma_id=$belirli;
             $belirli_istekliler->save();
           }
-
-        }
-         if($request->onayli_tedarikciler!=null){
-          foreach($request->onayli_tedarikciler as $onayli){
-
-              $belirli_istekliler= new \App\BelirliIstekli();
-              $belirli_istekliler->ilan_id = $ilan->id;
-              $belirli_istekliler->firma_id=$onayli;
-              $belirli_istekliler->save();
-          }
         }
 
         //kalem bilgileri kaydediliyor ilan türüne ve sözleşme türüne göre.
@@ -1263,77 +1244,45 @@ class IlanController extends Controller
         }
     }
 
-    public function getOnayliTedarikciler(){
-        $mod=Input::get('mod');
-        $firma_id = session()->get('firma_id');
-        $sektorOnayli = Input::get('sektorOnayli');
-
-        $sektorControl = DB::table('firmalar')
-            ->join('firma_sektorler', 'firmalar.id','=', 'firma_sektorler.firma_id')
-            ->where('firmalar.id', '!=' ,$firma_id)
-            ->where('firma_sektorler.sektor_id',$sektorOnayli)
-            ->select('firmalar.adi', 'firmalar.id')
-            ->orderBy('adi','asc');
-
-        $firmaArray["tumFirmalar"] = $sektorControl->get();
-
-        if($mod=="duzenle"){
-            $ilanID=Input::get('ilanID');
-            $secilmisFirmalar = DB::table('firmalar')
-                ->join('belirli_istekliler', 'firmalar.id', '=', 'belirli_istekliler.firma_id')
-                ->where('belirli_istekliler.ilan_id',$ilanID)
-                ->select('firmalar.id');
-
-            $firmaArray["secilmisFirmalar"] = $secilmisFirmalar->get();
-        }
-        else{
-            $onayliTedarikciler = DB::table('firmalar')
-                ->join('firma_sektorler', 'firmalar.id', '=', 'firma_sektorler.firma_id')
-                ->join('onayli_tedarikciler','firmalar.id','=','onayli_tedarikciler.tedarikci_id')
-                ->where('onayli_tedarikciler.firma_id', '=',$firma_id)
-                ->where('firma_sektorler.sektor_id', '=',$sektorOnayli)
-                ->select('firmalar.id');
-
-            $firmaArray["onayliTedarikciler"] = $onayliTedarikciler->get();
-        }
-        return Response::json($firmaArray);
-    }
-
     public function getBelirliFirmalar(){
         $mod=Input::get('mod');
         $firma_id = session()->get('firma_id');
-        $sektorOnayli = Input::get('sektorOnayli');
+        $sektor = Input::get('sektorIlan');
+
+        $onayliTed = DB::table('firmalar')
+            ->join('firma_sektorler', 'firmalar.id', '=', 'firma_sektorler.firma_id')
+            ->join('onayli_tedarikciler','firmalar.id','=','onayli_tedarikciler.tedarikci_id')
+            ->where('onayli_tedarikciler.firma_id', '=',$firma_id)
+            ->where('firma_sektorler.sektor_id', '=',$sektor)
+            ->select('firmalar.adi', 'firmalar.id')
+            ->orderBy('adi','asc')->get();
+
+        $onayliTedID=array();
+        for ($i=0; $i<count($onayliTed); $i++){
+            $onayliTedID[$i]=$onayliTed[$i]->id;
+        }
+
+        $digerTed = DB::table('firmalar')
+            ->join('firma_sektorler', 'firmalar.id', '=', 'firma_sektorler.firma_id')
+            ->where('firma_sektorler.firma_id', '!=',$firma_id)
+            ->where('firma_sektorler.sektor_id', '=',$sektor)
+            ->whereNotIn('firmalar.id',$onayliTedID)
+            ->select('firmalar.adi', 'firmalar.id')
+            ->orderBy('adi','asc')->distinct()->get();
+
+        $json["digerTedarikciler"]=$digerTed;
+        $json["onayliTedarikciler"]=$onayliTed;
+
         if($mod=="duzenle"){
             //ilan duzenleme icin
             $ilanID=Input::get('ilanID');
-            $sektorControl = DB::table('firmalar')
-                ->join('firma_sektorler', 'firmalar.id','=', 'firma_sektorler.firma_id')
-                ->where('firmalar.id', '!=' ,$firma_id)
-                ->where('firma_sektorler.sektor_id',$sektorOnayli)
-                ->select('firmalar.adi', 'firmalar.id')
-                ->orderBy('adi','asc');
-
-            $firmaArray["tumFirmalar"] = $sektorControl->get();
-
-            $secilmisFirmalar = DB::table('firmalar')
+            $json["seciliFirmalar"]  = DB::table('firmalar')
                 ->join('belirli_istekliler', 'firmalar.id', '=', 'belirli_istekliler.firma_id')
                 ->where('belirli_istekliler.ilan_id',$ilanID)
-                ->select('firmalar.id');
+                ->select('firmalar.id')->get();
+        }
 
-            $firmaArray["secilmisFirmalar"] = $secilmisFirmalar->get();
-            return Response::json($firmaArray);
-        }
-        else{
-            //yeni ilan olusturmak icin
-            $sektorControl = DB::table('firmalar')
-                ->join('firma_sektorler', 'firmalar.id','=', 'firma_sektorler.firma_id')
-                ->where('firmalar.id', '!=',$firma_id)
-                ->where('firma_sektorler.sektor_id',$sektorOnayli)
-                ->select('firmalar.adi', 'firmalar.id')
-                ->orderBy('adi','asc');
-            $sektorControl = $sektorControl->get();
-            return Response::json($sektorControl);
-        }
+        return Response::json($json);
     }
 
     public function ilaniPasifEt(Request $request){

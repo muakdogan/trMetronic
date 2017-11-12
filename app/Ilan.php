@@ -104,14 +104,13 @@ class Ilan extends Model
     public function getKatilimciTur()
     {
     if($this->katilimcilar == 1)
-      return 'Onaylı Tedarikçiler';
+        return 'Tüm Firmalar';
     else if ($this->katilimcilar == 2)
       return 'Belirli Firmalar';
-    else if ($this->katilimcilar == 3)
-      return 'Tüm Firmalar';
+
     }
     public function getKatilimciFirmalar(){
-        if($this->katilimcilar == 1 || $this->katilimcilar == 2){
+        if($this->katilimcilar == 2){
             return DB::table('firmalar')
                 ->join('belirli_istekliler', 'firmalar.id', '=', 'belirli_istekliler.firma_id')
                 ->where('belirli_istekliler.ilan_id',$this->id)

@@ -182,9 +182,8 @@
                                             <select class="form-control selectpicker required" name="katilimcilar" id="katilimcilar" data-validation="required"
                                                     data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                                 <option selected disabled value="Seçiniz">Seçiniz</option>
-                                                <option value="1">Onaylı Tedarikçiler</option>
+                                                <option value="1">Tüm Firmalar</option>
                                                 <option value="2">Belirli Firmalar</option>
-                                                <option value="3">Tüm Firmalar</option>
                                             </select>
                                         </div>
                                         <div class="col-md-1 aciklama-tooltip">
@@ -193,28 +192,24 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group row"  id="onayli_tedarikciler">
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-2"></div>
-                                            <div style="padding-right:3px;padding-left:1px"  class="col-md-9">
-                                                <select id='custom-headers' multiple='multiple' name="onayli_tedarikciler[]" id="onayli_tedarikciler[]" data-rule-multiselectOnay="true">
+                                <div id="belirli-firmalar" style="display: none;">
+                                        <div class="form-group row">
+                                            <div class="col-md-12">
+                                            <div style="padding-right:3px;padding-left:1px"  class="col-md-11 col-md-offset-1">
+                                                <select id='belirliFirma' multiple='multiple' name="belirli_istekli[]" id="belirli_istekli[]" data-rule-multiselectOnay="true">
+                                                    <optgroup label='Onaylı Tedarikçiler'></optgroup>
+                                                    <optgroup label='Diğer Tedarikçiler'></optgroup>
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="form-group"  id="belirli-istekliler">
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                            </div>
-                                            <div style="padding-right:3px;padding-left:1px"  class="col-md-9">
-                                                <select id='belirliIstek' multiple='multiple' name="belirli_istekli[]" id="belirli_istekli[]" data-rule-multiselectOnay="true">
-                                                </select>
+                                            <div class="form-group row">
+                                                <div class="col-md-10 col-md-offset-1" style="padding-top:10px">
+                                                    <a href="javascript:;" class="btn" id="onayliOtomatik">Onaylı Tedarikçilerimi Otomatik Ekle</a>
+                                                    <a href="javascript:;" style="float: right" class="btn" id="firmaVazgec">Tümünden Vazgeç</a>
+                                                </ul>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
@@ -441,8 +436,6 @@
     var sartnameSilindiMi="0";
 
     $(document).ready(function(){
-        $('#onayli_tedarikciler').hide();
-        $('#belirli-istekliler').hide();
         $('#il_id').on('change', function (e) {
             var il_id = e.target.value;
             GetIlce(il_id);
@@ -643,9 +636,10 @@
         $('#maliyet').val(option);
     });
 
-    $('#custom-headers').multiSelect({
-        selectableHeader: "<p style='font-size:12px;color:red'>Tüm firmalar</p><input style='width:100px' type='text' class='search-input' autocomplete='off' placeholder='Firma Seçiniz'>",
-        selectionHeader: "<p style='font-size:12px;color:red'>Onaylı Tedarikciler</p><input  style='width:100px' type='text' class='search-input' autocomplete='off' placeholder='Firma Seçiniz'>",
+    $('#belirliFirma').multiSelect({
+        selectableHeader: "<p style='font-size:12px;color:red'>Tüm Firmalar</p><input style='width:100%' type='text' class='search-input' autocomplete='off' placeholder='Firma Seçiniz'>",
+        selectionHeader: "<p style='font-size:12px;color:red'>Seçili Firmalar</p><input  style='width:100%' type='text' class='search-input' autocomplete='off' placeholder='Firma Seçiniz'>",
+        selectableOptgroup: true,
         afterInit: function(ms){
             var that = this,
                 $selectableSearch = that.$selectableUl.prev(),
@@ -660,40 +654,7 @@
                         return false;
                     }
                 });
-            that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
-                .on('keydown', function(e){
-                    if (e.which == 40){
-                        that.$selectionUl.focus();
-                        return false;
-                    }
-                });
-        },
-        afterSelect: function(values){
-            this.qs1.cache();
-            this.qs2.cache();
-        },
-        afterDeselect: function(){
-            this.qs1.cache();
-            this.qs2.cache();
-        }
-    });
 
-    $('#belirliIstek').multiSelect({
-        selectableHeader: "<input style='width:100px' type='text' class='search-input' autocomplete='off' placeholder='Firma Seçiniz'>",
-        selectionHeader: "<input  style='width:100px' type='text' class='search-input' autocomplete='off' placeholder='Firma Seçiniz'>",
-        afterInit: function(ms){
-            var that = this,
-                $selectableSearch = that.$selectableUl.prev(),
-                $selectionSearch = that.$selectionUl.prev(),
-                selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
-                selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
-            that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
-                .on('keydown', function(e){
-                    if (e.which === 40){
-                        that.$selectableUl.focus();
-                        return false;
-                    }
-                });
             that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
                 .on('keydown', function(e){
                     if (e.which == 40){
@@ -702,7 +663,7 @@
                     }
                 });
         },
-        afterSelect: function(values){
+        afterSelect: function(){
             this.qs1.cache();
             this.qs2.cache();
         },
@@ -714,82 +675,39 @@
 
     var option;
 
-    function editOnayliTedarikciler(){
-        $("#belirliIstek option").remove();
-        $('#belirliIstek').multiSelect('refresh');
-        $("#custom-headers option").remove();
-        $('#custom-headers').multiSelect('refresh');
-        $.ajax({
-            type:"GET",
-            url: "{{asset('onayli')}}",
-            data:{
-                sektorOnayli:sektor,
-                ilanID:"{{$ilan->id}}",
-                mod:'duzenle'},
-            cache: false,
-            success: function(data){
+    $( "#firmaVazgec" ).click(function() {
+        $('#belirliFirma').multiSelect('deselect_all');
+    });
+    var onayliTed=new Array();
+    $( "#onayliOtomatik" ).click(function() {
+        for(var key=0; key < onayliTed.length;key++) {
+            $('#belirliFirma').multiSelect('select', (onayliTed[key]));
+        }
+    });
 
-                for(var key=0; key <Object.keys(data.tumFirmalar).length;key++) {
-                    $('#custom-headers').multiSelect('addOption', { value: data.tumFirmalar[key].id, text: data.tumFirmalar[key].adi, index:key});
-                }
-                for(var key=0; key <Object.keys(data.secilmisFirmalar).length;key++){
-                    $('#custom-headers').multiSelect('select', (data.secilmisFirmalar[key].id));
-                }
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert("Status: " + textStatus); alert("Error: " + errorThrown);
-            }
-        });
-    }
-
-    function getOnayliTedarikciler(){
-        $.ajax({
-            type:"GET",
-            url: "{{asset('onayli')}}",
-            data:{
-                sektorOnayli:sektor
-            },
-            cache: false,
-            success: function(data){
-                $("#belirliIstek option").remove();
-                $('#belirliIstek').multiSelect('refresh');
-                $("#custom-headers option").remove();
-                $('#custom-headers').multiSelect('refresh');
-
-                for(var key=0; key <Object.keys(data.tumFirmalar).length;key++) {
-                    $('#custom-headers').multiSelect('addOption', { value: data.tumFirmalar[key].id, text: data.tumFirmalar[key].adi, index:key});
-                }
-                for(var key=0; key <Object.keys(data.onayliTedarikciler).length;key++){
-                    $('#custom-headers').multiSelect('select', (data.onayliTedarikciler[key].id));
-                }
-            },
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert("Status: " + textStatus); alert("Error: " + errorThrown);
-            }
-        });
-    }
-
-    function editBelirliIstekliler(){
+    function editBelirliFirmalar(){
         $.ajax({
             type:"GET",
             url: "{{asset('belirli')}}",
             data:{
-                sektorOnayli:sektor,
+                sektorIlan:sektor,
                 ilanID:"{{$ilan->id}}",
-                mod:'duzenle'
+                mod:"duzenle"
                 },
             cache: false,
             success: function(data){
-                $("#custom-headers option").remove();
-                $('#custom-headers').multiSelect('refresh');
-                $("#belirliIstek option").remove();
-                $('#belirliIstek').multiSelect('refresh');
-
-                for(var key=0; key <Object.keys(data.tumFirmalar).length;key++) {
-                    $('#belirliIstek').multiSelect('addOption', { value: data.tumFirmalar[key].id, text: data.tumFirmalar[key].adi, index:key});
+                onayliTedarikciler=data.onayliTedarikciler;
+                $("#belirliFirma option").remove();
+                for(var key=0; key <Object.keys(data.onayliTedarikciler).length;key++) {
+                    $('#belirliFirma').multiSelect('addOption', { value: data.onayliTedarikciler[key].id, text: data.onayliTedarikciler[key].adi, index:key, nested: 'Onaylı Tedarikçiler'});
+                    onayliTed[key]=data.onayliTedarikciler[key].id;
                 }
-                for(var key=0; key <Object.keys(data.secilmisFirmalar).length;key++){
-                    $('#belirliIstek').multiSelect('select', (data.secilmisFirmalar[key].id));
+                for(var key=0; key <Object.keys(data.digerTedarikciler).length;key++) {
+                    $('#belirliFirma').multiSelect('addOption', { value: data.digerTedarikciler[key].id, text: data.digerTedarikciler[key].adi, index:key, nested: 'Diğer Tedarikçiler'});
+                }
+                $('#belirliFirma').multiSelect('refresh');
+                for(var key=0; key <Object.keys(data.seciliFirmalar).length;key++){
+                    $('#belirliFirma').multiSelect('select', (data.seciliFirmalar[key].id));
                 }
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -798,23 +716,25 @@
         });
     }
 
-    function getBelirliIstekliler(){
+    function getBelirliFirmalar(){
         $.ajax({
             type:"GET",
             url: "{{asset('belirli')}}",
             data:{
-                sektorOnayli:sektor
+                sektorIlan:sektor
             },
             cache: false,
             success: function(data){
-                $("#custom-headers option").remove();
-                $('#custom-headers').multiSelect('refresh');
-                $("#belirliIstek option").remove();
-                $('#belirliIstek').multiSelect('refresh');
-
-                for(var key=0; key <Object.keys(data).length;key++) {
-                    $('#belirliIstek').multiSelect('addOption', { value: data[key].id, text: data[key].adi, index:key});
+                onayliTedarikciler=data.onayliTedarikciler;
+                $("#belirliFirma option").remove();
+                for(var key=0; key <Object.keys(data.onayliTedarikciler).length;key++) {
+                    $('#belirliFirma').multiSelect('addOption', { value: data.onayliTedarikciler[key].id, text: data.onayliTedarikciler[key].adi, index:key, nested: 'Onaylı Tedarikçiler'});
+                    onayliTed[key]=data.onayliTedarikciler[key].id;
                 }
+                for(var key=0; key <Object.keys(data.digerTedarikciler).length;key++) {
+                    $('#belirliFirma').multiSelect('addOption', { value: data.digerTedarikciler[key].id, text: data.digerTedarikciler[key].adi, index:key, nested: 'Diğer Tedarikçiler'});
+                }
+                $('#belirliFirma').multiSelect('refresh');
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 alert("Status: " + textStatus+" Error: " + errorThrown);
@@ -825,28 +745,23 @@
     $("#katilimcilar").change(function(){
         option = $('option:selected', this).attr('value');
         if(option==="1"){
-            $('#custom-headers').multiSelect('deselect_all');
-            getOnayliTedarikciler();
-            $('#onayli_tedarikciler').show();
-            $('#belirli-istekliler').hide();
+            $('#belirli-firmalar').hide();
         }
         else if (option==="2"){
-            $('#belirliIstek').multiSelect('deselect_all');
-            getBelirliIstekliler();
-            $('#belirli-istekliler').show();
-            $('#onayli_tedarikciler').hide();
-        }
-        else {
-            $('#onayli_tedarikciler').hide();
-            $('#belirli-istekliler').hide();
+            $('#belirliFirma').multiSelect('deselect_all');
+            getBelirliFirmalar();
+            $('#belirli-firmalar').show();
         }
     });
 
     $( "#teslim_yeri" ).change(function() {
         var teslim_yeri= $('#teslim_yeri').val();
         if(teslim_yeri=="Satıcı Firma"){
+            $('#il_id').prop('selectedIndex',0);
+            $('#ilce_id').prop('selectedIndex',0);
             $('.teslim_il').hide();
             $('.teslim_ilce').hide();
+            $('.selectpicker').selectpicker('refresh');
         }
         else if(teslim_yeri=="Adrese Teslim"){
             $('.teslim_il').show();
@@ -1287,20 +1202,10 @@
 
         //katılımcılar doldurulur
         $("#katilimcilar").val({{$ilan->katilimcilar}});
-        option = $('option:selected', $("#katilimcilar")).attr('value');
-        if(option==="1"){
-            editOnayliTedarikciler();
-            $('#onayli_tedarikciler').show();
-            $('#belirli-istekliler').hide();
-        }
-        else if (option==="2"){
-            editBelirliIstekliler();
-            $('#belirli-istekliler').show();
-            $('#onayli_tedarikciler').hide();
-        }
-        else {
-            $('#onayli_tedarikciler').hide();
-            $('#belirli-istekliler').hide();
+        option = "{{$ilan->katilimcilar}}";
+        if (option=="2"){
+            editBelirliFirmalar();
+            $('#belirli-firmalar').show();
         }
 
         $("#sozlesme_turu").val({{$ilan->sozlesme_turu}});
