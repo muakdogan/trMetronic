@@ -845,7 +845,7 @@
                         </div>
                         <div class="portlet-body">
                             <div class="portlet-body">
-                                @if($brosur==null)
+                                @if(!count($firma->firma_brosurler))
                                     <span class="profile-desc-text"> Henüz broşür eklenmemiş. </span>
                                 @else
                                     <div class="table-scrollable table-scrollable-borderless">
@@ -1110,7 +1110,7 @@
                             </div>
                         </div>
                         <div class="portlet-body">
-                            @if($kaliteBelge==null)
+                            @if(!count($firma->kalite_belgeleri))
                                 <span class="profile-desc-text">Henüz kalite belgesi eklenmemiş.</span>
                             @else
                                 <div class="table-scrollable table-scrollable-borderless">
@@ -1245,7 +1245,7 @@
                             </div>
                         </div>
                         <div class="portlet-body">
-                        @if($referans==null)
+                        @if(!count($firma->firma_referanslar))
                             <span class="profile-desc-text">Henüz referans eklenmemiş.</span>
                         @else
                         @foreach($firmaReferanslar as $firmaReferans)
@@ -1318,6 +1318,7 @@
                                                     @endif
                                                 </td>
                                             </tr>
+                                            <tr>
                                             <td></td>
                                             <td>
                                                 <div class="col-md-3">
