@@ -130,7 +130,10 @@ class FirmaController extends Controller{
             'firma_brosurler',
             'firma_calisma_bilgileri'
         ])->first();
-        Debugbar::info($firma->firma_brosurler);
+
+        if (!count($firma))
+            abort('404');
+
         //hatalar icin
         $sirketTurleri=  SirketTuru::all();
         $firmaFatura = $firma->adresler()->where('tur_id', '=', '2')->first();
@@ -150,12 +153,14 @@ class FirmaController extends Controller{
         ->join('firmalar', 'yorumlar.yorum_yapan_firma_id', '=', 'firmalar.id')//firma isimleri için
         ->get();
 
-        if (!$firma)
-            abort('404');
+        $onaylimi=false;//kullanıcının onaylı firmalarında var mı
+        {
+            $onaylimi=DB::table('onayli_tedarikciler')->select('firma_id')->where('firma_id', session()->get('firma_id'))->where('tedarikci_id', $firma_id)->first();
+        }
 
         return view('Firma.firmaDetay')->with(['firma'=>$firma, 'yorumlar'=>$yorumlar])->with('sirketTurleri',$sirketTurleri)
             ->with('firmaFatura',$firmaFatura)->with('kalite_belgeleri',$kalite_belgeleri)->with('firmaAdres',$firmaAdres)
-            ->with('firmaSektorleri',$firmaSektorleri);
+            ->with('firmaSektorleri',$firmaSektorleri)->with('onaylimi',$onaylimi);
     }
 
     public function uyelikBilgileri(){
