@@ -1,7 +1,7 @@
 <?php $puanNumber = 0; ?>
     @if($ilan->ilan_turu == 1 && $ilan->sozlesme_turu == 0)
     <h3>Fiyat İstenen Kalemler Rekabet Listesi</h3>
-       <table class="table table-condensed" style="border-collapse:collapse;" >
+       <table class="table" style="border-collapse:collapse;" >
                 <thead>
                     <tr>
                         <th width="6%" >Sıra:</th>
@@ -48,7 +48,7 @@
                             <div class="accordian-body collapse" id="kalem{{$kismiCount}}">
                                                                                         <!--Mal kalemleri çekme sorgusu -->
                                 <?php $malIdCount=1;?>
-                                <table>
+                                <table class="table table-light">
                                     <thead>
                                         <tr>
                                             <th >Sıra:</th>
@@ -198,7 +198,7 @@
         </table>
     @elseif($ilan->ilan_turu == 2 && $ilan->sozlesme_turu == 0)     <!--Hizmet Teklifler -->
         <h3>Fiyat İstenen Kalemler Rekabet Listesi</h3>
-    <table class="table table-condensed" style="border-collapse:collapse;" >
+    <table class="table" style="border-collapse:collapse;" >
         <thead>
         <tr>
             <th>Sıra:</th>
@@ -238,7 +238,7 @@
                     <div class="accordian-body collapse" id="kalem{{$kismiCount}}">
                         <!--Hizmet kalemleri çekme sorgusu -->
                         <?php  $hizmetIdCount=1; ?>
-                        <table>
+                        <table class="table table-light">
                             <thead>
                             <tr>
                                 <th >Sıra:</th>
@@ -391,7 +391,7 @@
     </table>
     @elseif($ilan->ilan_turu == 3)  <!--Yapım İşi Teklifler -->
         <h3>Fiyat İstenen Kalemler Rekabet Listesi</h3>
-       <table class="table table-condensed" style="border-collapse:collapse;" >
+       <table class="table" style="border-collapse:collapse;" >
                 <thead>
                     <tr>
                         <th>Sıra:</th>
@@ -423,7 +423,7 @@
                             <div class="accordian-body collapse" id="kalem{{$kismiCount}}">
                                 <!--Hizmet kalemleri çekme sorgusu -->
                                 <?php  $yapimIsiIdCount=1;?>
-                                <table>
+                                <table class="table table-light">
                                     <thead>
                                         <tr>
                                             <th >Sıra:</th>

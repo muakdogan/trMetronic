@@ -33,8 +33,6 @@
     Firma Profili
 @endsection
 @section('content')
-
-
     <div class="row">
         <!-- BEGIN PAGE CONTENT INNER -->
         <div class="page-content-inner">
