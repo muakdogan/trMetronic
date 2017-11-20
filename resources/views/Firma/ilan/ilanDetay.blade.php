@@ -6,21 +6,28 @@ DebugBar::info($ilan);
 
 @extends('layouts.appUser')
 
-@section('baslik') @endsection
-
-@section('aciklama') İlanlar > {{$ilan->adi}}  @endsection
+@section('baslik') {{$ilan->adi}} ilanı
+    @if($ilan->statu==0)
+        <span id="ilanStatu" style="color:yellowgreen">(Aktif)</span>
+    @elseif($ilan->statu==1)
+        <span id="ilanStatu">(Tamamlanmış)</span>
+    @else
+        <span id="ilanStatu" style="color:red">(Pasif)</span>
+    @endif
+@endsection
 
 @section('head') <!-- Osman Kutlu - jQuery confirm icin gerekli -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.3/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.3/jquery-confirm.min.js"></script>
+<link href="{{asset('MetronicFiles/pages/css/profile-2.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('bodyAttributes')onload="loadPage()"@endsection {{-- teklif girilirken textbox cursorunu dogru konumlandirmak icin gerekli --}}
 
 @section('content')
     <?php
-        $kullaniciTeklifi=null;
-        $para_birimi=$ilan->para_birimleri->para_birimi();
+    $kullaniciTeklifi=null;
+    $para_birimi=$ilan->para_birimleri->para_birimi();
     ?>
 
     @foreach($teklifler as $tekliff)
@@ -29,21 +36,11 @@ DebugBar::info($ilan);
         @endif
     @endforeach
 
+
     <script src="{{asset('js/noUiSlider/nouislider.js')}}"></script>
     <link href="{{asset('css/noUiSlider/nouislider.css')}}" rel="stylesheet"></link>
     <script src="{{asset('js/wNumb.js')}}"></script>
     <style>
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        td, th {
-
-            text-align: left;
-            padding: 5px;
-        }
 
         .popup, .popup2, .bMulti {
             background-color: #fff;
@@ -78,7 +75,7 @@ DebugBar::info($ilan);
             font-weight: bold;
         }
         .highlight{
-            background:#faebcc;
+            background:#F2CDE9;
         }
         .minFiyat{
             background: yellow;
@@ -128,12 +125,7 @@ DebugBar::info($ilan);
             border-color: #C24032;
             box-shadow: 0px 0px 4px #C24032 inset;
         }
-        nav ul li a:active {
-            color: #eee;
-        }
-        nav ul li a.active {
-            color: #eee;
-        }
+
         .dialog {
             position: relative;
             text-align: center;
@@ -283,17 +275,6 @@ DebugBar::info($ilan);
         }
         .info-box {
             margin: 0 0 15px;
-        }
-        .box h3{
-            text-align:center;
-            position:relative;
-            top:80px;
-        }
-        .box {
-            width:100%;
-            height:200px;
-            background:#FFF;
-            margin:40px auto;
         }
         .effect8
         {
@@ -452,7 +433,7 @@ DebugBar::info($ilan);
                 setCaretPosition(elemId, 1);
             }
             else
-            setCaretPosition(elemId, startPos);
+                setCaretPosition(elemId, startPos);
 
         }
 
@@ -511,205 +492,254 @@ DebugBar::info($ilan);
         }
     </script>
 
-    <div class="container">
-        <div class="ajax-loader">
-            <img src="{{asset('images/200w.gif')}}" class="img-responsive" />
-        </div>
-        <div class="panel ">
-                <div class="panel-heading">
-                    <h4><strong>{{$ilan->adi}}</strong> ilanı
-                        @if($ilan->statu==0)
-                            <span id="ilanStatu" style="color:yellowgreen">(Aktif)</span>
-                            @if($ilan->firma_id == session()->get('firma_id'))
-                                @if(!$teklifVarMi)
-                                    {!! Form::button('İlanı Pasifleştir', array('id'=>'btn_ilaniPasifEt','class'=>'btn btn-danger', 'style'=>'float:right')) !!}
-                                    {!! Form::button('İlanı Aktifleştir', array('id'=>'btn_ilaniAktifEt','class'=>'btn btn-success', 'style'=>'float:right;display:none')) !!}
-                                @endif
-                            @endif
-                        @elseif($ilan->statu==1)
-                            <span id="ilanStatu">(Tamamlanmış)</span>
-                        @else
-                            <span id="ilanStatu" style="color:red">(Pasif)</span>
-                            @if($ilan->firma_id == session()->get('firma_id'))
-                                {!! Form::button('İlanı Aktifleştir', array('id'=>'btn_ilaniAktifEt','class'=>'btn btn-success', 'style'=>'float:right')) !!}
-                                {!! Form::button('İlanı Pasifleştir', array('id'=>'btn_ilaniPasifEt','class'=>'btn btn-danger', 'style'=>'float:right;display:none')) !!}
-                            @endif
-                        @endif
-                    </h4>
-                </div>
-
-            <div class="panel-body">
-                <div id="exTab2" class="col-lg-9">
+    <div class="ajax-loader">
+        <img src="{{asset('images/200w.gif')}}" class="img-responsive" />
+    </div>
+    <div class="row">
+        <!-- BEGIN PAGE CONTENT INNER -->
+        <div class="page-content-inner">
+            <div class="col-md-9">
+            <div class="profile">
+                <div class="tabbable-line tabbable-full-width">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a  href="#1" data-toggle="tab">İlan Bilgileri</a>
+                        <li class="active">
+                            <a href="#tab_1" data-toggle="tab"> İlan Bilgileri </a>
                         </li>
-                        <li><a href="#2" data-toggle="tab">Kalem Listesi</a>
+                        <li>
+                            <a href="#tab_2" data-toggle="tab"> Kalem Listesi </a>
                         </li>
-                        <li><a href="#3" data-toggle="tab">Rekabet</a>
+                        <li>
+                            <a href="#tab_3" data-toggle="tab"> Rekabet </a>
                         </li>
                     </ul>
-                    <div class="tab-content ">
-                        <div class="tab-pane active" id="1">
-                            <table class="table" >
-                                <tr>
-                                    <td>Firma Adı:</td>
-                                    <td><a href="{{URL::to('firmaDetay', array($ilan->firmalar->id), false)}}">{{$ilan->getFirmaAdi()}}</a></td>
-                                </tr>
-                                <tr>
-                                    <td>İlan Adı:</td>
-                                    <td>{{$ilan->adi}}</td>
-                                </tr>
-                                <tr>
-                                    <td>ilan Türü:</td>
-                                    <td>{{$ilan->getIlanTuru()}}</td>
-                                </tr>
-                                <tr>
-                                    <td>İlan Sektor:</td>
-                                    <td>{{$ilan->getIlanSektorAdi($ilan->ilan_sektor)}}</td>
-                                </tr>
-                                <tr>
-                                    <td>İlan Yayınlama Tarihi:</td>
-                                    <td>{{date('d-m-Y', strtotime($ilan->yayin_tarihi))}}</td>
-                                </tr>
-                                <tr>
-                                    <td>İlan Kapanma Tarihi:</td>
-                                    <td>{{date('d-m-Y', strtotime($ilan->kapanma_tarihi))}}</td>
-                                </tr>
-                                <tr>
-                                    <td>İşin Süresi:</td>
-                                    <td>{{$ilan->isin_suresi}}</td>
-                                </tr>
-                                <tr>
-                                    <td>İş Başlama Tarihi:</td>
-                                    <td>{{date('d-m-Y', strtotime($ilan->is_baslama_tarihi))}}</td>
-                                </tr>
-                                <tr>
-                                    <td>İş Bitiş Tarihi:</td>
-                                    <td>{{date('d-m-Y', strtotime($ilan->is_bitis_tarihi))}}</td>
-                                </tr>
-                                @if($ilan->teknik_sartname=='')
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_1">
+                            <div class="table-scrollable table-scrollable-borderless">
+                                <table class="table table-light" >
                                     <tr>
-                                        <td>Teknik Şartname:</td>
-                                        <td>Teknik şartname yüklenmemiş!</td>
-                                    </tr>
-                                @else
-                                    <tr>
-                                        <td>Teknik Şartname:</td>
-                                        <td>{{$ilan->teknik_sartname}}</td>
-                                    </tr>
-                                @endif
-                                @if($ilan->getKatilimciTur()=='Tüm Firmalar')
-                                    <tr>
-                                        <td>Katılımcılar:</td>
-                                        <td>Tüm Firmalar</td>
-                                    </tr>
-                                @else
-                                    <tr>
-                                        <td>Katılımcılar:</td>
+                                        <td>Firma Adı:</td>
                                         <td>
-                                            <ul>
-                                                @foreach($ilan->getKatilimciFirmalar() as $katilimciFirma)
-                                                <li><a href="{{URL::to('firmaDetay', array($katilimciFirma->id), false)}}">{{$katilimciFirma->adi}}</a></li>
-                                                @endforeach
-                                            </ul>
+                                            @if($ilan->goster || $ilan->firma_id == session()->get('firma_id'))
+                                                <a href="{{URL::to('firmaDetay', array($ilan->firmalar->id), false)}}">{{$ilan->getFirmaAdi()}}</a>
+                                            @else
+                                                {{$ilan->getFirmaAdi()}}
+                                           @endif
                                         </td>
+
                                     </tr>
-                                @endif
-                                <tr>
-                                    <td>Rekabet Şekli:</td>
-                                    <td>{{$ilan->getRekabet()}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Sözleşme Türü:</td>
-                                    <td>{{$ilan->getSozlesmeTuru()}}</td>
-                                </tr>
-                                @if($ilan->getSozlesmeTuru()=='Birim Fiyatlı')
-                                <tr>
-                                    <td>Fiyatlandirma Şekli:</td>
-                                    <td>{{$ilan->getFytSekli()}}</td>
-                                </tr>
-                                @endif
-                                <tr>
-                                    <td>Yaklaşık Maliyet:</td>
-                                    <td>{{$ilan->maliyetler->aralik}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Ödeme Türü:</td>
-                                    <td>{{$ilan->odeme_turleri->adi}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Para Birimi:</td>
-                                    <td>{{$ilan->para_birimleri->adi}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Teslim Yeri:</td>
-                                    <td>{{$ilan->teslim_yeri_satici_firma}}</td>
-                                </tr>
-                                @if($ilan->teslim_yeri_satici_firma=='Adrese Teslim')
-                                <tr>
-                                    <td>Teslim İli:</td>
-                                    <td>{{$ilan->iller->adi}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Teslim İlcesi:</td>
-                                    <td>{{$ilan->ilceler->adi}}</td>
-                                </tr>
-                                @endif
-                                <tr>
-                                    <td>İlan Açıklaması:</td>
-                                    <td>{{$ilan->aciklama}}</td>
-                                </tr>
-                            </table>
+                                    <tr>
+                                        <td>İlan Adı:</td>
+                                        <td>{{$ilan->adi}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ilan Türü:</td>
+                                        <td>{{$ilan->getIlanTuru()}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>İlan Sektor:</td>
+                                        <td>{{$ilan->getIlanSektorAdi($ilan->ilan_sektor)}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>İlan Yayınlama Tarihi:</td>
+                                        <td>{{date('d-m-Y', strtotime($ilan->yayin_tarihi))}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>İlan Kapanma Tarihi:</td>
+                                        <td>{{date('d-m-Y', strtotime($ilan->kapanma_tarihi))}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>İşin Süresi:</td>
+                                        <td>{{$ilan->isin_suresi}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>İş Başlama Tarihi:</td>
+                                        <td>{{date('d-m-Y', strtotime($ilan->is_baslama_tarihi))}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>İş Bitiş Tarihi:</td>
+                                        <td>{{date('d-m-Y', strtotime($ilan->is_bitis_tarihi))}}</td>
+                                    </tr>
+                                    @if($ilan->teknik_sartname=='')
+                                        <tr>
+                                            <td>Teknik Şartname:</td>
+                                            <td>Teknik şartname yüklenmemiş!</td>
+                                        </tr>
+                                    @else
+                                        <tr>
+                                            <td>Teknik Şartname:</td>
+                                            <td><a data-toggle="tooltip" title="Dosyayı görüntülemek için tıklayınız!" target="_blank" href="{{ asset('Teknik/'.$ilan->teknik_sartname) }}"><img src="{{asset('images/see.png')}}">{{$ilan->teknik_sartname}}</a></td>
+                                        </tr>
+                                    @endif
+                                    @if($ilan->getKatilimciTur()=='Tüm Firmalar')
+                                        <tr>
+                                            <td>Katılımcılar:</td>
+                                            <td>Tüm Firmalar</td>
+                                        </tr>
+                                    @else
+                                        <tr>
+                                            <td>Katılımcılar:</td>
+                                            <td>
+                                                <ul class="list-inline">
+                                                    @foreach($ilan->getKatilimciFirmalar() as $katilimciFirma)
+                                                        <li><a href="{{URL::to('firmaDetay', array($katilimciFirma->id), false)}}">{{$katilimciFirma->adi}}</a></li>
+                                                    @endforeach
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    @endif
+                                    <tr>
+                                        <td>Rekabet Şekli:</td>
+                                        <td>{{$ilan->getRekabet()}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sözleşme Türü:</td>
+                                        <td>{{$ilan->getSozlesmeTuru()}}</td>
+                                    </tr>
+                                    @if($ilan->getSozlesmeTuru()=='Birim Fiyatlı')
+                                        <tr>
+                                            <td>Fiyatlandirma Şekli:</td>
+                                            <td>{{$ilan->getFytSekli()}}</td>
+                                        </tr>
+                                    @endif
+                                    <tr>
+                                        <td>Yaklaşık Maliyet:</td>
+                                        <td>{{$ilan->maliyetler->aralik}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ödeme Türü:</td>
+                                        <td>{{$ilan->odeme_turleri->adi}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Para Birimi:</td>
+                                        <td>{{$ilan->para_birimleri->adi}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Teslim Yeri:</td>
+                                        <td>{{$ilan->teslim_yeri_satici_firma}}</td>
+                                    </tr>
+                                    @if($ilan->teslim_yeri_satici_firma=='Adrese Teslim')
+                                        <tr>
+                                            <td>Teslim İli:</td>
+                                            <td>{{$ilan->iller->adi}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Teslim İlcesi:</td>
+                                            <td>{{$ilan->ilceler->adi}}</td>
+                                        </tr>
+                                    @endif
+                                    <tr>
+                                        <td>İlan Açıklaması:</td>
+                                        <td>{{$ilan->aciklama}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <!--tab_1_2-->
+                        <div class="tab-pane" id="tab_2">
+
+                            <div class="portlet light ">
+                                <div class="portlet-title">
+                                    <div class="caption caption-md">
+                                        <i class="icon-picture theme-font"></i>
+                                        <span class="caption-subject theme-font bold uppercase">{{$ilan->adi}} İlanına Teklif  Ver</span>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="portlet-body">
+                                            @if($ilan->sozlesme_turu == 1)
+                                                @include('Firma.ilan.goturuBedelTeklif')
+                                            @elseif($ilan->ilan_turu == 1)
+                                                @include('Firma.ilan.malTeklif')
+                                            @elseif($ilan->ilan_turu == 2)
+                                                @include('Firma.ilan.hizmetTeklif')
+                                            @else
+                                                @include('Firma.ilan.yapimIsiTeklif')
+                                            @endif
+                                    </div>
+                                </div>
+                            </div>
+
 
                         </div>
-                        <div class="tab-pane" id="2">
-                            <h3>{{$firmaIlan->adi}}'nın {{$ilan->adi}} İlanına Teklif  Ver</h3>
-                            <hr>
-                            @if($ilan->sozlesme_turu == 1)
-                                @include('Firma.ilan.goturuBedelTeklif')
-                            @elseif($ilan->ilan_turu == 1)
-                                @include('Firma.ilan.malTeklif')
-                            @elseif($ilan->ilan_turu == 2)
-                                @include('Firma.ilan.hizmetTeklif')
-                            @else
-                                @include('Firma.ilan.yapimIsiTeklif')
-                            @endif
-                        </div>
-                        <div class="tab-pane" id="3">
-                            <div id="kismiRekabet">
-                                    @include('Firma.ilan.kismiRekabet')
+                        <!--end tab-pane-->
+                        <div class="tab-pane" id="tab_3">
+                            <div id="kismiRekabet" class="table-scrollable table-scrollable-borderless">
+                                @include('Firma.ilan.kismiRekabet')
                             </div>
                         </div>
-                        @if($ilan->firma_id == session()->get('firma_id'))
-                            @if(!$teklifVarMi)
-                                {{--Sadece teklif verilmemiş ilanlar duzenlenebilir!--}}
-                                {!! Form::button('İlanı Düzenle', array('id'=>'btn_ilanDuzenle','class'=>'btn btn-info', 'style'=>'float:right')) !!}
-                            @else
-                                <div class="col-lg-12"><input style="float:right" type="button" class="btn btn-info" value="İlanı Düzenle" disabled /></div>
-                                <div class="col-lg-12"><p><span style="float:right; color:red;">Teklif verilmiş ilan düzenlenemez!</span></p></div>
-                            @endif
-                        @endif
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="panel">
-                        <div class="panel-heading">{{$ilan->firmalar->adi}} Profili</div>
-                        <div class="panel-body">
-                            <div class="" align="center"><img src="{{asset('uploads')}}/{{$ilan->firmalar->logo}}" alt="HTML5 Icon" style="width:128px;height:128px;"></div>
-                            <div align="center">
-                                <br>
-                                <Strong>Firmaya ait ilan sayısı:</strong> {{$ilan->firmalar->ilanlar()->count()}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel kismiDiv">
-                        <div class="panel-heading">Rekabet</div>
-                        <div class="panel-body rekabet">
-                            @include('Firma.ilan.rekabet')
-                        </div>
+                        <!--end tab-pane-->
                     </div>
                 </div>
             </div>
+            </div>
+
+            <div class="col-md-3" >
+                @if($ilan->goster || $ilan->firma_id == session()->get('firma_id'))
+                    <div class="portlet box purple">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="icon-user"></i>
+                                {{$ilan->firmalar->adi}} Profili
+                            </div>
+                        </div>
+                        <div class="portlet-body">
+                            <div align="center">
+                                <a href="{{asset('firmaDetay')}}/{{$ilan->firmalar->id}}">
+                                    <img src="{{asset('uploads')}}/{{$ilan->firmalar->logo}}" width="128" height="128" />
+                                </a>
+                                <br>
+                                <strong>Firmaya ait ilan sayısı:</strong> {{$ilan->firmalar->ilanlar()->count()}}
+                                <hr>
+                                <a href="{{asset('firmaDetay')}}/{{$ilan->firmalar->id}}" class="btn btn-circle red btn-sm">Profili Görüntüle <i class="icon-arrow-right"></i></a>
+                                @if($ilan->firma_id == session()->get('firma_id'))
+                                    <hr>
+                                    <div class="btn-group btn-group-sm btn-group-solid">
+                                        @if($ilan->statu==0)
+                                            @if(!$teklifVarMi)
+                                                {!! Form::button('İlanı Pasifleştir', array('id'=>'btn_ilaniPasifEt','class'=>'btn btn-danger')) !!}
+                                                {!! Form::button('İlanı Aktifleştir', array('id'=>'btn_ilaniAktifEt','class'=>'btn btn-success', 'style'=>'display:none')) !!}
+                                            @endif
+                                        @elseif($ilan->statu==1)
+
+                                        @else
+                                            {!! Form::button('İlanı Aktifleştir', array('id'=>'btn_ilaniAktifEt','class'=>'btn btn-success')) !!}
+                                            {!! Form::button('İlanı Pasifleştir', array('id'=>'btn_ilaniPasifEt','class'=>'btn btn-danger', 'style'=>'display:none')) !!}
+                                        @endif
+
+                                        @if($ilan->firma_id == session()->get('firma_id'))
+                                            @if(!$teklifVarMi)
+                                                {{--Sadece teklif verilmemiş ilanlar duzenlenebilir!--}}
+                                                {!! Form::button('İlanı Düzenle', array('id'=>'btn_ilanDuzenle','class'=>'btn btn-info')) !!}
+                                            @else
+                                                <input style="float:right" type="button" class="btn btn-info" value="İlanı Düzenle" disabled />
+                                                <p><span style="float:right; color:red;">Teklif verilmiş ilan düzenlenemez!</span></p>
+                                            @endif
+                                        @endif
+
+                                    </div>
+
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+
+                @endif
+
+                <div class="portlet box purple kismiDiv">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-bar-chart"></i>
+                            Rekabet
+                        </div>
+                    </div>
+                    <div class="portlet-body rekabet">
+                        @include('Firma.ilan.rekabet')
+                    </div>
+                </div>
+
+        </div>
+        <!-- END PAGE CONTENT INNER -->
+
         </div>
     </div>
     <div class="modal fade" id="myModalSirketListe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -735,9 +765,7 @@ DebugBar::info($ilan);
         </div>
     </div>
 
-    <br>
-    <br>
-    <hr>
+
     <!-- Modal -->
     <div class="modal fade" id="onaylamaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
@@ -764,7 +792,6 @@ DebugBar::info($ilan);
             </div>
         </div>
     </div>
-    </body>
     <script src="{{asset('js/sortAnimation.js')}}"></script>
     <script src="{{asset('js/jquery.bpopup-0.11.0.min.js')}}"></script>
     <script>

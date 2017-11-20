@@ -121,13 +121,12 @@ $para_birimi=$ilan->para_birimleri->para_birimi();
         </tr>
         </tbody>
     </table>
-</div>
-
 @endif
+</div>
 <script>
-    var tcount ={{$tekliflerCount}};
-    var i = {{$i}};
-    var ilanSahibi = {{$ilanSahibi}};
+    var tcount ="{{$tekliflerCount}}";
+    var i = "{{$i}}";
+    var ilanSahibi = "{{$ilanSahibi}}";
     if(tcount==0) { //teklif verilmediyse hide edilmesi
         $('#rekabetDiv').html("Bu ilana henüz Teklif Verilmemiş!");
         $('#kismiRekabet').html("Bu ilana henüz Teklif Verilmemiş!");
@@ -140,7 +139,7 @@ $para_birimi=$ilan->para_birimleri->para_birimi();
     $(".KapaliKazanan").click(function(){
         var kazananFirmaId=$(this).attr("name");
         var kazananFiyat=$(this).attr("id");
-        var ilanID={{$ilan->id}};
+        var ilanID="{{$ilan->id}}";
         var successValue = $(this);
         if(confirm("Bu firmayı kazanan ilan etmek istediğinize emin misiniz ?")){
             $.ajax({
@@ -163,7 +162,7 @@ $para_birimi=$ilan->para_birimleri->para_birimi();
     });
     $(".KapaliAcikRekabetKazanan").click(function(){
         var kazananFirmaId=$(this).attr("name");
-        var ilanID={{$ilan->id}};
+        var ilanID="{{$ilan->id}}";
         var successValue = $(this);
         if(confirm("Bu firmayı kazanan ilan etmek istediğinize emin misiniz ?")){
             $.ajax({
