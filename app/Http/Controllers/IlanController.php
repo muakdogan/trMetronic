@@ -1095,8 +1095,15 @@ class IlanController extends Controller
 
     public function davetEdildigimIlanlar ()
     {
-        $firma=Firma::find(session()->get('firma_id'));
-        return view('Firma.ilan.davetEdildigimIlanlar')->with('firma', $firma);
+        $id = session()->get('firma_id');
+        $davetEdilIlanlar=DB::table('belirli_istekliler')
+            ->join('ilanlar', 'ilanlar.id', '=', 'belirli_istekliler.ilan_id')
+            ->join('firmalar', 'firmalar.id', '=', 'ilanlar.firma_id')
+            ->select('ilanlar.id as ilan_id','ilanlar.adi as ilan_adi','ilanlar.kapanma_tarihi as ilan_kapanma_tarihi','firmalar.adi as firma_adi','firmalar.id as firma_id')
+            ->where( 'kapanma_tarihi','>=', date('Y-m-d'))->where('belirli_istekliler.firma_id', $id)
+            ->distinct()
+            ->get();
+        return view('Firma.ilan.davetEdildigimIlanlar')->with('davetEdilIlanlar', $davetEdilIlanlar);
     }
 
     public function teklifGonder ($firma_id,$ilan_id,$kullanici_id,Request $request) {

@@ -54,7 +54,7 @@
                         </div>
                     </div>
                     <!-- END DAVET EDILDIGIM ILANLAR -->
-                    @endif
+                @endif
                     <!-- BEGIN SON ILANLARIM -->
                     <div class="portlet light ">
                         <div class="portlet-title">
