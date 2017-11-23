@@ -40,7 +40,6 @@
     <script type="text/javascript" src="{{asset('js/jquery.quicksearch.js')}}"></script>
     <script src="{{asset('js/multiple-select.js')}}"></script>
     <div class="row">
-        <div class="col-md-12">
             <!-- BEGIN PROFILE CONTENT -->
             <div class="profile-content">
                 <div class="col-md-6">
@@ -1548,7 +1547,7 @@
             </div>
             <!-- END PROFILE CONTENT -->
         </div>
-    </div>
+
 
     <script src="{{asset('js/selectDD.js')}}"></script>
     <script src="{{asset('js/jquery.bpopup-0.11.0.min.js')}}"></script>

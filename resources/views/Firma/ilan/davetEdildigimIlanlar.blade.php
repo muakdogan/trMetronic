@@ -9,19 +9,13 @@
 @endsection
 @section('content')
     <div class="row">
-        <div class="col-md-12">
+
             <!-- BEGIN PROFILE CONTENT -->
             <div class="profile-content">
                 <div class="col-md-12">
                 @if(count($davetEdilIlanlar) != 0)
                     <!-- BEGIN DAVET EDILDIGIM ILANLAR -->
                         <div class="portlet light ">
-                            <div class="portlet-title">
-                                <div class="caption caption-md">
-                                    <i class="icon-envelope-open theme-font"></i>
-                                    <span class="caption-subject theme-font bold uppercase">Davet Edildiğim İlanlar</span>
-                                </div>
-                            </div>
                             <div class="portlet-body">
                                 <table data-toggle="table" data-sort-name="tarih" data-sort-order="asc" class="table-striped" >
                                     <thead>
@@ -50,11 +44,11 @@
                             </div>
                         </div>
                         <!-- END DAVET EDILDIGIM ILANLAR -->
-    @endif
+                @endif
                 </div>
             </div>
         </div>
-    </div>
+
 @endsection
 
 @section('sayfaSonu')

@@ -1069,25 +1069,14 @@ class IlanController extends Controller
                             GROUP BY th.teklif_id
                             )th2 ON th1.teklif_id = th2.teklif_id
                             AND th1.tarih = th2.tarih ORDER BY th2.tarih DESC "));
-        $basvurular_count = DB::select(DB::raw("SELECT count(th1.id) as count
-                            FROM teklif_hareketler th1
-                            JOIN (
-                            SELECT teklif_id, t.ilan_id AS ilanId, MAX( tarih ) tarih
-                            FROM teklifler t, teklif_hareketler th
-                            WHERE t.id = th.teklif_id
-                            AND t.firma_id ='$firma->id'
-                            GROUP BY th.teklif_id
-                            )th2 ON th1.teklif_id = th2.teklif_id
-                            AND th1.tarih = th2.tarih ORDER BY th2.tarih DESC "));
+        $basvurular_count = count($basvurular);
+
         $kazananKismi = \App\KismiAcikKazanan::where('kazanan_firma_id',$firma->id)->get();
         $kazananKismiCount= $kazananKismi->count();
 
         $kazananKapali = \App\KismiKapaliKazanan::where('kazanan_firma_id',$firma->id)->get();
         $kazananKismiCount = $kazananKismiCount +($kazananKapali->count());
-        $teklifler=  \App\Teklif::all();
-        //$kullanici = App\Kullanici::find($kul_id);
-        $detaylar = \App\MalTeklif::all();
-        return view('Firma.ilan.basvurularim')->with('firma', $firma)->with('teklifler', $teklifler)->with('detaylar', $detaylar)
+        return view('Firma.ilan.basvurularim')->with('firma', $firma)
             ->with('basvurular', $basvurular)->with('basvurular_count', $basvurular_count)
             ->with('kazananKismi', $kazananKismi)->with('kazananKapali', $kazananKapali)->with('kazananKismiCount', $kazananKismiCount);
 
