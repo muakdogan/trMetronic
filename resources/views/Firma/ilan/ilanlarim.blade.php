@@ -1,5 +1,6 @@
 <?php
     use Carbon\Carbon;
+    use Barryvdh\Debugbar\Facade as Debugbar;
     $dt = Carbon::today();
     $time = Carbon::parse($dt);
     $dt = $time->format('Y-m-d');
@@ -409,7 +410,7 @@ animation:2s blinker linear infinite;
                     @if($pasif_ilanlar->count()!=0) <!-- Pasif ilanlar boş ise data table gözükmemesi kontrolü-->
 
                         <table  id="pasif" class="row-border hover order-column" cellspacing="0" width="100%">
-                        <thead style=" font-size: 12px;">
+                            <thead style=" font-size: 12px;">
                             <tr>
                                 <th>Sıra</th>
                                 <th>İlan Adı</th>
@@ -418,8 +419,8 @@ animation:2s blinker linear infinite;
                                 <th></th>
 
                             </tr>
-                        </thead>
-                        <tbody style="font_size:12px">
+                            </thead>
+                            <tbody style="font_size:12px">
                             <?php $i=1; ?>
                             @foreach($pasif_ilanlar as $pasif_ilan)
                                 <tr onclick="location.href='{{ URL::to('teklifGor', array($firma->id,$pasif_ilan->id), false) }}'">
@@ -427,23 +428,23 @@ animation:2s blinker linear infinite;
                                     <td>{{$pasif_ilan->adi}}</td>
 
                                     <td>{{date('d-m-Y', strtotime($pasif_ilan->kapanma_tarihi))}}</td>
-                                    <td>{{$pasif_ilan->teklifler->count() == 0 ? 0 : $ilan->teklifler[0]->firma_sayisi}}</td>
+                                    <td>{{$pasif_ilan->teklifler->count() == 0 ? 0 : $pasif_ilan->teklifler[0]->firma_sayisi}}</td>
 
                                     @if($pasif_ilan->kapanma_tarihi > $dt || $pasif_ilan->teklifler->count() == 0)
-                                       <td> <a href="{{ URL::to('teklifGor', array($firma->id,$pasif_ilan->id), false) }}"><button style="float:right;padding: 4px 12px;font-size:12px" type="button" class="btn btn-info">Detay/Teklif Gör</button></a></td>
+                                        <td> <a href="{{ URL::to('teklifGor', array($firma->id,$pasif_ilan->id), false) }}"><button style="float:right;padding: 4px 12px;font-size:12px" type="button" class="btn btn-info">Detay/Teklif Gör</button></a></td>
                                     @else
-                                    <td> <a href="{{ URL::to('teklifGor', array($firma->id,$pasif_ilan->id), false) }}"><button style="background-color:#00ff00 ;float:right;padding: 4px 12px;font-size:12px;height:28px;width: 113px" type="button" class="btn btn-info"><span  id=box>Kazananı İlan Et</span></button></a></td>
+                                        <td> <a href="{{ URL::to('teklifGor', array($firma->id,$pasif_ilan->id), false) }}"><button style="background-color:#00ff00 ;float:right;padding: 4px 12px;font-size:12px;height:28px;width: 113px" type="button" class="btn btn-info"><span  id=box>Kazananı İlan Et</span></button></a></td>
 
                                     @endif
                                 </tr>
                             @endforeach
-                        </tbody>
-                    </table>
-                    @else
+                            </tbody>
+                        </table>
+                        @else
 
-                        <p style="text-align:center">Henüz Pasif Olan İlanınız Bulunmamaktadır.</p>
+                            <p style="text-align:center">Henüz Pasif Olan İlanınız Bulunmamaktadır.</p>
 
-                    @endif
+                        @endif
 
                     </div>
                 </div>
