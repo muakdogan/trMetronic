@@ -102,6 +102,11 @@
         </div>
         <div class="col-md-3">
             <!-- BEGIN WIDGET THUMB -->
+            <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 " align="center">
+                <a href="{{asset('ilanAra')}}" class="btn btn-circle purple">İlan Ara <i class="icon-magnifier"></i></a>
+            </div>
+            <!-- END WIDGET THUMB -->
+            <!-- BEGIN WIDGET THUMB -->
             <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
                 <h4 class="widget-thumb-heading">Toplam Başvurum</h4>
                 <div class="widget-thumb-wrap">
