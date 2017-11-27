@@ -63,7 +63,6 @@
 
 <script>
 $(document).on('click', '.btn-tedCikar', function(){
-
     var tedarikci_id=$(this).val();
     $.ajax({
         type:"GET",
@@ -77,7 +76,6 @@ $(document).on('click', '.btn-tedCikar', function(){
             alert("Status: " + textStatus); alert("Error: " + errorThrown);
         }
     });
-
 });
 </script>
 @endsection
