@@ -112,7 +112,7 @@
 
                           <select class="form-control deneme" name="sektor_id[]" id="custom-headers" multiple='multiple'value="{{1}}" data-validation = "required" data-validation-error-msg = "Lütfen Sektör Seçiniz">
                             @foreach($sektorler as $sektor)
-                                    <option  value="{{$sektor->id}}">{{$sektor->adi}}</option>
+                              <option  value="{{$sektor->id}}">{{$sektor->adi}}</option>
                             @endforeach
                           </select>
                           <span class="help-block" style="color:red"> {{ $errors->first('sektor_id') }}</span>
@@ -139,7 +139,7 @@
                           data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!" value="{{1}}">
                             <option selected disabled>İl Seçiniz</option>
                             @foreach($iller_query as $il)
-                                   <option value="{{$il->id}}">{{$il->adi}}</option>
+                              <option value="{{$il->id}}">{{$il->adi}}</option>
                             @endforeach
                           </select>
                           <span class="help-block" style="color:red"> {{ $errors->first('il_id') }}</span>

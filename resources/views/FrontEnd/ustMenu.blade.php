@@ -8,10 +8,10 @@
       </div>
       <div id="navigation" class="collapse navbar-collapse navbar-right">
         <ul class="nav navbar-nav">
-          <li><a href="#biz" class="scroll-to">Biz Kimiz</a></li>
           <li><a href="#nasil" class="scroll-to">Nasıl Çalışır</a></li>
           <li><a href="#avantaj" class="scroll-to">Avantajlarımız</a></li>
           <li><a href="#neler" class="scroll-to">Neler Var</a></li>
+          <li><a href="#biz" class="scroll-to">Biz Kimiz</a></li>
           <li><a href="#iletisim" class="scroll-to">İletişim</a></li>
         </ul>
         <a href="{{url('/firmaKayit')}}" class="btn navbar-btn btn-ghost">ÜYE OL</a>

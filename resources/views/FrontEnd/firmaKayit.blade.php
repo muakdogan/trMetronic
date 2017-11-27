@@ -46,109 +46,140 @@
 
               <div class="row">
                   <div class="col-md-6">
-                    <h3 class="form-section">Firma Bilgileri</h3>
+                    <h4 class="form-section">Firma Bilgileri</h4>
+                    <!-- Firma Adı -->
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Firma Adı</label>
-                        <div class="col-md-8">
-                          <div class="input-group">
-                            <span class="input-group-addon input-circle-left">
-                              <i class="fa fa-envelope"></i>
-                            </span>
-                              <input type="text" class="form-control input-circle-right" placeholder="Firma Adı">
-                          </div>
+                      <label class="col-md-3 control-label">Firma Adı</label>
+                      <div class="col-md-8">
+                        <div class="input-group">
+                          <span class="input-group-addon input-circle-left">
+                            <i class="fa fa-briefcase"></i>
+                          </span>
+                          <input type="text" class="form-control input-circle-right" placeholder="Firma Adı">
                         </div>
+                      </div>
                     </div>
+                    <!-- Sektörler -->
+                    <!--
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Sektörler</label>
-                        <div class="col-md-8">
-                            <select class="form-control deneme" name="sektor_id[]" id="custom-headers" multiple="multiple" value="{{1}}">
-                              @foreach ($sektorler as $sektor)
-                                <option value="{{$sektor->id}}">{{$sektor->adi}}</option>
-                              @endforeach
-                        </div>
-                    </div>
+                      <label class="col-md-3 control-label">Sektörler</label>
+                      <div class="col-md-8">
+                        <select class="form-control deneme" name="sektor_id[]" id="custom-headers" multiple="multiple" value="{{1}}">
+                          @foreach ($sektorler as $sektor)
+                            <option value="{{$sektor->id}}">{{$sektor->adi}}</option>
+                          @endforeach
+                      </div>
+                    </div>-->
+                    <!-- Telefon -->
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Telefon</label>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control input-circle" placeholder="Enter text">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Web Adresi</label>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control input-circle" placeholder="Enter text">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">İletişim Adresi</label>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control input-circle" placeholder="Enter text">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">İl</label>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control input-circle" placeholder="Enter text">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">İlçe</label>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control input-circle" placeholder="Enter text">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Semt</label>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control input-circle" placeholder="Enter text">
-                        </div>
-                    </div>
+                      <label class="col-md-3 control-label">Telefon</label>
+                      <div class="col-md-8">
 
+                          <input type="text" class="form-control" id="mask_phone">
+                          <span class="help-block"> (999) 999-9999 </span>
+
+                      </div>
+                    </div>
+                    <!-- Web Adresi -->
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">Web Adresi</label>
+                      <div class="col-md-8">
+                        <div class="input-group">
+                          <span class="input-group-addon input-circle-left">
+                            <i class="fa fa-desktop"></i>
+                          </span>
+                          <input type="text" class="form-control input-circle-right" placeholder="www.firmam.com">
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Şehir -->
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">Şehir</label>
+                      <div class="col-md-8">
+                        <input type="text" class="form-control input-circle" placeholder="Enter text">
+                      </div>
+                    </div>
+                    <!-- İlçe -->
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">İlçe</label>
+                      <div class="col-md-8">
+                        <input type="text" class="form-control input-circle" placeholder="Enter text">
+                      </div>
+                    </div>
+                    <!-- Semt -->
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">Semt</label>
+                      <div class="col-md-8">
+                        <input type="text" class="form-control input-circle" placeholder="Enter text">
+                      </div>
+                    </div>
+                    <!-- İletişim Adresi -->
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">İletişim Adresi</label>
+                      <div class="col-md-8">
+                        <div class="input-group">
+                          <span class="input-group-addon input-circle-left">
+                            <i class="fa fa-envelope-o"></i>
+                          </span>
+                          <input type="text" class="form-control input-circle-right" placeholder="İletişim Adresi">
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <!--/span-->
                   <div class="col-md-6">
-                    <h3 class="form-section">Fatura Bilgileri</h3>
-                      <div class="form-group has-error">
-                          <label class="control-label col-md-3">Last Name</label>
-                          <div class="col-md-9">
-                              <select name="foo" class="form-control">
-                                  <option value="1">Abc</option>
-                                  <option value="1">Abc</option>
-                                  <option value="1">This is a really long value that breaks the fluid design for a select2</option>
-                              </select>
-
-                          </div>
+                    <h4 class="form-section">Fatura Bilgileri</h4>
+                    <!-- Firma Ünvanı -->
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">Firma Ünvanı</label>
+                      <div class="col-md-8">
+                        <div class="input-group">
+                          <span class="input-group-addon input-circle-left">
+                            <i class="fa fa-newspaper-o"></i>
+                          </span>
+                          <input type="text" class="form-control input-circle-right" placeholder="Firma Ünvanı">
+                        </div>
                       </div>
+                    </div>
+                    <!-- Fatura Adresi -->
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">Fatura Adresi</label>
+                      <div class="col-md-8">
+                        <div class="input-group">
+                          <span class="input-group-addon input-circle-left">
+                            <i class="fa fa-envelope-o"></i>
+                          </span>
+                          <input type="text" class="form-control input-circle-right" placeholder="Fatura Adresi">
+                        </div>
+                      </div>
+                    </div>
+                    <!-- İl -->
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">İl</label>
+                      <div class="col-md-8">
+                        <input type="text" class="form-control input-circle" placeholder="Enter text">
+                      </div>
+                    </div>
+                    <!-- İlçe -->
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">İlçe</label>
+                      <div class="col-md-8">
+                        <input type="text" class="form-control input-circle" placeholder="Enter text">
+                      </div>
+                    </div>
+                    <!-- Semt -->
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">Semt</label>
+                      <div class="col-md-8">
+                        <input type="text" class="form-control input-circle" placeholder="Enter text">
+                      </div>
+                    </div>
+                  </div>
                   </div>
                   <!--/span-->
               </div>
               <!--/row-->
-              <div class="row">
-                  <div class="col-md-6">
-                      <div class="form-group">
-                          <label class="control-label col-md-3">First Name</label>
-                          <div class="col-md-9">
-                              <input type="text" class="form-control" placeholder="Chee Kin">
 
-                          </div>
-                      </div>
-                  </div>
-                  <!--/span-->
-                  <div class="col-md-6">
-                      <div class="form-group has-error">
-                          <label class="control-label col-md-3">Last Name</label>
-                          <div class="col-md-9">
-                              <select name="foo" class="form-control">
-                                  <option value="1">Abc</option>
-                                  <option value="1">Abc</option>
-                                  <option value="1">This is a really long value that breaks the fluid design for a select2</option>
-                              </select>
-
-                          </div>
-                      </div>
-                  </div>
-                  <!--/span-->
-              </div>
               <!--/row-->
               <div class="form-group">
                 <label>Firma Adı</label>
@@ -182,5 +213,7 @@
     </div>
   </div>
 </div>
-
+<script src="{{asset('MetronicFiles/global/plugins/jquery.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('MetronicFiles/global/scripts/app.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('MetronicFiles/pages/scripts/form-input-mask.min.js')}}" type="text/javascript"></script>
   @endsection

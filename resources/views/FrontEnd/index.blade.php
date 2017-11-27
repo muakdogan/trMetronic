@@ -75,20 +75,6 @@
 <!--   *** CUSTOMERS END ***-->
 <!--   *** FEATURES ***-->
 
-<!-- ***BİZ KİMİZ ***-->
-<section id="biz" class="section no-padding-bottom">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 col-lg-8 col-lg-offset-2 text-center">
-        <h2>Biz Kimiz?</h2>
-        <p>Kurucularının Dokuz Eylül Üniversitesi Bilgisayar Mühendisliği Bölümü Akademisyeni ve İktisat Bölümü Yüksek Linsans Öğrencisi olduğu tamrekabet.com Ocak 2016’da çalışmalarına başlamıştır. İlk aşamada ‘’Bilgi ve İletişim Teknolojilerinin Rekabet Üzerindeki Etkileri’’ konulu yüksek lisans tezinin uygulaması olan tamrekabet.com firmalar ile yapılan görüşmeler ve gelen talepler sonucunda aslında firmaların önemli bir ihtiyacına çözüm olduğu anlaşıldı.</p>
-        <p>Günümüzde gelişen rekabet koşulları, maliyetlerin sürekli düşürülmesini ve yeni müşterilere ulaşarak satış hacimlerinin sürekli arttırılmasını firmalar için vazgeçilmez çabalar haline getirmiştir. Tamrekabet.com bünyesindeki firmalara bir yandan satın alma süreçlerinde maliyetlerini düşürerek diğer yandan da yeni pazarlara ve firmalara kolayca ulaşıp satışlarını arttırarak önamli avantajlar sunuyor/ önemli bir değer yaratıyor.</p>
-        <p>59 sektörde binlerce kalem mal, hizmet ve yapım işi içeren tamrekabet.com günden güne büyüyen firma havuzu, yenilikçi ürün ve hizmetleri ile en kaliteli işletmeler arası ticaret platformunu sunmak için sürekli kendisini yenilemektedir.</p>
-        <p>Merkezi Dokuz Eylül Teknoloji Geliştirme Bölgesi İzmir’de bulunan tamrekabet.com genç ekibiyle, yeni teknolojileri sürekli takip ederek müşterilerine en iyi deneyimi sunmak için tüm gücüyle çalışmaya devam ediyor.</p>
-      </div>
-    </div>
-  </div>
-</section>
 <!-- ***NASIL ÇALIŞIR ***-->
 <section id="nasil" class="section testimonails background-gray-lighter">
   <div class="container">
@@ -245,7 +231,7 @@
   </div>
 </section>
 <!-- *** NELER VAR ***-->
-<section id="neler" class="section background-gray-lighter">
+<section id="neler" class="section">
   <div class="container clearfix">
     <h2 class="text-center">tamrekabet.com'da Neler Var?</h2>
     <div class="row services">
@@ -296,8 +282,23 @@
     </div>
   </div>
 </section>
+<!-- ***BİZ KİMİZ ***-->
+<section id="biz" class="section background-gray-lighter">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-lg-8 col-lg-offset-2 text-center">
+        <h2>Biz Kimiz?</h2>
+        <p>Kurucularının Ocak 2016'da çalışmalarına başladığı tamrekabet.com ‘’Bilgi ve İletişim Teknolojilerinin Rekabet Üzerindeki Etkileri’’ konulu akademik bir çalışmanın uygulaması olarak doğmuştur. tamrekabet.com bünyesindeki firmalara, bir yandan satın alma süreçlerinde maliyetlerini düşürmek, diğer yandan da yeni pazarlara ve firmalara kolayca ulaşıp satışlarını arttırmak gibi önemli avantajlar sunmaktadır. Merkezi Dokuz Eylül Üniversitesi Teknoloji Geliştirme Bölgesi - İzmir’de bulunan ve 59 sektörde binlerce kalem mal, hizmet ve yapım işi içeren tamrekabet.com günden güne büyüyen firma havuzu, yenilikçi ürün ve hizmetleri ile en kaliteli işletmeler arası ticaret platformunu sunmak için sürekli olarak kendisini yenilemektedir.</p>
+        <!--p>Kurucularının Dokuz Eylül Üniversitesi Bilgisayar Mühendisliği Bölümü Akademisyeni ve İktisat Bölümü Yüksek Linsans Öğrencisi olduğu tamrekabet.com Ocak 2016’da çalışmalarına başlamıştır. İlk aşamada ‘’Bilgi ve İletişim Teknolojilerinin Rekabet Üzerindeki Etkileri’’ konulu yüksek lisans tezinin uygulaması olan tamrekabet.com firmalar ile yapılan görüşmeler ve gelen talepler sonucunda aslında firmaların önemli bir ihtiyacına çözüm olduğu anlaşıldı.</p>
+        <p>Günümüzde gelişen rekabet koşulları, maliyetlerin sürekli düşürülmesini ve yeni müşterilere ulaşarak satış hacimlerinin sürekli arttırılmasını firmalar için vazgeçilmez çabalar haline getirmiştir. Tamrekabet.com bünyesindeki firmalara bir yandan satın alma süreçlerinde maliyetlerini düşürerek diğer yandan da yeni pazarlara ve firmalara kolayca ulaşıp satışlarını arttırarak önamli avantajlar sunuyor/ önemli bir değer yaratıyor.</p>
+        <p>59 sektörde binlerce kalem mal, hizmet ve yapım işi içeren tamrekabet.com günden güne büyüyen firma havuzu, yenilikçi ürün ve hizmetleri ile en kaliteli işletmeler arası ticaret platformunu sunmak için sürekli kendisini yenilemektedir.</p>
+        <p>Merkezi Dokuz Eylül Teknoloji Geliştirme Bölgesi İzmir’de bulunan tamrekabet.com genç ekibiyle, yeni teknolojileri sürekli takip ederek müşterilerine en iyi deneyimi sunmak için tüm gücüyle çalışmaya devam ediyor.</p-->
+      </div>
+    </div>
+  </div>
+</section>
 <!-- *** SSS ***-->
-<section class="section no-padding-bottom">
+<section class="section">
   <div class="container">
     <div class="row">
       <div class="col-md-12 col-lg-8 col-lg-offset-2 text-center">
