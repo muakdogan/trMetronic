@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <table id="table-pagination" data-toggle="table" data-pagination="true" data-search="true" class="table table-light">
+                    <table id="table-pagination" data-toggle="table" data-pagination="true" data-search="true" class="table table-light table-striped">
                         <thead>
                         <tr>
                             <th data-field="firma" data-align="center" data-sortable="true">Firma Adı</th>
@@ -27,7 +27,7 @@
                         </thead>
                         <tbody>
                         @foreach($onayli_tedarikciler as $onayliFirma)
-                            <tr class="active">
+                            <tr>
                                 <td>{{$onayliFirma->adi}}</td>
                                 <td><img src="{{asset('uploads')}}/{{$onayliFirma->logo}}" alt="Firma Logo" width="100" height="100"></td>
                                 <td>{{$onayliFirma->adresler[0]->iller->adi}}</td>
