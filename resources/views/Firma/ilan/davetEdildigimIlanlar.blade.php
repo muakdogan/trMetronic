@@ -5,71 +5,53 @@
 @section('aciklama') @endsection
 
 @section('head')
-<style>
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td, th {
-    border: 1px solid #fff;
-    text-align: left;
-    padding: 8px;
-}
-
-tr:nth-child(even) {
-    background-color: #fff;
-}
-.div5{
-    float:right;
-}
-.div6{
-    float:left;
-}
-.button {
-    background-color: #ccc; /* Green */
-    border: none;
-    color: white;
-    padding: 6px 25px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 8px;
-}
-</style>
+    <link href="{{asset('MetronicFiles/global/plugins/bootstrap-table/bootstrap-table.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
-     <div class="container">
-             <div class="row">
-                 <div class="col-xs-12 col-sm-6 col-md-8">
-                     <div class="panel-group">
-                        
-                         <div class="panel panel-default">
-                             <div class="panel-heading">Davet Edildiğim İlanlar</div>
-                             <div class="panel-body">
-                                 <table>
-                                     <tr>
-                                         <th>İlan İsmi</th>
-                                         <th>Başvuru Sayısı</th>
-                                         <th></th>
-                                     </tr>
-                                    @foreach(App\BelirliIstekli::where('firma_id',$firma->id)->get() as $dvtIlan)
-                                     <tr>
-                                         <td>{{$dvtIlan->dvtIlanAdi($dvtIlan->ilan_id)}}</td>
-                                         <td>{{$dvtIlan->dIlanTeklifsayısı($dvtIlan->ilan_id)}}</td>
-                                         <td><a href="{{ URL::to('teklifGor', array($firma->id,$dvtIlan->getdIlanId($dvtIlan->ilan_id)), false) }}"><button type="button" class="btn btn-primary" name="{{$dvtIlan->getdIlan($dvtIlan->ilan_id)}}" id="{{$dvtIlan->getdIlan($dvtIlan->ilan_id)}}" style='float:right'>Başvur</button></a><br><br></td>                                          
-                                     </tr>
-                                    @endforeach
-                                 </table>
+    <div class="row">
 
-                             </div>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-     </div>
-    @endsection
+            <!-- BEGIN PROFILE CONTENT -->
+            <div class="profile-content">
+                <div class="col-md-12">
+                @if(count($davetEdilIlanlar) != 0)
+                    <!-- BEGIN DAVET EDILDIGIM ILANLAR -->
+                        <div class="portlet light ">
+                            <div class="portlet-body">
+                                <table data-toggle="table" data-sort-name="tarih" data-sort-order="asc" class="table-striped" >
+                                    <thead>
+                                    <tr>
+                                        <th data-align="center" data-field="tarih" data-sortable="true">İlan Adı</th>
+                                        <th data-align="center" data-sortable="true">Firma Adı</th>
+                                        <th data-align="center" data-sortable="true">Kapanma Tarihi</th>
+                                        <th data-align="center">Başvur</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($davetEdilIlanlar as $dvtIlan)
+                                        <tr>
+                                            <td><a class="btn" href="{{URL::to('teklifGor', array($dvtIlan->firma_id,$dvtIlan->ilan_id), false)}}">{{$dvtIlan->ilan_adi}}</a></td>
+                                            <td><a class="btn" href="{{URL::to('firmaDetay', array($dvtIlan->firma_id), false)}}">{{$dvtIlan->firma_adi}}</a></td>
+                                            <td>{{date("d-m-Y", strtotime($dvtIlan->ilan_kapanma_tarihi))}}</td>
+                                            <td>
+                                                <a href="{{URL::to('teklifGor', array($dvtIlan->firma_id,$dvtIlan->ilan_id), false)}}" class="btn btn-circle bold btn-icon-only purple">
+                                                    <i class="icon-arrow-right"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- END DAVET EDILDIGIM ILANLAR -->
+                @endif
+                </div>
+            </div>
+        </div>
+
+@endsection
+
+@section('sayfaSonu')
+    <script src="{{asset('MetronicFiles/global/plugins/bootstrap-table/bootstrap-table.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('MetronicFiles/pages/scripts/table-bootstrap.min.js')}}" type="text/javascript"></script>
+@endsection

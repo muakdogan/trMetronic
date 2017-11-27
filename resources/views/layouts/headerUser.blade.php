@@ -107,22 +107,14 @@
                                 <a href="{{URL::to('uyelikBilgileri')}}" class="nav-link ">
                                     <i class="icon-info"></i> Üyelik Bilgileri</a>
                             </li>
-                            <li aria-haspopup="true" class="dropdown-submenu ">
-                                <a href="javascript:;" class="nav-link nav-toggle ">
-                                    <i class="icon-globe"></i> Firma Havuzu
-                                    <span class="arrow"></span>
+                            <li aria-haspopup="true" class=" ">
+                                <a href="{{URL::to('onayliTedarikcilerim')}}" class="nav-link ">
+                                    <i class="icon-star"></i> Onaylı Tedarikçilerim
                                 </a>
-                                <ul class="dropdown-menu">
-                                    <li aria-haspopup="true" class=" ">
-                                        <a href="{{URL::to('onayliTedarikcilerim')}}" class="nav-link ">
-                                            <i class="icon-star"></i> Onaylı Tedarikçilerim
-                                        </a>
-                                    </li>
-                                    <li aria-haspopup="true" class="nav-link ">
-                                        <a href="{{URL::to('firmaHavuzu')}}" class="nav-link ">
-                                            <i class="icon-list"></i> Tüm Firmalar</a>
-                                    </li>
-                                </ul>
+                            </li>
+                            <li aria-haspopup="true" class="nav-link ">
+                                <a href="{{URL::to('firmaHavuzu')}}" class="nav-link ">
+                                    <i class="icon-globe"></i> Firma Havuzu</a>
                             </li>
                         </ul>
                     </li>

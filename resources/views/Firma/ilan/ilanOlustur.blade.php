@@ -16,7 +16,7 @@ $i=1;
         <link href="{{asset('css/skin-bootstrap/ui.fancytree.css')}}" rel="stylesheet" class="skinswitcher">
 
         <!--kalem agacı -->
-         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
         <script src="//cdn.jsdelivr.net/jquery.ui-contextmenu/1/jquery.ui-contextmenu.min.js"></script>
         <script src="{{asset('js/jquery.fancytree.js')}}"></script>
         <script src="{{asset('js/jquery.fancytree.glyph.js')}}"></script>
@@ -28,15 +28,12 @@ $i=1;
         <script src="//cdn.ckeditor.com/4.5.10/basic/ckeditor.js"></script>
 
         <style>
-
             table {
                 font-family: arial, sans-serif;
                 border-collapse: collapse;
                 width: 100%;
             }
-
             td, th {
-
                 text-align: center;
                 padding: 5px;
             }
@@ -49,39 +46,6 @@ $i=1;
             }
             .test + .tooltip.bottom > .tooltip-arrow {
                 border-bottom: 5px solid green;
-            }
-
-            /*custom font*/
-
-
-            #msform {
-                width: 100%;
-
-
-                position: relative;
-            }
-            #msform fieldset {
-
-            }
-            /*Hide all except first fieldset*/
-            #msform fieldset:not(:first-of-type) {
-                display: none;
-            }
-
-            /*buttons*/
-            .action-button {
-                width: 100px;
-                background: #27AE60;
-                font-weight: bold;
-                color: white;
-                border: 0 none;
-                border-radius: 1px;
-                cursor: pointer;
-                padding: 10px 5px;
-                margin: 10px 5px;
-            }
-            .action-button:hover, #msform .action-button:focus {
-                box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
             }
             /*headings*/
             .fs-title {
@@ -114,7 +78,6 @@ $i=1;
                 position:relative;
                 top:80px;
             }
-
         </style>
 @endsection
 @section('content')
@@ -134,10 +97,8 @@ $i=1;
     <div class="portlet light " id="form_wizard_1">
         <div class="portlet-title">
             <div class="caption">
-                <i class=" icon-layers font-red"></i>
-                <span class="caption-subject font-red bold uppercase"> İlan Oluştur -
-                                                                <span class="step-title"> Step 1 of 3 </span>
-                                                            </span>
+                <i class=" icon-layers theme-font"></i>
+                <span class="caption-subject theme-font bold uppercase">İlan Oluştur</span>
             </div>
 
         </div>
@@ -185,11 +146,9 @@ $i=1;
                                     <div class="col-sm-6">
                                         <div class="form-group row">
                                             <div class="col-md-12">
-
                                                 <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Firma Adı Göster</label>
                                                 <label for="inputTask" style="text-align: right;padding-right:3px;padding-left:3px"class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
-
                                                     <input type="radio" class="filled-in firma_goster  required"  name="firma_adi_goster" value="1"  data-validation-error-msg="Lütfen birini seçiniz!" checked><label> Göster</label> </input>
                                                     <input type="radio" data-placement="bottom" class="filled-in test firma_goster"  name="firma_adi_goster" value="0" data-validation-error-msg="Lütfen birini seçiniz!"><label>Gizle</label> </input>
                                                     <div class="col-md-1 aciklama-tooltip">
@@ -215,11 +174,9 @@ $i=1;
                                                     <span class="tooltiptext">Satın almak istediğiniz mal veya hizmet için kısa ancak açıklayıcı bir ilan adı belirleyiniz.</span>
                                                 </div>
                                             </div>
-
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-md-12">
-
                                                 <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">İlan Türü<span class="required"> * </span></label>
                                                 <label for="inputTask" style="text-align:right;padding-right:3px;padding-left:3px" class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
@@ -338,16 +295,14 @@ $i=1;
                                     <div class="col-sm-6">
                                         <div class="form-group row">
                                             <div class="col-md-12">
-
                                                 <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Katılımcılar<span class="required"> * </span></label>
                                                 <label for="inputTask" style="text-align: right;padding-right:3px;padding-left:3px"class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
                                                     <select class="form-control selectpicker required" name="katilimcilar" id="katilimcilar" data-validation="required"
                                                             data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                                         <option selected disabled value="Seçiniz">Seçiniz</option>
-                                                        <option value="1">Onaylı Tedarikçiler</option>
+                                                        <option value="1">Tüm Firmalar</option>
                                                         <option value="2">Belirli Firmalar</option>
-                                                        <option value="3">Tüm Firmalar</option>
                                                     </select>
                                                     @if($errors->first('katilimcilar') != null)
                                                         <span class="help-block" style="color:red">{{ $errors->first('katilimcilar') }}</span>
@@ -360,31 +315,21 @@ $i=1;
                                             </div>
                                         </div>
 
-                                        <div class="form-group"  id="onayli_tedarikciler">
-                                            <div class="col-md-12">
-                                                <div class="row">
-                                                    <div class="col-md-2"></div>
-                                                    <div style="padding-right:3px;padding-left:1px"  class="col-md-9">
-                                                        <select id='custom-headers' multiple='multiple' name="onayli_tedarikciler[]" id="onayli_tedarikciler[]" data-rule-multiselectOnay="true">
+                                        <div id="belirli-firmalar" style="display: none;">
+                                            <div class="form-group row">
+                                                <div class="col-md-12">
+                                                    <div style="padding-right:3px;padding-left:1px"  class="col-md-11 col-md-offset-1">
+                                                        <select id='belirliFirma' multiple='multiple' name="belirli_istekli[]" id="belirli_istekli[]" data-rule-multiselectOnay="true">
+                                                            <optgroup label='Onaylı Tedarikçiler'></optgroup>
+                                                            <optgroup label='Diğer Tedarikçiler'></optgroup>
                                                         </select>
-                                                        @if($errors->first('onayli_tedarikciler') != null)
-                                                            <span class="help-block" style="color:red">{{ $errors->first('onayli_tedarikciler') }}</span>
-                                                        @endif
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group"  id="belirli-istekliler">
-                                            <div class="col-md-12">
-                                                <div class="row">
-                                                    <div class="col-md-2"></div>
-                                                    <div style="padding-right:3px;padding-left:1px"  class="col-md-9">
-                                                        <select id='belirliIstek' multiple='multiple' name="belirli_istekli[]" id="belirli_istekli[]" data-rule-multiselectOnay="true">
-                                                        </select>
-                                                        @if($errors->first('belirli_istekli') != null)
-                                                            <span class="help-block" style="color:red">{{ $errors->first('belirli_istekli') }}</span>
-                                                        @endif
+                                                <div class="form-group row">
+                                                    <div class="col-md-10 col-md-offset-1" style="padding-top:10px">
+                                                        <a href="javascript:;" class="btn" id="onayliOtomatik">Onaylı Tedarikçilerimi Otomatik Ekle</a>
+                                                        <a href="javascript:;" style="float: right" class="btn" id="firmaVazgec">Tümünden Vazgeç</a>
+                                                        </ul>
                                                     </div>
                                                 </div>
                                             </div>
@@ -413,7 +358,6 @@ $i=1;
 
                                         <div class="form-group row">
                                             <div class="col-md-12">
-
                                                 <label for="inputEmail3" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Sözleşme Türü<span class="required"> * </span></label>
                                                 <label for="inputTask" style="text-align:right;padding-right:3px;padding-left:3px"class="col-sm-1 control-label">:</label>
                                                 <div class="col-sm-7">
@@ -432,7 +376,7 @@ $i=1;
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group fiyatlandirma row">
+                                        <div class="form-group fiyatlandirma row" style="display: none;">
                                             <div class="col-md-12">
 
                                                 <label for="inputEmail3"   style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Fiyatlandırma Şekli<span class="required"> * </span></label>
@@ -533,7 +477,7 @@ $i=1;
                                             </div>
                                         </div>
 
-                                        <div class="form-group teslim_il row">
+                                        <div class="form-group teslim_il row" style="display: none;">
                                             <div class="col-md-12">
 
                                                 <label for="inputTask" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Teslim Ad. İli<span class="required"> * </span></label>
@@ -561,7 +505,7 @@ $i=1;
                                                 <div class="col-md-1 aciklama-tooltip"></div>
                                             </div>
                                         </div>
-                                        <div class="form-group teslim_ilce row">
+                                        <div class="form-group teslim_ilce row" style="display: none;">
                                             <div class="col-md-12">
                                                 <label for="inputTask" style="padding-right:3px;padding-left:12px" class="col-sm-3 control-label">Teslim Ad. İlçesi<span class="required"> * </span></label>
                                                 <label for="inputTask" style="text-align: right;padding-right:3px;padding-left:3px"class="col-sm-1 control-label">:</label>
@@ -722,7 +666,6 @@ $i=1;
                                                 </select>
                                             </td>
                                             <td><a href="#"  class="sil"> <img src="{{asset("images/sil1.png")}}"></a><input type="hidden" name="goturu_id[0]"  id="goturu_id0" value=""></td>
-
                                         </tr>
                                     </table>
                                 </div>
@@ -773,7 +716,7 @@ $i=1;
                                     </table>
                                 </div>
 
-                                <input style="float:right" type="button" class="action-button" id="btn2" value="Kalem Ekle" />
+                                <input style="float:right" type="button" class="btn purple" id="btn2" value="Kalem Ekle" />
                                 </fieldset>
                             </div>
                             <div class="tab-pane" id="tab3">
@@ -783,21 +726,20 @@ $i=1;
                                 <div class="info-box eula-container ">
                                     <h3>İlan Bilgileri</h3>
                                 </div>
-                                <input type="checkbox"  id='sozlesme_onay' name="sozlesme_onay" value="1"><strong>Sözleşmeyi Okudum Onaylıyorum</strong>
+                                <input type="checkbox"  id='sozlesme_onay' name="sozlesme_onay" value="1" class="required"><strong>Sözleşmeyi Okudum Onaylıyorum</strong>
                             </div>
                         </div>
                     </div>
                     <div class="form-actions">
                         <div class="row">
-                            <div class="col-md-offset-3 col-md-9">
+                            <div class="col-md-offset-9 col-md-3">
                                 <a href="javascript:;" class="btn default button-previous">
                                     <i class="fa fa-angle-left"></i> Geri </a>
-                                <a href="javascript:;" class="btn btn-outline green button-next next"> İleri
+                                <a href="javascript:;" class="btn btn-outline purple button-next next"> İleri
                                     <i class="fa fa-angle-right"></i>
                                 </a>
-                                <a href="javascript:;" class="btn green button-submit" id="onayButton">Onayla ve Gönder
-                                    <i class="fa fa-check"></i>
-                                </a>
+                                <button class="btn purple button-submit" type="submit">Gönder <i class="fa fa-check"></i></button>
+
                             </div>
                         </div>
                     </div>
@@ -817,46 +759,6 @@ $i=1;
 
 <script charset="utf-8">
 
-    //FORM SUBMIT
-    //Ilan guncelle buton
-    $("#onayButton").unbind().click(function(e){
-        for ( instance in CKEDITOR.instances )
-            CKEDITOR.instances[instance].updateElement();
-
-        var postData = new FormData($("#submit_form")[0]);
-        var formURL = $("#submit_form").attr('action');
-        console.log(postData);
-        $.ajax(
-            {
-                beforeSend: function(){
-                    $('.ajax-loader').css("visibility", "visible");
-                },
-                url : formURL,
-                type: "POST",
-                contentType: false,
-                processData: false,
-                data : postData,
-                success:function(data, textStatus, jqXHR)
-                {
-                    var form = $('#submit_form');
-                    // let the browser natively reset defaults
-                    form[0].reset();
-                    setTimeout(function(){
-                        window.location = "{{asset('ilanlarim')}}/{{$firma->id}}";
-                    }, 5);
-
-                    e.preventDefault();
-                },
-                error: function(jqXHR, textStatus, errorThrown)
-                {
-                    console.log(jqXHR);
-                    alert(textStatus + "," + errorThrown+","+jqXHR);
-                    $('.ajax-loader').css("visibility", "hidden");
-                }
-            });
-        e.preventDefault(); //STOP default action
-    });
-
     $('#btn-add-ilanBilgileri').click(function () {
         $('#btn-save-ilanBilgileri').val("add");
         $('#myModal-ilanBilgileri').modal('show');
@@ -870,32 +772,8 @@ $i=1;
         $(this).hide();
         $("#sartnameGozat").val('');
     });
-var findName;
 
-$(".next2").click(function(){
-
-    $(".info-box").append('<li style="list-style-type:circle">Firma Adi Göster: '+$("input[type='radio']:checked").next('label:first').html+'</li>');
-    $(".info-box").append('<li style="list-style-type:circle">İlan Adı: '+$("#ilan_adi").val()+'</li>');
-    $(".info-box").append('<li style="list-style-type:circle">İlan Türü: '+$( "#ilan_turu option:selected" ).text()+'</li>');
-    $(".info-box").append('<li style="list-style-type:circle">İlan Sektörü: '+$( "#firma_sektor option:selected" ).text()+'</li>');
-    $(".info-box").append('<li style="list-style-type:circle">İlan Yayın-Kapanma Tarihi: '+$( "#ilan_tarihi_araligi option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">İş Süresi: '+$( "#isin_suresi option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">İş Başlama-Bitiş Tarihi: '+$( "#is_tarihi_araligi option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">Teknik Şartname: '+$( "#teknik" ).val()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">Katılımcılar: '+$( "#katilimcilar option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">Rekabet Şekli: '+$( "#rekabet_sekli option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">Sözleşme Türü: '+$( "#sozlesme_turu option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">Fiyatlandırma Şekli: '+$( "#kismi_fiyat option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">Yaklaşık Maliyet: '+$( "#yaklasik_maliyet option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">Ödeme Türü: '+ $("#odeme_turu option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">Para Birimi: '+ $("#para_birimi option:selected" ).text()+'</li>');
-     $(".info-box").append('<li style="list-style-type:circle">Teslim Yeri: '+ $( "#teslim_yeri option:selected" ).text()+'</li>');
-});
-
-var firmaCount = 0;
 var sektor = 0;
-var multiselectCount=0;
-var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
 
 $( ".box" ).click(function() {
    $('#cke_1_contents').each(function(){
@@ -904,13 +782,9 @@ $( ".box" ).click(function() {
 });
 
 $(document).ready(function(){
-   $('#onayli_tedarikciler').hide();
-   $('#belirli-istekliler').hide();
      $('#il_id').on('change', function (e) {
          var il_id = e.target.value;
          GetIlce(il_id);
-         //popDropDown('ilce_id', 'ajax-subcat?il_id=', il_id);
-         //$("#semt_id")[0].selectedIndex=0;
      });
     jQuery.validator.methods["date"] = function (value, element) { return true; };
     jQuery.validator.addMethod("multiselectOnay", function(value, element) {
@@ -970,36 +844,6 @@ $(".next").click(function(){
        $('#goturu').hide();
        $('#mal').hide();
     }
-/*
-    var form = $("#submit_form");
-        form.validate({
-                errorElement: 'span',
-                errorClass: 'help-block',
-                highlight: function(element, errorClass, validClass) {
-                        $(element).closest('.form-group').addClass("has-error");
-                },
-                unhighlight: function(element, errorClass, validClass) {
-                        $(element).closest('.form-group').removeClass("has-error");
-                },
-                rules: {
-                        sozlesme_onay: {
-                                required: true
-                        },
-                },
-
-        });
-        if (form.valid() === true){
-                if ($('#ilan').is(":visible")){
-                        current_fs = $('#ilan');
-                        next_fs = $('#kalem');
-                }else if($('#kalem').is(":visible")){
-                        current_fs = $('#kalem');
-                        next_fs = $('#onay');
-                }
-                $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-                 next_fs.show();
-                 current_fs.hide();
-        }*/
 });
 $('.previous').click(function(){
         if($('#kalem').is(":visible")){
@@ -1031,6 +875,7 @@ function GetIlce(il_id) {
                     $.each(msg, function(index, ilce) {
                         $("#ilce_id").get(0).options[$("#ilce_id").get(0).options.length] = new Option(ilce.adi, ilce.id);
                     });
+                    $('.selectpicker').selectpicker('refresh');
                 },
                 async: false,
                 error: function() {
@@ -1049,93 +894,55 @@ $("#yaklasik_maliyet").change(function(){
     $('#maliyet').val(option);
 });
 
-$('#custom-headers').multiSelect({
-  selectableHeader: "<p style='font-size:12px;color:red'>Tüm Firmalar</p><input style='width:100px' type='text' class='search-input' autocomplete='off' placeholder='Firma Seçiniz'>",
-  selectionHeader: "<p style='font-size:12px;color:red'>Seçili Firmalar</p><input  style='width:100px' type='text' class='search-input' autocomplete='off' placeholder='Firma Seçiniz'>",
-  afterInit: function(ms){
-    var that = this,
-        $selectableSearch = that.$selectableUl.prev(),
-        $selectionSearch = that.$selectionUl.prev(),
-        selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
-        selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
+$('#belirliFirma').multiSelect({
+    selectableHeader: "<p style='font-size:12px;color:red'>Tüm Firmalar</p><input style='width:100%' type='text' class='search-input' autocomplete='off' placeholder='Firma Seçiniz'>",
+    selectionHeader: "<p style='font-size:12px;color:red'>Seçili Firmalar</p><input  style='width:100%' type='text' class='search-input' autocomplete='off' placeholder='Firma Seçiniz'>",
+    selectableOptgroup: true,
+    afterInit: function(ms){
+        var that = this,
+            $selectableSearch = that.$selectableUl.prev(),
+            $selectionSearch = that.$selectionUl.prev(),
+            selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
+            selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
 
-    that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
-    .on('keydown', function(e){
-      if (e.which === 40){
-        that.$selectableUl.focus();
-        return false;
-      }
-    });
+        that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+            .on('keydown', function(e){
+                if (e.which === 40){
+                    that.$selectableUl.focus();
+                    return false;
+                }
+            });
 
-    that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
-    .on('keydown', function(e){
-      if (e.which == 40){
-        that.$selectionUl.focus();
-        return false;
-      }
-    });
-  },
-  afterSelect: function(values){
-       firmaCount++;
-       if( firmaCount>2){
-              $('#custom-headers').multiSelect('deselect', values);
-       }
-
-    this.qs1.cache();
-    this.qs2.cache();
-  },
-  afterDeselect: function(){
-      firmaCount--;
-    this.qs1.cache();
-    this.qs2.cache();
-  }
-
+        that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
+            .on('keydown', function(e){
+                if (e.which == 40){
+                    that.$selectionUl.focus();
+                    return false;
+                }
+            });
+    },
+    afterSelect: function(){
+        this.qs1.cache();
+        this.qs2.cache();
+    },
+    afterDeselect: function(){
+        this.qs1.cache();
+        this.qs2.cache();
+    }
 });
 
-$('#belirliIstek').multiSelect({
-  selectableHeader: "<p style='font-size:12px;color:red'>Tüm Firmalar</p><input style='width:100px' type='text' class='search-input' autocomplete='off' placeholder='Firma Seçiniz'>",
-  selectionHeader: "<p style='font-size:12px;color:red'>Seçili Firmalar</p><input  style='width:100px' type='text' class='search-input' autocomplete='off' placeholder='Firma Seçiniz'>",
-  afterInit: function(ms){
-    var that = this,
-        $selectableSearch = that.$selectableUl.prev(),
-        $selectionSearch = that.$selectionUl.prev(),
-        selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
-        selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
-
-    that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
-    .on('keydown', function(e){
-      if (e.which === 40){
-        that.$selectableUl.focus();
-        return false;
-      }
-    });
-
-    that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
-    .on('keydown', function(e){
-      if (e.which == 40){
-        that.$selectionUl.focus();
-        return false;
-      }
-    });
-  },
-  afterSelect: function(values){
-       firmaCount++;
-       if( firmaCount>2){
-              $('#custom-headers').multiSelect('deselect', values);
-       }
-
-    this.qs1.cache();
-    this.qs2.cache();
-  },
-  afterDeselect: function(){
-      firmaCount--;
-    this.qs1.cache();
-    this.qs2.cache();
-  }
-
-});
-var multiselectCount=0;
 var option;
+
+    $( "#firmaVazgec" ).click(function() {
+        $('#belirliFirma').multiSelect('deselect_all');
+    });
+    var onayliTed=new Array();
+    $( "#onayliOtomatik" ).click(function() {
+        for(var key=0; key < onayliTed.length;key++) {
+            $('#belirliFirma').multiSelect('select', (onayliTed[key]));
+        }
+    });
+
 
 $("#firma_sektor").change(function(){
   sektor = $('option:selected', this).attr('value');
@@ -1144,53 +951,27 @@ $("#firma_sektor").change(function(){
 
 });
 
-function getBelirliIstekliler(){
+function getBelirliFirmalar(){
     $.ajax({
         type:"GET",
         url: "{{asset('belirli')}}",
         data:{
-            sektorOnayli:sektor
+            sektorIlan:sektor
         },
         cache: false,
         success: function(data){
-            $("#custom-headers option").remove();
-            $('#custom-headers').multiSelect('refresh');
-            $("#belirliIstek option").remove();
-            $('#belirliIstek').multiSelect('refresh');
-
-            for(var key=0; key <Object.keys(data).length;key++) {
-                $('#belirliIstek').multiSelect('addOption', { value: data[key].id, text: data[key].adi, index:key});
+            $("#belirliFirma option").remove();
+            for(var key=0; key <Object.keys(data.onayliTedarikciler).length;key++) {
+                $('#belirliFirma').multiSelect('addOption', { value: data.onayliTedarikciler[key].id, text: data.onayliTedarikciler[key].adi, index:key, nested: 'Onaylı Tedarikçiler'});
+                onayliTed[key]=data.onayliTedarikciler[key].id;
             }
+           for(var key=0; key <Object.keys(data.digerTedarikciler).length;key++) {
+                $('#belirliFirma').multiSelect('addOption', { value: data.digerTedarikciler[key].id, text: data.digerTedarikciler[key].adi, index:key, nested: 'Diğer Tedarikçiler'});
+            }
+            $('#belirliFirma').multiSelect('refresh');
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             alert("Status: " + textStatus+" Error: " + errorThrown);
-        }
-    });
-}
-
-function getOnayliTedarikciler(){
-    $.ajax({
-        type:"GET",
-        url: "{{asset('onayli')}}",
-        data:{
-            sektorOnayli:sektor
-        },
-        cache: false,
-        success: function(data){
-            $("#belirliIstek option").remove();
-            $('#belirliIstek').multiSelect('refresh');
-            $("#custom-headers option").remove();
-            $('#custom-headers').multiSelect('refresh');
-
-            for(var key=0; key <Object.keys(data.tumFirmalar).length;key++) {
-                $('#custom-headers').multiSelect('addOption', { value: data.tumFirmalar[key].id, text: data.tumFirmalar[key].adi, index:key});
-            }
-            for(var key=0; key <Object.keys(data.onayliTedarikciler).length;key++){
-                $('#custom-headers').multiSelect('select', (data.onayliTedarikciler[key].id));
-            }
-        },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            alert("Status: " + textStatus); alert("Error: " + errorThrown);
         }
     });
 }
@@ -1199,43 +980,29 @@ $("#katilimcilar").change(function(){
    option = $('option:selected', this).attr('value');
     if(sektor!==0){
         if(option==="1"){
-            $('#custom-headers').multiSelect('deselect_all');
-            getOnayliTedarikciler();
-            $('#onayli_tedarikciler').show();
-            $('#belirli-istekliler').hide();
+            $('#belirli-firmalar').hide();
         }
         else if (option==="2"){
-            $('#belirliIstek').multiSelect('deselect_all');
-            getBelirliIstekliler();
-            $('#belirli-istekliler').show();
-            $('#onayli_tedarikciler').hide();
+            $('#belirliFirma').multiSelect('deselect_all');
+            getBelirliFirmalar();
+            $('#belirli-firmalar').show();
         }
-        else {
-             $('#onayli_tedarikciler').hide();
-             $('#belirli-istekliler').hide();
-        }
-    }
-    else {
-         $('#mesaj').bPopup({
-             speed: 650,
-             transition: 'slideIn',
-             transitionClose: 'slideBack',
-             autoClose: 5000
-         });
     }
 });
 
 $( "#teslim_yeri" ).change(function() {
         var teslim_yeri= $('#teslim_yeri').val();
         if(teslim_yeri=="Satıcı Firma"){
+            $('#il_id').prop('selectedIndex',0);
+            $('#ilce_id').prop('selectedIndex',0);
             $('.teslim_il').hide();
             $('.teslim_ilce').hide();
+            $('.selectpicker').selectpicker('refresh');
         }
         else if(teslim_yeri=="Adrese Teslim"){
              $('.teslim_il').show();
             $('.teslim_ilce').show();
         }
-        else{}
 });
 $('.firma_goster').click(function() {
     $(this).siblings('input:checkbox').prop('checked', false);
@@ -1308,7 +1075,6 @@ $("#btn2").click(function(){ //birden fazla kalem ekleme modal form içerisinde.
             '<td><select class="form-control required" name="yapim_miktar_birim_id['+kalem_num+']" id="yapim_miktar_birim_id" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"><option selected disabled>Seçiniz</option>@foreach($birimler as $miktar_birim) <option  value="{{$miktar_birim->id}}" >{{$miktar_birim->adi}}</option>@endforeach</select></td>',
             '<td><a href="#" class="sil" > <img src="{{asset("images/sil1.png")}}"></a><input type="hidden" name="yapim_id['+kalem_num+']"  id="yapim_id'+kalem_num+'" value=""></td>','</tr>'].join(''));
     }
-
 });
 //kalemleri silme
 $('#mal_table').on('click', '.sil', function(e) {
@@ -1452,18 +1218,13 @@ function kalemAgaci(){
     },
     lazyLoad: function(event, data){
 		var node = data.node;
-
-		console.log(node.key);
-
         data.result = {
 		  url: "{{asset('findChildrenTree')}}"+"/"+sektor,
-
         debugDelay: 1000,
                     data: {id: node.key},
                     dataType:'json',
           cache: false
         }
-
       }
   });
   $(".fancytree-container").toggleClass("fancytree-connectors");
@@ -1699,11 +1460,246 @@ $(function() {
                 endDate: dt
      });
 });
+
+//FORM WIZARD VALIDATION, SOZLESME VE SUBMIT
+    var FormWizard = function () {
+        return {
+            //main function to initiate the module
+            init: function () {
+                if (!jQuery().bootstrapWizard) {
+                    return;
+                }
+
+                function format(state) {
+                    return state.text;
+                }
+
+                var form = $('#submit_form');
+                var error = $('.alert-danger', form);
+                var success = $('.alert-success', form);
+
+                form.validate({
+                    doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'help-block help-block-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+                    rules: {
+                        sozlesme_onay: {
+                            required: true
+                        },
+                    },
+
+                    messages: {
+                        sozlesme_onay: {
+                            required: "Sözleşmeyi Onaylamanız Gerekmektedir",
+                        }
+                    },
+
+                    errorPlacement: function (error, element) { // render error placement for each input type
+                        if (element.attr("name") == "gender") { // for uniform radio buttons, insert the after the given container
+                            error.insertAfter("#form_gender_error");
+                        } else if (element.attr("name") == "payment[]") { // for uniform checkboxes, insert the after the given container
+                            error.insertAfter("#form_payment_error");
+                        } else {
+                            error.insertAfter(element); // for other inputs, just perform default behavior
+                        }
+                    },
+
+                    invalidHandler: function (event, validator) { //display error alert on form submit
+                        success.hide();
+                        error.show();
+                        App.scrollTo(error, -200);
+                    },
+
+                    highlight: function (element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+                    },
+
+                    unhighlight: function (element) { // revert the change done by hightlight
+                        $(element)
+                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    },
+
+                    success: function (label) {
+                        if (label.attr("for") == "gender" || label.attr("for") == "payment[]") { // for checkboxes and radio buttons, no need to show OK icon
+                            label
+                                .closest('.form-group').removeClass('has-error').addClass('has-success');
+                            label.remove(); // remove error label here
+                        } else { // display success icon for other inputs
+                            label
+                                .addClass('valid') // mark the current input as valid and display OK icon
+                                .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                        }
+                    },
+
+                    submitHandler: function (form) {
+                        success.show();
+                        error.hide();
+
+                        for ( instance in CKEDITOR.instances )
+                            CKEDITOR.instances[instance].updateElement();
+                        var postData = new FormData(form[0]);
+                        var formURL = form.attr('action');
+
+                        $.ajax(
+                            {
+                                beforeSend: function(){
+                                    $('.ajax-loader').css("visibility", "visible");
+                                },
+                                url : formURL,
+                                type: "POST",
+                                contentType: false,
+                                processData: false,
+                                data : postData,
+                                success:function(data, textStatus, jqXHR)
+                                {
+
+                                    // let the browser natively reset defaults
+                                    form[0].reset();
+                                    setTimeout(function(){
+                                        window.location = "{{asset('ilanlarim')}}/{{$firma->id}}";
+                                    }, 5);
+
+                                    e.preventDefault();
+                                },
+                                error: function(jqXHR, textStatus, errorThrown)
+                                {
+                                    console.log(jqXHR);
+                                    alert(textStatus + "," + errorThrown+","+jqXHR);
+                                    $('.ajax-loader').css("visibility", "hidden");
+                                }
+                            });
+                        e.preventDefault(); //STOP default action
+                    }
+                });
+
+                var displayConfirm = function() {
+                    $('#tab4 .form-control-static', form).each(function(){
+                        var input = $('[name="'+$(this).attr("data-display")+'"]', form);
+                        if (input.is(":radio")) {
+                            input = $('[name="'+$(this).attr("data-display")+'"]:checked', form);
+                        }
+                        if (input.is(":text") || input.is("textarea")) {
+                            $(this).html(input.val());
+                        } else if (input.is("select")) {
+                            $(this).html(input.find('option:selected').text());
+                        } else if (input.is(":radio") && input.is(":checked")) {
+                            $(this).html(input.attr("data-title"));
+                        } else if ($(this).attr("data-display") == 'payment[]') {
+                            var payment = [];
+                            $('[name="payment[]"]:checked', form).each(function(){
+                                payment.push($(this).attr('data-title'));
+                            });
+                            $(this).html(payment.join("<br>"));
+                        }
+                    });
+                }
+
+                var handleTitle = function(tab, navigation, index) {
+                    var total = navigation.find('li').length;
+                    var current = index + 1;
+                    // set wizard title
+                    $('.step-title', $('#form_wizard_1')).text('Step ' + (index + 1) + ' of ' + total);
+                    // set done steps
+                    jQuery('li', $('#form_wizard_1')).removeClass("done");
+                    var li_list = navigation.find('li');
+                    for (var i = 0; i < index; i++) {
+                        jQuery(li_list[i]).addClass("done");
+                    }
+
+                    if (current == 1) {
+                        $('#form_wizard_1').find('.button-previous').hide();
+                    } else {
+                        $('#form_wizard_1').find('.button-previous').show();
+                    }
+
+                    if (current >= total) {
+                        $('#form_wizard_1').find('.button-next').hide();
+                        $('#form_wizard_1').find('.button-submit').show();
+                        $(".info-box").append('<li style="list-style-type:circle">Firma Adi Göster: '+$("input[type='radio']:checked").next('label:first').html+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">İlan Adı: '+$("#ilan_adi").val()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">İlan Türü: '+$( "#ilan_turu option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">İlan Sektörü: '+$( "#firma_sektor option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">İlan Yayın-Kapanma Tarihi: '+$( "#ilan_tarihi_araligi option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">İş Süresi: '+$( "#isin_suresi option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">İş Başlama-Bitiş Tarihi: '+$( "#is_tarihi_araligi option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">Teknik Şartname: '+$( "#teknik" ).val()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">Katılımcılar: '+$( "#katilimcilar option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">Rekabet Şekli: '+$( "#rekabet_sekli option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">Sözleşme Türü: '+$( "#sozlesme_turu option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">Fiyatlandırma Şekli: '+$( "#kismi_fiyat option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">Yaklaşık Maliyet: '+$( "#yaklasik_maliyet option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">Ödeme Türü: '+ $("#odeme_turu option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">Para Birimi: '+ $("#para_birimi option:selected" ).text()+'</li>');
+                        $(".info-box").append('<li style="list-style-type:circle">Teslim Yeri: '+ $( "#teslim_yeri option:selected" ).text()+'</li>');
+                        displayConfirm();
+                    } else {
+                        $('#form_wizard_1').find('.button-next').show();
+                        $('#form_wizard_1').find('.button-submit').hide();
+                    }
+                    App.scrollTo($('.page-title'));
+                }
+
+                // default form wizard
+                $('#form_wizard_1').bootstrapWizard({
+                    'nextSelector': '.button-next',
+                    'previousSelector': '.button-previous',
+                    onTabClick: function (tab, navigation, index, clickedIndex) {
+                        return false;
+
+                        success.hide();
+                        error.hide();
+                        if (form.valid() == false) {
+                            return false;
+                        }
+
+                        handleTitle(tab, navigation, clickedIndex);
+                    },
+                    onNext: function (tab, navigation, index) {
+                        success.hide();
+                        error.hide();
+
+                        if (form.valid() == false) {
+                            return false;
+                        }
+
+                        handleTitle(tab, navigation, index);
+                    },
+                    onPrevious: function (tab, navigation, index) {
+                        success.hide();
+                        error.hide();
+
+                        handleTitle(tab, navigation, index);
+                    },
+                    onTabShow: function (tab, navigation, index) {
+                        var total = navigation.find('li').length;
+                        var current = index + 1;
+                        var $percent = (current / total) * 100;
+                        $('#form_wizard_1').find('.progress-bar').css({
+                            width: $percent + '%'
+                        });
+                    }
+                });
+
+                $('#form_wizard_1').find('.button-previous').hide();
+                $('#form_wizard_1 .button-submit').hide();
+
+                //apply validation on select2 dropdown value change, this only needed for chosen dropdown integration.
+                $('#country_list', form).change(function () {
+                    form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
+                });
+            }
+        };
+    }();
+
+    jQuery(document).ready(function() {
+        FormWizard.init();
+    });
 </script>
 @endsection
 
 @section('sayfaSonu')
     <script src="{{asset('MetronicFiles/global/plugins/select2/js/select2.full.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('MetronicFiles/global/plugins/bootstrap-wizard/jquery.bootstrap.wizard.min.js')}}" type="text/javascript"></script>
-    <script src="{{asset('MetronicFiles/pages/scripts/form-wizard.min.js')}}" type="text/javascript"></script>
 @endsection

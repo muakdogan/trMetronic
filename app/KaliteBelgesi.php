@@ -12,6 +12,6 @@ class KaliteBelgesi extends Model
     
     public function firmalar()
     {
-        return $this->belognsToMany('App\Firma', 'firma_kalite_belgeleri', 'belge_id', 'firma_id')->withPivot('belge_no');
+        return $this->belognsToMany('App\Firma', 'firma_kalite_belgeleri', 'belge_id', 'firma_id')->withPivot('id', 'belge_no');
     }
 }
