@@ -17,156 +17,152 @@
 <script src="{{asset('js/wNumb.js')}}"></script>
 <link href="{{asset('css/noUiSlider/nouislider.css')}}" rel="stylesheet"></link>
 
-<style>
+    <style>
 
-    .dialog {
-        position: relative;
-        text-align: center;
-        background: #fff;
-        margin: 13px 0 4px 4px;
-        display: inline-block;
-    }
-    .dialog:after,
-    .dialog:before {
-        bottom: 100%;
-        border: solid transparent;
-        content: " ";
-        height: 0;
-        width: 0;
-        position: absolute;
-        pointer-events: none;
-    }
-    .dialog:after {
-        border-color: rgba(255, 255, 255, 0);
-        border-bottom-color: #5C9CCE;
-        border-width: 15px;
-        left: 50%;
-        margin-left: -15px;
-    }
-    .dialog:before {
-        border-color: rgba(170, 170, 170, 0);
-        border-width: 16px;
-        left: 50%;
-        margin-left: -16px;
-    }
-    .dialog .title {
-        font-weight: bold;
-        text-align: center;
-        border: 1px solid #eeeeee;
-        border-radius: 8px;
-        border-width: 0px 0px 1px 0px;
-        margin-left: 0;
-        margin-right: 0;
-        margin-bottom: 4px;
-        margin-top: 8px;
-        padding: 8px 16px;
-        background: #fff;
-        font-size: 16px;
-        line-height:2em;
-    }
-    .dialog .title:first-child {
-        margin-top: -4px;
-    }
-    form
-    {
-        padding:16px;
-        padding-top: 0;
-    }
-    label1{
-        display: inline-block;
-        font-size: 12px;
-    }
-    textarea,input[type=text],input[type=datetime-local],input[type=time],select,label1
-    {
-        color: #000;
-        border-width: 0px 0px 1px 0px;
-        border-radius: 8px;
-        border:0px solid #ccc;
-        outline: 0;
-        resize: none;
-        margin: 0;
-        margin-top: 1em;
-        padding: .5em;
-        width:100%;
-        border-bottom: 1px dotted rgba(250, 250, 250, 0.4);
-        background:#fff;
-        box-shadow:inset 0 2px 2px rgb(119, 119, 119);
-    }
-    input[type=text]:focus,input[type=datetime-local]:focus,input[type=time]:focus {
-        background-color: #ddd;
-    }
-    input[type=submit]
-    {
-        border:none;
-        background: #FAFEFF;
-        padding: .5em 1em;
-        margin-top: 1em;
-        color:#4478a0;
-    }
-    input[type=submit]:active
-    {
-        background: #E1E5E5;
-    }
-    input:-moz-placeholder, textarea:-moz-placeholder {
-        color: #555;
-    }
-    input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-        color: #555;
-    }
-    input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-        color:#555;
-    }
-    .blink_text {
-
-        animation:2s blinker linear infinite;
-        -webkit-animation:2s blinker linear infinite;
-        -moz-animation:2s blinker linear infinite;
-    }
-
-    @-moz-keyframes blinker {
-        0% { opacity: 1.0; }
-        50% { opacity: 0.0; }
-        100% { opacity: 1.0; }
-    }
-
-    @-webkit-keyframes blinker {
-        0% { opacity: 1.0; }
-        50% { opacity: 0.0; }
-        100% { opacity: 1.0; }
-    }
-
-    @keyframes blinker {
-        0% { opacity: 1.0; }
-        50% { opacity: 0.0; }
-        100% { opacity: 1.0; }
-    }
-    .test + .tooltip > .tooltip-inner {
-        background-color: #73AD21;
-        color: #FFFFFF;
-        border: 1px solid green;
-        padding: 10px;
-        font-size: 12px;
-    }
-    .test + .tooltip.bottom > .tooltip-arrow {
-        border-bottom: 5px solid green;
-    }
-    @keyframes fontbulger {
-        0%, 100% {
-            font-size: 10px;
+        .dialog {
+            position: relative;
+            text-align: center;
+            background: #fff;
+            margin: 13px 0 4px 4px;
+            display: inline-block;
         }
-        50% {
+        .dialog:after,
+        .dialog:before {
+            bottom: 100%;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+        .dialog:after {
+            border-color: rgba(255, 255, 255, 0);
+            border-bottom-color: #5C9CCE;
+            border-width: 15px;
+            left: 50%;
+            margin-left: -15px;
+        }
+        .dialog:before {
+            border-color: rgba(170, 170, 170, 0);
+            border-width: 16px;
+            left: 50%;
+            margin-left: -16px;
+        }
+        .dialog .title {
+            font-weight: bold;
+            text-align: center;
+            border: 1px solid #eeeeee;
+            border-radius: 8px;
+            border-width: 0px 0px 1px 0px;
+            margin-left: 0;
+            margin-right: 0;
+            margin-bottom: 4px;
+            margin-top: 8px;
+            padding: 8px 16px;
+            background: #fff;
+            font-size: 16px;
+            line-height:2em;
+        }
+        .dialog .title:first-child {
+            margin-top: -4px;
+        }
+        form
+        {
+            padding:16px;
+            padding-top: 0;
+        }
+        label1{
+            display: inline-block;
             font-size: 12px;
         }
-    }
-    #box {
-        animation: fontbulger 2s infinite;
-        font-weight: bold;
-    }
-#box {
-   animation: fontbulger 2s infinite;
-    font-weight: bold;
-}
-</style>
+        textarea,input[type=text],input[type=datetime-local],input[type=time],select,label1
+        {
+            color: #000;
+            outline: 0;
+            resize: none;
+            margin: 0;
+            margin-top: 1em;
+            padding: .5em;
+            width:100%;
+            background:#fff;
+            box-shadow:inset 0 2px 2px rgb(119, 119, 119);
+        }
+        input[type=text]:focus,input[type=datetime-local]:focus,input[type=time]:focus {
+            background-color: #ddd;
+        }
+        input[type=submit]
+        {
+            border:none;
+            background: #FAFEFF;
+            padding: .5em 1em;
+            margin-top: 1em;
+            color:#4478a0;
+        }
+        input[type=submit]:active
+        {
+            background: #E1E5E5;
+        }
+        input:-moz-placeholder, textarea:-moz-placeholder {
+            color: #555;
+        }
+        input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+            color: #555;
+        }
+        input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+            color:#555;
+        }
+        .blink_text {
+
+            animation:2s blinker linear infinite;
+            -webkit-animation:2s blinker linear infinite;
+            -moz-animation:2s blinker linear infinite;
+        }
+
+        @-moz-keyframes blinker {
+            0% { opacity: 1.0; }
+            50% { opacity: 0.0; }
+            100% { opacity: 1.0; }
+        }
+
+        @-webkit-keyframes blinker {
+            0% { opacity: 1.0; }
+            50% { opacity: 0.0; }
+            100% { opacity: 1.0; }
+        }
+
+        @keyframes blinker {
+            0% { opacity: 1.0; }
+            50% { opacity: 0.0; }
+            100% { opacity: 1.0; }
+        }
+        .test + .tooltip > .tooltip-inner {
+            background-color: #73AD21;
+            color: #FFFFFF;
+            border: 1px solid green;
+            padding: 10px;
+            font-size: 12px;
+        }
+        .test + .tooltip.bottom > .tooltip-arrow {
+            border-bottom: 5px solid green;
+        }
+        @keyframes fontbulger {
+            0%, 100% {
+                font-size: 10px;
+            }
+            50% {
+                font-size: 12px;
+            }
+        }
+        #box {
+            animation: fontbulger 2s infinite;
+            font-weight: bold;
+        }
+        #box {
+            animation: fontbulger 2s infinite;
+            font-weight: bold;
+        }
+    </style>
 @endsection
 @section('content')
     <div class="row">
@@ -265,7 +261,7 @@
                                     @if($ilan->kismi_fiyat == 1)
                                         <a href="{{ URL::to('teklifGor', array($firma->id,$ilan->id), false) }}"><button style="float:right;padding: 4px 12px;font-size:12px" type="button" class="btn btn-info add">İlanı Gör</button></a>
                                     @else
-                                        <button style="float:right;padding: 4px 12px;font-size:12px" type="button" class="btn btn-info add" id="{{$i}}">Puan Ver/Yorum Yap</button>
+                                        <button style="float:right;padding: 4px 12px;font-size:12px" type="button" class="btn btn-info add btn-yorumYap" id="{{$i}}">Puan Ver/Yorum Yap</button>
                                     @endif
                                 <div class="modal fade" id="modalForm{{$i}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -454,148 +450,22 @@
         </div>
     </div>
 <script>
-$(document).ready( function() {
+    $(document).on('click', '.btn-yorumYap', function(){
+        var j = $(this).attr('id');
 
-    $('[data-toggle="tooltip"]').tooltip();/*
-    var table = $('#example').DataTable({
-        "language": {
-            "sDecimal":        ",",
-            "sEmptyTable":     "Tabloda herhangi bir veri mevcut değil",
-            "sInfo":           "_TOTAL_ kayıttan _START_ - _END_ arasındaki kayıtlar gösteriliyor",
-            "sInfoEmpty":      "Kayıt yok",
-            "sInfoFiltered":   "(_MAX_ kayıt içerisinden bulunan)",
-            "sInfoPostFix":    "",
-            "sInfoThousands":  ".",
-            "sLengthMenu":     "Sayfada _MENU_ kayıt göster",
-            "sLoadingRecords": "Yükleniyor...",
-            "sProcessing":     "İşleniyor...",
-            "sSearch":         "Ara:",
-            "sZeroRecords":    "Eşleşen kayıt bulunamadı",
-            "oPaginate": {
-                    "sFirst":    "<<",
-                    "sLast":     ">>",
-                    "sNext":     ">",
-                    "sPrevious": "<"
-            },
-            "oAria": {
-                    "sSortAscending":  ": artan sütun sıralamasını aktifleştir",
-                    "sSortDescending": ": azalan sütun soralamasını aktifleştir"
-            }
-        },
-        "bLengthChange": false, ///// Bu kodu kaldırınca Sayfada kayıt göster kısmı ekrana gelicek.
-        "iDisplayLength": 10,
-        "bInfo":false, //// Bu kodu kaldırınca 2 kayıttan 1 - 2 arasındaki kayıtlar gösteriliyor gibi kısın aktive edilecek.
-        "sPaginationType": "full_numbers",
-        "dom": '<"pull-left"f><"pull-right"l>tip' /// search butonu yerini değiştirme
-});
-    $('#example tbody')
-        .on( 'mouseenter', 'td', function () {
-            var colIdx = table.cell(this).index().column;
-
-            $( table.cells().nodes() ).removeClass( 'highlight' );
-            $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
-        } );
-var tableSonuc = $('#sonuc').DataTable({
-        "language": {
-            "sDecimal":        ",",
-            "sEmptyTable":     "Tabloda herhangi bir veri mevcut değil",
-            "sInfo":           "_TOTAL_ kayıttan _START_ - _END_ arasındaki kayıtlar gösteriliyor",
-            "sInfoEmpty":      "Kayıt yok",
-            "sInfoFiltered":   "(_MAX_ kayıt içerisinden bulunan)",
-            "sInfoPostFix":    "",
-            "sInfoThousands":  ".",
-            "sLengthMenu":     "Sayfada _MENU_ kayıt göster",
-            "sLoadingRecords": "Yükleniyor...",
-            "sProcessing":     "İşleniyor...",
-            "sSearch":         "Ara:",
-            "sZeroRecords":    "Eşleşen kayıt bulunamadı",
-            "oPaginate": {
-                    "sFirst":    "<<",
-                    "sLast":     ">>",
-                    "sNext":     ">",
-                    "sPrevious": "<"
-            },
-            "oAria": {
-                    "sSortAscending":  ": artan sütun sıralamasını aktifleştir",
-                    "sSortDescending": ": azalan sütun soralamasını aktifleştir"
-            }
-        },
-        "bLengthChange": false, ///// Bu kodu kaldırınca Sayfada kayıt göster kısmı ekrana gelicek.
-        "iDisplayLength": 10,
-        "bInfo":false ,//// Bu kodu kaldırınca 2 kayıttan 1 - 2 arasındaki kayıtlar gösteriliyor gibi kısım aktive edilecek.
-        "sPaginationType": "full_numbers",
-        "dom": '<"pull-left"f><"pull-right"l>tip'    /// search butonu yerini değiştirme
-});
-$('#sonuc tbody')
-        .on( 'mouseenter', 'td', function () {
-            var colIdx = tableSonuc.cell(this).index().column;
-
-            $( tableSonuc.cells().nodes() ).removeClass( 'highlight' );
-            $( tableSonuc.column( colIdx ).nodes() ).addClass( 'highlight' );
-        } );
-
-    var tablePasif = $('#pasif').DataTable({
-        "language": {
-            "sDecimal":        ",",
-            "sEmptyTable":     "Tabloda herhangi bir veri mevcut değil",
-            "sInfo":           "_TOTAL_ kayıttan _START_ - _END_ arasındaki kayıtlar gösteriliyor",
-            "sInfoEmpty":      "Kayıt yok",
-            "sInfoFiltered":   "(_MAX_ kayıt içerisinden bulunan)",
-            "sInfoPostFix":    "",
-            "sInfoThousands":  ".",
-            "sLengthMenu":     "Sayfada _MENU_ kayıt göster",
-            "sLoadingRecords": "Yükleniyor...",
-            "sProcessing":     "İşleniyor...",
-            "sSearch":         "Ara:",
-            "sZeroRecords":    "Eşleşen kayıt bulunamadı",
-            "oPaginate": {
-                    "sFirst":    "<<",
-                    "sLast":     ">>",
-                    "sNext":     ">",
-                    "sPrevious": "<"
-            },
-            "oAria": {
-                    "sSortAscending":  ": artan sütun sıralamasını aktifleştir",
-                    "sSortDescending": ": azalan sütun soralamasını aktifleştir"
-            }
-        },
-        "bLengthChange": false, ///// Bu kodu kaldırınca Sayfada kayıt göster kısmı ekrana gelicek.
-        "iDisplayLength": 10,
-        "bInfo":false, //// Bu kodu kaldırınca 2 kayıttan 1 - 2 arasındaki kayıtlar gösteriliyor gibi kısın aktive edilecek.
-        "sPaginationType": "full_numbers",
-        "dom": '<"pull-left"f><"pull-right"l>tip'    /// search butonu yerini değiştirme
-});
-    $('#pasif tbody')
-        .on( 'mouseenter', 'td', function () {
-            var colIdx = tablePasif.cell(this).index().column;
-
-            $( tablePasif.cells().nodes() ).removeClass( 'highlight' );
-            $( tablePasif.column( colIdx ).nodes() ).addClass( 'highlight' );
-        } );
-*/
-
-var blink_speed = 1500;
-//var t = setInterval(function () { var ele = document.getElementById("blinker"); ele.style.visibility = (ele.style.visibility == 'hidden' ? '' : 'hidden'); }, blink_speed);
-
-
-    var changeNumber="";
-    var length="{{$i}}";
-    for(var key=0; key < length; key++){
-        $('#'+key).click(function(e){
-            alert("hgopsaop");
-            var j = $(this).attr('id');
-          e.stopPropagation();
-         if ($(this).hasClass('active')){
-
+        if ($(this).hasClass('active')){
             $('#dialog'+j).fadeOut(200);
             $(this).removeClass('active');
-         } else {
+        } else {
             $('#modalForm'+j).modal('show');
             $('#dialog'+j).delay(300).fadeIn(200);
             $(this).addClass('active');
-         }
-       });
-    }
+        }
+    });
+
+$(document).ready( function() {
+    $('[data-toggle="tooltip"]').tooltip();
+
     function closeMenu(){
       $('.dialog').fadeOut(200);
       $('.add').removeClass('active');
@@ -611,7 +481,6 @@ var blink_speed = 1500;
     var sliders = document.getElementsByClassName('sliders');
     var connect = document.getElementsByClassName('noUi-connect');
     var tooltip = document.getElementsByClassName('noUi-tooltip');
-    //console.log(tooltip);
     var value = document.getElementsByClassName('value');
     for ( var i = 0; i < sliders.length; i++ ) {
         noUiSlider.create(sliders[i], {
@@ -683,11 +552,8 @@ var blink_speed = 1500;
                 tooltip[idCount].style.backgroundColor = "#45c538";
                 tooltip[idCount].style.border = "1px solid #45c538";
             }
-
-
         });
     }
-
 });
 </script>
 @endsection
