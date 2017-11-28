@@ -59,7 +59,7 @@
             <div class="widget-thumb widget-bg-color-white text-uppercase margin-bottom-20 ">
                 <h4 class="widget-thumb-heading">Toplam Davet Edildiğim İlan</h4>
                 <div class="widget-thumb-wrap">
-                    <i class="widget-thumb-icon bg-red-pink icon-star"></i>
+                    <i class="widget-thumb-icon bg-red-pink icon-call-in"></i>
                     <div class="widget-thumb-body">
                         <span class="widget-thumb-body-stat" data-counter="counterup" data-value="{{count($davetEdilIlanlar)}}">{{count($davetEdilIlanlar)}}</span>
                     </div>

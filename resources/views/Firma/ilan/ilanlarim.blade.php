@@ -79,16 +79,12 @@
         textarea,input[type=text],input[type=datetime-local],input[type=time],select,label1
         {
             color: #000;
-            border-width: 0px 0px 1px 0px;
-            border-radius: 8px;
-            border:0px solid #ccc;
             outline: 0;
             resize: none;
             margin: 0;
             margin-top: 1em;
             padding: .5em;
             width:100%;
-            border-bottom: 1px dotted rgba(250, 250, 250, 0.4);
             background:#fff;
             box-shadow:inset 0 2px 2px rgb(119, 119, 119);
         }
