@@ -51,22 +51,13 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="{{url('yeniFirmaKaydet/')}}">
-                                    <i class="icon-plus"></i> Yeni Firma Ekle </a>
-                            </li>
-                            <li>
-                                <a href="{{URL::to('kullaniciBilgileri')}}">
-                                    <i class="icon-info"></i> Bilgilerim
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
+                                <a href="{{asset('yardim')}}">
                                     <i class="icon-question"></i> Yardım
                                 </a>
                             </li>
                             <li class="divider"> </li>
                             <li>
-                                <a href="{{url('/sessionKill')}}">
+                                <a href="{{asset('sessionKill')}}">
                                     <i class="icon-key"></i> Çıkış Yap </a>
                             </li>
                         </ul>

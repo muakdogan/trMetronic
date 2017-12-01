@@ -685,7 +685,12 @@ DebugBar::info($ilan);
                         <div class="portlet-body">
                             <div align="center">
                                 <a href="{{asset('firmaDetay')}}/{{$ilan->firmalar->id}}">
-                                    <img src="{{asset('uploads')}}/{{$ilan->firmalar->logo}}" width="128" height="128" />
+
+                                    @if($ilan->firmalar->logo != "")
+                                        <img src="{{asset('uploads')}}/{{$ilan->firmalar->logo}}" width="128" height="128"/>
+                                    @else
+                                        <img  src="{{asset('uploads/logo/defaultFirmaLogo.png')}}" width="128" height="128"/>
+                                    @endif
                                 </a>
                                 <br>
                                 <strong>Firmaya ait ilan sayısı:</strong> {{$ilan->firmalar->ilanlar()->count()}}

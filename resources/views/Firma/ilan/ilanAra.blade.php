@@ -1,210 +1,200 @@
-@extends('layouts.app')
- @section('content')
+@extends('layouts.appUser')
+@section('baslik')
+    <div class='row content'>
+        <div class="container">
+            <div class="col-sm-4" id="ilanCount">
+                <?php $ilanCount = DB::table('ilanlar')->count();?>
+                <h4>Arama kriterlerinize uyan <img src="{{asset('images/sol.png')}}"> </h4>
+            </div>
+            <div class="col-sm-6">
+                <ul style="list-style: none outside none;">
+                    <?php $j=0; ?>
+                    <li id="multiSel{{$j}}">
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-2">
+                <div style="float:right">
+                    <br>
+                    <a href="#" id="temizleButton">
+                            <span aria-hidden="true" class="icon-trash" style="color: #333">Temizle</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('head')
     <style>
-           input[type=text] {
-               width: 200px;
-               box-sizing: border-box;
-               border: 1px solid #ccc;
-               border-radius: 4px;
-               font-size: 16px;
-               background-color: white;
-               background-image: url("{{asset('images/search.png')}}");
-               background-position: 10px 10px;
-               background-repeat: no-repeat;
-               padding: 12px 20px 12px 40px;
-               -webkit-transition: width 0.4s ease-in-out;
-               transition: width 0.4s ease-in-out;
-           }
+        input[type=text] {
+            width: 200px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: white;
+            background-image: url("{{asset('images/search.png')}}");
+            background-position: 10px 10px;
+            background-repeat: no-repeat;
+            padding: 12px 20px 12px 40px;
+            -webkit-transition: width 0.4s ease-in-out;
+            transition: width 0.4s ease-in-out;
+        }
 
-           input[type=button] {
-               background-color: #004f70;
-               border: 2px solid #ccc;
-               color: white;
-               border-radius: 4px;
-              padding: 12px 8px 12px 8px;
-               text-decoration: none;
-               margin: 4px 2px;
-              
-           }
-          
-           .search{
-               width: 270px;
-               box-sizing: border-box;
-               border: 1px solid #ccc;
-               border-radius: 0px;
-               font-size: 12px;
-               background-color:#C0C0C0;
-               padding: 12px 8px 12px 8px;
-               
-           }
-           .soldivler{
-                width: 270px;
-               box-sizing: border-box;
-               border: 1px solid #ccc;
-               border-radius: 0px;
-               font-size: 12px;
-               background-color: #ddd;
-               padding: 12px 8px 12px 8px;
-               
-           }
-            a {
-              color: #000;
-            }
-            .dropdown dd,
-            .dropdown dt {
-              margin: 0px;
-              padding: 0px;
-            }
+        input[type=button] {
+            background-color: #004f70;
+            border: 2px solid #ccc;
+            color: white;
+            border-radius: 4px;
+            padding: 12px 8px 12px 8px;
+            text-decoration: none;
+            margin: 4px 2px;
 
-            .dropdown ul {
-              margin: -1px 0 0 0;
-            }
+        }
+        .search{
+            width: 270px;
+            box-sizing: border-box;
+            border: 1px solid #cc00c0;
+            border-radius: 0px;
+            font-size: 12px;
+            background-color: #ffffff;
+            padding: 12px 8px 12px 8px;
 
-            .dropdown dd {
-              position: relative;
-            }
+        }
+        .soldivler{
+            width: 270px;
+            box-sizing: border-box;
+            border: 1px solid #cc00c0;
+            border-radius: 0px;
+            font-size: 12px;
+            background-color: #ffffff;
+            padding: 12px 8px 12px 8px;
+
+        }
+        a {
+            color: #000;
+        }
+        .dropdown dd,
+        .dropdown dt {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .dropdown ul {
+            margin: -1px 0 0 0;
+        }
+
+        .dropdown dd {
+            position: relative;
+        }
 
 
-            .dropdown dt a {
-              background-color: #FFF;
-              display: block;
+        .dropdown dt a {
+            background-color: #FFF;
+            display: block;
 
-              min-height: 25px;
-              line-height: 24px;
-              overflow: hidden;
-              border: 0;
-              border-radius: 4px;
-              width: 250px;
-            }
+            min-height: 25px;
+            line-height: 24px;
+            overflow: hidden;
+            border: 0;
+            border-radius: 4px;
+            width: 250px;
+        }
 
-            .dropdown dt a span,
-            .multiSel span {
-              cursor: pointer;
-              display: inline-block;
-              padding: 0 3px 2px 0;
-            }
+        .dropdown dt a span,
+        .multiSel span {
+            cursor: pointer;
+            display: inline-block;
+            padding: 0 3px 2px 0;
+        }
 
-            .dropdown dd ul {
-              background-color: #4F6877;
-              border: 0;
-              color: #fff;
-              display: none;
-              left: 0px;
-              padding: 2px 15px 2px 5px;
-              position: absolute;
-              top: 2px;
-              width: 250px;
-              list-style: none;
-              height: 170px;
-              overflow: auto;
-            }
-            
-            .dropdown span.value {
-              display: none;
-            }
+        .dropdown dd ul {
+            background-color: #4F6877;
+            border: 0;
+            color: #fff;
+            display: none;
+            left: 0px;
+            padding: 2px 15px 2px 5px;
+            position: absolute;
+            top: 2px;
+            width: 250px;
+            list-style: none;
+            height: 170px;
+            overflow: auto;
+        }
 
-            .dropdown dd ul li a {
-              padding: 5px;
-              display: block;
-            }
+        .dropdown span.value {
+            display: none;
+        }
 
-            .dropdown dd ul li a:hover {
-              background-color: #fff;
-            }
+        .dropdown dd ul li a {
+            padding: 5px;
+            display: block;
+        }
 
-            button {
-              background-color: #fff;
-              border-radius: 3px; 
-              border: 0;
-              font: 13px/18px roboto;
-              text-align: center;
-              color: #003151;
-              
-            }
-            .pclass {
-                color:#003151;
-               border-radius: 3px; 
-                display: inline-block;
-                zoom: 1;
-                font: 13px/18px ;
-                background:#fff;
-                padding: 2px;
-            }
-            .li {
-                   position: relative;
-                   display: inline;
-                   margin: 20px;
-            }
-            .ajax-loader {
-                visibility: hidden;
-                background-color: rgba(255,255,255,0.7);
-                position: absolute;
-                z-index: +100 !important;
-                width: 100%;
-                height:100%;
-            }
+        .dropdown dd ul li a:hover {
+            background-color: #fff;
+        }
 
-            .ajax-loader img {
-                position: relative;
-                top:50%;
-                left:32%;
-            }
-            .hr{
-                    margin-top: 0px;
-                    margin-bottom: 10px;
-                    border: 0;
-                    border-top: 1px solid #ddd;
-                
-            }
-            .trigger {
-                /* font: 16px/1 'roboto-m'; */
-                color: #333;
-                background: #eee;
-                display: block;
-                padding: 20px 15px 20px 45px;
-            }
-   </style>
-   <link href="{{asset('css/multiple-select.css')}}" rel="stylesheet"/>
-<body style="overflow-x:hidden">
-  
-    <div  class="container-fuild">
-           <div class='row content' id ="header" >
-               <div  class="container">
-                   <div class="col-sm-4" id="ilanCount">
-                       
-                        <?php $ilanCount = DB::table('ilanlar')->count();?>
-                       <h4 style="color:#fff"><strong>Arama kriterlerinize uyan</strong> <img src="{{asset('images/sol.png')}}"> </h4>
-                        
-                   </div>
-                    <div class="col-sm-6">
-                        <ul style="list-style: none outside none;">
-                            <?php $j=0; ?>
-                            <li class="li" id="multiSel{{$j}}"> 
-                            </li>                            
-                        </ul>
-                    </div>
-                    <div class="col-sm-2">
-                        <div style="float:right">
-                            <br>
-                            <a  style="color:#fff" href="#" id="temizleButton">
-                                <img  src="{{asset('images/whiteDelete.png')}}">&nbsp;Temizle</img>
-                            </a>
-                        </div>
-                    </div>
-               </div>
-           </div>
-    </div>   
-   
-   <br>
-   <br>
-   <br>
-      
-        <div  class="container">
-            <div id="FilterSection" class="row content">
+        button {
+            background-color: #fff;
+            border-radius: 3px;
+            border: 0;
+            font: 13px/18px roboto;
+            text-align: center;
+            color: #003151;
+
+        }
+        .pclass {
+            color: #cc00c0;
+            border-radius: 3px;
+            display: inline-block;
+            zoom: 1;
+            font-size: small;
+            background:#fff;
+            padding: 2px;
+        }
+        .ajax-loader {
+            visibility: hidden;
+            background-color: rgba(255,255,255,0.7);
+            position: absolute;
+            z-index: +100 !important;
+            width: 100%;
+            height:100%;
+        }
+
+        .ajax-loader img {
+            position: relative;
+            top:50%;
+            left:32%;
+        }
+        .hr{
+            margin-top: 0px;
+            margin-bottom: 10px;
+            border: 0;
+            border-top: 1px solid #ddd;
+
+        }
+        .trigger {
+            /* font: 16px/1 'roboto-m'; */
+            color: #333;
+            background: #eee;
+            display: block;
+            padding: 20px 15px 20px 45px;
+        }
+    </style>
+    <link href="{{asset('css/multiple-select.css')}}" rel="stylesheet"/>
+@endsection
+@section('bodyAttributes')
+    style="overflow-x:hidden"
+@endsection
+ @section('content')
+    <div id="FilterSection" class="row content">
                 <div class="col-sm-3">
                     <div class="search" id="radioDiv3">
                        <div>
-                           <input type="text" name="search" id="search" placeholder="Anahtar Kelime"><input type="button" id="button"  value="ARA">
+                           <input type="text" name="search" id="search" placeholder="Anahtar Kelime"><input type="button" id="button" class="btn purple btn-sm" value="ARA">
                        </div>
                        <div>
                           <input type="radio" name="searchBox" value="tum" checked="checked"> Tüm İlanda<br>
@@ -232,6 +222,7 @@
                            </dl>
                         </form>
                     </div>
+                    <br>
                     <div class="soldivler">
                         <h4>İlan Tarihi Aralığı</h4>
                         <p>Başlangıç Tarihi</p>
@@ -240,6 +231,7 @@
                         <p>Bitiş Tarihi</p>
                         <input type="date" class="form-control datepicker" id="bitis_tarihi" name="bitis_tarihi" placeholder="" value="">
                     </div>
+                    <br>
                     <div class="soldivler">
                         <h4>İlan Sektörü</h4>
                         <select id="sektorler"   name="sektorler[]" multiple="multiple">
@@ -248,23 +240,27 @@
                             @endforeach
                         </select>
                     </div>
+                    <br>
                     <div class="soldivler" id="radioDiv">
                         <h4>İlan Türü</h4>
                         <input type="radio" name="ilanTuru[]" class="tur" value="Mal"><span class="lever"></span>Mal<br>
                         <input type="radio" name="ilanTuru[]" class="tur" value="Hizmet"><span class="lever"></span>Hizmet<br>
                         <input type="radio" name="ilanTuru[]" class="tur" value="Yapım İşi"><span class="lever"></span>Yapım İşi
                     </div>
+                    <br>
                      <div class="soldivler" id="radioDiv4"> 
                         <h4>Sözleşme Türü</h4>
                         <input type="radio" name="sozlesmeTuru[]" class="sozlesme" value="Birim Fiyatlı"><span class="lever"></span>Birim Fiyatlı<br>
                         <input type="radio" name="sozlesmeTuru[]" class="sozlesme" value="Götürü Bedel"><span class="lever"></span>Götürü Bedel<br>
                      </div>
+                    <br>
                      <div class="soldivler">
                         <h4>Ödeme Türleri</h4>
                         @foreach($odeme_turleri as $odeme)
                          <input type="checkbox" class="checkboxClass2" value="{{$odeme->id}}" name="{{$odeme->adi}}"> {{$odeme->adi}}<br>
                         @endforeach
                     </div>
+                    <br>
                     <div class="soldivler" id="radioDiv2">
                         <h4>İlan Usulü</h4>
                         <input type="radio" name="gender[]" class="usul" value="Açık"> Açık<br>
@@ -273,68 +269,76 @@
                     </div>
                 </div>
                  @if(count($firma->belirli_istekliler) != 0 )
-                 <h3 style="text-shadow: 2px 2px 4px #fff">Davet Edildiğiniz İlanlar</h3>
-                 <hr class="hr">
-                 <div class="col-sm-9 davetEdil">
-                            @foreach ($firma->belirli_istekliler as $davetEdildigimIlan)
-                             
-                                <div class="ilanDetayPop " name="{{$davetEdildigimIlan->ilanlar->id}}">
-                                    <div class="pop-up"  style="display: none;
+                <div class="col-sm-9">
+                     <div class="portlet light ">
+                         <div class="portlet-title">
+                             <div class="caption caption-md">
+                                 <i class="icon-envelope-open theme-font"></i>
+                                 <span class="caption-subject theme-font bold uppercase">Davet Edildiğiniz İlanlar</span>
+                             </div>
+                         </div>
+                         <div class="portlet-body">
+                             @foreach ($firma->belirli_istekliler as $davetEdildigimIlan)
+<div class="row">
+                                 <div class="ilanDetayPop " name="{{$davetEdildigimIlan->ilanlar->id}}">
+
+                                     <div class="pop-up"  style="display: none;
                                                                 position: absolute;
                                                                 left: 200px;
                                                                 width: 300px;
                                                                 padding: 10px;
-                                                                background: #006c90;
+                                                                background: #8E44AD;
                                                                 color: #fff;
                                                                 border: 1px solid #1a1a1a;
                                                                 font-size: 90%;
                                                                 border-radius: 5px;
                                                                 z-index: 1000;">
-                                            <p id="popIlanAdi"><img src="{{asset('images/ok.png')}}"><strong>İlan Adı :</strong> {{$davetEdildigimIlan->ilanlar->adi}}</p>
-                                            <p id="popIlanTuru"><img src="{{asset('images/ok.png')}}"><strong>İlan Türü :</strong> {{$davetEdildigimIlan->ilanlar->getIlanTuru()}}</p>
-                                            <p id="popIlanUsulu"><img src="{{asset('images/ok.png')}}"><strong>Usulü : </strong>{{$davetEdildigimIlan->ilanlar->getRekabet()}}</p>
-                                            <p id="popIlanSektoru"><img src="{{asset('images/ok.png')}}"><strong>İlan Sektörü :</strong>{{$davetEdildigimIlan->ilanlar->sektorler->adi}}</p>
-                                            <p id="popIlanAciklama"><img src="{{asset('images/ok.png')}}"><strong>Açıklama : </strong>{{$davetEdildigimIlan->ilanlar->aciklama}}</p>
-                                            <p id="popIlanIsinSuresi"><img src="{{asset('images/ok.png')}}"><strong>İşin Süresi:</strong> {{$davetEdildigimIlan->ilanlar->isin_suresi}}</p>
-                                            <p id="popIlanSözlesmeTuru"><img src="{{asset('images/ok.png')}}"><strong>Sözleşme Türü : </strong>{{$davetEdildigimIlan->ilanlar->getSozlesmeTuru()}}</p>                                  
-                                    </div>
-                   
-                                    <div class="col-sm-10">
-                                        <p><b>İlan Adı: {{$davetEdildigimIlan->ilanlar->adi}}</b></p>
-                                        @if($davetEdildigimIlan->ilanlar->firmalar->puanlamaOrtalama() > 0)
-                                            <div class="puanlama">{{$davetEdildigimIlan->ilanlar->firmalar->puanlamaOrtalama()}}</div>
-                                            <p><a href="{{url('firmaDetay/'.$davetEdildigimIlan->ilanlar->firmalar->id)}}" >Firma: {{$davetEdildigimIlan->ilanlar->firmalar->adi}}</a></p>
-                                        @else
-                                            <p><a href="{{url('firmaDetay/'.$davetEdildigimIlan->ilanlar->firmalar->id)}}" style="padding: 0px" >Firma: {{$davetEdildigimIlan->ilanlar->firmalar->adi}}</a></p>
-                                        @endif
-                                        <p>{{$davetEdildigimIlan->ilanlar->adi}}</p>
+                                         <p id="popIlanAdi"><img src="{{asset('images/ok.png')}}"><strong>İlan Adı :</strong> {{$davetEdildigimIlan->ilanlar->adi}}</p>
+                                         <p id="popIlanTuru"><img src="{{asset('images/ok.png')}}"><strong>İlan Türü :</strong> {{$davetEdildigimIlan->ilanlar->getIlanTuru()}}</p>
+                                         <p id="popIlanUsulu"><img src="{{asset('images/ok.png')}}"><strong>Usulü : </strong>{{$davetEdildigimIlan->ilanlar->getRekabet()}}</p>
+                                         <p id="popIlanSektoru"><img src="{{asset('images/ok.png')}}"><strong>İlan Sektörü :</strong>{{$davetEdildigimIlan->ilanlar->sektorler->adi}}</p>
+                                         <p id="popIlanAciklama"><img src="{{asset('images/ok.png')}}"><strong>Açıklama : </strong>{{$davetEdildigimIlan->ilanlar->aciklama}}</p>
+                                         <p id="popIlanIsinSuresi"><img src="{{asset('images/ok.png')}}"><strong>İşin Süresi:</strong> {{$davetEdildigimIlan->ilanlar->isin_suresi}}</p>
+                                         <p id="popIlanSözlesmeTuru"><img src="{{asset('images/ok.png')}}"><strong>Sözleşme Türü : </strong>{{$davetEdildigimIlan->ilanlar->getSozlesmeTuru()}}</p>
+                                     </div>
+                                     <div class="col-sm-10">
+                                         <p><b>İlan Adı: {{$davetEdildigimIlan->ilanlar->adi}}</b></p>
+                                         @if($davetEdildigimIlan->ilanlar->firmalar->puanlamaOrtalama() > 0)
+                                             <div class="puanlama">{{$davetEdildigimIlan->ilanlar->firmalar->puanlamaOrtalama()}}</div>
+                                             <p><a href="{{url('firmaDetay/'.$davetEdildigimIlan->ilanlar->firmalar->id)}}" >Firma: {{$davetEdildigimIlan->ilanlar->firmalar->adi}}</a></p>
+                                         @else
+                                             <p><a href="{{url('firmaDetay/'.$davetEdildigimIlan->ilanlar->firmalar->id)}}" style="padding: 0px" >Firma: {{$davetEdildigimIlan->ilanlar->firmalar->adi}}</a></p>
+                                         @endif
+                                         <p>{{$davetEdildigimIlan->ilanlar->adi}}</p>
 
-                                        <p style="font-size: 13px;color: #999">{{date('d-m-Y', strtotime($davetEdildigimIlan->ilanlar->yayin_tarihi))}}</p>
-                                    </div>
-                                    <div class="col-sm-2">
-                                        @if(Auth::guest())
-                                        @else
-                                            <a href="#"><button type="button" class="btn btn-primary" name="{{$davetEdildigimIlan->ilanlar->firmalar->id}} {{$davetEdildigimIlan->ilanlar->id}}" id="{{$davetEdildigimIlan->ilanlar->id}}" style='float:right;margin-top:60px'>Başvur</button></a><br><br>
-                                        @endif
-                                    </div>
-                                   
-                                </div>
-                                  
-                            @endforeach
+                                         <p style="font-size: 13px;color: #999">{{date('d-m-Y', strtotime($davetEdildigimIlan->ilanlar->yayin_tarihi))}}</p>
+                                     </div>
+                                     <div class="col-sm-2">
+                                         @if(Auth::guest())
+                                         @else
+                                             <a href="#"><button type="button" class="btn purple" name="{{$davetEdildigimIlan->ilanlar->firmalar->id}} {{$davetEdildigimIlan->ilanlar->id}}" id="{{$davetEdildigimIlan->ilanlar->id}}"style='float:right;margin-top:60px'>Başvur</button></a><br><br>
+                                         @endif
+                                     </div>
+                                 </div>
+
+    <hr />
+</div>
+                             @endforeach
+                         </div>
+                     </div>
                 </div>
                  @endif
                 <div class="col-sm-9 ilanlar" id="auto_load_div">
-                   @include('Firma.ilan.ilanlar')   
-                  
+                   @include('Firma.ilan.ilanlar')
                </div>
                 <div class="ajax-loader">
                     <img src="{{asset('images/200w.gif')}}" class="img-responsive" />
                 </div>
-            </div> 
-        </div>
-</body>  
- <script src="{{asset('js/multiple-select.js')}}"></script>
-<script type="text/javascript">
+            </div>
+ @endsection
+@section('sayfaSonu')
+    <script src="{{asset('js/multiple-select.js')}}"></script>
+    <script type="text/javascript">
     var sektor = new Array();
     $("#sektorler").multipleSelect({
             width: 260,
