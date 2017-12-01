@@ -919,6 +919,12 @@ class FirmaController extends Controller{
         $firma ->doluluk_orani= (int) $sonuc;
         $firma ->save();
     }
+
+    public function yardim(){
+        return view('firma.yardim');
+    }
+
+
     //eski fonksiyonlar...suan kullanılmıyorlar
     public function firma(Request $request){
     $firma = new Firma();

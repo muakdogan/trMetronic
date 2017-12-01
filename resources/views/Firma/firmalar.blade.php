@@ -14,16 +14,28 @@
         background-color:#eee;
     }
 </style>
-<div class="form-group">
-    <h1>Firmalar</h1>
-    <hr>
-    <div>
-        <?php $i = 1; ?>
+
+
+<div class="portlet light ">
+    <div class="portlet-title">
+        <div class="caption caption-md">
+            <i class="icon-envelope-open theme-font"></i>
+            <span class="caption-subject theme-font bold uppercase">Firmalar</span>
+        </div>
+    </div>
+    <?php $i = 1; ?>
+    <div class="portlet-body">
         @foreach($firmalar as $firma)
             <div class="ilanDetayPop ">
                 <div class="row hover">
                     <div class="col-sm-10 ">
-                        <div class="col-sm-2"><img src="{{asset('uploads')}}/{{$firma->logo}}" alt="HTML5 Icon" width="80" height="80" class="img-responsive " style="padding-top:16px;padding-bottom: 10px">
+                        <div class="col-sm-2">
+                            @if($firma->logo != "")
+                                <img src="{{asset('uploads')}}/{{$firma->logo}}" alt="Firma Logo" class="img-responsive"  width="80" height="80" style="padding-top:16px;padding-bottom: 10px">
+                            @else
+                                <img src="{{asset('uploads/logo/defaultFirmaLogo.png')}}" alt="Firma Logo" class="img-responsive" width="80" height="80" style="padding-top:16px;padding-bottom: 10px">
+                            @endif
+
                             @if(($firma->puanlamaOrtalama())> 0)
                                 <div class="puanlama ">{{$firma->puanlamaOrtalama()}}</div>
                                 <br />
@@ -39,8 +51,8 @@
 
                     </div>
                     <div class="col-sm-2">
-                        <button type="button" class="btn btn-primary btn-tedEkle" id="btn_tedEkle_{{$firma->id}}" value="{{$firma->id}}" style="float:right;width:170px;margin: 30px">Onaylı Tedarikçi Ekle</button>
-                        <button type="button" class="btn btn-primary btn-tedCikar" id="btn_tedCikar_{{$firma->id}}" value="{{$firma->id}}" style="float:right;width:170px;display: none;margin: 30px">Tedarikçilerimden Çıkar</button>
+                        <button type="button" class="btn btn-primary purple btn-tedEkle" id="btn_tedEkle_{{$firma->id}}" value="{{$firma->id}}" style="float:right;width:170px;margin: 30px">Onaylı Tedarikçi Ekle</button>
+                        <button type="button" class="btn btn-primary purple btn-tedCikar" id="btn_tedCikar_{{$firma->id}}" value="{{$firma->id}}" style="float:right;width:170px;display: none;margin: 30px">Tedarikçilerimden Çıkar</button>
                     </div>
                 </div>
 
@@ -49,17 +61,12 @@
             </div>
             <?php $i++; ?>
         @endforeach
-        {{$firmalar->links()}}
     </div>
-
-    <br>
-    <div class="form-group">
-    </div>
+    {{$firmalar->links()}}
 </div>
 
+
 <script>
-
-
     $(".puanlama").each(function(){
         var puan = $(this).text();
         if(puan > 0 && puan < 3){
@@ -86,7 +93,6 @@
         else if (puan > 9 && puan <= 10){
             $(this).css("background", "#45c538");
         }
-
     });
 
     $(".btn-tedEkle").click(function () {

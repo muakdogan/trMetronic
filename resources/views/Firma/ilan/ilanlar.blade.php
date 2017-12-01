@@ -24,84 +24,94 @@ a{
 }
 </style>
 <?php use Barryvdh\Debugbar\Facade as Debugbar; ?>
-    <h3>İlanlar</h3> 
-    <hr class="hr">
-    <?php 
-        $count=$ilanlar->total();
-        $firma_id = session()->get('firma_id');
-        $firma_adi = session()->get('firma_adi');  
-    ?>        
-    <input type="hidden" name="totalCount" value='{{$ilanlar->total()}}'>
-        
-    @foreach($ilanlar as $ilan)
+
+<div class="portlet light ">
+    <div class="portlet-title">
+        <div class="caption caption-md">
+            <i class="icon-envelope-open theme-font"></i>
+            <span class="caption-subject theme-font bold uppercase">İlanlar</span>
+        </div>
+    </div>
+    <?php
+    $count=$ilanlar->total();
+    $firma_id = session()->get('firma_id');
+    $firma_adi = session()->get('firma_adi');
+    ?>
+    <div class="portlet-body">
+        <input type="hidden" name="totalCount" value='{{$ilanlar->total()}}'>
+        @foreach($ilanlar as $ilan)
             <div class="ilanDetayPop "  name="{{$ilan->id}}">
                 <div class="pop-up"  style="display: none;
                                                 position: absolute;
                                                 left: 200px;
                                                 width: 300px;
                                                 padding: 10px;
-                                                background: #006c90;
+                                                background: #8E44AD;
                                                 color: #fff;
                                                 border: 1px solid #1a1a1a;
                                                 font-size: 90%;
                                                 border-radius: 5px;
                                                 z-index: 1000;">
-                                <p id="popIlanAdi"><img src="{{asset('images/ok.png')}}"><strong>İlan Adı :</strong> {{$ilan->adi}}</p>
-                                <p id="popIlanTuru"><img src="{{asset('images/ok.png')}}"><strong>İlan Türü :</strong> {{$ilan->getIlanTuru()}}</p>
-                                <p id="popIlanUsulu"><img src="{{asset('images/ok.png')}}"><strong>Usulü : </strong>{{$ilan->getRekabet()}}</p>
-                                <p id="popIlanSektoru"><img src="{{asset('images/ok.png')}}"><strong>İlan Sektörü :</strong>{{$ilan->sektorler->adi}}</p>
-                                <p id="popIlanAciklama"><img src="{{asset('images/ok.png')}}"><strong>Açıklama : </strong>{{$ilan->aciklama}}</p>
-                                <p id="popIlanIsinSuresi"><img src="{{asset('images/ok.png')}}"><strong>İşin Süresi:</strong> {{$ilan->isin_suresi}}</p>
-                                <p id="popIlanSözlesmeTuru"><img src="{{asset('images/ok.png')}}"><strong>Sözleşme Türü : </strong>{{$ilan->getSozlesmeTuru()}}</p>                                
+                    <p id="popIlanAdi"><img src="{{asset('images/ok.png')}}"><strong>İlan Adı :</strong> {{$ilan->adi}}</p>
+                    <p id="popIlanTuru"><img src="{{asset('images/ok.png')}}"><strong>İlan Türü :</strong> {{$ilan->getIlanTuru()}}</p>
+                    <p id="popIlanUsulu"><img src="{{asset('images/ok.png')}}"><strong>Usulü : </strong>{{$ilan->getRekabet()}}</p>
+                    <p id="popIlanSektoru"><img src="{{asset('images/ok.png')}}"><strong>İlan Sektörü :</strong>{{$ilan->sektorler->adi}}</p>
+                    <p id="popIlanAciklama"><img src="{{asset('images/ok.png')}}"><strong>Açıklama : </strong>{{$ilan->aciklama}}</p>
+                    <p id="popIlanIsinSuresi"><img src="{{asset('images/ok.png')}}"><strong>İşin Süresi:</strong> {{$ilan->isin_suresi}}</p>
+                    <p id="popIlanSözlesmeTuru"><img src="{{asset('images/ok.png')}}"><strong>Sözleşme Türü : </strong>{{$ilan->getSozlesmeTuru()}}</p>
                 </div>
                 <div class="row hover">
                     <div class="col-sm-10">
-                        <p style="font-size: 17px; color: #333"><b>İlan Adı: {{$ilan->adi}}</b></p>
-                        
+                        <p><b>İlan Adı: {{$ilan->adi}}</b></p>
+
                         @if($ilan->firmalar->puanlamaOrtalama() > 0)
-                        
+
                             <div class="puanlama">{{$ilan->firmalar->puanlamaOrtalama()}}</div>
-                            <p style="font-size:15px; color:#666"><a href="{{url('firmaDetay/'.$ilan->firma_id)}}" >
-                            
-                                @if($ilan->goster == 0 || $misafir == 1)
-                                    Firma Adı Gizli
-                                @else    
-                                    Firma: {{$ilan->firmalar->adi}}
-                                @endif
+                            <p><a href="{{url('firmaDetay/'.$ilan->firma_id)}}" >
+
+                                    @if($ilan->goster == 0 || $misafir == 1)
+                                        Firma Adı Gizli
+                                    @else
+                                        Firma: {{$ilan->firmalar->adi}}
+                                    @endif
                                 </a></p>
                         @else
-                            <p style="font-size:15px ; color:#666" ><a href="{{url('firmaDetay/'.$ilan->firma_id)}}" style="padding: 0px" >
-                            @if($ilan->goster == 0 || $misafir == 1)
-                                Firma Adı Gizli
-                            @else    
-                                Firma: {{$ilan->firmalar->adi}}
-                            @endif
-                            </a></p>
+                            <p><a href="{{url('firmaDetay/'.$ilan->firma_id)}}" style="padding: 0px" >
+                                    @if($ilan->goster == 0 || $misafir == 1)
+                                        Firma Adı Gizli
+                                    @else
+                                        Firma: {{$ilan->firmalar->adi}}
+                                    @endif
+                                </a></p>
                         @endif
-                            <p>{{$ilan->firmalar->adresler[0]->iller->adi}}</p>
-                            <p style="font-size: 13px;color: #999">{{date('d-m-Y', strtotime($ilan->yayin_tarihi))}}</p>
-                     
+                        <p>{{$ilan->firmalar->adresler[0]->iller->adi}}</p>
+                        <p>{{date('d-m-Y', strtotime($ilan->yayin_tarihi))}}</p>
+
                     </div>
                     <div class="col-sm-2">
-                        
-                        @if(Auth::guest())
-                        @else
-                            <?php Debugbar::info($ilan->rekabet_sekli); ?>
-                            @if($ilan->rekabet_sekli == 1 || $ilan->rekabet_sekli == 2 || ($ilan->katilimcilar == 2 && $ilan->belirliIstekliControl($ilan->id,$firma_id) == 1)) <!-- Eğer bir firma davet edilmediyse o ilanda başvuru butonu çıkmaz-->
-                                
-                                <a href="#"><button type="button" class="btn btn-primary" name="{{$ilan->firma_id}}_{{$ilan->id}}" id="{{$ilan->id}}" style='float:right;margin-top:60px'>Başvur</button></a><br><br>
-                               
-                            @endif    
+
+                    @if(Auth::guest())
+                    @else
+                        <?php Debugbar::info($ilan->rekabet_sekli); ?>
+                        @if($ilan->rekabet_sekli == 1 || $ilan->rekabet_sekli == 2 || ($ilan->katilimcilar == 2 && $ilan->belirliIstekliControl($ilan->id,$firma_id) == 1)) <!-- Eğer bir firma davet edilmediyse o ilanda başvuru butonu çıkmaz-->
+
+                            <a href="#"><button type="button" class="btn btn-primary purple"  name="{{$ilan->firma_id}}_{{$ilan->id}}" id="{{$ilan->id}}" style='float:right;margin-top:60px'>Başvur</button></a><br><br>
+
+                            @endif
                         @endif
                     </div>
-               
+
                 </div>
-                
+
                 <hr class="hr">
-               
+
             </div>
-    @endforeach
+        @endforeach
+    </div>
+</div>
+
 {{$ilanlar->links()}}
+
 <script>
     $('.ilanDetayPop').mouseenter(function(){
         $(this).children("div.pop-up").show();

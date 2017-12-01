@@ -259,7 +259,7 @@ Route::get('/firmalist', ['middleware'=>'auth' ,function () {
 }]);
 Route::get('/firmaDetay/{firma_id}', 'FirmaController@firmaDetay');
 Route::get('/davetEdildigim', 'IlanController@davetEdildigimIlanlar');
-
+Route::get('/yardim', 'FirmaController@yardim');
 Route::get('/image/{id}', ['middleware'=>'auth',function ($id) {
   $firmas = Firma::find($id);
   return view('firmas.upload')->with('firmas', $firmas);
