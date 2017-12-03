@@ -64,7 +64,6 @@
         </div>
         <div class="portlet-body">
             <p><strong>Adınız:&nbsp;&nbsp;</strong>{{$kullanici->adi}}</p>
-            <p><strong>Kullanıcı Adınız:&nbsp;&nbsp;</strong>{{Auth::user()->name}}</p>
             <p><strong>Soyadınız:&nbsp;&nbsp;</strong>{{$kullanici->soyadi}}</p>
             <p><strong>Email:&nbsp;&nbsp;</strong>{{$kullanici->email}}</p>
             <p><strong>Telefon:&nbsp;&nbsp;</strong>{{$kullanici->telefon}}</p>
@@ -80,18 +79,12 @@
                             <h4 class="modal-title" id="myModalLabel">Kullanıcı Bilgilerini Düzenle</h4>
                         </div>
                         <div class="modal-body">
-                            {!! Form::open(array('url'=>'kullaniciBilgileriUpdate/'.$firma->id.'/'.$kullanici->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
+                            {!! Form::open(array('url'=>'kullaniciBilgileriUpdate/','class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
                             {!! csrf_field() !!}
                             <div class="form-group">
                                 <label for="inputEmail3" class="col-sm-3 control-label">Adı</label>
                                 <div class="col-sm-9">
                                     <input type="text" class="form-control" id="adi" name="adi" placeholder="Adı giriniz" value="{{$kullanici->adi}}" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-3 control-label">Kullanıcı Adı</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="kul_adi" name="kul_adi" placeholder="Kullanıcı Adınızı giriniz" value="{{Auth::user()->kullanici_adi}}" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -113,7 +106,7 @@
                                 </div>
                             </div>
 
-                            {!! Form::submit('Kaydet', array('url'=>'kullaniciBilgileriUpdate/'.$firma->id.'/'.$kullanici->id,'class'=>'btn btn-danger')) !!}
+                            {!! Form::submit('Kaydet', array('url'=>'kullaniciBilgileriUpdate','class'=>'btn btn-danger')) !!}
                             {!! Form::close() !!}
                         </div>
                         <div class="modal-footer">
@@ -129,7 +122,7 @@
                             <h4 class="modal-title" id="myModalLabel">Kullanıcı Şifresini Düzenle</h4>
                         </div>
                         <div class="modal-body">
-                            {!! Form::open(array('url'=>'kullaniciBilgileriSifre/'.$firma->id.'/'.Auth::user()->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
+                            {!! Form::open(array('url'=>'kullaniciSifreDegisikligi','class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
                             {!! csrf_field() !!}
 
                             <div class="form-group">
@@ -152,7 +145,7 @@
                                     <input type="password" class="form-control  " id="sifre_tekrar" name="sifre_tekrar" placeholder="Sifreyi Tekrar giriniz" onfocusout="Validate()" value="" required>
                                 </div>
                             </div>
-                            {!! Form::submit('Kaydet', array('url'=>'kullaniciBilgileriSifre/'.$firma->id.'/'.Auth::user()->id,'class'=>'btn btn-danger')) !!}
+                            {!! Form::submit('Kaydet', array('url'=>'kullaniciBilgileriSifre/','class'=>'btn btn-danger')) !!}
                             {!! Form::close() !!}
                         </div>
                         <div class="modal-footer">
@@ -222,10 +215,9 @@
                         </td>
                         <td> <button name="open-modal-kullanici"  value="{{$kullanici->id}}" class="btn purple btn-xs open-modal-kullanici" >Düzenle</button></td>
                         <td>
-                            {{ Form::open(array('url'=>'kullaniciDelete/'.$kullanici->id.'/'.$firma->id,'method' => 'DELETE', 'files'=>true)) }}
-                            <input type="hidden" name="firma_id"  id="firma_id" value="{{$firma->id}}">
-                            {{ Form::submit('Sil', ['class' => 'btn purple btn-xs']) }}
+                            {{ Form::open(array('url'=>'kullaniciDelete','method' => 'DELETE', 'files'=>true)) }}
                             <input type="hidden" name="kullanici_id"  id="kullanici_id" value="{{$kullanici->id}}">
+                            {{ Form::submit('Sil', ['class' => 'btn purple btn-xs']) }}
                             {{ Form::close() }}
                             <div class="modal fade" id="myModal-kullaniciDüzenle-{{$kullanici->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
