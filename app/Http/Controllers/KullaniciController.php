@@ -9,7 +9,9 @@ use Password;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\PasswordBroker;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Facades\Hash;
 use App\Firma;
+use App\Kullanici;
 use Illuminate\Support\Str;
 use DB;
 
@@ -63,36 +65,39 @@ class KullaniciController extends Controller
             );
             return view('Kullanici.kullaniciIslemleri')->with('firma',$firma)->with('roller',$roller);
     }
-    
 
     public function kullaniciIslemleri()
     {
         $firma = Firma::find(session()->get('firma_id'));
         $roller=  \App\Rol::all();
-
         return view('Kullanici.kullaniciIslemleri')->with('firma',$firma)->with('roller',$roller);
+    }
 
+    public function kullaniciSifreDegisikligi(Request $request){
+        $kullanici= Kullanici::find(session()->get('kullanici_id'));
+        $kullanici->password =Hash::make( $request->sifre);
+        $kullanici->save();
+        return redirect('/kullaniciIslemleri');
+    }
+
+    public function kullaniciSil(Request $request){
+        $firma = Firma::find(session()->get('firma_id'));
+        $kullanici = $firma->kullanicilar()->where('kullanici_id',$request->kullanici_id);
+        $kullanici->delete();
+        return redirect('/kullaniciIslemleri');
     }
 
     public function kullaniciBilgileri () {
         return view('Kullanici.kullaniciBilgileri')->with('firma',Firma::find(session()->get('firma_id')));
     }
 
-    public function kullaniciBilgileriUpdate (Request $request,$id,$kul_id) {
-        $firma = Firma::find($id);
-        $kullanici= App\Kullanici::find($kul_id);
+    public function kullaniciBilgileriUpdate (Request $request) {
+        $kullanici= Kullanici::find(session()->get('kullanici_id'));
         $kullanici->adi = Str::title(strtolower($request->adi));
         $kullanici->soyadi = Str::title(strtolower($request->soyadi));
-        $kullanici->email = $request->email;
         $kullanici->telefon = $request->telefon;
         $kullanici->save();
-
-        $user = DB::table('users')
-        ->where( 'users.kullanici_id', '=',  $kul_id);
-        $user->name=$request->kul_adi;
-        $user->save();
-
-        return view('Kullanici.kullaniciBilgileri')->with('firma',$firma);
+        return redirect('/kullaniciIslemleri');
     }
 
     public function kullaniciIslemleriEkle (Request $request,$id) {
