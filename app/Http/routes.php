@@ -280,7 +280,8 @@ Route::get('/firmaKayit', function () {
    $sektorler=DB::table('sektorler')->orderBy('adi','ASC')->get();
 
 
-  return view('Firma.genFirmaKayit')->with('iller', $iller)->with('sektorler',$sektorler)->with('iller_query',$iller_query);
+  return view('FrontEnd.FirmaKayit')->with('iller', $iller)->with('sektorler',$sektorler)->with('iller_query',$iller_query);
+  //return view('Firma.genFirmaKayit')->with('iller', $iller)->with('sektorler',$sektorler)->with('iller_query',$iller_query);
   // Önceki Hali "Firma.firmaKayit" Güncel Hali "Firma.genFirmaKayit"
 });
 
@@ -785,37 +786,37 @@ Route::get('ilaniAktifEt' ,'IlanController@ilaniAktifEt');
         });
 
 Route::post('/teklifGonder/{firma_id}/{ilan_id}/{kullanici_id}', 'IlanController@teklifGonder');
-            ////////////////////////ilan detay ///////////////////////////
-            Route::get('ilanDetay', function () {
-              $ilan_id = Input::get('ilan_id');
-              $ilan = Ilan::find($ilan_id);
-              return Response::json($ilan);
-            });
+////////////////////////ilan detay ///////////////////////////
+Route::get('ilanDetay', function () {
+  $ilan_id = Input::get('ilan_id');
+  $ilan = Ilan::find($ilan_id);
+  return Response::json($ilan);
+});
 
-            Route::get('/ajax-subcat', function (Request $request) {
+Route::get('/ajax-subcat', function (Request $request) {
 
-              $il_id = Input::get('il_id');
-              $ilceler = \App\Ilce::where('il_id', '=', $il_id)->get();
-              return Response::json($ilceler);
-            });
-            Route::get('/ajax-subcatt', function () {
-              $ilce_id = Input::get('ilce_id');
-              $semtler = \App\Semt::where('ilce_id', '=', $ilce_id)->get();
-              return Response::json($semtler);
-            });
-            Route::get('/vergi_daireleri', function (Request $request) {
+  $il_id = Input::get('il_id');
+  $ilceler = \App\Ilce::where('il_id', '=', $il_id)->get();
+  return Response::json($ilceler);
+});
+Route::get('/ajax-subcatt', function () {
+  $ilce_id = Input::get('ilce_id');
+  $semtler = \App\Semt::where('ilce_id', '=', $ilce_id)->get();
+  return Response::json($semtler);
+});
+Route::get('/vergi_daireleri', function (Request $request) {
 
-              $il_id = Input::get('il_id');
-              $vergi_daireleri = \App\VergiDairesi::where('il_id', '=', $il_id)->get();
-              return Response::json($vergi_daireleri);
-            });
-            Route::get('/ticaret_odalari', function (Request $request) {
+  $il_id = Input::get('il_id');
+  $vergi_daireleri = \App\VergiDairesi::where('il_id', '=', $il_id)->orderBy('adi')->get();
+  return Response::json($vergi_daireleri);
+});
+Route::get('/ticaret_odalari', function (Request $request) {
 
-              $il_id = Input::get('il_id');
-              $ticaret_odalari = \App\TicaretOdasi::where('il_id', '=', $il_id)->get();
-              return Response::json($ticaret_odalari);
-            });
+  $il_id = Input::get('il_id');
+  $ticaret_odalari = \App\TicaretOdasi::where('il_id', '=', $il_id)->get();
+  return Response::json($ticaret_odalari);
+});
 
-            Route::auth();
+Route::auth();
 
 Route::get('kullanici/onay/{kullanici_id}/{token}', 'Auth\AuthController@activateUser')->name('kullanici.onay');
