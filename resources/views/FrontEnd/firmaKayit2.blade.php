@@ -1,0 +1,569 @@
+@extends('layouts.fe.feMaster')
+
+<!--heade eklemeler-->
+@section('head')
+  <!-- BEGIN GLOBAL MANDATORY STYLES -->
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+  <link href="{{asset('MetronicFiles/global/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{asset('MetronicFiles/global/plugins/simple-line-icons/simple-line-icons.min.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{asset('MetronicFiles/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet')}}" type="text/css" />
+  <link href="{{asset('MetronicFiles/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
+  <!-- END GLOBAL MANDATORY STYLES -->
+  <!-- BEGIN THEME GLOBAL STYLES -->
+  <link href="{{asset('MetronicFiles/global/css/components.min.css')}}" rel="stylesheet" id="style_components" type="text/css" />
+  <link href="{{asset('MetronicFiles/global/css/plugins.min.css')}}" rel="stylesheet" type="text/css" />
+  <!-- END THEME GLOBAL STYLES -->
+  <!-- BEGIN THEME LAYOUT STYLES -->
+  <link href="{{asset('MetronicFiles/layouts/layout3/css/layout.min.css')}}" rel="stylesheet" type="text/css" />
+  <link href="{{asset('MetronicFiles/layouts/layout3/css/themes/default.min.css')}}" rel="stylesheet" type="text/css" id="style_color" />
+  <link href="{{asset('MetronicFiles/layouts/layout3/css/custom.min.css')}}" rel="stylesheet" type="text/css" />
+  <!-- END THEME LAYOUT STYLES -->
+  <!-- END GLOBAL MANDATORY STYLES -->
+  <!-- BEGIN THEME GLOBAL STYLES -->
+  <link href="../assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+  <link href="../assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+  <!-- END THEME GLOBAL STYLES -->
+  <!-- BEGIN THEME LAYOUT STYLES -->
+  <link href="../assets/layouts/layout3/css/layout.min.css" rel="stylesheet" type="text/css" />
+  <link href="../assets/layouts/layout3/css/themes/default.min.css" rel="stylesheet" type="text/css" id="style_color" />
+  <link href="../assets/layouts/layout3/css/custom.min.css" rel="stylesheet" type="text/css" />
+  <!-- END THEME LAYOUT STYLES -->
+  <link href="{{asset('css/multi-select.css')}}" media="screen" rel="stylesheet" type="text/css"></link>
+@endsection
+
+
+
+<!--content starts-->
+@section('content')
+    @if (count($errors) > 0)
+      <div class="alert alert-danger">
+        <ul>
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
+    <section id="biz" class="section background-gray-lighter">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-lg-12 text-center">
+            <div class="caption font-purple text-center">
+                <span class="caption-subject bold uppercase">Firma Kayıt Formu</span>
+            </div>
+
+    <!-- BEGIN SAMPLE FORM PORTLET-->
+    <div class="portlet light">
+        <div class="portlet-body form">
+          {!! Form::open(array('id'=>'firma_kayit','url'=>'form' ,'name'=>'kayit','method' => 'POST','files'=>true, 'class'=>'form-horizontal'))!!}
+            <div class="form-body">
+              <div class="row">
+                  <div class="col-md-6">
+                    <h4 class="form-section">Firma Bilgileri</h4>
+
+                    <!-- İletişim ve Fatura Adresleri Aynı-->
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">Fatura ve İletişim adresi</label>
+                      <div class="col-md-8">
+                        <input id="TheCheckBox" type="checkbox" data-off-text="False" data-on-text="True" checked="false" class="BSswitch">
+                      </div>
+                    </div>
+
+            </div>
+          {!! Form::close() !!}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+</div>
+<script src="{{asset('MetronicFiles/global/plugins/jquery.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('MetronicFiles/global/plugins/bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('MetronicFiles/global/plugins/js.cookie.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('MetronicFiles/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
+
+
+<script src="{{asset('MetronicFiles/global/scripts/app.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('MetronicFiles/pages/scripts/form-input-mask.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('js_fe/bootstrap-switch.js')}}" type="text/javascript"></script>
+<script src="{{asset('MetronicFiles/global/plugins/jquery.blockui.min.js')}}" type="text/javascript"></script>
+<!-- BEGIN THEME LAYOUT SCRIPTS -->
+<script src="{{asset('MetronicFiles/layouts/layout3/scripts/layout.min.js')}}" type="text/javascript"></script>
+<script src="{{asset('MetronicFiles/assets/layouts/layout3/scripts/demo.min.js')}}" type="text/javascript"></script>
+<!-- END THEME LAYOUT SCRIPTS -->
+<script>
+/*
+19.07.2017 Oguzhan
+original_state_il   = fatura adresinin il kismini alan form elementinin klonunu tutar
+original_state_ilce = fatura adresinin ilce kismini alan form elementinin klonunu tutar.
+original_state_semt = fatura adresinin semt kismini alana form elemenetinin klonunu tutar.
+*/
+var original_state_il;
+var original_state_ilce;
+var original_state_semt;
+$(document).ready(function(){
+  $('.BSswitch').bootstrapSwitch('state', true);
+});
+// READY PARANTHESIS
+
+$("#adres_kopyalayici").change(function(event){
+
+  if (document.getElementById("adres_kopyalayici").checked)
+  $(".fatura_adres_group").hide();
+
+  else
+  $(".fatura_adres_group").show();
+});
+
+$('input[type=radio][name=fatura_tur]').change(function(){
+  if($('input[name=fatura_tur]:checked').val() === 'bireysel'){
+    $('.bireysel').show();
+    $('.kurumsal').hide();
+  }
+  else{
+    $('.kurumsal').show();
+    $('.bireysel').hide();
+  }
+  /*
+  var form_kurumsal = document.getElementById('div_kurumsal');
+  var form_bireysel = document.getElementById('div_bireysel');
+  //Kurumsal form aktif degilse aktif eder.
+  if(form_kurumsal.style.display === 'none'){
+    form_bireysel.style.display = 'none';
+    form_kurumsal.style.display = 'block';
+  }
+  //Bireysel form aktif degilse aktif eder.
+  else{
+    form_kurumsal.style.display = 'none';
+    form_bireysel.style.display = 'block';
+  }*/
+});
+
+$('#il_id').change(function (e) {
+  var il_id = e.target.value;
+  $.get("{{asset('ajax-subcat?il_id=')}}"+il_id, function (data) {
+  beforeSend:( function(){
+      $('.ajax-loader').css("visibility", "visible");
+    });
+    $('#ilce_id').empty();
+    $('#ilce_id').append('<option value="" selected disabled>İlçe Seçiniz</option>');
+    $.each(data, function (index, subcatObj) {
+      $('#ilce_id').append('<option value="' + subcatObj.id + '">' + subcatObj.adi + '</option>');
+    });
+  }).done(function(data){
+    $('.ajax-loader').css("visibility", "hidden");
+  }).fail(function(){
+    alert('İller Yüklenemiyor !!!  ');
+    console.log("data:");
+    console.log(data);
+  });
+});
+
+$('#ilce_id').on('change', function (e) {
+  var ilce_id = e.target.value;
+  $.get("{{asset('ajax-subcatt?ilce_id=')}}"+ ilce_id, function (data) {
+    beforeSend:( function(){
+      $('.ajax-loader').css("visibility", "visible");
+    });
+    $('#semt_id').empty();
+    $('#semt_id').append('<option value="" selected disabled>Semt Seçiniz</option>');
+    $.each(data, function (index, subcatObj) {
+      $('#semt_id').append('<option value="' + subcatObj.id + '">' + subcatObj.adi + '</option>');
+    });
+  }).done(function(data){
+    $('.ajax-loader').css("visibility", "hidden");
+  }).fail(function(){
+    alert('İller Yüklenemiyor !!!  ');
+  });
+});
+
+$('#fatura_il_id').on('change', function (e) {
+  var il_id = e.target.value;
+  $.get("{{asset('ajax-subcat?il_id=')}}"+il_id, function (data) {
+    beforeSend:( function(){
+      $('.ajax-loader').css("visibility", "visible");
+    });
+    $('#fatura_ilce_id').empty();
+    $('#fatura_ilce_id').append('<option value="" selected disabled>İlçe Seçiniz</option>');
+    $.each(data, function (index, subcatObj) {
+      $('#fatura_ilce_id').append('<option value="' + subcatObj.id + '">' + subcatObj.adi + '</option>');
+    });
+  }).done(function(data){
+    $('.ajax-loader').css("visibility", "hidden");
+  }).fail(function(){
+    alert('İller Yüklenemiyor !!!  ');
+  });
+  $.get("{{asset('vergi_daireleri?il_id=')}}"+il_id, function (data) {
+    beforeSend:( function(){
+      $('.ajax-loader').css("visibility", "visible");
+    });
+    $('#vergi_daire').empty();
+    $('#vergi_daire').append('<option value="" selected disabled> Seçiniz </option>');
+    $.each(data, function (index, subcatObj) {
+      $('#vergi_daire').append('<option value="' + subcatObj.id + '">' + subcatObj.adi + '</option>');
+    });
+  }).done(function(data){
+    $('.ajax-loader').css("visibility", "hidden");
+  }).fail(function(){
+    alert('Vergi dairesi Yüklenemiyor !!!  ');
+  });
+});
+
+$('#fatura_ilce_id').on('change', function (e) {
+  var ilce_id = e.target.value;
+  $.get("{{asset('ajax-subcatt?ilce_id=')}}"+ ilce_id, function (data) {
+    beforeSend:( function(){
+      $('.ajax-loader').css("visibility", "visible");
+    });
+    $('#fatura_semt_id').empty();
+    $('#fatura_semt_id').append('<option value="" selected disabled>Semt Seçiniz </option>');
+    $.each(data, function (index, subcatObj) {
+      $('#fatura_semt_id').append('<option value="' + subcatObj.id + '">' + subcatObj.adi + '</option>');
+    });
+  }).done(function(data){
+    $('.ajax-loader').css("visibility", "hidden");
+  }).fail(function(){
+    alert('İller Yüklenemiyor !!!  ');
+  });
+});
+
+$('#vergi_daire_il').on('change', function (e) {
+  var vergi_daire_il = e.target.value;
+  $.get("{{asset('vergi_daireleri?il_id=')}}"+vergi_daire_il, function (data) {
+    beforeSend:( function(){
+      $('.ajax-loader').css("visibility", "visible");
+    });
+    $('#vergi_daire').empty();
+    $('#vergi_daire').append('<option value="" selected disabled> Seçiniz </option>');
+    $.each(data, function (index, subcatObj) {
+      $('#vergi_daire').append('<option value="' + subcatObj.id + '">' + subcatObj.adi + '</option>');
+    });
+  }).done(function(data){
+    $('.ajax-loader').css("visibility", "hidden");
+  }).fail(function(){
+    alert('Vergi dairesi Yüklenemiyor !!!  ');
+  });
+});
+
+/*
+18-19.07.2017 Oguzhan
+selection header'a id eklendi.
+count_for_header degiskeni eklendi.
+afterSelect ve afterDeselect fonksiyonlarinda duzenleme yapildi.
+Duzenleme islevi:
+Sektorler secilirken Header'da ki degiskeni 1'er 1'er azaltir.
+Sektorlerin secimleri kaldirirken de ayni sekilde degiskeni artirir.
+count_for_header = Kac tane sektor secme hakki oldugunu tutar.
+*/
+var count = 0;
+var count_for_header = 5;
+
+
+$('#custom-headers').multiSelect({
+  selectableHeader: "</i><input type='text'  class='search-input col-sm-12 search_icon' autocomplete='off' placeholder='Sektör Seçiniz'></input>",
+  selectionHeader: "<p id = 'sektor_count' style='font-size:12px;color:green'>Lütfen Sektör Seçiniz</p>",
+  afterInit: function(ms){
+    var that = this,
+    $selectableSearch = that.$selectableUl.prev(),
+    $selectionSearch = that.$selectionUl.prev(),
+    selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
+    selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
+    that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
+    .on('keydown', function(e){
+      if (e.which === 40){
+        that.$selectableUl.focus();
+        return false;
+      }
+    });
+  },
+  afterSelect: function(values){
+    count = $(".ms-selection").find(".ms-selected").length;
+    if(count>5){
+      $('#custom-headers').multiSelect('deselect', values);
+    }
+    $("#sektor_count").text(" '"+(5-count)+"' sektör seçebilirsiniz");
+    this.qs1.cache();
+  },
+  afterDeselect: function(values){
+    count = $(".ms-selection").find(".ms-selected").length;
+
+    if(count!=5){
+      $("#sektor_count").text(" '"+(5-count)+"' sektör seçebilirsiniz");
+    }
+    if(count==0){
+      $("#sektor_count").text("Lütfen Sektör Seçiniz");
+    }
+    this.qs1.cache();
+  }
+});
+
+
+
+function CheckPasswordStrength(password) {
+  var password_strength = document.getElementById("password_strength");
+  //TextBox left blank.
+  if (password.length == 0) {
+    password_strength.innerHTML = "";
+    return;
+  }
+  //Regular Expressions.
+  var regex = new Array();
+  regex.push("[A-Z]"); //Uppercase Alphabet.
+  regex.push("[a-z]"); //Lowercase Alphabet.
+  regex.push("[0-9]"); //Digit.
+  regex.push("[$@$!%*#?&]"); //Special Character.
+  var passed = 0;
+  var color = "";
+  var strength = "";
+  //Validate for each Regular Expression.
+  for (var i = 0; i < regex.length; i++) {
+    if (new RegExp(regex[i]).test(password)) {
+      passed++;
+    }
+  }
+  //Validate for length of Password.
+  if (passed > 6 && password.length > 12) {
+    passed++;
+  }
+  //Display status.
+  switch (passed) {
+    case 0:
+    case 1:
+    strength = "Zayıf";
+    color = "red";
+    break;
+    case 2:
+    strength = "İyi";
+    color = "darkorange";
+    break;
+    case 3:
+    case 4:
+    strength = "Güçlü";
+    color = "green";
+    break;
+    case 5:
+    strength = "Çok Güçlü";
+    color = "darkgreen";
+    break;
+  }
+  var  password_deneme=$('#password').val().length;
+  if(password_deneme<6){
+    strength = "Şifre en az 6 karakterden oluşmalıdır işiş";
+    color = "red";
+  }
+  password_strength.innerHTML = strength;
+  password_strength.style.color = color;
+}
+function checkPass()
+{
+  //Store the password field objects into variables ...
+  var password = document.getElementById('password');
+  var password_confirmation = document.getElementById('password_confirmation');
+  //Store the Confimation Message Object ...
+  var message = document.getElementById('confirmMessage');
+  //Set the colors we will be using ...
+  var goodColor = "#66cc66";
+  var badColor = "#ff6666";
+  //Compare the values in the password field
+  //and the confirmation field
+  if(password.value != '' && password.value == password_confirmation.value){//control of empty password value added -Oguzhan
+    //The passwords match.
+    //Set the color to the good color and inform
+    //the user that they have entered the correct password
+    password_confirmation.style.backgroundColor = goodColor;
+    message.style.color = goodColor;
+    message.innerHTML = "Şifre Eşleşti"
+  }else if(password.value != ''){//control of empty password value added -Oguzhan
+    //The passwords do not match.
+    //Set the color to the bad color and
+    //notify the user.
+    password_confirmation.style.backgroundColor = badColor;
+    message.style.color = badColor;
+    message.innerHTML = "Şifre Eşleşmedi"
+  }
+}
+
+$(".sozlesme_kapat").click(function (event){
+  event.preventDefault();
+  $("#sozlesme_modal").modal('hide');
+});
+
+$(".sozlesme_goster").click(function (event){
+  event.preventDefault();
+  $("#sozlesme_modal").modal('show');
+});
+
+/*
+Oguzhan Ulucay 18/07/2017
+T.C kimlik numarasi icin ozel validation.
+T.C kimlik numaralarinin basinda sifir olamaz.
+T.C kimlik numaralarinin sonunda tek sayi olamaz.
+*/
+$.formUtils.addValidator
+({
+  name : 'tc_kimlik_dogrulama',
+  validatorFunction : function(value, $el, config, language, $form) {
+    if(value.substr(0,1) == 0)
+    return false;
+    if(value.substr(10,1)%2 != 0)
+    return false;
+    else{
+      return true;
+    }
+  },
+  errorMessage : 'Lutfen T.C kimlik numaranizi giriniz',
+  errorMessageKey: 'Lutfen gecerli T.C Kimlik No giriniz.'
+});
+$.validate({
+  /*modules : 'location, date, security, file, logic',//18.7.17 Logic eklendi. -Oguzhan
+  onModulesLoaded : function() {
+  $('#country').suggestCountry();
+}*/
+});
+$('#presentation').restrictLength( $('#pres-max-length') );
+
+/*
+21.07.2017 Oguzhan
+Eklemeler:
+Form data serialize edilmeden once maskelemeler kaldirilir daha sonra da
+tekrar maskeleme yapilir.
+*/
+
+
+$("#firma_kayit").submit(function(e)
+{
+  var obj,curtop;
+  var json;
+
+  var postData, formURL;
+  $('#telefon').unmask();//telefon verilerinin maskesini kaldirir.
+  $('#telefonkisisel').unmask();
+  postData = $(this).serialize();
+  $('#telefon').mask('(000) 000-00-00');//telefon verisini tekrar maskeler
+  $('#telefonkisisel').mask('(000) 000-00-00');
+  formURL = $(this).attr('action');
+
+  $.ajax(
+    {
+      beforeSend: function(){
+
+        $('.ajax-loader').css("visibility", "visible");
+      },
+      url : formURL,
+      type: "POST",
+      data : postData,
+      success:function(data, textStatus, jqXHR)
+      {
+
+        $('.ajax-loader').css("visibility", "hidden");
+        if(data=="error"){
+          $('#mesaj').bPopup({
+            speed: 650,
+            transition: 'slideIn',
+            transitionClose: 'slideBack',
+            autoClose: 5000
+          });
+          setTimeout(function(){ location.href="{{asset('firmaKayit')}}"}, 5000);
+        }
+        else{
+          $('#kayit_msg').bPopup({
+            speed: 650,
+            transition: 'slideIn',
+            transitionClose: 'slideBack',
+            autoClose: 5000
+          });
+          setTimeout(function(){ location.href="{{asset('/')}}"}, 5000);
+        }
+        e.preventDefault();
+      },
+      error: function(jqXHR, textStatus, errorThrown)
+      {
+        console.log(textStatus + "," + errorThrown);
+        location.reload();
+
+        window.scroll(0,0);//Kullanıcıların hatasını görebilmesi için sayfa başına yeniliyor.
+      }
+    });
+    e.preventDefault(); //STOP default action
+  });
+
+  /*
+  Oguzhan Ulucay 13/07/2017
+  Fatura bilgileri kayit formu icin script.
+  Fonksiyon radio buttonlara tiklanildiginda cagrilir.
+  Tiklanilan buttona gore bireysel yada kurumsal
+  fatura formlarin display ozelliklerini kapayip acar.
+  form_kurumsal = kurumsal fatura form div elementi.
+  form_bireysel = bireysel fatura form div elementi.
+  */
+
+  /*
+  25-26.07.2017 Oguzhan Ulucay
+  Sirket adresini form'un altinda yer alan fatura adresini kopyalama scripti.
+  Checkbox'a basilmasi hallinde aktif olup yukarida ki ve asagida ki formlarin
+  bosluk veya doluluk durumlarini kontrol edip kopyalama islemini gerceklestirir.
+  flag_first_adrs_filled = Sirket adresinin tum fieldlarinin dolulugunu tutar.
+  flag_second_adrs_empty = Fatura adresinin tum fieldlarinin boslugunu tutar.
+  flag_return_original   = Fatura adresinin tum fieldlarinin dolulugunu tutar.
+  */
+
+  /*
+  Oguzhan Ulucay 18.07.2017
+  Tooltips
+  */
+
+  var email;
+  var email_giris;
+  function emailControl(){
+    email = $('#email').val();
+    emailGet();
+  }
+  function email_girisControl(){
+    email_giris = $('#email_giris').val();
+    email_girisGet();
+  }
+  function email_girisGet(){
+    $.ajax({
+      type:"GET",
+      url:"{{asset('email_girisControl')}}",
+      data:{email_giris:email_giris},
+      cache: false,
+      success: function(data){
+        console.log(data);
+        if(data==1){
+          $('#email2').bPopup({
+            speed: 650,
+            transition: 'slideIn',
+            transitionClose: 'slideBack',
+            autoClose: 5000
+          });
+          $('#email_giris').val("");
+        }
+      }
+    });
+  }
+  function emailGet(){
+    $.ajax({
+      type:"GET",
+      url:"{{asset('emailControl')}}",
+      data:{email:email},
+      cache: false,
+      success: function(data){
+        console.log(data);
+        if(data==1){
+          $('#email1').bPopup({
+            speed: 650,
+            transition: 'slideIn',
+            transitionClose: 'slideBack',
+            autoClose: 5000
+          });
+          $('#email').val("");
+        }
+      }
+    });
+  }
+  </script>
+
+
+@endsection
