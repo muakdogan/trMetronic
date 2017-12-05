@@ -7,7 +7,7 @@
   <link href="{{asset('MetronicFiles/global/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{asset('MetronicFiles/global/plugins/simple-line-icons/simple-line-icons.min.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{asset('MetronicFiles/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet')}}" type="text/css" />
-  <link href="{{asset('MetronicFiles/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css')}}" rel="stylesheet" type="text/css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
   <!-- END GLOBAL MANDATORY STYLES -->
   <!-- BEGIN THEME GLOBAL STYLES -->
   <link href="{{asset('MetronicFiles/global/css/components.min.css')}}" rel="stylesheet" id="style_components" type="text/css" />
@@ -167,14 +167,17 @@
                     <!-- İletişim ve Fatura Adresleri Aynı-->
                     <div class="form-group">
                       <label class="col-md-3 control-label">Fatura ve İletişim adresi</label>
-                      <div class="col-md-8">
-                        <input type="checkbox" class="make-switch switch-radio1" data-on-text="&nbsp;Aynı&nbsp;" data-off-text="&nbsp;Farklı&nbsp;">
+                      <div class="col-md-9">
+                        <input id="adreslerAyni" type="checkbox" data-off-text="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FARKLI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" data-on-text="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AYNI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" checked="false" class="BSswitch">
                       </div>
                     </div>
                     <!-- Firma Ünvanı -->
                     <div class="form-group">
                       <label class="col-md-3 control-label">Fatura Türü</label>
-                      <div class="col-md-8">
+                      <div class="col-md-9 make-switch">
+                        <input id="faturaTuru" name="fatura_tur" type="checkbox" data-off-text="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BİREYSEL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" data-on-text="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KURUMSAL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" checked="false" class="BSswitch">
+                      </div>
+                      <!--div class="col-md-5">
                         <div class="radio">
                           <label>
                             <input type="radio" name="fatura_tur" id="fatura_tur_kurumsal" value="kurumsal" checked> Kurumsal
@@ -184,7 +187,7 @@
                           </label>
                           <span class="help-block" style="color:red"> {{ $errors->first('fatura_tur') }}</span>
                         </div>
-                      </div>
+                      </div-->
                     </div>
                     <!-- Firma Ünvanı (Kurumsal)-->
                     <div class="form-group kurumsal">
@@ -209,7 +212,7 @@
                       </div>
                     </div>
                     <!-- Fatura Adresi -->
-                    <div class="form-group fatura_adres_group">
+                    <div class="form-group fatura_adres_group" style="display:none;">
                       <label class="col-md-3 control-label">Fatura Adresi</label>
                       <div class="col-md-8">
                         {!! Form::text('fatura_adres', null,
@@ -223,7 +226,7 @@
                       </div>
                     </div>
                     <!-- Fatura İli -->
-                    <div class="form-group fatura_adres_group">
+                    <div class="form-group fatura_adres_group" style="display:none;">
                       <label class="col-md-3 control-label">İl</label>
                       <div class="col-md-8">
                         <select class="form-control" name="fatura_il_id" id="fatura_il_id"
@@ -238,7 +241,7 @@
                       </div>
                     </div>
                     <!-- Fatura İlçesi -->
-                    <div class="form-group fatura_adres_group">
+                    <div class="form-group fatura_adres_group" style="display:none;">
                       <label class="col-md-3 control-label">İlçe</label>
                       <div class="col-md-8">
                         <select class="form-control" name="fatura_ilce_id" id="fatura_ilce_id"
@@ -249,7 +252,7 @@
                       </div>
                     </div>
                     <!-- Fatura Semti -->
-                    <div class="form-group fatura_adres_group">
+                    <div class="form-group fatura_adres_group" style="display:none;">
                       <label class="col-md-3 control-label">Semt</label>
                       <div class="col-md-8">
                         <select class="form-control" name="fatura_semt_id" id="fatura_semt_id"
@@ -313,30 +316,114 @@
 
               <!--/row-->
               <div class="form-group">
-                <label>Firma Adı</label>
-                  <div class="input-group">
-                    <span class="input-group-addon">
-                      <i class="fa fa-briefcase" aria-hidden="true"></i>
-                    </span>
-                    <input type="text" class="form-control" placeholder="Firma Adı">
-                  </div>
-              </div>
-              <div class="form-group">
-                  <label>Circle Input</label>
-                  <div class="input-group">
-                      <span class="input-group-addon input-circle-left">
-                          <i class="fa fa-envelope"></i>
-                      </span>
-                      {!! Form::text('firma_adi', null,
+                <h4 class="form-section">Kişisel Bilgiler</h4>
+                <div class="col-md-6">
+                  <!-- Kullanıcı Adı -->
+                  <div class="form-group">
+                    <label class="col-md-3 control-label">Ad</label>
+                    <div class="col-md-8">
+                      {!! Form::text('adi', null,
                                     array('class'=>'form-control',
-                                    'placeholder'=>'Firma adı',
+                                    'placeholder'=>'Adınız',
                                     'data-validation'=>'length',
-                                    'data-validation-length'=>'min1',
-                                    'data-validation-error-msg'=>'Lütfen bu alanı doldurunuz!')) !!}
+                                    'data-validation-length'=>'min2',
+                                    'data-validation-error-msg'=>'Lütfen bu alanı doldurunuz!')
+                      ) !!}
+                      <span class="help-block" style="color:red"> {{ $errors->first('adi') }}</span>
                       <span class="help-block" style="color:red"> {{ $errors->first('firma_adi') }}</span>
-                      <!--input type="text" class="form-control input-circle-right" placeholder="Email Address"-->
+                    </div>
                   </div>
-              </div>
+                  <!-- Kullanıcı Soyadı -->
+                  <div class="form-group">
+                    <label class="col-md-3 control-label">Soyad</label>
+                    <div class="col-md-8">
+                      {!! Form::text('soyadi', null,
+                                    array('class'=>'form-control',
+                                    'placeholder'=>'Soyadınız',
+                                    'data-validation'=>'length',
+                                    'data-validation-length'=>'min2',
+                                    'data-validation-error-msg'=>'Lütfen bu alanı doldurunuz!')
+                      ) !!}
+                      <span class="help-block" style="color:red"> {{ $errors->first('soyadi') }}</span>
+                    </div>
+                  </div>
+                  <!-- Kullanıcı Ünvanı -->
+                  <div class="form-group">
+                    <label class="col-md-3 control-label">Ünvan</label>
+                    <div class="col-md-8">
+                      {!! Form::text('unvan', null,
+                                    array('class'=>'form-control',
+                                    'placeholder'=>'Ünvanınız',
+                                    'data-toggle' => 'tooltip',
+                                    'data-validation'=>'length',
+                                    'data-validation-length'=>'min2',
+                                    'data-validation-error-msg'=>'LÜtfen bu alanı doldurunuz!')
+                      ) !!}
+                      <span class="help-block" style="color:red"> {{ $errors->first('unvan') }}</span>
+                    </div>
+                  </div>
+                  <!-- Kullanıcı Telefonu -->
+                  <div class="form-group">
+                    <label class="col-md-3 control-label">Telefon</label>
+                    <div class="col-md-8">
+                      {!! Form::text('telefonkisisel', null,
+                                    array('id' => 'telefonkisisel',
+                                    'class'=>'form-control',
+                                    'placeholder'=>'Telefonunuz',
+                                    'data-validation'=>'length',
+                                    'data-validation-length'=>'3-17',
+                                    'data-validation-error-msg'=>'Lütfen bu alanı doldurunuz!')
+                      ) !!}
+                      <span class="help-block" style="color:red"> {{ $errors->first('telefonkisisel') }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <!-- Kullanıcı Emailı -->
+                  <div class="form-group">
+                    <label class="col-md-3 control-label">E-Posta</label>
+                    <div class="col-md-8">
+                      {!! Form::email('email_giris', null,
+                                     array('id'=>'email_giris','class'=>'form-control email',
+                                     'placeholder'=>'E-Postanız' ,
+                                     'onFocusout'=>'email_girisControl()',
+                                     'data-validation'=>'email' ,
+                                     'data-validation-error-msg'=>'Lütfen bu alanı doldurunuz!')
+                      ) !!}
+                      <span class="help-block" id="email_error" style="color:red" onload="findPos()">{{ $errors->first('email_giris') }}</span>
+                    </div>
+                  </div>
+                  <!-- Kullanıcı Pass -->
+                  <div class="form-group">
+                    <label class="col-md-3 control-label">Şifre</label>
+                    <div class="col-md-8">
+                      <input type="password" class="form-control" placeholder="******" name="password" id="password" onkeyup="CheckPasswordStrength(this.value)"
+                      data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"
+                      data-toggle="tooltip" >
+                      <span class="help-block" style="color:red"> {{ $errors->first('password') }}</span>
+                    </div>
+                    <span id="password_strength"></span>
+                    <span id="passwordmsg"></span>
+                  </div>
+                  <!-- Kullanıcı PassTekrar -->
+                  <div class="form-group">
+                    <label class="col-md-3 control-label">Şifre Onayla</label>
+                    <div class="col-md-8">
+                      <input type="password" class="form-control" placeholder="******" name="password_confirmation" id="password_confirmation" onkeyup="CheckPasswordStrength(this.value)"
+                      data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"
+                      data-toggle="tooltip">
+                      <span class="help-block" style="color:red"> {{ $errors->first('password_confirmation') }}</span>
+                      <span id="confirmMessage" class="confirmMessage"></span>
+                    </div>
+                  </div>
+                  <!-- Gönder Butonu -->
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Gönder</button>
+                  </div>
+
+                </div>
+
+
             </div>
           {!! Form::close() !!}
         </div>
@@ -349,7 +436,8 @@
 <script src="{{asset('MetronicFiles/global/plugins/jquery.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('MetronicFiles/global/scripts/app.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('MetronicFiles/pages/scripts/form-input-mask.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('MetronicFiles/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js" type="text/javascript"></script>
+
 <script src="{{asset('MetronicFiles/pages/scripts/components-bootstrap-switch.min.js')}}" type="text/javascript"></script>
 <script>
 /*
@@ -378,7 +466,7 @@ $("#password").tooltip({
   opacity: 0.7
 });
 $("#unvan").tooltip({
-  title: "Sirkette ki posizyonunuz",
+  title: "Sirkette ki pozisyonunuz",
   // place tooltip on the right edge
   placement: "right",
   offset: [-2, 10],
@@ -421,24 +509,23 @@ $("#tc_kimlik").tooltip({
 
 });
 // READY PARANTHESIS
+$('.BSswitch').bootstrapSwitch('state', true); //Init BSswitch
 
-$("#adres_kopyalayici").change(function(event){
-
-  if (document.getElementById("adres_kopyalayici").checked)
-  $(".fatura_adres_group").hide();
-
+$('#adreslerAyni').on('switchChange.bootstrapSwitch', function (event, state) {
+  if (state === true)
+    $(".fatura_adres_group").hide();
   else
-  $(".fatura_adres_group").show();
+    $(".fatura_adres_group").show();
 });
 
-$('input[type=radio][name=fatura_tur]').change(function(){
-  if($('input[name=fatura_tur]:checked').val() === 'bireysel'){
-    $('.bireysel').show();
-    $('.kurumsal').hide();
+$('#faturaTuru').on('switchChange.bootstrapSwitch', function (event, state) {
+  if(state === true){
+    $('.bireysel').hide();
+    $('.kurumsal').show();
   }
   else{
-    $('.kurumsal').show();
-    $('.bireysel').hide();
+    $('.kurumsal').hide();
+    $('.bireysel').show();
   }
   /*
   var form_kurumsal = document.getElementById('div_kurumsal');
