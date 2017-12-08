@@ -26,6 +26,10 @@ class Kullanici extends Authenticatable
   {
     return $this->belongsToMany('App\Firma','firma_kullanicilar', 'kullanici_id', 'firma_id')->withPivot('rol_id', 'unvan');
   }
+  public function firma_kullanici()
+  {
+    return $this->hasOne('App\FirmaKullanici','kullanici_id', 'id');
+  }
   public function yorumlar()
   {
     return $this->hasMany('App\Yorum', 'yorum_yapan_kullanici_id', 'id');

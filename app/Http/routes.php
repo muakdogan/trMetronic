@@ -196,35 +196,7 @@ Route::post('/kullaniciSifreDegisikligi', 'KullaniciController@kullaniciSifreDeg
 Route::post('/kullaniciIslemleriEkle/{id}', 'KullaniciController@kullaniciIslemleriEkle');
 Route::delete('/kullaniciDelete','KullaniciController@kullaniciSil');
 
-Route::post('/kullaniciIslemleriUpdate/{id}/{kul_id}', function (Request $request,$id,$kul_id) {
-  DB::beginTransaction();
-
-  try {
-    $firma = Firma::find($id);
-    $roller=  App\Rol::all();
-    $kullanici= App\Kullanici::find($kul_id);
-
-    $kullanici->adi = Str::title(strtolower($request->adi));
-    $kullanici->soyadi = Str::title(strtolower($request->soyadi));
-    $kullanici->email = $request->email;
-    $kullanici->save();
-
-    $firmaKullanicilar = App\FirmaKullanici::where('kullanici_id', '=',  $kul_id)
-    ->where('firma_id', '=',$id)->first();
-
-    $firmaKullanicilar->rol_id =$request->rol;
-    $firmaKullanicilar->unvan=$request->unvan;
-    $firmaKullanicilar->save();
-    DB::commit();
-    // all good
-  } catch (\Exception $e) {
-    $error="error";
-    DB::rollback();
-    return Response::json($error);
-  }
-  //return Redirect::to('/kullaniciIslemleri/'.$firma->id);
-
-});
+Route::post('/kullaniciIslemleriGuncelle', 'KullaniciController@kullaniciIslemleriGuncelle');
 
 Route::get('/kullanici/{kullanici_id?}',function($kullanici_id){
   $kullanici = DB::table('kullanicilar')

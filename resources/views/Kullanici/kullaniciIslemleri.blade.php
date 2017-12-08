@@ -1,7 +1,6 @@
-<?php $kullanici = Auth::user(); ?>
 @extends('layouts.appUser')
-@section('baslik') Kullanıcılar @endsection
-@section('aciklama') @endsection
+@section('baslik') Kullanıcı İşlemleri @endsection
+
 @section('head')
     <style>
         .short{
@@ -166,7 +165,6 @@
         <div class="portlet-body">
             <table class="table" >
                 <thead id="tasks-list" name="tasks-list">
-                <tr id="firma{{$firma->id}}">
                 <tr>
                     <th>Adı:</th>
                     <th>Soyadı:</th>
@@ -178,48 +176,27 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($firma->kullanicilar as $kullanici)
+                @foreach($firma->kullanicilar as $firmaKullanici)
                     <tr>
                         <td>
-                            {{$kullanici->adi}}
+                            {{$firmaKullanici->adi}}
                         </td>
                         <td>
-                            {{$kullanici->soyadi}}
+                            {{$firmaKullanici->soyadi}}
                         </td>
                         <td>
-                            {{$kullanici->email}}
-                        </td>
-                        <?php
-                        $rol_id  = App\FirmaKullanici::where( 'kullanici_id', '=', $kullanici->id)
-                            ->where( 'firma_id', '=', $firma->id)
-                            ->select('rol_id')->get();
-                        $rol_id=$rol_id->toArray();
-
-                        $querys = App\Rol::join('firma_kullanicilar', 'firma_kullanicilar.rol_id', '=', 'roller.id')
-                            ->where( 'firma_kullanicilar.rol_id', '=', $rol_id[0]['rol_id'])
-                            ->select('roller.adi as rolAdi')->get();
-                        $querys=$querys->toArray();
-
-                        $queryUnvan = App\FirmaKullanici::where( 'kullanici_id', '=', $kullanici->id)
-                            ->where( 'firma_id', '=', $firma->id)
-                            ->select('unvan')->get();
-                        $queryUnvan= $queryUnvan->toArray();
-
-                        ?>
-
-                        <td>
-                            {{$querys[0]['rolAdi']}}
+                            {{$firmaKullanici->email}}
                         </td>
                         <td>
-                            {{$queryUnvan[0]['unvan']}}
+                            {{$firmaKullanici->firma_kullanici->roller->adi}}
                         </td>
-                        <td> <button name="open-modal-kullanici"  value="{{$kullanici->id}}" class="btn purple btn-xs open-modal-kullanici" >Düzenle</button></td>
                         <td>
-                            {{ Form::open(array('url'=>'kullaniciDelete','method' => 'DELETE', 'files'=>true)) }}
-                            <input type="hidden" name="kullanici_id"  id="kullanici_id" value="{{$kullanici->id}}">
-                            {{ Form::submit('Sil', ['class' => 'btn purple btn-xs']) }}
-                            {{ Form::close() }}
-                            <div class="modal fade" id="myModal-kullaniciDüzenle-{{$kullanici->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            {{$firmaKullanici->firma_kullanici->unvan}}
+                        </td>
+                        @if($kullanici->firma_kullanici->roller->adi=='Yönetici' && $kullanici->id != $firmaKullanici->id)
+                        <td>
+                            <button name="open-modal-kullanici"  value="{{$firmaKullanici->id}}" class="btn purple btn-xs open-modal-kullanici" >Düzenle</button>
+                            <div class="modal fade" id="myModal-kullaniciDüzenle-{{$firmaKullanici->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -227,49 +204,31 @@
                                             <h4 class="modal-title" id="myModalLabel">Kullanıcı Düzenle</h4>
                                         </div>
                                         <div class="modal-body">
-                                            {!! Form::open(array('id'=>'kullanici_up_kayit','url'=>'kullaniciIslemleriUpdate/'.$firma->id.'/'.$kullanici->id,'class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
-
+                                            {!! Form::open(array('url'=>'kullaniciIslemleriGuncelle','class'=>'form-horizontal','method'=>'POST', 'files'=>true)) !!}
                                             <div class="form-group">
                                                 <label for="inputEmail3" class="col-sm-3 control-label">Adı</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="adi" name="adi" placeholder="Adı giriniz" value="{{$kullanici->adi}}" required>
+                                                    <input type="text" class="form-control" id="adi" name="adi" placeholder="Adı giriniz" value="{{$firmaKullanici->adi}}" required>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputEmail3" class="col-sm-3 control-label">Soyadı</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="soyadi" name="soyadi" placeholder="Soyadı giriniz" value="{{$kullanici->soyadi}}" required>
+                                                    <input type="text" class="form-control" id="soyadi" name="soyadi" placeholder="Soyadı giriniz" value="{{$firmaKullanici->soyadi}}" required>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputEmail3" class="col-sm-3 control-label">Email</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control " id="email" name="email" placeholder="Email giriniz" value="{{$kullanici->email}}" required>
+                                                    <input type="text" class="form-control " id="email" name="email" placeholder="Email giriniz" value="{{$firmaKullanici->email}}" required disabled>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="inputEmail3" class="col-sm-3 control-label">Rol</label>
-                                                <?php
-                                                $rol_id  = App\FirmaKullanici::where( 'kullanici_id', '=', $kullanici->id)
-                                                    ->where( 'firma_id', '=', $firma->id)
-                                                    ->select('rol_id')->get();
-                                                $rol_id=$rol_id->toArray();
-
-                                                $querys = App\Rol::join('firma_kullanicilar', 'firma_kullanicilar.rol_id', '=', 'roller.id')
-                                                    ->where( 'firma_kullanicilar.rol_id', '=', $rol_id[0]['rol_id'])
-                                                    ->select('roller.adi as rolAdi')->get();
-                                                $querys=$querys->toArray();
-
-                                                $queryUnvan = App\FirmaKullanici::where( 'kullanici_id', '=', $kullanici->id)
-                                                    ->where( 'firma_id', '=', $firma->id)
-                                                    ->select('unvan')->get();
-                                                $queryUnvan= $queryUnvan->toArray();
-
-                                                ?>
                                                 <div class="col-sm-9">
                                                     <select class="form-control" name="rol" id="rol" required>
                                                         @foreach($roller as $rol)
-                                                            @if($querys[0]['rolAdi'] == $rol->adi)
+                                                            @if($firmaKullanici->firma_kullanici->roller->adi == $rol->adi)
                                                                 <option selected value="{{$rol->id}}" >{{$rol->adi}}</option>
                                                             @else
                                                                 <option value="{{$rol->id}}" >{{$rol->adi}}</option>
@@ -281,12 +240,12 @@
                                             <div class="form-group">
                                                 <label for="inputEmail3" class="col-sm-3 control-label">Ünvan</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="unvan" name="unvan" placeholder="Ünvan giriniz" value="{{$queryUnvan[0]['unvan']}}" required>
+                                                    <input type="text" class="form-control" id="unvan" name="unvan" placeholder="Ünvan giriniz" value="{{$firmaKullanici->firma_kullanici->unvan}}" required>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="firma_id"  id="firma_id" value="{{$firma->id}}">
-
-                                            {!! Form::submit('Kaydet', array('url'=>'kullaniciIslemleriUpdate/'.$firma->id.'/'.$kullanici->id ,'class'=>'btn btn-danger')) !!}
+                                            <input type="hidden" name="kullanici_id" value="{{$firmaKullanici->id}}">
+                                            {!! Form::submit('Kaydet', array('class'=>'btn btn-danger')) !!}
                                             {!! Form::close() !!}
                                         </div>
                                         <div class="modal-footer">
@@ -294,11 +253,20 @@
                                     </div>
                                 </div>
                             </div>
+
                         </td>
+                        <td>
+                            {{ Form::open(array('url'=>'kullaniciDelete','method' => 'DELETE', 'files'=>true)) }}
+                            <input type="hidden" name="kullanici_id"  id="kullanici_id" value="{{$firmaKullanici->id}}">
+                            {{ Form::submit('Sil', ['class' => 'btn purple btn-xs']) }}
+                            {{ Form::close() }}
+                            </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>
             </table>
+            @if($kullanici->firma_kullanici->roller->adi=='Yönetici')
             <div class="modal fade" id="myModal-kullanici-ekle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -355,6 +323,7 @@
                 </div>
             </div>
             <button href="{{ url('/password/reset') }}" id="btn-add-kullanici-ekle" name="btn-add-kullanici" class="btn purple btn-xs" >Ekle</button>
+            @endif
         </div>
     </div>
 
