@@ -31,12 +31,13 @@
     <div class="row">
       <div class="col-md-12">
         <h1>Al Kazan Sat Kazan <!--span class="rotate">startup intro site, landing page, bootstrap template</span--> </h1>
-        <h3 class="weight-300">Tekliflerinizi hala emailla mı topluyorsunuz?</h3>
+        <h3 class="weight-300"><b>tamrekabet.com</b> Nedir?</h3>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <p>Onlarca firma TamRekabet ile maliyetlerini azaltıp, yeni pazarlara ulaşıyor...<br />Siz de TamRekabet'in avantajlarına hemen katılın!</p>
+        <p><b>tamrekabet.com</b> mal, hizmet veya yapım işi ihtiyacı olan firmaların teklif toplama süreçlerinde destek vererek <br/> bu ihtiyaçları karşılayabilecek satıcı firmalar ile buluşturur.</p>
+        <p><b>tamrekabet.com</b> satış süreçlerinde yenilikçi bir anlayışla satıcı firmaları alıcı firmaların taleplerinden haberdar eder. <br/> Ayrıca satıcı firmalar <b>tamrekabet.com</b> üzerinden kolayca tekliflerini gönderebilirler.</p>
         <a href="{{url('/firmaKayit')}}" class="btn navbar-btn btn-white">HEMEN ÜYE OLUN</a>
         <!--form class="form-inline margin-top sign-up-form">
           <input id="email_intro" type="email" placeholder="name@company.com" class="form-control">
@@ -75,20 +76,6 @@
 <!--   *** CUSTOMERS END ***-->
 <!--   *** FEATURES ***-->
 
-<!-- ***BİZ KİMİZ ***-->
-<section id="biz" class="section no-padding-bottom">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 col-lg-8 col-lg-offset-2 text-center">
-        <h2>Biz Kimiz?</h2>
-        <p>Kurucularının Dokuz Eylül Üniversitesi Bilgisayar Mühendisliği Bölümü Akademisyeni ve İktisat Bölümü Yüksek Linsans Öğrencisi olduğu tamrekabet.com Ocak 2016’da çalışmalarına başlamıştır. İlk aşamada ‘’Bilgi ve İletişim Teknolojilerinin Rekabet Üzerindeki Etkileri’’ konulu yüksek lisans tezinin uygulaması olan tamrekabet.com firmalar ile yapılan görüşmeler ve gelen talepler sonucunda aslında firmaların önemli bir ihtiyacına çözüm olduğu anlaşıldı.</p>
-        <p>Günümüzde gelişen rekabet koşulları, maliyetlerin sürekli düşürülmesini ve yeni müşterilere ulaşarak satış hacimlerinin sürekli arttırılmasını firmalar için vazgeçilmez çabalar haline getirmiştir. Tamrekabet.com bünyesindeki firmalara bir yandan satın alma süreçlerinde maliyetlerini düşürerek diğer yandan da yeni pazarlara ve firmalara kolayca ulaşıp satışlarını arttırarak önamli avantajlar sunuyor/ önemli bir değer yaratıyor.</p>
-        <p>59 sektörde binlerce kalem mal, hizmet ve yapım işi içeren tamrekabet.com günden güne büyüyen firma havuzu, yenilikçi ürün ve hizmetleri ile en kaliteli işletmeler arası ticaret platformunu sunmak için sürekli kendisini yenilemektedir.</p>
-        <p>Merkezi Dokuz Eylül Teknoloji Geliştirme Bölgesi İzmir’de bulunan tamrekabet.com genç ekibiyle, yeni teknolojileri sürekli takip ederek müşterilerine en iyi deneyimi sunmak için tüm gücüyle çalışmaya devam ediyor.</p>
-      </div>
-    </div>
-  </div>
-</section>
 <!-- ***NASIL ÇALIŞIR ***-->
 <section id="nasil" class="section testimonails background-gray-lighter">
   <div class="container">
@@ -100,6 +87,7 @@
             <div class="testimonial same-height-always">
               <div class="text" style="text-align:center">
                 <span class="numbers">1</span>
+                <div class="circle-avatar" style="background-image:url(images/fe/nasilCalisir1.png)"></div>
                 <h5>İHTİYACINIZI OLUŞTURUN</h5>
                 <p>Alıcı firma mal, hizmet veya yapım işi ihtiyacı için ilan oluşturur.</p>
               </div>
@@ -109,6 +97,7 @@
             <div class="testimonial same-height-always">
               <div class="text" style="text-align:center">
                 <span class="numbers">2</span>
+                <div class="circle-avatar" style="background-image:url(images/fe/nasilCalisir2.png)"></div>
                 <h5>İHTİYACINIZI DUYURUN</h5>
                 <p>İhtiyacınızı sadece onaylı tedarikçilerinizle ya da seçeceğiniz firmalar ile paylaşabileceğiniz gibi sektördeki kayıtlı tüm firmalarla da paylaşabilirsiniz. Seçiminize göre sistem firmalara bildirim gönderecektir.</p>
               </div>
@@ -118,6 +107,7 @@
             <div class="testimonial same-height-always">
               <div class="text" style="text-align:center">
                 <span class="numbers">3</span>
+                <div class="circle-avatar" style="background-image:url(images/fe/nasilCalisir3.png)"></div>
                 <h5>TEKLİFLERİ TOPLAYIN</h5>
                 <p>Belirlediğiniz satıcı firmalar teklif vererek rekabet ederler.</p>
               </div>
@@ -127,6 +117,7 @@
             <div class="testimonial same-height-always">
               <div class="text" style="text-align:center">
                 <span class="numbers">4</span>
+                <div class="circle-avatar" style="background-image:url(images/fe/nasilCalisir4.png)"></div>
                 <h5>KAZANANI BELİRLEYİN</h5>
                 <p>Alıcı firma teklifleri ve firma profillerini karşılaştırır ve kazananı belirler.</p>
               </div>
@@ -137,6 +128,35 @@
     </div>
   </div>
 </section>
+<style>
+div.circle-avatar{
+  /* make it responsive */
+  max-width: 100%;
+  width:100%;
+  height:auto;
+  display:block;
+  /* div height to be the same as width*/
+  padding-top:100%;
+
+  /* make it a cirkle */
+  border-radius:50%;
+
+  /* Centering on image`s center*/
+  background-position-y: center;
+  background-position-x: center;
+  background-repeat: no-repeat;
+
+  /* it makes the clue thing, takes smaller dimention to fill div */
+  background-size: cover;
+
+  /* it is optional, for making this div centered in parent*/
+  margin: 0 auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  }
+</style>
 <!-- ***AVANTAJLARIMIZ ***-->
 <section id="avantaj" class="section-gray">
   <div class="container clearfix">
@@ -245,7 +265,7 @@
   </div>
 </section>
 <!-- *** NELER VAR ***-->
-<section id="neler" class="section background-gray-lighter">
+<section id="neler" class="section">
   <div class="container clearfix">
     <h2 class="text-center">tamrekabet.com'da Neler Var?</h2>
     <div class="row services">
@@ -296,8 +316,23 @@
     </div>
   </div>
 </section>
+<!-- ***BİZ KİMİZ ***-->
+<section id="biz" class="section background-gray-lighter">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-lg-8 col-lg-offset-2 text-center">
+        <h2>Biz Kimiz?</h2>
+        <p>Kurucularının Ocak 2016'da çalışmalarına başladığı tamrekabet.com ‘’Bilgi ve İletişim Teknolojilerinin Rekabet Üzerindeki Etkileri’’ konulu akademik bir çalışmanın uygulaması olarak doğmuştur. tamrekabet.com bünyesindeki firmalara, bir yandan satın alma süreçlerinde maliyetlerini düşürmek, diğer yandan da yeni pazarlara ve firmalara kolayca ulaşıp satışlarını arttırmak gibi önemli avantajlar sunmaktadır. Merkezi Dokuz Eylül Üniversitesi Teknoloji Geliştirme Bölgesi - İzmir’de bulunan ve 59 sektörde binlerce kalem mal, hizmet ve yapım işi içeren tamrekabet.com günden güne büyüyen firma havuzu, yenilikçi ürün ve hizmetleri ile en kaliteli işletmeler arası ticaret platformunu sunmak için sürekli olarak kendisini yenilemektedir.</p>
+        <!--p>Kurucularının Dokuz Eylül Üniversitesi Bilgisayar Mühendisliği Bölümü Akademisyeni ve İktisat Bölümü Yüksek Linsans Öğrencisi olduğu tamrekabet.com Ocak 2016’da çalışmalarına başlamıştır. İlk aşamada ‘’Bilgi ve İletişim Teknolojilerinin Rekabet Üzerindeki Etkileri’’ konulu yüksek lisans tezinin uygulaması olan tamrekabet.com firmalar ile yapılan görüşmeler ve gelen talepler sonucunda aslında firmaların önemli bir ihtiyacına çözüm olduğu anlaşıldı.</p>
+        <p>Günümüzde gelişen rekabet koşulları, maliyetlerin sürekli düşürülmesini ve yeni müşterilere ulaşarak satış hacimlerinin sürekli arttırılmasını firmalar için vazgeçilmez çabalar haline getirmiştir. Tamrekabet.com bünyesindeki firmalara bir yandan satın alma süreçlerinde maliyetlerini düşürerek diğer yandan da yeni pazarlara ve firmalara kolayca ulaşıp satışlarını arttırarak önamli avantajlar sunuyor/ önemli bir değer yaratıyor.</p>
+        <p>59 sektörde binlerce kalem mal, hizmet ve yapım işi içeren tamrekabet.com günden güne büyüyen firma havuzu, yenilikçi ürün ve hizmetleri ile en kaliteli işletmeler arası ticaret platformunu sunmak için sürekli kendisini yenilemektedir.</p>
+        <p>Merkezi Dokuz Eylül Teknoloji Geliştirme Bölgesi İzmir’de bulunan tamrekabet.com genç ekibiyle, yeni teknolojileri sürekli takip ederek müşterilerine en iyi deneyimi sunmak için tüm gücüyle çalışmaya devam ediyor.</p-->
+      </div>
+    </div>
+  </div>
+</section>
 <!-- *** SSS ***-->
-<section class="section no-padding-bottom">
+<section class="section">
   <div class="container">
     <div class="row">
       <div class="col-md-12 col-lg-8 col-lg-offset-2 text-center">
@@ -312,7 +347,7 @@
         </div>
         <button class="accordion">Tamrekabet.com ne kadar güvenli?</button>
         <div class="panel">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+          <p>Tamrekabet.com'da verileriniz 128 bit şifreleme ile güvenlik altına alındıktan sonra transfer edilmektedir.</p>
         </div>
         <button class="accordion">Tamrekabet.com bilgilerimi paylaşır mı?</button>
         <div class="panel">
@@ -386,21 +421,6 @@
     </div>
   </div>
 </section>
-<footer class="footer">
-  <div class="footer__copyright">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6">
-          <p>&copy;2017 tamrekabet</p>
-        </div>
-        <div class="col-md-6">
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
-@endsection
-
 <script>
   var acc = document.getElementsByClassName("accordion");
   var i;
@@ -417,3 +437,17 @@
     }
   }
 </script>
+<footer class="footer">
+  <div class="footer__copyright">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <p>&copy;2017 tamrekabet</p>
+        </div>
+        <div class="col-md-6">
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+@endsection

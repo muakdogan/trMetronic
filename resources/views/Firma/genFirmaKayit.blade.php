@@ -1,17 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.fe.feMaster')
+<!-- navbar-->
+@include('FrontEnd.ustMenu')
 
 
   @section('head')
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentelella Alela! | </title>
-
-    <!-- Bootstrap -->
-    <link href="admin/genvendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="admin/genvendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
@@ -29,10 +22,8 @@
     <!-- bootstrap-daterangepicker -->
     <link href="admin/genvendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 
-    <!-- Custom Theme Style -->
-    <link href="../genbuild/css/custom.min.css" rel="stylesheet">
 
-      <link href="{{asset('css/multi-select.css')}}" media="screen" rel="stylesheet" type="text/css"></link>
+    <link href="{{asset('css/multi-select.css')}}" media="screen" rel="stylesheet" type="text/css"></link>
   @endsection
 
   @section('bodyAttributes')
@@ -84,7 +75,7 @@
               <div class="col-md-6 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Firma Bilgileri<small>different form elements</small></h2>
+                    <h2>Firma Bilgileri</h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
@@ -112,7 +103,7 @@
 
                           <select class="form-control deneme" name="sektor_id[]" id="custom-headers" multiple='multiple'value="{{1}}" data-validation = "required" data-validation-error-msg = "Lütfen Sektör Seçiniz">
                             @foreach($sektorler as $sektor)
-                                    <option  value="{{$sektor->id}}">{{$sektor->adi}}</option>
+                              <option  value="{{$sektor->id}}">{{$sektor->adi}}</option>
                             @endforeach
                           </select>
                           <span class="help-block" style="color:red"> {{ $errors->first('sektor_id') }}</span>
@@ -121,7 +112,7 @@
                       <div class="form-group ">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12">Telefon </label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          {!! Form::text('telefon', '5125119612',
+                          {!! Form::text('telefon', null,
                                         array('id' => 'telefon',
                                         'class'=>'form-control',
                                         'placeholder'=>'Telefonunuz',
@@ -139,7 +130,7 @@
                           data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!" value="{{1}}">
                             <option selected disabled>İl Seçiniz</option>
                             @foreach($iller_query as $il)
-                                   <option value="{{$il->id}}">{{$il->adi}}</option>
+                              <option value="{{$il->id}}">{{$il->adi}}</option>
                             @endforeach
                           </select>
                           <span class="help-block" style="color:red"> {{ $errors->first('il_id') }}</span>
@@ -184,14 +175,14 @@
                       </br></br>
 
                       <div class="x_title">
-                        <h2>Kullanıcı Bilgileri<small>different form elements</small></h2>
+                        <h2>Kullanıcı Bilgileri</h2>
                         <div class="clearfix"></div>
                       </div>
 
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="adi">Ad</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          {!! Form::text('adi', 'Özenç',
+                          {!! Form::text('adi', null,
                                         array('class'=>'form-control',
                                         'placeholder'=>'Adınız',
                                         'data-validation'=>'length',
@@ -204,7 +195,7 @@
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="soyadi">Soyad</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          {!! Form::text('soyadi', 'Çelik',
+                          {!! Form::text('soyadi', null,
                                         array('class'=>'form-control',
                                         'placeholder'=>'Soyadınız',
                                         'data-validation'=>'length',
@@ -217,7 +208,7 @@
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="unvan">Ünvan</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          {!! Form::text('unvan', 'ADmin',
+                          {!! Form::text('unvan', null,
                                         array('class'=>'form-control',
                                         'placeholder'=>'Ünvanınız',
                                         'data-toggle' => 'tooltip',
@@ -231,7 +222,7 @@
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="telefonkisisel">Telefon</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          {!! Form::text('telefonkisisel', '5380583230',
+                          {!! Form::text('telefonkisisel', null,
                                         array('id' => 'telefonkisisel',
                                         'class'=>'form-control',
                                         'placeholder'=>'Telefonunuz',
@@ -245,7 +236,7 @@
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-12" for="email_giris">E-Mail</label>
                         <div class="col-md-9 col-sm-9 col-xs-12">
-                          {!! Form::email('email_giris', 'ozenc.celik@ceng.deu.edu.tr',
+                          {!! Form::email('email_giris', null,
                                          array('id'=>'email_giris','class'=>'form-control email',
                                          'placeholder'=>'E-postanız' ,
                                          'onFocusout'=>'email_girisControl()',
@@ -281,7 +272,7 @@
                       </br></br>
 
                       <div class="x_title">
-                        <h2>Fatura Bilgileri<small>different form elements</small></h2>
+                        <h2>Fatura Bilgileri</h2>
                         <div class="clearfix"></div>
                       </div>
 
