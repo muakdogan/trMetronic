@@ -49,7 +49,9 @@ Debugbar::info(session()->all());
 <!-- END HEAD -->
 
 <body id="app-layout" class="page-container-bg-solid page-header-menu-fixed" @yield('bodyAttributes')>
+
 <div class="page-wrapper">
+
     <div class="page-wrapper-row">
         <div class="page-wrapper-top">
         @include('layouts.headerUser'){{--sitenin ust kismini (header) include eder--}}
