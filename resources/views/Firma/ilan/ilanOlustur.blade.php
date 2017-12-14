@@ -9,7 +9,7 @@ $i=1;
 ?>
 @extends('layouts.appUser')
 @section('baslik') İlan Oluştur @endsection
-@section('aciklama') @endsection
+
 @section('head')
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="{{asset('css/multi-select.css')}}" media="screen" rel="stylesheet" type="text/css"></link>

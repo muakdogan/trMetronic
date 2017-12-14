@@ -805,16 +805,16 @@ DebugBar::info($ilan);
         var count=0;
 
         @if($kullaniciTeklifi!=null)
-            var toplamFiyat={{$kullaniciTeklifi['kdv_dahil_fiyat']}};
-            var kdvsizToplamFiyat={{$kullaniciTeklifi['kdv_haric_fiyat']}};
+            var toplamFiyat="{{$kullaniciTeklifi['kdv_dahil_fiyat']}}";
+            var kdvsizToplamFiyat="{{$kullaniciTeklifi['kdv_haric_fiyat']}}";
         @else
             var toplamFiyat;
             var kdvsizToplamFiyat;
         @endif
 
 
-        var ilan_turu={{$ilan->ilan_turu}};
-        var sozlesme_turu={{$ilan->sozlesme_turu}};
+        var ilan_turu="{{$ilan->ilan_turu}}";
+        var sozlesme_turu="{{$ilan->sozlesme_turu}}";
 
         Number.prototype.formatMoney = function(c, d, t){
             var n = this,
@@ -1230,8 +1230,8 @@ DebugBar::info($ilan);
                 }, 300);
             });
         })(jQuery);
-        var ilan_id = {{$ilan->id}};
-        var ilanStatu = {{$ilan->statu}};
+        var ilan_id = "{{$ilan->id}}";
+        var ilanStatu = "{{$ilan->statu}}";
 
         $("#btn_ilaniPasifEt").click(function(e) {
             $.ajax({

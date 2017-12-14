@@ -728,7 +728,7 @@ class FirmaController extends Controller{
 
     if ($validator->fails()) {
         // send back to the page with the input data and errors
-        return false;
+        return "Brosur Eklenemedi PDF dosya turu gerekli.";
     }
     else {
         // checking file is valid.
