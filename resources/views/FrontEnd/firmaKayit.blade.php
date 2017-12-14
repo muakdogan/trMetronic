@@ -1,5 +1,4 @@
 @extends('layouts.fe.feMaster')
-
 <!--heade eklemeler-->
 @section('head')
   <!-- BEGIN GLOBAL MANDATORY STYLES -->
@@ -34,7 +33,7 @@
         </ul>
       </div>
     @endif
-    <section id="biz" class="section background-gray-lighter">
+    <section class="section background-gray-lighter" data-offset="120">
       <div class="container">
         <div class="row">
           <div class="col-md-12 col-lg-12 text-center">
@@ -146,7 +145,8 @@
                     <div class="form-group">
                       <label class="col-md-3 control-label">Firma Sektörleri</label>
                       <div class="col-md-8">
-                        <select class="form-control deneme" name="sektor_id[]" id="custom-headers" multiple='multiple'value="{{1}}" data-validation = "required" data-validation-error-msg = "Lütfen Sektör Seçiniz">
+                        <p id ='sektor_count' style='font-size:12px;color:#9055a2;font-weight: bold;'>Lütfen maksimum 5 sektör seçiniz!</p>
+                        <select class="form-control deneme" name="sektor_id[]" id="custom-headers" multiple='multiple' value="{{1}}" data-validation = "required" data-validation-error-msg = "Lütfen Sektör Seçiniz">
                           @foreach($sektorler as $sektor)
                             <option  value="{{$sektor->id}}">{{$sektor->adi}}</option>
                           @endforeach
@@ -437,7 +437,8 @@
 <script src="{{asset('MetronicFiles/global/scripts/app.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('MetronicFiles/pages/scripts/form-input-mask.min.js')}}" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js" type="text/javascript"></script>
-
+<script src="{{asset('js/jquery.multi-select.js')}}" type="text/javascript"></script>
+<script type="text/javascript" src="{{asset('js/jquery.quicksearch.js')}}"></script>
 <script src="{{asset('MetronicFiles/pages/scripts/components-bootstrap-switch.min.js')}}" type="text/javascript"></script>
 <script>
 /*
@@ -664,7 +665,7 @@ var count_for_header = 5;
 
 $('#custom-headers').multiSelect({
   selectableHeader: "</i><input type='text'  class='search-input col-sm-12 search_icon' autocomplete='off' placeholder='Sektör Seçiniz'></input>",
-  selectionHeader: "<p id = 'sektor_count' style='font-size:12px;color:green'>Lütfen Sektör Seçiniz</p>",
+  selectionHeader: "<div class='custom-header'>Seçtiğiniz Sektörler</div>",
   afterInit: function(ms){
     var that = this,
     $selectableSearch = that.$selectableUl.prev(),
@@ -691,10 +692,10 @@ $('#custom-headers').multiSelect({
     count = $(".ms-selection").find(".ms-selected").length;
 
     if(count!=5){
-      $("#sektor_count").text(" '"+(5-count)+"' sektör seçebilirsiniz");
+      $("#sektor_count").text(" '"+(5-count)+"' sektör daha seçebilirsiniz");
     }
     if(count==0){
-      $("#sektor_count").text("Lütfen Sektör Seçiniz");
+      $("#sektor_count").text("Lütfen maksimum 5 sektör seçiniz!");
     }
     this.qs1.cache();
   }
