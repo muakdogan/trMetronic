@@ -11,7 +11,7 @@
                     <th width="20%">KDV Oranı:</th>
                     <th width="25%">Fiyat:</th>
                     <th width="1%"></th>
-                    <th width="10%">Toplam:({{$firma->ilanlar->para_birimleri->adi}})</th>
+                    <th width="10%">Toplam:({{$para_birimi}})</th>
                   @endif  
             </tr>
             @foreach($ilan->ilan_goturu_bedeller as $ilan_goturu_bedel)

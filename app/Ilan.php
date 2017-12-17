@@ -134,9 +134,9 @@ class Ilan extends Model
     }
     public function getFytSekli()
     {
-    if($this->kismi_fiyat == 0)
+    if($this->kismi_fiyat == 1)
       return 'Kısmi Fiyat Teklifine Açık';
-    else if ($this->kismi_fiyat == 1)
+    else if ($this->kismi_fiyat == 0)
       return 'Kısmi Fiyat Teklifine Kapalı';
     }
     public function getFirmaAdi()

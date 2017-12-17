@@ -50,7 +50,7 @@ class IlanController extends Controller
         if($firma->id!=$ilan->firmalar->id){
             abort('404');
         }
-        $teklifler = $ilan->teklif_hareketler()->whereRaw('tarih IN (select MAX(tarih) FROM teklif_hareketler GROUP BY teklif_id)')->paginate();
+        $teklifler = $ilan->teklif_hareketler()->whereRaw('tarih IN (select MAX(tarih) FROM teklif_hareketler GROUP BY teklif_id)')->orderBy('kdv_dahil_fiyat', 'ASC')->paginate();
 
         if (!$ilan)
             $firma->ilanlar = new Ilan();
@@ -89,8 +89,7 @@ class IlanController extends Controller
         if($ilan->kismi_fiyat == 0){
             $kazananKapali = KismiKapaliKazanan::where("ilan_id",$ilan->id)->get(); /////ilanın kazananı var mı kontrolü
             $kisKazanCount=0;
-
-            foreach($kazananKapali as $kazanK){
+            if(count($kazananKapali) != 0){
                 $kisKazanCount=1;
             }
         }
@@ -356,10 +355,10 @@ class IlanController extends Controller
 
         $ilan->adi=Input::get('ilan_adi');
         $ilan->aciklama=Input::get('aciklama');
-        $ilan->katilimcilar= Input::get('katilimcilar');//1 - Onayli tedarikciler | 2 - Belirli Firmalar | 3 - Tum Firmalar
+        $ilan->katilimcilar= Input::get('katilimcilar');
         $ilan->rekabet_sekli= Input::get('rekabet_sekli');//1 - Tam Rekabet | 2 - Sadece Basvuru
         $ilan->katilimcilar= Input::get('katilimcilar');//1 - Onaylı Tedarikçiler | 2 - Belirli Firmalar | 3 - Tüm Firmalar
-        $ilan->kismi_fiyat=Input::get('kismi_fiyat');//1 - Kısmi Fiyat Teklifine Kapalı | 2 - Kısmi Fiyat Teklifine Acik
+        $ilan->kismi_fiyat=Input::get('kismi_fiyat');//0 - Kısmi Fiyat Teklifine Kapalı | 1 - Kısmi Fiyat Teklifine Acik
         $ilan->sozlesme_turu= Input::get('sozlesme_turu');//0 - Birim Fiyatli | 1 - Goturu Bedel
         $ilan->teslim_yeri_satici_firma= Input::get('teslim_yeri');
         if($ilan->teslim_yeri_satici_firma=='Adrese Teslim'){
@@ -1279,6 +1278,33 @@ class IlanController extends Controller
         }
 
         return Response::json($json);
+    }
+
+    public function kismiRekabetService($firmaID,$ilanID){
+        $firma = Firma::find($firmaID);
+        $ilan = Ilan::find($ilanID);
+        if($firma->id!=$ilan->firmalar->id){
+            abort('404');
+        }
+        if (!$ilan)
+            $firma->ilanlar = new Ilan();
+        if (!$ilan->ilan_mallar)
+            $firma->ilanlar->ilan_mallar = new IlanMal();
+        if (!$ilan->ilan_hizmetler)
+            $firma->ilanlar->ilan_hizmetler = new IlanHizmet();
+        if (!$ilan->ilan_yapim_isleri)
+            $firma->ilanlar->ilan_yapim_isleri = new IlanYapimIsi();
+        if (!$ilan->ilan_goturu_bedeller)
+            $firma->ilanlar->ilan_goturu_bedeller = new IlanGoturuBedel();
+        $teklifler = $ilan->teklif_hareketler()->whereRaw('tarih IN (select MAX(tarih) FROM teklif_hareketler GROUP BY teklif_id)')->paginate();
+        $para_birimi=$ilan->para_birimleri->para_birimi();
+        $kullanici_id=Auth::user()->kullanici_id;
+
+        $dt = Carbon::today();
+        $time = Carbon::parse($dt);
+        $dt = $time->format('Y-m-d');
+
+        return view('Firma.ilan.kismiRekabet')->with('firma', $firma)->with('ilan',$ilan)->with('kullanici_id',$kullanici_id)->with("dt",$dt)->with("teklifler",$teklifler)->with("para_birimi",$para_birimi);
     }
 
     public function ilaniPasifEt(Request $request){

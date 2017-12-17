@@ -612,7 +612,7 @@ Route::get('ilanTeklifVer/{ilan_id}',['middleware'=>'auth' ,function ($ilan_id) 
   });
 
 
-Route::get('kismiRekabet/{firmaID}/{ilanID}' ,'KismiRekabetService@kismiRekabetService');
+Route::get('kismiRekabet/{firmaID}/{ilanID}' ,'IlanController@kismiRekabetService');
 
 Route::get('teklifGor/{id}/{ilanid}' ,'IlanController@teklifGor');
 Route::get('ilaniPasifEt' ,'IlanController@ilaniPasifEt');

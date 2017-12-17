@@ -1,10 +1,282 @@
 <?php $puanNumber = 0; ?>
+
+@if($ilan->kismi_fiyat==0 && $ilan->sozlesme_turu == 0)
+
+    <div class="portlet light ">
+        <div class="portlet-title">
+            <div class="caption caption-md">
+                <i class="icon-list theme-font"></i>
+                <span class="caption-subject theme-font bold uppercase">Teklif Veren Firmaların Listesi</span>
+            </div>
+        </div>
+        <div class="portlet-body">
+            <div class="portlet-body">
+                <div id="accordion1" class="panel-group">
+
+
+                    @if($ilan->ilan_turu == 1)
+                        {{--İlan Türü: Mal, Kısmi Teklife Kapalı, Birim Fiyatlı
+                            Rekabet sekmesindeki teklif veren firmalar ve detaylı kalem bilgileri listelenir
+                            Kazanan Belirlenir    --}}
+                        <?php $index = 1; ?>
+                        @foreach($teklifler as $telifHareketDetay)
+                            <div class="panel panel-default">
+                                <div class="panel-heading accordion-toggle" data-toggle="collapse" data-parent="#accordion1" data-target="#accordion1_{{$index}}">
+                                    <h4 class="panel-title">
+                                        <div class="row">
+                                            <div class="panel-title col-md-6">
+                                                @if($ilan->firma_id == session()->get('firma_id') || $telifHareketDetay->teklifler->firmalar->id == session()->get('firma_id'))
+                                                    {{--Sayfayı görüntüleyen kişi;
+                                                    *ilan sahibi ise tüm tekliflerin firmalarını görebilir
+                                                    *teklif sahibi ise sadece kendi teklifini görebilir
+                                                    --}}
+                                                <a href="javascript:;"> {{$index}}. {{$telifHareketDetay->teklifler->firmalar->adi}} </a>
+                                                @else
+                                                    <a href="javascript:;"> {{$index}}. X Firması </a>
+                                                @endif
+                                            </div>
+                                            <div class="panel-title col-md-6">
+                                                Toplam Teklif: {{$telifHareketDetay->kdv_dahil_fiyat}}{{$para_birimi}}
+                                            </div>
+                                        </div>
+                                    </h4>
+                                </div>
+                                <div id="accordion1_{{$index}}" class="panel-collapse collapse">
+                                    <div class="panel-body"><h4>Teklifin Kalem Detayları:</h4>
+
+                                        <table class="table" style="margin-bottom:0px">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Marka</th>
+                                                <th>Model</th>
+                                                <th>Miktar</th>
+                                                <th>KDV</th>
+                                                <th>Birim Fiyat</th>
+                                                <th>Teklif</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php $kalem_count=1; ?>
+                                            @foreach($telifHareketDetay->teklifler->getTeklifDetayMal() as $malKalemDetay)
+                                                <tr>
+                                                    <td>
+                                                        {{$kalem_count++}}
+                                                    </td>
+                                                    <td>
+                                                        {{$malKalemDetay->ilan_mallar->marka}}
+                                                    </td>
+                                                    <td>
+                                                        {{$malKalemDetay->ilan_mallar->model}}
+                                                    </td>
+                                                    <td>
+                                                        {{$malKalemDetay->ilan_mallar->miktar}}
+                                                    </td>
+                                                    <td>
+                                                        % {{$malKalemDetay->kdv_orani}}
+                                                    </td>
+                                                    <td>
+                                                        {{number_format($malKalemDetay->kdv_haric_fiyat, 2, ',', '.')}}{{$para_birimi}}
+                                                    </td>
+                                                    <td>
+                                                        {{number_format($malKalemDetay->kdv_dahil_fiyat, 2, ',', '.')}}{{$para_birimi}}
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <td colspan="3">Teklif Tarihi: {{date('G:i d/m/Y', strtotime($telifHareketDetay->tarih))}}</td>
+                                                <td colspan="3"><a href="javascript:;" class="btn purple-sharp btn-outline sbold uppercase btn-circle " style="float: right">Kazanan Olarak Belirle <i class="icon-trophy"></i></a></td>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                                <?php $index++; ?>
+                            </div>
+                        @endforeach
+
+                    @elseif($ilan->ilan_turu == 2)
+                        {{--İlan Türü: Hizmet, Kısmi Teklife Kapalı, Birim Fiyatlı
+                            Rekabet sekmesindeki teklif veren firmalar ve detaylı kalem bilgileri listelenir
+                            Kazanan Belirlenir    --}}
+                        <?php $index = 1; ?>
+                        @foreach($teklifler as $telifHareketDetay)
+                        <div class="panel panel-default">
+                            <div class="panel-heading accordion-toggle" data-toggle="collapse" data-parent="#accordion1" data-target="#accordion1_{{$index}}">
+                                <h4 class="panel-title">
+                                    <div class="row">
+                                        <div class="panel-title col-md-6">
+                                            @if($ilan->firma_id == session()->get('firma_id') || $telifHareketDetay->teklifler->firmalar->id == session()->get('firma_id'))
+                                                {{--Sayfayı görüntüleyen kişi;
+                                                *ilan sahibi ise tüm tekliflerin firmalarını görebilir
+                                                *teklif sahibi ise sadece kendi teklifini görebilir
+                                                --}}
+                                                <a href="javascript:;"> {{$index}}. {{$telifHareketDetay->teklifler->firmalar->adi}} </a>
+                                            @else
+                                                <a href="javascript:;"> {{$index}}. X Firması </a>
+                                            @endif
+                                        </div>
+                                        <div class="panel-title col-md-6">
+                                            Toplam Teklif: {{number_format($telifHareketDetay->kdv_dahil_fiyat, 2, ',', '.')}}{{$para_birimi}}
+                                        </div>
+                                    </div>
+                                </h4>
+                            </div>
+                            <div id="accordion1_{{$index}}" class="panel-collapse collapse">
+                                <div class="panel-body"><h4>Teklifin Kalem Detayları:</h4>
+
+                                    <table class="table" style="margin-bottom:0px">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Kalem Adı</th>
+                                            <th>Miktar</th>
+                                            <th>KDV</th>
+                                            <th>Birim Fiyat</th>
+                                            <th>Teklif</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php $kalem_count=1; ?>
+                                        @foreach($telifHareketDetay->teklifler->getTeklifDetayHizmet() as $hizmetKalemDetay)
+                                        <tr>
+                                            <td>
+                                                {{$kalem_count++}}
+                                            </td>
+                                            <td>
+                                                {{$hizmetKalemDetay->ilan_hizmetler->kalem_adi}}
+                                            </td>
+                                            <td>
+                                                {{$hizmetKalemDetay->ilan_hizmetler->miktar}}
+                                            </td>
+                                            <td>
+                                                % {{$hizmetKalemDetay->kdv_orani}}
+                                            </td>
+                                            <td>
+                                                {{number_format($hizmetKalemDetay->kdv_haric_fiyat, 2, ',', '.')}}{{$para_birimi}}
+                                            </td>
+                                            <td>
+                                                {{number_format($hizmetKalemDetay->kdv_dahil_fiyat, 2, ',', '.')}}{{$para_birimi}}
+                                            </td>
+                                        </tr>
+                                        @endforeach
+
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <td colspan="3">Teklif Tarihi: {{date('G:i d/m/Y', strtotime($telifHareketDetay->tarih))}}</td>
+                                            <td colspan="3"><a href="javascript:;" class="btn purple-sharp btn-outline sbold uppercase btn-circle " style="float: right">Kazanan Olarak Belirle <i class="icon-trophy"></i></a></td>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                            <?php $index++; ?>
+                        </div>
+                        @endforeach
+
+                    @elseif($ilan->ilan_turu == 3)
+                        {{--İlan Türü: Yapım İşi, Kısmi Teklife Kapalı, Birim Fiyatlı
+                            Rekabet sekmesindeki teklif veren firmalar ve detaylı kalem bilgileri listelenir
+                            Kazanan Belirlenir    --}}
+                        <?php $index = 1; ?>
+                        @foreach($teklifler as $telifHareketDetay)
+                            <div class="panel panel-default">
+                                <div class="panel-heading accordion-toggle" data-toggle="collapse" data-parent="#accordion1" data-target="#accordion1_{{$index}}">
+                                    <h4 class="panel-title">
+                                        <div class="row">
+                                            <div class="panel-title col-md-6">
+                                                @if($ilan->firma_id == session()->get('firma_id') || $telifHareketDetay->teklifler->firmalar->id == session()->get('firma_id'))
+                                                    {{--Sayfayı görüntüleyen kişi;
+                                                    *ilan sahibi ise tüm tekliflerin firmalarını görebilir
+                                                    *teklif sahibi ise sadece kendi teklifini görebilir
+                                                    --}}
+                                                    <a href="javascript:;"> {{$index}}. {{$telifHareketDetay->teklifler->firmalar->adi}} </a>
+                                                @else
+                                                    <a href="javascript:;"> {{$index}}. X Firması </a>
+                                                @endif
+                                            </div>
+                                            <div class="panel-title col-md-6">
+                                                Toplam Teklif: {{$telifHareketDetay->kdv_dahil_fiyat}}{{$para_birimi}}
+                                            </div>
+                                        </div>
+                                    </h4>
+                                </div>
+                                <div id="accordion1_{{$index}}" class="panel-collapse collapse">
+                                    <div class="panel-body"><h4>Teklifin Kalem Detayları:</h4>
+
+                                        <table class="table" style="margin-bottom:0px">
+                                            <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Kalem Adı</th>
+                                                <th>Miktar</th>
+                                                <th>KDV</th>
+                                                <th>Birim Fiyat</th>
+                                                <th>Teklif</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <?php $kalem_count=1; ?>
+                                            @foreach($telifHareketDetay->teklifler->getTeklifDetayYapim() as $yapimKalemDetay)
+                                                <tr>
+                                                    <td>
+                                                        {{$kalem_count++}}
+                                                    </td>
+                                                    <td>
+                                                        {{$yapimKalemDetay->ilan_yapim_isleri->kalem_adi}}
+                                                    </td>
+                                                    <td>
+                                                        {{$yapimKalemDetay->ilan_yapim_isleri->miktar}}
+                                                    </td>
+                                                    <td>
+                                                        % {{$yapimKalemDetay->kdv_orani}}
+                                                    </td>
+                                                    <td>
+                                                        {{number_format($yapimKalemDetay->kdv_haric_fiyat, 2, ',', '.')}}{{$para_birimi}}
+                                                    </td>
+                                                    <td>
+                                                        {{number_format($yapimKalemDetay->kdv_dahil_fiyat, 2, ',', '.')}}{{$para_birimi}}
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <td colspan="3">Teklif Tarihi: {{date('G:i d/m/Y', strtotime($telifHareketDetay->tarih))}}</td>
+                                                <td colspan="3"><a href="javascript:;" class="btn purple-sharp btn-outline sbold uppercase btn-circle " style="float: right">Kazanan Olarak Belirle <i class="icon-trophy"></i></a></td>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                                <?php $index++; ?>
+                            </div>
+                        @endforeach
+                    @endif
+                    <br />
+                    <p>
+                    İlan Türü: {{$ilan->getIlanTuru()}} <br />
+                    Fiyatlandırma Şekli: {{$ilan->getFytSekli()}}<br />
+                    İlan Kapanma Tarihi: {{date('d-m-Y', strtotime($ilan->kapanma_tarihi))}}
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@else
     @if($ilan->ilan_turu == 1 && $ilan->sozlesme_turu == 0)
     <h3>Fiyat İstenen Kalemler Rekabet Listesi</h3>
        <table class="table" style="border-collapse:collapse;" >
                 <thead>
                     <tr>
-                        <th width="6%" >Sıra:</th>
+                        <th width="6%">Sıra:</th>
                         <th width="9%">Marka:</th>
                         <th width="9%">Model:</th>
                         <th width="9%">Adı:</th>
@@ -568,7 +840,7 @@
                 @endforeach
         </table>
     @endif
-
+@endif
 <script>
     $(".kazanan").click(function(){
        var name=$(this).attr("name");
