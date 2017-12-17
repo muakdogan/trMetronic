@@ -434,7 +434,6 @@ DebugBar::info($ilan);
             }
             else
                 setCaretPosition(elemId, startPos);
-
         }
 
         function isNumberKey(evt) {
@@ -1004,14 +1003,8 @@ DebugBar::info($ilan);
         if($(this).parent().next().children().val() !== '')
         {
             var miktar = 1;
-            if(ilan_turu === 1 && sozlesme_turu == 0){  /// mal
+            if(sozlesme_turu != 1){
                 miktar = parseFloat($(this).parent().prev().prev().text());
-            }else if(ilan_turu === 2 && sozlesme_turu == 0){  ///hizmet
-                miktar = parseFloat($(this).parent().prev().prev().text());
-            }else if(ilan_turu === 3){     //yapim işi
-                miktar = parseFloat($(this).parent().prev().prev().text());
-            }else{
-
             }
             toplamFiyat=0;
             fiyat=TrToEnMoney($(this).parent().next().children().val());
@@ -1092,6 +1085,8 @@ DebugBar::info($ilan);
         var n1 = parseFloat($(this).html());
         $(this).html(n1.formatMoney(2));
     });
+
+
     $('.fiyat').on('input', function() {
 
         var fiyat = TrToEnMoney(this.value);
@@ -1102,14 +1097,8 @@ DebugBar::info($ilan);
         if($(this).parent().prev().children().val() !== null)
         {
             var miktar = 1;
-            if(ilan_turu === 1 && sozlesme_turu == 0){  /// mal
+            if(sozlesme_turu != 1){
                 miktar = parseFloat($(this).parent().prev().prev().prev().text());
-            }else if(ilan_turu === 2 && sozlesme_turu == 0){  ///hizmet
-                miktar = parseFloat($(this).parent().prev().prev().prev().text());
-            }else if(ilan_turu === 3){     //yapim işi
-                miktar = parseFloat($(this).parent().prev().prev().prev().text());
-            }else{
-
             }
             kdv=parseFloat($(this).parent().prev().children().val());
             if(kdv!=-1){//KDV secilmediyse islem yapmamasi icin

@@ -134,5 +134,13 @@ class Teklif extends Model
         }
                
     }
-            
+    public function getTeklifDetayHizmet(){
+        return $this->hizmet_teklifler()->whereRaw('tarih IN (select MAX(tarih) FROM hizmet_teklifler GROUP BY teklif_id)')->paginate();
+    }
+    public function getTeklifDetayMal(){
+        return $this->mal_teklifler()->whereRaw('tarih IN (select MAX(tarih) FROM mal_teklifler GROUP BY teklif_id)')->paginate();
+    }
+    public function getTeklifDetayYapim(){
+        return $this->yapim_isi_teklifler()->whereRaw('tarih IN (select MAX(tarih) FROM yapim_isi_teklifler GROUP BY teklif_id)')->paginate();
+    }
 }

@@ -9,13 +9,15 @@
 
 @section('baslik') İlanlarım @endsection
 
-@section('aciklama') @endsection
+@section('aciklama')
+
+@endsection
 
 @section('head')
     <link href="{{asset('MetronicFiles/global/plugins/bootstrap-table/bootstrap-table.min.css')}}" rel="stylesheet" type="text/css" />
-<script src="{{asset('js/noUiSlider/nouislider.js')}}"></script>
+    <link href="{{asset('MetronicFiles/global/plugins/ion.rangeslider/css/ion.rangeSlider.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('MetronicFiles/global/plugins/ion.rangeslider/css/ion.rangeSlider.skinFlat.css')}}" rel="stylesheet" type="text/css" />
 <script src="{{asset('js/wNumb.js')}}"></script>
-<link href="{{asset('css/noUiSlider/nouislider.css')}}" rel="stylesheet"></link>
 
     <style>
 
@@ -276,28 +278,28 @@
                                                     {!! Form::open(array('url'=>'yorumPuan/'.$firma->id.'/'.$ilan->kismi_kapali_kazananlar->first()->kazanan_firma_id.'/'.$ilan->id.'/'.$kullanici_id,'method'=>'POST', 'files'=>true)) !!}
                                                     <div class="row col-lg-12">
                                                         <div class="col-lg-3">
-                                                            <label1 name="kriter1" type="text" >Ürün/hizmet kalitesi</label1>
+                                                            <label1 name="kriter1">Ürün/hizmet kalitesi</label1>
                                                             <div id="puanlama">
                                                                 <div class="sliders" id="k{{$i}}" {{$isDisabled}}></div>
                                                                 <input type="hidden" id="puan1" name="puan1" value="{{$ilan->puanlamalar[0] ? $ilan->puanlamalar[0]->kriter1 : 5}}" {{$isDisabled}}/>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3" style="border-color:#ddd">
-                                                            <label1 name="kriter2" type="text"><br>Teslimat</label1>
+                                                            <label1 name="kriter2"><br>Teslimat</label1>
                                                             <div id="puanlama">
                                                                 <div class="sliders" id="k{{$i+1}}" {{$isDisabled}}></div>
                                                                 <input type="hidden" id="puan2" name="puan2" value="{{$ilan->puanlamalar[0] ? $ilan->puanlamalar[0]->kriter2 : 5}}" {{$isDisabled}}/>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3">
-                                                            <label1 name="kriter3" type="text">Teknik ve Yönetsel Yeterlilik</label1>
+                                                            <label1 name="kriter3">Teknik ve Yönetsel Yeterlilik</label1>
                                                             <div id="puanlama">
                                                                 <div class="sliders" id="k{{$i+2}}" {{$isDisabled}}></div>
                                                                 <input type="hidden" id="puan3" name="puan3" value="{{$ilan->puanlamalar[0] ? $ilan->puanlamalar[0]->kriter3 : 5}}" {{$isDisabled}}/>
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-3">
-                                                            <label1 name="kriter4" type="text" >İletişim ve Esneklik</label1>
+                                                            <label1 name="kriter4">İletişim ve Esneklik</label1>
                                                             <div id="puanlama">
                                                                 <div class="sliders" id="k{{$i+3}}" {{$isDisabled}}></div>
                                                                 <input type="hidden" id="puan4" name="puan4" value="{{$ilan->puanlamalar[0] ? $ilan->puanlamalar[0]->kriter4 : 5}}" {{$isDisabled}}/>
@@ -560,6 +562,7 @@ $(document).ready( function() {
 
 
 @section('sayfaSonu')
+    <script src="{{asset('MetronicFiles/global/plugins/ion.rangeslider/js/ion.rangeSlider.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('MetronicFiles/global/plugins/bootstrap-table/bootstrap-table.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('MetronicFiles/pages/scripts/table-bootstrap.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('MetronicFiles/global/plugins/counterup/jquery.waypoints.min.js')}}" type="text/javascript"></script>
