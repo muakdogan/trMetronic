@@ -33,17 +33,15 @@
         </ul>
       </div>
     @endif
-    <section class="section background-gray-lighter" data-offset="120">
+    <section class="section background-gray-lighter" style="padding-top:100px">
       <div class="container">
         <div class="row">
           <div class="col-md-12 col-lg-12 text-center">
             <div class="caption font-purple text-center">
-                <span class="caption-subject bold uppercase">Firma Kayıt Formu</span>
+                <h4><span class="caption-subject bold uppercase">Firma Kayıt Formu</span></h4>
             </div>
-
-    <!-- BEGIN SAMPLE FORM PORTLET-->
-    <div class="portlet light">
-        <div class="portlet-body form">
+            <div class="portlet light">
+              <div class="portlet-body form">
           {!! Form::open(array('id'=>'firma_kayit','url'=>'form' ,'name'=>'kayit','method' => 'POST','files'=>true, 'class'=>'form-horizontal'))!!}
             <div class="form-body">
               <div class="row">
@@ -158,24 +156,18 @@
                   <!--/span-->
                   <div class="col-md-6">
                     <h4 class="form-section">Fatura Bilgileri</h4>
-                    <!--div class="checkbox">
-                      <label>
-                        <input id="adres_kopyalayici" type="checkbox" name="adres_kopyalayici"> "Firma Adresi" ile "Fatura Adresi" aynı
-                      </label>
-                        <span class="help-block" style="color:red"> {{ $errors->first('adres_kopyalayici') }}</span>
-                    </div-->
                     <!-- İletişim ve Fatura Adresleri Aynı-->
                     <div class="form-group">
                       <label class="col-md-3 control-label">Fatura ve İletişim adresi</label>
-                      <div class="col-md-9">
-                        <input id="adreslerAyni" type="checkbox" data-off-text="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FARKLI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" data-on-text="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AYNI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" checked="false" class="BSswitch">
+                      <div class="col-md-8">
+                        <input id="adreslerAyni" type="checkbox" data-off-text="FARKLI" data-on-text="AYNI" checked="false" class="BSswitch">
                       </div>
                     </div>
                     <!-- Firma Ünvanı -->
                     <div class="form-group">
                       <label class="col-md-3 control-label">Fatura Türü</label>
-                      <div class="col-md-9 make-switch">
-                        <input id="faturaTuru" name="fatura_tur" type="checkbox" data-off-text="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BİREYSEL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" data-on-text="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KURUMSAL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" checked="false" class="BSswitch">
+                      <div class="col-md-8 make-switch">
+                        <input id="faturaTuru" name="fatura_tur" type="checkbox" data-off-text="BİREYSEL" data-on-text="KURUMSAL" checked="false" class="BSswitch">
                       </div>
                       <!--div class="col-md-5">
                         <div class="radio">
@@ -427,12 +419,12 @@
             </div>
           {!! Form::close() !!}
         </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
-</section>
-</div>
+    </section>
 <script src="{{asset('MetronicFiles/global/plugins/jquery.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('MetronicFiles/global/scripts/app.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('MetronicFiles/pages/scripts/form-input-mask.min.js')}}" type="text/javascript"></script>
