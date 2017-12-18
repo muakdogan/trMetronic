@@ -205,6 +205,19 @@
                             </tr>
                         @endforeach
                         </tbody>
+
+                        <tfoot>
+                        <tr>
+                            <td colspan="4">
+                                <div class="col-md-6">
+                                    <div style="width: 20px;height: 20px;background-color: #eef1f5;float: left;"></div> <div style="float: left; margin:1px;margin-left: 10px">Yayında İlan</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div style="width: 20px;height: 20px;background-color: #fbe1e3;float: left;"></div> <div style="float: left; margin:1px;margin-left: 10px">Süresi Dolmuş İlan</div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tfoot>
                     </table>
                 @else
 
@@ -366,6 +379,18 @@
                             </tr>
                         @endforeach
                         </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="4">
+                                <div class="col-md-6">
+                                    <div style="width: 20px;height: 20px;background-color: #f9e491;float: left;"></div> <div style="float: left; margin:1px;margin-left: 10px">Pasif İlan</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div style="width: 20px;height: 20px;background-color: #fbe1e3;float: left;"></div> <div style="float: left; margin:1px;margin-left: 10px">Süresi Dolmuş İlan</div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tfoot>
                     </table>
                     @else
                         <p style="text-align:center">Henüz Pasif İlanınız Bulunmamaktadır.</p>
@@ -392,7 +417,7 @@
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <div class="table-scrollable table-scrollable-borderless">
+                    <div class="table-scrollable table-scrollable-borderless" style="max-height: 500px;overflow-y: scroll;">
                         <table class="table table-light">
                             <tbody>
                                 @foreach($aktif_ilanlar as $aktif_ilan)
@@ -484,6 +509,7 @@ $(document).ready( function() {
     var connect = document.getElementsByClassName('noUi-connect');
     var tooltip = document.getElementsByClassName('noUi-tooltip');
     var value = document.getElementsByClassName('value');
+    /*
     for ( var i = 0; i < sliders.length; i++ ) {
         noUiSlider.create(sliders[i], {
                 start: $(".sliders").eq(i).siblings("input").attr("value"),
@@ -500,7 +526,7 @@ $(document).ready( function() {
 
         });
         var deneme;
-        sliders[i].noUiSlider.on('slide', function( values, handle ,e){
+       sliders[i].noUiSlider.on('slide', function( values, handle ,e){
             var idCount=$(this.target.id).selector;
             idCount=idCount.substring(1);
             console.log($(this));
@@ -555,7 +581,7 @@ $(document).ready( function() {
                 tooltip[idCount].style.border = "1px solid #45c538";
             }
         });
-    }
+    }*/
 });
 </script>
 @endsection
