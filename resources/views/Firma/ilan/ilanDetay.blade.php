@@ -1434,7 +1434,7 @@ DebugBar::info($ilan);
                 $("#onaylamaModal").modal("show");
                 var postData = $("#teklifForm").serialize();
                 var formURL = $("#teklifForm").attr('action');
-                var ilan_id = {{$ilan->id}};
+                var ilan_id = "{{$ilan->id}}";
                 $(".onaylamaButton").unbind().click(function(e){
                     if($("#sozlesme_onay").is(':checked')){
                         $("#onaylamaModal").modal("hide");

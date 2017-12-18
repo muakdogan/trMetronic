@@ -802,7 +802,7 @@ class FirmaController extends Controller{
 
     public function firmaProfilDolulukHesapla($firmaID){
         $firma = Firma::find($firmaID);
-        $toplamOzellik = 30;
+        $toplamOzellik = 28;
         $doluOzellik = 0;
 
         //ILETISIM BILGILERI
