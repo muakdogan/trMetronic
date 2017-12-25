@@ -72,11 +72,11 @@
                     </td>
                     <td>
                         @if(count($teklif)!=0 && count($yapimIsiTeklif) != 0)
-                            <input id="visible_miktar#{{$i-1}}" style="margin-top: 0px" align="right"  type="text" class="form-control fiyat kdvsizFiyat" onkeyup="ParaFormat(this.value,event, 'visible_miktar#{{$i-1}}','miktar#{{$i-1}}') " value="{{$teklifler[0]->paraFormat($yapimIsiTeklif[0]['kdv_haric_fiyat'])}}" onkeypress="return isNumberKey(event)">
+                            <input id="visible_miktar#{{$i-1}}" idd="{{$i-1}}" style="margin-top: 0px" align="right"  type="text" class="form-control fiyat kdvsizFiyat" value="{{$teklifler[0]->paraFormat($yapimIsiTeklif[0]['kdv_haric_fiyat'])}}" onkeypress="return isNumberKey(event)">
                             <input id="miktar#{{$i-1}}" type="hidden" name="birim_fiyat[]" value="{{$yapimIsiTeklif[0]['kdv_haric_fiyat']}}" />
                             <label class="control-label toplam">Eski Teklif: {{$teklifler[0]->paraFormat($yapimIsiTeklif[0]['kdv_haric_fiyat'])}}</label>
                         @else
-                            <input id="visible_miktar#{{$i-1}}" style="margin-top: 0px" align="right" type="text" class="form-control fiyat kdvsizFiyat" value="0,00" onkeyup="ParaFormat(this.value,event, 'visible_miktar#{{$i-1}}','miktar#{{$i-1}}') " onkeypress="return isNumberKey(event)">
+                            <input id="visible_miktar#{{$i-1}}" idd="{{$i-1}}" style="margin-top: 0px" align="right" type="text" class="form-control fiyat kdvsizFiyat" value="0,00" onkeypress="return isNumberKey(event)">
                             <input id="miktar#{{$i-1}}" type="hidden" name="birim_fiyat[]" value="0" />
                         @endif
                     </td>

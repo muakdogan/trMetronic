@@ -611,134 +611,43 @@ Route::get('ilanTeklifVer/{ilan_id}',['middleware'=>'auth' ,function ($ilan_id) 
 
   });
 
-
 Route::get('kismiRekabet/{firmaID}/{ilanID}' ,'IlanController@kismiRekabetService');
-
+Route::post('/teklifGonder/{firma_id}/{ilan_id}/{kullanici_id}', 'IlanController@teklifGonder');
 Route::get('teklifGor/{id}/{ilanid}' ,'IlanController@teklifGor');
 Route::get('ilaniPasifEt' ,'IlanController@ilaniPasifEt');
 Route::get('ilaniAktifEt' ,'IlanController@ilaniAktifEt');
+Route::post('KazananBelirleKismiAcik','IlanController@kazananBelirleKismiAcik');
+Route::post('KazananBelirleKismiKapali','IlanController@kazananBelirleKismiKapali');
 
-///////////////////////////////Kısmi Açık REkabet Kazanan ///////////
-Route::post('KismiAcikRekabetKazanan' ,function () {
-
-$ilan_id = Input::get('ilan_id');
-$ilan = App\Ilan::find($ilan_id);
-$kazanan_firma_id = Input::get('kazananFirmaId');
-
-if($ilan->ilan_turu == 1 && $ilan->sozlesme_turu == 0){
-$kalemler = $ilan->ilan_mallar;
-}elseif($ilan->ilan_turu == 2 && $ilan->sozlesme_turu == 0){
-$kalemler = $ilan->ilan_hizmetler;
-}elseif($ilan->ilan_turu == 3){
-$kalemler = $ilan->ilan_yapim_isleri;
-}else{
-$kalemler = $ilan->ilan_goturu_bedeller;
-}
-$kalemIdArray = Array();
-foreach ($kalemler as $kalem){
-if($ilan->ilan_turu == 1 && $ilan->sozlesme_turu == 0){
-$kazanan_fiyat = DB::select(DB::raw("SELECT *
-FROM teklifler t, mal_teklifler mt
-WHERE t.id = mt.teklif_id
-AND t.firma_id ='$kazanan_firma_id'
-AND t.ilan_id ='$ilan_id'
-AND mt.ilan_mal_id = '$kalem->id';
-ORDER BY tarih DESC
-LIMIT 1"));
-}elseif($ilan->ilan_turu == 2 && $ilan->sozlesme_turu == 0){
-$kazanan_fiyat = DB::select(DB::raw("SELECT *
-  FROM teklifler t, hizmet_teklifler ht
-  WHERE t.id = ht.teklif_id
-  AND t.firma_id ='$kazanan_firma_id'
-  AND t.ilan_id ='$ilan_id'
-  AND ht.ilan_hizmet_id = '$kalem->id';
-  ORDER BY tarih DESC
-  LIMIT 1"));
-}elseif($ilan->ilan_turu == 3){
-  $kazanan_fiyat = DB::select(DB::raw("SELECT *
-    FROM teklifler t, yapim_isi_teklifler yt
-    WHERE t.id = yt.teklif_id
-    AND t.firma_id ='$kazanan_firma_id'
-    AND t.ilan_id ='$ilan_id'
-    AND yt.ilan_yapim_isleri_id = '$kalem->id';
-    ORDER BY tarih DESC
-    LIMIT 1"));
-  }
-  $kalemIdArray[]=$kalem->id;
-  $kismiKazanan = new App\KismiAcikKazanan();
-  $kismiKazanan->ilan_id =$ilan_id ;
-  $kismiKazanan->kalem_id = $kalem->id;
-  $kismiKazanan->kazanan_fiyat = $kznFiyat->kdv_dahil_fiyat;
-  $kismiKazanan->kazanan_firma_id = $kazanan_firma_id;
-  $kismiKazanan->save();
-}
-
-return Response::json($kalemIdArray);
-});
-/////////////////////////////////////Kısmi Açık Kazanan ///////////////////////////////////
-Route::post('KismiAcikKazanan' ,function () {
-
-$ilan_id = Input::get('ilan_id');
-$ilan = App\Ilan::find($ilan_id);
-$kazanan_firma_id = Input::get('kazananFirmaId');
-$kazanan_fiyat = Input::get('kazanan_fiyat');
-$kalem_id = Input::get('kalem_id');
-
-$kismiKazanan = new App\KismiAcikKazanan();
-$kismiKazanan->ilan_id =$ilan_id ;
-$kismiKazanan->kalem_id = $kalem_id;
-$kismiKazanan->kazanan_fiyat = $kazanan_fiyat;
-$kismiKazanan->kazanan_firma_id = $kazanan_firma_id;
-
-$kismiKazanan->save();
-return Response::json($kismiKazanan);
-});
-/////////////////////////////////////Kısmi Kapalı Kazanan ///////////////////////////////////
-Route::post('KismiKapaliKazanan' ,function () {
-$ilan_id = Input::get('ilan_id');
-$kazanan_firma_id = Input::get('kazananFirmaId');
-$kazanan_fiyat = Input::get('kazananFiyat');
-
-$kismiKazanan = new App\KismiKapaliKazanan();
-$kismiKazanan->ilan_id =$ilan_id ;
-$kismiKazanan->kazanan_fiyat =  $kazanan_fiyat;
-$kismiKazanan->kazanan_firma_id = $kazanan_firma_id;
-
-$kismiKazanan->save();
-return Response::json($kismiKazanan);
-});
-///////////////////////////////////// Rekabet //////////////////////////////////////
+/////////////// Rekabet //////////////////////////////////////
 Route::get('rekabet/{ilan_id}' ,function ($ilanid) {
-  $ilan = App\Ilan::find($ilanid);
-$firma_id = session()->get('firma_id');
-$ilanSahibi=0;
-if($firma_id == $ilan->firmalar->id){
-  $ilanSahibi=1;
-}
-$teklifler = $ilan->teklif_hareketler()->whereRaw('tarih IN (select MAX(tarih) FROM teklif_hareketler GROUP BY teklif_id)')->get();
-
-$minFiyat = $ilan->minFiyat();
-$kazanK = null;
-if($ilan->kismi_fiyat == 0){
-    $kazananKapali = App\KismiKapaliKazanan::where("ilan_id",$ilan->id)->get(); /////ilanın kazananı var mı kontrolü
-    $kisKazanCount=0;
-
-    foreach($kazananKapali as $kazanK){
-        $kisKazanCount=1;
+    $ilan = App\Ilan::find($ilanid);
+    $firma_id = session()->get('firma_id');
+    $ilanSahibi=0;
+    if($firma_id == $ilan->firmalar->id){
+      $ilanSahibi=1;
     }
-}
-else{
-    $kazananKapali = App\KismiAcikKazanan::where("ilan_id",$ilan->id)->get(); /////ilanın kazananı var mı kontrolü
-    $kisKazanCount=0;
-    foreach($kazananKapali as $kazanK){
-        $kisKazanCount=1;
-    }
-}
-return View::make('Firma.ilan.rekabet',array('teklifler'=> $teklifler,'ilanSahibi'=> $ilanSahibi,'ilan'=>$ilan,'minFiyat'=>$minFiyat,'kazanK'=>$kazanK,'kisKazanCount'=>$kisKazanCount))->render();
+    $teklifler = $ilan->teklif_hareketler()->whereRaw('tarih IN (select MAX(tarih) FROM teklif_hareketler GROUP BY teklif_id)')->get();
 
+    $minFiyat = $ilan->minFiyat();
+    $kazanK = null;
+    if($ilan->kismi_fiyat == 0){
+        $kazananKapali = App\KismiKapaliKazanan::where("ilan_id",$ilan->id)->get(); /////ilanın kazananı var mı kontrolü
+        $kisKazanCount=0;
+        foreach($kazananKapali as $kazanK){
+            $kisKazanCount=1;
+        }
+    }
+    else{
+        $kazananKapali = App\KismiAcikKazanan::where("ilan_id",$ilan->id)->get(); /////ilanın kazananı var mı kontrolü
+        $kisKazanCount=0;
+        foreach($kazananKapali as $kazanK){
+            $kisKazanCount=1;
+        }
+    }
+
+    return View::make('Firma.ilan.rekabet',array('teklifler'=> $teklifler,'ilanSahibi'=> $ilanSahibi,'ilan'=>$ilan,'minFiyat'=>$minFiyat,'kazanK'=>$kazanK,'kisKazanCount'=>$kisKazanCount))->render();
 });
-
-Route::post('/teklifGonder/{firma_id}/{ilan_id}/{kullanici_id}', 'IlanController@teklifGonder');
 
 ////////////////////////ilan detay ///////////////////////////
 Route::get('ilanDetay', function () {
@@ -747,30 +656,30 @@ Route::get('ilanDetay', function () {
   return Response::json($ilan);
 });
 
-            Route::get('/ajax-subcat', function (Request $request) {
+Route::get('/ajax-subcat', function (Request $request) {
 
-              $il_id = Input::get('il_id');
-              $ilceler = \App\Ilce::where('il_id', '=', $il_id)->get();
-              return Response::json($ilceler);
-            });
-            Route::get('/ajax-subcatt', function () {
-              $ilce_id = Input::get('ilce_id');
-              $semtler = \App\Semt::where('ilce_id', '=', $ilce_id)->get();
-              return Response::json($semtler);
-            });
-            Route::get('/vergi_daireleri', function (Request $request) {
+  $il_id = Input::get('il_id');
+  $ilceler = \App\Ilce::where('il_id', '=', $il_id)->get();
+  return Response::json($ilceler);
+});
+Route::get('/ajax-subcatt', function () {
+  $ilce_id = Input::get('ilce_id');
+  $semtler = \App\Semt::where('ilce_id', '=', $ilce_id)->get();
+  return Response::json($semtler);
+});
+Route::get('/vergi_daireleri', function (Request $request) {
 
-              $il_id = Input::get('il_id');
-              $vergi_daireleri = \App\VergiDairesi::where('il_id', '=', $il_id)->get();
-              return Response::json($vergi_daireleri);
-            });
-            Route::get('/ticaret_odalari', function (Request $request) {
+  $il_id = Input::get('il_id');
+  $vergi_daireleri = \App\VergiDairesi::where('il_id', '=', $il_id)->get();
+  return Response::json($vergi_daireleri);
+});
+Route::get('/ticaret_odalari', function (Request $request) {
 
-              $il_id = Input::get('il_id');
-              $ticaret_odalari = \App\TicaretOdasi::where('il_id', '=', $il_id)->get();
-              return Response::json($ticaret_odalari);
-            });
+  $il_id = Input::get('il_id');
+  $ticaret_odalari = \App\TicaretOdasi::where('il_id', '=', $il_id)->get();
+  return Response::json($ticaret_odalari);
+});
 
-            Route::auth();
+Route::auth();
 
 Route::get('kullanici/onay/{kullanici_id}/{token}', 'Auth\AuthController@activateUser')->name('kullanici.onay');
