@@ -25,9 +25,9 @@ $para_birimi=$ilan->para_birimleri->para_birimi();
             <?php  $j++; ?>
             @if(count($teklif->verilenFiyat()) != 0)
                 @if($kisKazanCount == 1 && $kazanK->kazanan_firma_id == $teklif->teklifler->getFirma("id")) <!--Kazanan firma kontrolü -->
-                    <tr class="kismiKazanan">
+                <tr class="kismiKazanan">
                 @else
-                    <tr>
+                <tr>
                 @endif
 
                 @if(session()->get('firma_id') == $teklif->teklifler->getFirma("id")) <!--Teklifi veren firma ise -->
@@ -40,16 +40,16 @@ $para_birimi=$ilan->para_birimleri->para_birimi();
                     <td>{{$teklif->teklifler->getFirma("adi")}}</td>
                     <td style="text-align: right; font-size: 10px"><strong class="currency">{{$teklif->teklifler->verilenFiyat()}}</strong>
                     </td>
-                @else  <!-- Diğer teklif veren firmalar -->
+                    @else  <!-- Diğer teklif veren firmalar -->
                     <?php  $i++; ?>
                     <td>{{$j}}</td>
                     <td>X Firması</td>
                     <td  style="text-align: right; font-size: 10px"><strong class="currency">{{$teklif->teklifler->verilenFiyat()}}</strong>
                     </td>
-                @endif
+                    @endif
                 </tr>
-        @endif
-                @endforeach
+            @endif
+        @endforeach
         </tbody>
     </table>
 

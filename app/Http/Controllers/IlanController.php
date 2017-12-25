@@ -89,7 +89,7 @@ class IlanController extends Controller
         if($ilan->kismi_fiyat == 0){
             $kazananKapali = KismiKapaliKazanan::where("ilan_id",$ilan->id)->get(); /////ilanın kazananı var mı kontrolü
             $kisKazanCount=0;
-            if(count($kazananKapali) != 0){
+            foreach($kazananKapali as $kazanK){
                 $kisKazanCount=1;
             }
         }
@@ -1296,7 +1296,7 @@ class IlanController extends Controller
             $firma->ilanlar->ilan_yapim_isleri = new IlanYapimIsi();
         if (!$ilan->ilan_goturu_bedeller)
             $firma->ilanlar->ilan_goturu_bedeller = new IlanGoturuBedel();
-        $teklifler = $ilan->teklif_hareketler()->whereRaw('tarih IN (select MAX(tarih) FROM teklif_hareketler GROUP BY teklif_id)')->paginate();
+        $teklifler = $ilan->teklif_hareketler()->whereRaw('tarih IN (select MAX(tarih) FROM teklif_hareketler GROUP BY teklif_id)')->orderBy('kdv_dahil_fiyat', 'ASC')->paginate();
         $para_birimi=$ilan->para_birimleri->para_birimi();
         $kullanici_id=Auth::user()->kullanici_id;
 
@@ -1305,6 +1305,46 @@ class IlanController extends Controller
         $dt = $time->format('Y-m-d');
 
         return view('Firma.ilan.kismiRekabet')->with('firma', $firma)->with('ilan',$ilan)->with('kullanici_id',$kullanici_id)->with("dt",$dt)->with("teklifler",$teklifler)->with("para_birimi",$para_birimi);
+    }
+
+    public function kazananBelirleKismiAcik(){
+        $ilanID = Input::get('ilanID');
+        $kalemID = Input::get('kalemID');
+        $firmaID = Input::get('firmaID');
+        $kdv_dahil_fiyat = Input::get('kdv_dahil_fiyat');
+
+        $ilan = Ilan::find($ilanID);
+        if(session()->get('firma_id') != $ilan->firma_id){
+            abort(403);
+        }
+
+        $kismiKazanan = new KismiAcikKazanan();
+        $kismiKazanan->ilan_id =$ilanID ;
+        $kismiKazanan->kalem_id =$kalemID ;
+        $kismiKazanan->kazanan_firma_id = $firmaID;
+        $kismiKazanan->kazanan_fiyat =  $kdv_dahil_fiyat;
+        $kismiKazanan->save();
+
+        return Response::json($kismiKazanan);
+    }
+
+    public function kazananBelirleKismiKapali(){
+        $ilanID = Input::get('ilanID');
+        $firmaID = Input::get('firmaID');
+        $kdv_dahil_fiyat = Input::get('kdv_dahil_fiyat');
+
+        $ilan = Ilan::find($ilanID);
+        if(session()->get('firma_id') != $ilan->firma_id){
+            abort(403);
+        }
+
+        $kismiKazanan = new KismiKapaliKazanan();
+        $kismiKazanan->ilan_id =$ilanID ;
+        $kismiKazanan->kazanan_firma_id = $firmaID;
+        $kismiKazanan->kazanan_fiyat =  $kdv_dahil_fiyat;
+        $kismiKazanan->save();
+
+        return Response::json($kismiKazanan);
     }
 
     public function ilaniPasifEt(Request $request){

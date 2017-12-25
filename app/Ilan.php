@@ -244,23 +244,23 @@ class Ilan extends Model
     return $kazananFirmaAdiKapali;
     }
     public function kazananFirmaId(){
-    $sonucKapali = KismiKapaliKazanan::where('ilan_id',$this->id)->get();
-    $sonucAcik = KismiAcikKazanan::where('ilan_id',$this->id)->get();
-    if(count($sonucKapali)!=0)
-    {
-      foreach ($sonucKapali as $sonucK){
-      }
-        $kazananFirmaId = $sonucK->kazanan_firma_id;
-    }else{ $kazananFirmaId = 0;}
+        $sonucKapali = KismiKapaliKazanan::where('ilan_id',$this->id)->get();
+        $sonucAcik = KismiAcikKazanan::where('ilan_id',$this->id)->get();
+        if(count($sonucKapali)!=0)
+        {
+          foreach ($sonucKapali as $sonucK){
+          }
+            $kazananFirmaId = $sonucK->kazanan_firma_id;
+        }else{ $kazananFirmaId = 0;}
 
-    if(count($sonucAcik)!=0)
-    {
-      foreach ($sonucAcik as $sonucA){
-      }
-      $kazananFirmaId= $sonucA->kazanan_firma_id;
-    }else{$kazananFirmaId =0;}
+        if(count($sonucAcik)!=0)
+        {
+          foreach ($sonucAcik as $sonucA){
+          }
+          $kazananFirmaId= $sonucA->kazanan_firma_id;
+        }else{$kazananFirmaId =0;}
 
-    return $kazananFirmaId;
+        return $kazananFirmaId;
     }
     public function existsYorum($firma_id){
       $existsYorum = Yorum::where('ilan_id',$this->id)->where('firma_id',$firma_id)->get();
@@ -336,5 +336,25 @@ class Ilan extends Model
         }
         return $minFiyat;
 
+    }
+
+    public function kisKapaliKazanBelirlenmisMi(){
+        $kazanan = KismiKapaliKazanan::where("ilan_id",$this->id)->first();
+        $kisKazanBelirlenmisMi=count($kazanan);
+        return $kisKazanBelirlenmisMi;
+    }
+
+    public function kisKapaliKazananFirmaId(){
+        $kazanan = KismiKapaliKazanan::where("ilan_id",$this->id)->first();
+        return $kazanan->kazanan_firma_id;
+    }
+
+    public function kisKapaliKazananFirmalar(){
+        $firmalar=KismiKapaliKazanan::where('ilan_id',$this->id)->select('kazanan_firma_id')->get();
+        return $firmalar;
+    }
+    public function kisAcikKazananFirmalar(){
+        $firmalar=KismiAcikKazanan::where('ilan_id',$this->id)->select('kalem_id','kazanan_firma_id')->get();
+        return $firmalar;
     }
 }

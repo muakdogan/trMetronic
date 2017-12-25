@@ -32,6 +32,9 @@ class IlanHizmet extends Model
     {
         return $this->hasMany('App\HizmetTeklif', 'ilan_hizmetler_id', 'id');
     }
+    public function getHizmetTeklifDetay(){
+        return $this->hizmet_teklifler()->whereRaw('tarih IN (select MAX(tarih) FROM hizmet_teklifler GROUP BY teklif_id)')->orderBy('kdv_dahil_fiyat', 'ASC')->paginate();
+    }
     public function getHizmetTeklif($ilan_hizmet_id,$teklif_id){
         $hizmetTeklif = HizmetTeklif::where('ilan_hizmet_id',$ilan_hizmet_id)->where('teklif_id',$teklif_id)->orderBy('id','DESC')->limit(1)->get();
         return $hizmetTeklif;
@@ -62,8 +65,13 @@ class IlanHizmet extends Model
          $firmaHizmet = Firma::find($firmaHizmetId->firma_id);
          return $firmaHizmet->adi;
     }
+    public function kisKazanBelirlenmisMi(){
+        $kazanan = KismiAcikKazanan::where("ilan_id",$this->ilanlar->id)->where("kalem_id",$this->kalem_id)->first();
+        $kisKazanBelirlenmisMi=count($kazanan);
+        return $kisKazanBelirlenmisMi;
+    }
     public function kisKazanCount(){
-        $kazanan = KismiAcikKazanan::where("ilan_id",$this->ilanlar->id)->where("kalem_id",$this->id)->first();
+        $kazanan = KismiAcikKazanan::where("ilan_id",$this->ilanlar->id)->where("kalem_id",$this->kalem_id)->first();
         if(count($kazanan) != 0){
             $kisKazanCount=1;
         }
@@ -73,7 +81,7 @@ class IlanHizmet extends Model
         return $kisKazanCount;
     } 
     public function kisKazananFirmaId(){
-        $kazanan = KismiAcikKazanan::where("ilan_id",$this->ilanlar->id)->where("kalem_id",$this->id)->first();
+        $kazanan = KismiAcikKazanan::where("ilan_id",$this->ilanlar->id)->where("kalem_id",$this->kalem_id)->first();
         return $kazanan->kazanan_firma_id;
     }
 }

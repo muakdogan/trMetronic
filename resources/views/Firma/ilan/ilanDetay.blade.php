@@ -358,7 +358,7 @@ DebugBar::info($ilan);
 
         function ParaFormat(Num,event,elemId,miktarElemId) {
 
-            var evt = event.which;
+            var evt = event;
 
             if(Num.length<3){
                 Num="0,00";
@@ -434,10 +434,12 @@ DebugBar::info($ilan);
             }
             else
                 setCaretPosition(elemId, startPos);
+
+
         }
 
         function isNumberKey(evt) {
-            var charCode = (evt.which) ? evt.which : event.keyCode;
+            var charCode = evt.which;
             if (charCode > 31 && (charCode < 48 || charCode > 57))
                 return false;
             return true;
@@ -522,7 +524,7 @@ DebugBar::info($ilan);
                                                 <a href="{{URL::to('firmaDetay', array($ilan->firmalar->id), false)}}">{{$ilan->getFirmaAdi()}}</a>
                                             @else
                                                 {{$ilan->getFirmaAdi()}}
-                                           @endif
+                                            @endif
                                         </td>
 
                                     </tr>
@@ -645,15 +647,15 @@ DebugBar::info($ilan);
                                 </div>
                                 <div class="portlet-body">
                                     <div class="portlet-body">
-                                            @if($ilan->sozlesme_turu == 1)
-                                                @include('Firma.ilan.goturuBedelTeklif')
-                                            @elseif($ilan->ilan_turu == 1)
-                                                @include('Firma.ilan.malTeklif')
-                                            @elseif($ilan->ilan_turu == 2)
-                                                @include('Firma.ilan.hizmetTeklif')
-                                            @else
-                                                @include('Firma.ilan.yapimIsiTeklif')
-                                            @endif
+                                        @if($ilan->sozlesme_turu == 1)
+                                            @include('Firma.ilan.goturuBedelTeklif')
+                                        @elseif($ilan->ilan_turu == 1)
+                                            @include('Firma.ilan.malTeklif')
+                                        @elseif($ilan->ilan_turu == 2)
+                                            @include('Firma.ilan.hizmetTeklif')
+                                        @else
+                                            @include('Firma.ilan.yapimIsiTeklif')
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -1087,8 +1089,9 @@ DebugBar::info($ilan);
     });
 
 
-    $('.fiyat').on('input', function() {
-
+    $('.fiyat').on('input', function(event) {
+        var idd=$(this).attr("idd");
+        ParaFormat(this.value,event.which, 'visible_miktar#'+idd,'miktar#'+idd);
         var fiyat = TrToEnMoney(this.value);
         if(isNaN(fiyat)) {
             fiyat = 0;
@@ -1164,6 +1167,84 @@ DebugBar::info($ilan);
                 $("#toplamFiyatKdvsiz").val(kdvsizToplamFiyat.toFixed(2));
             }
         }});
+
+    function deneme(elementID) {
+            var element=$(elementID);
+            var fiyat = TrToEnMoney(element.value);
+            if(isNaN(fiyat)) {
+                fiyat = 0;
+            }
+            var result;
+            if($(element).parent().prev().children().val() !== null)
+            {
+                var miktar = 1;
+                if(sozlesme_turu != 1){
+                    miktar = parseFloat($(element).parent().prev().prev().prev().text());
+                }
+                kdv=parseFloat($(element).parent().prev().children().val());
+                if(kdv!=-1){//KDV secilmediyse islem yapmamasi icin
+                    if(isNaN(fiyat)) {
+                        fiyat = 0;
+                    }
+                    result=((fiyat+(fiyat*kdv)/100)*miktar);
+                    toplamFiyat += result;
+                    $(element).parent().next().next().children().html(result.formatMoney(2));
+                    toplamFiyat=0;
+                    $("span.kalem_toplam").each(function(){
+                        var n = TrToEnMoney($(element).html());
+                        toplamFiyat += n;
+                    });
+
+                    kdvsizToplamFiyat=0;
+                    var y = 0;
+                    var count=0;
+                    $(".kdvsizFiyat").each(function(){
+                        //Osman Kutlu 18.07.2017 KDV Haric Toplam Tutar'in dogru hesaplanması icin guncellendi
+                        var miktar2 = parseFloat($(element).parent().prev().prev().prev().text());
+                        var n = TrToEnMoney($(element).val());
+                        kdvsizToplamFiyat += ((n.toFixed(2))*miktar2);
+                        if(TrToEnMoney($(".kalem_toplam").eq(count).text()) == 0){
+                            y = 1
+                        }
+                        count++;
+                    });
+                    var ilan_kismi_fiyat="{{$ilan->kismi_fiyat}}";
+                    if(y == 0 && ilan_kismi_fiyat == 1){
+                        $('#iskontoLabel').text(" İskonto Ver");
+                        $('#iskonto').prop("type", "checkbox");
+                    }
+                    else if(y == 1 && ilan_kismi_fiyat == 1){
+                        $('#iskontoLabel').text("İskonto verebilmek için tüm kalemlere teklif vermelisiniz!");
+                        $('#iskonto').prop("type", "hidden");
+                        $('#iskonto').attr('checked', false);
+                        canselIskontoVal();
+                    }
+                    if($('#iskonto').is(":checked")) {
+                        $('#iskontoVal').trigger('input');
+                    }
+                    var parabirimi = "{{$ilan->para_birimleri->adi}}";
+                    var symbolP;
+                    if(parabirimi.indexOf("Lirası") !== -1){
+                        symbolP = String.fromCharCode(8378);
+                    }
+                    else if(parabirimi === "Dolar"){
+                        symbolP= String.fromCharCode(36);
+                    }
+                    else{
+                        symbolP= String.fromCharCode(8364);
+                    }
+                    $("#toplamFiyatLabel").text("KDV Dahil Toplam Fiyat: " + toplamFiyat.formatMoney(2)+" "+symbolP);
+                    $(".firmaFiyat").html("<strong>"+toplamFiyat.formatMoney(2)+"</strong>"+" "+symbolP);
+
+                    if(ilan_kismi_fiyat == 0){
+                        voteClick($('#table'));
+                    }
+
+                    $("#toplamFiyatL").text("KDV Hariç Toplam Fiyat: "+kdvsizToplamFiyat.formatMoney(2)+" "+symbolP);
+                    $("#toplamFiyat").val(toplamFiyat.toFixed(2));
+                    $("#toplamFiyatKdvsiz").val(kdvsizToplamFiyat.toFixed(2));
+                }
+            }}
 
        // SORTTABLE FONKSIYON SONU
 
