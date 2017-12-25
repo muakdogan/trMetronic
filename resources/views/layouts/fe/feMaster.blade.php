@@ -25,8 +25,8 @@
     @yield('head')
     <!-- Favicon-->
     <link rel="shortcut icon" href="favicon.png">
-
   </head>
+  @include('FrontEnd.ustMenu')
   <body data-spy="scroll" data-target="#navigation" data-offset="120">
     <div id="all">
       @yield('content')

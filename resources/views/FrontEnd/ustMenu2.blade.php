@@ -8,18 +8,17 @@
       </div>
       <div id="navigation" class="collapse navbar-collapse navbar-right">
         <ul class="nav navbar-nav">
-          <li><a href="#nasil" class="scroll-to">Nasıl Çalışır</a></li>
-          <li><a href="#avantaj" class="scroll-to">Avantajlarımız</a></li>
-          <li><a href="#neler" class="scroll-to">Neler Var</a></li>
-          <li><a href="#biz" class="scroll-to">Biz Kimiz</a></li>
-          <li><a href="#iletisim" class="scroll-to">İletişim</a></li>
+          <li><a href="{{url('/#nasil')}}">Nasıl Çalışır</a></li>
+          <li><a href="{{url('/')}}" data-id="avantaj">Avantajlarımız</a></li>
+          <li><a href="#neler">Neler Var</a></li>
+          <li><a href="#biz">Biz Kimiz</a></li>
+          <li><a href="#iletisim">İletişim</a></li>
         </ul>
         @if (!Auth::check())
           <a href="{{url('/firmaKayit')}}" class="btn navbar-btn btn-ghost">ÜYE OL</a>
           <a href="{{url('/login')}}" class="btn navbar-btn btn-ghost">ÜYE GİRİŞİ</a>
         @else
           <a href="{{url('/firmaIslemleri')}}" class="btn navbar-btn btn-ghost">FİRMAM</a>
-          <a href="{{url('/sessionKill')}}" class="btn navbar-btn btn-ghost">ÇIKIŞ</a>
         @endif
       </div>
     </div>
