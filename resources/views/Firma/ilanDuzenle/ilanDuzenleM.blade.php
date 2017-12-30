@@ -794,6 +794,9 @@
                 '<td><select class="form-control  required" name="goturu_miktar_birim_id" id="goturu_miktar_birim_id" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"><option selected disabled>Seçiniz</option>@foreach($birimler as $miktar_birim) <option  value="{{$miktar_birim->id}}" >{{$miktar_birim->adi}}</option>@endforeach</select></td>',
                 '<td><a href="#"  class="btn_kalem_sil"> <img src="{{asset("images/sil1.png")}}"></a><input type="hidden" name="goturu_id"  id="goturu_id0" value=""><input class="inp_kalem_id_goturu" name="kalem_id_goturu" type="hidden" value="-1"/></td>','</tr>'].join(''));
         }
+        else if(sozlesme_turu=="1" && $("#goturu_kalem0").length>0){
+            alert("Götürü Bedel İlanlara Sadece 1 Kalem Eklenebilir!");
+        }
         else if(ilan_turu=="1" &&sozlesme_turu=="0") {
             $("#mal_table").append(['<tr>','<td>'+(parseInt(kalem_num)+1)+'</td>','<td> <input type="text"  style="background:url({{asset("images/ekle.png")}}) no-repeat scroll ;padding-left:25px"class="form-control mal_show  required" id="mal_kalem'+kalem_num+'" name="mal_kalem[]" placeholder="Kalem Ekle" readonly value="" > </td>',
                 '<td><input type="text" class="form-control required " id="mal_marka" name="mal_marka[]" placeholder="Marka" value="" ></td>',

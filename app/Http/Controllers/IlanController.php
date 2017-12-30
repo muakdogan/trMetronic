@@ -65,8 +65,19 @@ class IlanController extends Controller
 
         $firma_id = session()->get('firma_id');
         $ilanSahibi=0;
+        $sektor_kontrol = 0;
         if($firma_id == $ilan->firmalar->id){
             $ilanSahibi=1;
+            $sektor_kontrol=1;
+        }
+        else{
+            $ilan_goruntuleyen_firma=Firma::find($firma_id);
+            foreach ($ilan_goruntuleyen_firma->sektorler as $i_g_firma_sektor){
+                if($i_g_firma_sektor->id==$ilan->ilan_sektor){
+                    $sektor_kontrol=1;
+                }
+            }
+                //Debugbar::info(count($ilan_goruntuleyen_firma->sektorler));
         }
 
         $kullanici_id = Auth::user()->kullanici_id;
@@ -130,7 +141,7 @@ class IlanController extends Controller
             ->with('iller',$iller)->with('maliyetler',$maliyetler)
             ->with('odeme_turleri',$odeme_turleri)->with('para_birimleri',$para_birimleri)->with('birimler',$birimler)
             ->with('teklifVarMi',$teklifVarMi)->with('ilan_sektor',$ilan_sektor)
-            ->with('goturu_bedel',$goturu_bedel)->with('sartnameUzanti',$sartnameUzanti);
+            ->with('goturu_bedel',$goturu_bedel)->with('sartnameUzanti',$sartnameUzanti)->with('sektor_kontrol',$sektor_kontrol);
 
     }
 

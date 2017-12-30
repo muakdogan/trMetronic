@@ -1046,7 +1046,7 @@ $("#btn2").click(function(){ //birden fazla kalem ekleme modal form içerisinde.
             '<td><select class="form-control selectpicker required" name="hizmet_miktar_birim_id['+kalem_num+']" id="hizmet_miktar_birim_id" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"><option selected disabled>Seçiniz</option>@foreach($birimler as $miktar_birim) <option  value="{{$miktar_birim->id}}" >{{$miktar_birim->adi}}</option>@endforeach</select></td>',
             '<td><a href="#"  class="sil"> <img src="{{asset("images/sil1.png")}}"></a><input type="hidden" name="hizmet_id['+kalem_num+']"  id="hizmet_id'+kalem_num+'" value=""></td>','</tr>'].join(''));
     }
-    else if(sozlesme_turu=="1"){
+    else if(sozlesme_turu=="1" && $("#goturu_kalem0").length==0){
 
           i = ($(".goturu_show").length) +1;
           kalem_num = i-1;
@@ -1060,6 +1060,9 @@ $("#btn2").click(function(){ //birden fazla kalem ekleme modal form içerisinde.
             '<td><select class="form-control selectpicker required" name="goturu_miktar_birim_id['+kalem_num+']" id="goturu_miktar_birim_id" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"><option selected disabled>Seçiniz</option>@foreach($birimler as $miktar_birim) <option  value="{{$miktar_birim->id}}" >{{$miktar_birim->adi}}</option>@endforeach</select></td>',
             '<td><a href="#"  class="sil"> <img src="{{asset("images/sil1.png")}}"></a><input type="hidden" name="goturu_id['+kalem_num+']"  id="goturu_id'+kalem_num+'" value=""></td>','</tr>'].join(''));
 
+    }
+    else if(sozlesme_turu=="1" && $("#goturu_kalem0").length>0){
+        alert("Götürü Bedel İlanlara Sadece 1 Kalem Eklenebilir!");
     }
     else if(ilan_turu=="3"){
 
