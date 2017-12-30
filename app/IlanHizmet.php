@@ -14,7 +14,7 @@ class IlanHizmet extends Model
     public $timestamps=false;
     public function birimler()
     {
-        return $this->belongsTo('App\Birim', 'birim_id', 'id');
+        return $this->belongsTo('App\Birim', 'miktar_birim_id', 'id');
     }
     public function fiyat_birimler()
     {
@@ -30,7 +30,7 @@ class IlanHizmet extends Model
     }
     public function hizmet_teklifler()
     {
-        return $this->hasMany('App\HizmetTeklif', 'ilan_hizmetler_id', 'id');
+        return $this->hasMany('App\HizmetTeklif', 'ilan_hizmet_id', 'id');
     }
     public function getHizmetTeklifDetay(){
         return $this->hizmet_teklifler()->whereRaw('tarih IN (select MAX(tarih) FROM hizmet_teklifler GROUP BY teklif_id)')->orderBy('kdv_dahil_fiyat', 'ASC')->paginate();

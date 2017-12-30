@@ -603,7 +603,8 @@ use Barryvdh\Debugbar\Facade as Debugbar;$puanNumber = 0; ?>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <?php $teklif_count=1; ?>
+                                            <?php $teklif_count=1; Debugbar::info($hizmetKalem->getHizmetTeklifDetay());?>
+
                                             @foreach($hizmetKalem->getHizmetTeklifDetay() as $hizmetTeklif)
                                                 <tr id="row_{{$hizmetKalem->kalem_id}}_{{$hizmetTeklif->teklifler->firmalar->id}}">
                                                     <td>{{$teklif_count++}}</td>
@@ -827,7 +828,7 @@ use Barryvdh\Debugbar\Facade as Debugbar;$puanNumber = 0; ?>
             @endforeach
         });
     </script>
-@else
+@elseif(false)
     @if($ilan->ilan_turu == 1 && $ilan->sozlesme_turu == 0)
     <h3>Fiyat İstenen Kalemler Rekabet Listesi</h3>
        <table class="table" style="border-collapse:collapse;" >
