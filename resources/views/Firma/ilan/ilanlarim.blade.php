@@ -20,6 +20,23 @@
 <script src="{{asset('js/wNumb.js')}}"></script>
 
     <style>
+        .ajax-loader {
+            visibility: hidden;
+            background-color: rgba(255,255,255,0.7);
+            position: absolute;
+            z-index: +100 !important;
+            width: 100%;
+            height:100%;
+        }
+
+        .ajax-loader img {
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
 
         .dialog {
             position: relative;
@@ -169,6 +186,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-9">
+            {{--aktif ilanlar başlangıcı--}}
             <div class="portlet light ">
                 <div class="portlet-title">
                     <div class="caption">
@@ -227,6 +245,113 @@
                 </div>
             </div>
 
+            {{--puan ver yorum yap ilanlar başlangıcı--}}
+            <div class="portlet light ">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-paper-plane theme-font"></i>
+                        <span class="caption-subject theme-font bold uppercase">Puan Ver Yorum Yap &nbsp;({{$yorumPuanIlanlar->count()}} İlan)</span>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                @if($yorumPuanIlanlar->count()!=0)
+                    <table id="table-pagination" data-toggle="table" data-pagination="true" data-search="true" class="table table-light">
+                        <thead>
+                        <tr>
+                            <th data-field="ilan" data-align="center" data-sortable="true">İlan Adı</th>
+                            <th data-field="tarih" data-align="center" data-sortable="true">İş Başlama Tarihi</th>
+                            <th data-field="kazananFirma" data-sortable="true">Kazanan Firma</th>
+                            <th data-field="teklif" data-align="center" data-sortable="true">Teklif</th>
+                            <th data-field="puanYorum">Puan / Yorum</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($yorumPuanIlanlar as $yorumPuanIlan)
+                            <tr class="active">
+                                <td><a href="{{ URL::to('teklifGor', array($yorumPuanIlan->firma_id,$yorumPuanIlan->id), false) }}" class="btn">{{$yorumPuanIlan->adi}}</a></td>
+                                <td>{{date('d-m-Y', strtotime($yorumPuanIlan->is_baslama_tarihi))}}</td>
+                                <td><a href="{{ URL::to('firmaDetay', array($yorumPuanIlan->kismi_kapali_kazananlar[0]->kazanan_firma_id), false) }}" class="btn">{{$yorumPuanIlan->kismi_kapali_kazananlar[0]->firma->adi}}</a></td>
+                                <td>{{number_format($yorumPuanIlan->kismi_kapali_kazananlar[0]->kazanan_fiyat, 2, ',', '.')}}{{$yorumPuanIlan->para_birimleri->para_birimi()}}</td>
+                                <td><a href="javascript:;" class="btn btn-circle bold purple btn_yorum_puan" value="{{$yorumPuanIlan->id}}">
+                                        <i class="icon-bubbles"></i> puan ver!
+                                    </a>
+                                    <div id="modal_yorum_puan_{{$yorumPuanIlan->id}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="ajax-loader" id="loader-puan-ver">
+                                                    <img src="{{asset('images/slack_load.gif')}}"/>
+                                                </div>
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Puan Ver Yorum Yap!</strong></h4>
+                                                </div>
+                                                <?php $i=0 ?>
+                                                {!! Form::open(array('url'=>'yorumPuan/'.$yorumPuanIlan->id.'/'.$yorumPuanIlan->kismi_kapali_kazananlar[0]->kazanan_firma_id,'method'=>'POST','class'=>'form_yorum_puan','value'=>$yorumPuanIlan->id)) !!}
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-lg-3">
+                                                            <label1 name="kriter1">Ürün/hizmet kalitesi</label1>
+                                                            <div id="puanlama">
+                                                                <div class="sliders" id="k{{$i}}"></div>
+                                                                <input type="hidden" id="puan1" name="puan1"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3" style="border-color:#ddd">
+                                                            <label1 name="kriter2">Teslimat</label1>
+                                                            <div id="puanlama">
+                                                                <div class="sliders" id="k{{$i+1}}"></div>
+                                                                <input type="hidden" id="puan2" name="puan2"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label1 name="kriter3">Teknik ve Yönetsel Yeterlilik</label1>
+                                                            <div id="puanlama">
+                                                                <div class="sliders" id="k{{$i+2}}"></div>
+                                                                <input type="hidden" id="puan3" name="puan3"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-3">
+                                                            <label1 name="kriter4">İletişim ve Esneklik</label1>
+                                                            <div id="puanlama">
+                                                                <div class="sliders" id="k{{$i+3}}"></div>
+                                                                <input type="hidden" id="puan4" name="puan4"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <?php $i=$i+3; ?>
+                                                    <textarea name="yorum" placeholder="Yorum" cols="30" rows="5" wrap="soft" ></textarea>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    {!! Form::submit('Kaydet', array('style'=>'float:right','class'=>'btn purple')) !!}
+                                                </div>
+                                                {!! Form::close() !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="5">
+                                <div class="col-md-6">
+                                    <div style="width: 20px;height: 20px;background-color: #eef1f5;float: left;"></div> <div style="float: left; margin:1px;margin-left: 10px">Henüz Puan Verilmemiş İlan</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div style="width: 20px;height: 20px;background-color: #fbe1e3;float: left;"></div> <div style="float: left; margin:1px;margin-left: 10px">Puan Verilmiş İlan</div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                @else
+                    <p style="text-align:center">Henüz Puan Yapılacak İlanınız Bulunmamaktadır.</p>
+                @endif
+                </div>
+            </div>
+
             <?php
             $i=0;
             $kullanici_id=Auth::user()->id;
@@ -237,33 +362,33 @@
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="icon-paper-plane theme-font"></i>
-                        <span class="caption-subject theme-font bold uppercase">Sonuçlanmış İlanlarım &nbsp;({{$sonuc_ilanlar->count()}} İlan)</span>
+                        <span class="caption-subject theme-font bold uppercase">Sonuçlanmış &nbsp;({{$sonuc_ilanlar->count()}} İlan)</span>
                     </div>
                 </div>
                 <div class="portlet-body">
 
-                @if($sonuc_ilanlar->count() != 0)
-                    <table id="table-pagination" data-toggle="table" data-pagination="true" data-search="true" class="table table-light">
-                        <thead>
-                        <tr>
-                            <th data-field="ilan" data-align="center" data-sortable="true">İlan Adı</th>
-                            <th data-field="tarih" data-align="center" data-sortable="true">Sonuclanma Tarihi</th>
-                            <th data-field="teklifVerenler" data-align="center" data-sortable="true">Teklif Veren Sayısı</th>
-                            <th data-field="kazananFiyat" data-align="center" data-sortable="true">Kazanan Fiyat</th>
-                            <th data-field="kazananFirma" data-align="center" data-sortable="true">Kazanan Firma</th>
-                            <th data-field="goruntule" data-align="center">Görüntüle</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($sonuc_ilanlar as $ilan)
+                    @if($sonuc_ilanlar->count() != 0)
+                        <table id="table-pagination" data-toggle="table" data-pagination="true" data-search="true" class="table table-light">
+                            <thead>
                             <tr>
-                                <td><a href="{{ URL::to('teklifGor', array($firma->id,$ilan->id), false) }}">{{$ilan->adi}}</a></td>
-                            @if($ilan->kismi_fiyat == 1 ) <!--Kismi Açık -->
-                                <td>{{$ilan->kismi_acik_kazananlar->count() == 0 ? "" : $ilan->kismi_acik_kazananlar->last()->sonuclanma_tarihi}}</td>
-                            @else<!--Kismi Kapali -->
-                                <td>{{$ilan->kismi_kapali_kazananlar->count() == 0 ? "" : $ilan->kismi_kapali_kazananlar->last()->sonuclanma_tarihi}}</td>
+                                <th data-field="ilan" data-align="center" data-sortable="true">İlan Adı</th>
+                                <th data-field="tarih" data-align="center" data-sortable="true">Sonuclanma Tarihi</th>
+                                <th data-field="teklifVerenler" data-align="center" data-sortable="true">Teklif Veren Sayısı</th>
+                                <th data-field="kazananFiyat" data-align="center" data-sortable="true">Kazanan Fiyat</th>
+                                <th data-field="kazananFirma" data-align="center" data-sortable="true">Kazanan Firma</th>
+                                <th data-field="goruntule" data-align="center">Görüntüle</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($sonuc_ilanlar as $ilan)
+                                <tr>
+                                    <td><a href="{{ URL::to('teklifGor', array($firma->id,$ilan->id), false) }}">{{$ilan->adi}}</a></td>
+                                @if($ilan->kismi_fiyat == 1 ) <!--Kismi Açık -->
+                                    <td>{{$ilan->kismi_acik_kazananlar->count() == 0 ? "" : $ilan->kismi_acik_kazananlar->last()->sonuclanma_tarihi}}</td>
+                                @else<!--Kismi Kapali -->
+                                    <td>{{$ilan->kismi_kapali_kazananlar->count() == 0 ? "" : $ilan->kismi_kapali_kazananlar->last()->sonuclanma_tarihi}}</td>
                                 @endif
-                                <td>{{$ilan->teklifler->count() == 0 ? 0 : $ilan->teklifler[0]->firma_sayisi}}</td>
+                                    <td>{{$ilan->teklifler->count() == 0 ? 0 : $ilan->teklifler[0]->firma_sayisi}}</td>
 
                                 @if($ilan->kismi_fiyat == 1 )
                                     <td><strong> {{$ilan->kazanan_acik_toplam}}</strong> &#8378;</td>
@@ -272,69 +397,71 @@
                                     <td><strong> {{$ilan->kismi_kapali_kazananlar->count() == 0 ? "" : $ilan->kismi_kapali_kazananlar[0]->kazanan_fiyat}}</strong> &#8378;</td>
                                     <td>{{$ilan->kismi_kapali_kazananlar->count() == 0 ? "" : $ilan->kismi_kapali_kazananlar[0]->firma->adi}}</td>
                                 @endif
-                                <td>
+                                    <td>
                                     @if($ilan->kismi_fiyat == 1)
                                         <a href="{{ URL::to('teklifGor', array($firma->id,$ilan->id), false) }}"><button style="float:right;padding: 4px 12px;font-size:12px" type="button" class="btn btn-info add">İlanı Gör</button></a>
                                     @else
                                         <button style="float:right;padding: 4px 12px;font-size:12px" type="button" class="btn btn-info add btn-yorumYap" id="{{$i}}">Puan Ver/Yorum Yap</button>
                                     @endif
-                                <div class="modal fade" id="modalForm{{$i}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div style="background-color: #fcf8e3;" class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                                <h4 style="font-size:14px" class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Puanla/Yorum Yap</strong></h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="dialog" id="dialog{{$i++}}" style="display:none">
-                                                    <?php $isDisabled = $ilan->puanlamalar->count() == 0 || $ilan->yorumlar->count() == 0 ? "" : "disabled"; ?>
-                                                    {!! Form::open(array('url'=>'yorumPuan/'.$firma->id.'/'.$ilan->kismi_kapali_kazananlar->first()->kazanan_firma_id.'/'.$ilan->id.'/'.$kullanici_id,'method'=>'POST', 'files'=>true)) !!}
-                                                    <div class="row col-lg-12">
-                                                        <div class="col-lg-3">
-                                                            <label1 name="kriter1">Ürün/hizmet kalitesi</label1>
-                                                            <div id="puanlama">
-                                                                <div class="sliders" id="k{{$i}}" {{$isDisabled}}></div>
-                                                                <input type="hidden" id="puan1" name="puan1" value="{{$ilan->puanlamalar[0] ? $ilan->puanlamalar[0]->kriter1 : 5}}" {{$isDisabled}}/>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-3" style="border-color:#ddd">
-                                                            <label1 name="kriter2"><br>Teslimat</label1>
-                                                            <div id="puanlama">
-                                                                <div class="sliders" id="k{{$i+1}}" {{$isDisabled}}></div>
-                                                                <input type="hidden" id="puan2" name="puan2" value="{{$ilan->puanlamalar[0] ? $ilan->puanlamalar[0]->kriter2 : 5}}" {{$isDisabled}}/>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-3">
-                                                            <label1 name="kriter3">Teknik ve Yönetsel Yeterlilik</label1>
-                                                            <div id="puanlama">
-                                                                <div class="sliders" id="k{{$i+2}}" {{$isDisabled}}></div>
-                                                                <input type="hidden" id="puan3" name="puan3" value="{{$ilan->puanlamalar[0] ? $ilan->puanlamalar[0]->kriter3 : 5}}" {{$isDisabled}}/>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-lg-3">
-                                                            <label1 name="kriter4">İletişim ve Esneklik</label1>
-                                                            <div id="puanlama">
-                                                                <div class="sliders" id="k{{$i+3}}" {{$isDisabled}}></div>
-                                                                <input type="hidden" id="puan4" name="puan4" value="{{$ilan->puanlamalar[0] ? $ilan->puanlamalar[0]->kriter4 : 5}}" {{$isDisabled}}/>
-                                                            </div>
+                                        <div class="modal fade" id="modalForm{{$i}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div style="background-color: #fcf8e3;" class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                        <h4 style="font-size:14px" class="modal-title" id="myModalLabel"><img src="{{asset('images/arrow.png')}}">&nbsp;<strong>Puanla/Yorum Yap</strong></h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="dialog" id="dialog{{$i++}}" style="display:none">
+                                                            <?php $isDisabled = $ilan->puanlamalar->count() == 0 || $ilan->yorumlar->count() == 0 ? "" : "disabled"; ?>
+                                                            @if($ilan->puanlamalar->count())
+                                                                {!! Form::open(array('url'=>'yorumPuan/'.$firma->id.'/'.$ilan->kismi_kapali_kazananlar->first()->kazanan_firma_id.'/'.$ilan->id.'/'.$kullanici_id,'method'=>'POST', 'files'=>true)) !!}
+                                                                <div class="row col-lg-12">
+                                                                    <div class="col-lg-3">
+                                                                        <label1 name="kriter1">Ürün/hizmet kalitesi</label1>
+                                                                        <div id="puanlama">
+                                                                            <div class="sliders" id="k{{$i}}" {{$isDisabled}}></div>
+                                                                            <input type="hidden" id="puan1" name="puan1" value="{{$ilan->puanlamalar[0] ? $ilan->puanlamalar[0]->kriter1 : 5}}" {{$isDisabled}}/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-3" style="border-color:#ddd">
+                                                                        <label1 name="kriter2"><br>Teslimat</label1>
+                                                                        <div id="puanlama">
+                                                                            <div class="sliders" id="k{{$i+1}}" {{$isDisabled}}></div>
+                                                                            <input type="hidden" id="puan2" name="puan2" value="{{$ilan->puanlamalar[0] ? $ilan->puanlamalar[0]->kriter2 : 5}}" {{$isDisabled}}/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-3">
+                                                                        <label1 name="kriter3">Teknik ve Yönetsel Yeterlilik</label1>
+                                                                        <div id="puanlama">
+                                                                            <div class="sliders" id="k{{$i+2}}" {{$isDisabled}}></div>
+                                                                            <input type="hidden" id="puan3" name="puan3" value="{{$ilan->puanlamalar[0] ? $ilan->puanlamalar[0]->kriter3 : 5}}" {{$isDisabled}}/>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-3">
+                                                                        <label1 name="kriter4">İletişim ve Esneklik</label1>
+                                                                        <div id="puanlama">
+                                                                            <div class="sliders" id="k{{$i+3}}" {{$isDisabled}}></div>
+                                                                            <input type="hidden" id="puan4" name="puan4" value="{{$ilan->puanlamalar[0] ? $ilan->puanlamalar[0]->kriter4 : 5}}" {{$isDisabled}}/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <?php $i=$i+3; ?>
+                                                                <textarea name="yorum" placeholder="Yorum" cols="30" rows="5" wrap="soft" {{$isDisabled}}>{{$ilan->yorumlar[0] ? $ilan->yorumlar[0]->yorum : ""}}</textarea>
+                                                                <input type="submit" value="Ok" {{$isDisabled}}/>
+                                                                {{ Form::close() }}
+                                                            @endif
                                                         </div>
                                                     </div>
-                                                    <?php $i=$i+3; ?>
-                                                    <textarea name="yorum" placeholder="Yorum" cols="30" rows="5" wrap="soft" {{$isDisabled}}>{{$ilan->yorumlar[0] ? $ilan->yorumlar[0]->yorum : ""}}</textarea>
-                                                    <input type="submit" value="Ok" {{$isDisabled}}/>
-                                                    {{ Form::close() }}
+                                                    <div class="modal-footer">
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="modal-footer">
-                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                </td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                     @else
 
                         <p style="text-align:center">Henüz Sonuçlanmış İlanınız Bulunmamaktadır.</p>
@@ -343,6 +470,7 @@
                 </div>
             </div>
 
+            {{--pasif ilanlar başlangıcı--}}
             <div class="portlet light ">
                 <div class="portlet-title">
                     <div class="caption">
@@ -477,18 +605,21 @@
         </div>
     </div>
 <script>
-    $(document).on('click', '.btn-yorumYap', function(){
-        var j = $(this).attr('id');
 
-        if ($(this).hasClass('active')){
-            $('#dialog'+j).fadeOut(200);
-            $(this).removeClass('active');
-        } else {
-            $('#modalForm'+j).modal('show');
-            $('#dialog'+j).delay(300).fadeIn(200);
-            $(this).addClass('active');
-        }
-    });
+$(document).on('click', '.btn-yorumYap', function(){
+    var j = $(this).attr('id');
+
+    if ($(this).hasClass('active')){
+        $('#dialog'+j).fadeOut(200);
+        $(this).removeClass('active');
+    } else {
+        $('#modalForm'+j).modal('show');
+        $('#dialog'+j).delay(300).fadeIn(200);
+        $(this).addClass('active');
+    }
+});
+
+
 
 $(document).ready( function() {
     $('[data-toggle="tooltip"]').tooltip();
@@ -593,4 +724,38 @@ $(document).ready( function() {
     <script src="{{asset('MetronicFiles/pages/scripts/table-bootstrap.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('MetronicFiles/global/plugins/counterup/jquery.waypoints.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('MetronicFiles/global/plugins/counterup/jquery.counterup.min.js')}}" type="text/javascript"></script>
+    <script>
+        $(document).on('click', '.btn_yorum_puan', function(){
+            $('#modal_yorum_puan_'+$(this).attr("value")).modal('show');
+        });
+        $(document).on('submit', '.form_yorum_puan', function(e){
+            $('.ajax-loader').css("visibility", "visible");
+            /*
+            var postData = $(this).serialize();
+            var formURL = $(this).attr('action');
+            $.ajax(
+                {
+                    url : formURL,
+                    type: "POST",
+                    data : postData,
+                    success:function(data, textStatus, jqXHR)
+                    {
+                        if(data=="error"){
+                            alert("hata");
+                            setTimeout(function(){ location.href="{{asset('firmaProfili')}}"}, 5000);
+                        }
+                        else{
+                            location.href="{{asset('firmaProfili')}}";
+                        }
+                        e.preventDefault();
+                    },
+                    error: function(jqXHR, textStatus, errorThrown)
+                    {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        alert(textStatus + "," + errorThrown);
+                    }
+                });*/
+            e.preventDefault();
+        });
+    </script>
 @endsection
