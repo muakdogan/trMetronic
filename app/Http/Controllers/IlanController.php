@@ -75,9 +75,9 @@ class IlanController extends Controller
             foreach ($ilan_goruntuleyen_firma->sektorler as $i_g_firma_sektor){
                 if($i_g_firma_sektor->id==$ilan->ilan_sektor){
                     $sektor_kontrol=1;
+                    break;
                 }
             }
-                //Debugbar::info(count($ilan_goruntuleyen_firma->sektorler));
         }
 
         $kullanici_id = Auth::user()->kullanici_id;

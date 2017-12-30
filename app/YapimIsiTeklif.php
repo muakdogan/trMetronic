@@ -13,7 +13,7 @@ class YapimIsiTeklif extends Model
     
     public function ilan_yapim_isleri()
     {
-        return $this->belongsTo('App\IlanYapimIsi', 'ilan_yapim_isi_id', 'id');
+        return $this->belongsTo('App\IlanYapimIsi', 'ilan_yapim_isleri_id', 'id');
     }
     public function firma_kullanicilar()
     {
