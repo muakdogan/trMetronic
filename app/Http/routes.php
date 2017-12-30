@@ -576,40 +576,7 @@ Route::get('ilanTeklifVer/{ilan_id}',['middleware'=>'auth' ,function ($ilan_id) 
     return;
   });
   //////////////////////////////////////Puan Yorum //////////////////////
-  Route::post('/yorumPuan/{yorum_firma_id}/{yorum_yapilan_firma_id}/{ilan_id}/{kullanici_id}' ,function ($yorum_firma_id,$yorum_yapilan_firma_id,$ilan_id,$kullanici_id,Request $request) {
-    $now = new \DateTime();
-
-    $ilan = Ilan::find($ilan_id);
-    $ilan->statu = 1;
-    $ilan->save();
-
-    $puan = new App\Puanlama();
-    $puan->firma_id=$yorum_yapilan_firma_id;
-    $puan->ilan_id=$ilan_id;
-    $puan->yorum_yapan_firma_id=$yorum_firma_id;
-    $puan->yorum_yapan_kullanici_id=$kullanici_id;
-    $puan->kriter1 = $request->puan1;
-    $puan->kriter2=$request->puan2;
-    $puan->kriter3=$request->puan3;
-    $puan->kriter4=$request->puan4;
-    $puan->tarih=$now;
-    $puan->save();
-
-    $yorum_yapilan_firma = Firma::find($yorum_yapilan_firma_id);
-    $yorum_yapilan_firma->puanlariGuncelle();
-    $yorum_yapilan_firma->save();
-
-    $yorum = new App\Yorum();
-    $yorum->firma_id=$yorum_yapilan_firma_id;
-    $yorum->ilan_id=$ilan_id;
-    $yorum->yorum_yapan_firma_id=$yorum_firma_id;
-    $yorum->yorum_yapan_kullanici_id=$kullanici_id;
-    $yorum->yorum = $request->yorum;
-    $yorum->tarih=$now;
-    $yorum->save();
-    return Redirect::back()->with($yorum_firma_id);
-
-  });
+Route::post('/yorumPuan/{ilan_id}/{yorum_yapilan_firma_id}/' , 'IlanController@yorumPuan');
 
 Route::get('kismiRekabet/{firmaID}/{ilanID}' ,'IlanController@kismiRekabetService');
 Route::post('/teklifGonder/{firma_id}/{ilan_id}/{kullanici_id}', 'IlanController@teklifGonder');

@@ -1025,6 +1025,7 @@ class IlanController extends Controller
             return Redirect::to('/');
         }
 
+        $now = new Carbon();
         $aktif_ilanlar = Ilan::where('firma_id', $firmaId)->orderBy('kapanma_tarihi','desc')
         ->with([
             'teklifler' => function($query){
@@ -1040,14 +1041,22 @@ class IlanController extends Controller
         ]);
         $sonuc_ilanlar = clone $aktif_ilanlar;
         $pasif_ilanlar = clone $aktif_ilanlar;
-        
+
+        $yorumPuanIlanlar = Ilan::where('firma_id',$firmaId)->where(function ($query){
+            $query->where(function ($query2){
+                $query2->where('sozlesme_turu','0')->where('kismi_fiyat','0');
+            })->orWhere('sozlesme_turu','1');
+        })->where('statu','1')->where('is_baslama_tarihi','<',$now)->
+            with(['kismi_kapali_kazananlar.firma'])->get();
+
+        Debugbar::info($yorumPuanIlanlar);
         $aktif_ilanlar = $aktif_ilanlar->where('statu', 0)->get();
         $sonuc_ilanlar = $sonuc_ilanlar->where('statu', 1)->get();
         $pasif_ilanlar = $pasif_ilanlar->where('statu', 2)->get();
 
-
-        return View::make('Firma.ilan.ilanlarim',
-        compact(['firma', 'aktif_ilanlar', 'sonuc_ilanlar', 'pasif_ilanlar']));
+        return view('Firma.ilan.ilanlarim')->with('firma', $firma)
+            ->with('aktif_ilanlar', $aktif_ilanlar)->with('sonuc_ilanlar', $sonuc_ilanlar)
+            ->with('pasif_ilanlar', $pasif_ilanlar)->with('yorumPuanIlanlar', $yorumPuanIlanlar);
     }
 
     public function basvurularim($firma_id)
@@ -1324,7 +1333,8 @@ class IlanController extends Controller
         $kismiKazanan->kazanan_firma_id = $firmaID;
         $kismiKazanan->kazanan_fiyat =  $kdv_dahil_fiyat;
         $kismiKazanan->save();
-
+        $ilan->statu=1;
+        $ilan->save();
         return Response::json($kismiKazanan);
     }
 
@@ -1343,8 +1353,43 @@ class IlanController extends Controller
         $kismiKazanan->kazanan_firma_id = $firmaID;
         $kismiKazanan->kazanan_fiyat =  $kdv_dahil_fiyat;
         $kismiKazanan->save();
-
+        $ilan->statu=1;
+        $ilan->save();
         return Response::json($kismiKazanan);
+    }
+
+    public function yorumPuan($ilan_id,$yorum_yapilan_firma_id,Request $request) {
+        $now = new \DateTime();
+
+        $ilan = Ilan::find($ilan_id);
+        $ilan->statu = 1;
+        $ilan->save();
+
+        $puan = new Puanlama();
+        $puan->firma_id=$yorum_yapilan_firma_id;
+        $puan->ilan_id=$ilan_id;
+        $puan->yorum_yapan_firma_id=$yorum_firma_id;
+        $puan->yorum_yapan_kullanici_id=$kullanici_id;
+        $puan->kriter1 = $request->puan1;
+        $puan->kriter2=$request->puan2;
+        $puan->kriter3=$request->puan3;
+        $puan->kriter4=$request->puan4;
+        $puan->tarih=$now;
+        $puan->save();
+
+        $yorum_yapilan_firma = Firma::find($yorum_yapilan_firma_id);
+        $yorum_yapilan_firma->puanlariGuncelle();
+        $yorum_yapilan_firma->save();
+
+        $yorum = new Yorum();
+        $yorum->firma_id=$yorum_yapilan_firma_id;
+        $yorum->ilan_id=$ilan_id;
+        $yorum->yorum_yapan_firma_id=$yorum_firma_id;
+        $yorum->yorum_yapan_kullanici_id=$kullanici_id;
+        $yorum->yorum = $request->yorum;
+        $yorum->tarih=$now;
+        $yorum->save();
+        return Redirect::back()->with($yorum_firma_id);
     }
 
     public function ilaniPasifEt(Request $request){
