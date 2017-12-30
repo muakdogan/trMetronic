@@ -23,8 +23,8 @@ DebugBar::info($ilan);
 @endsection
 
 @section('bodyAttributes')onload="loadPage()"@endsection {{-- teklif girilirken textbox cursorunu dogru konumlandirmak icin gerekli --}}
-
-@section('content')
+@if($sektor_kontrol==1)
+    @section('content')
     <?php
     $kullaniciTeklifi=null;
     $para_birimi=$ilan->para_birimleri->para_birimi();
@@ -1599,3 +1599,22 @@ DebugBar::info($ilan);
 
     </script>
 @endsection
+@else
+    @section('content')
+        <div class="row">
+            <div class="col-md-12">
+                <div class="portlet light ">
+                    <div class="portlet-title">
+                        <div class="caption caption-md">
+                            <i class="icon-note theme-font"></i>
+                            <span class="caption-subject theme-font bold uppercase">Sektör Uyuşmazlığı</span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <h3>Firma sektörleriniz ile ilan sektörünün uyuşmaması nedeniyle ilanı görüntüleyemezsiniz.</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endsection
+@endif
