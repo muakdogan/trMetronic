@@ -12,7 +12,7 @@ class GoturuBedelTeklif extends Model
     
     public function ilan_goturu_bedeller()
     {
-        return $this->belongsTo('App\IlanGoturuBedel', 'ilan_goturu_bedeller_id', 'id');
+        return $this->belongsTo('App\IlanGoturuBedel', 'ilan_goturu_bedel_id', 'id');
     }
     public function firma_kullanicilar()
     {

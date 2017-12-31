@@ -576,7 +576,7 @@ Route::get('ilanTeklifVer/{ilan_id}',['middleware'=>'auth' ,function ($ilan_id) 
     return;
   });
   //////////////////////////////////////Puan Yorum //////////////////////
-Route::post('/yorumPuan/{ilan_id}/{yorum_yapilan_firma_id}/' , 'IlanController@yorumPuan');
+Route::post('/yorumPuan/{ilan_id}/{yorum_yapilan_firma_id}' , 'IlanController@yorumPuan');
 
 Route::get('kismiRekabet/{firmaID}/{ilanID}' ,'IlanController@kismiRekabetService');
 Route::post('/teklifGonder/{firma_id}/{ilan_id}/{kullanici_id}', 'IlanController@teklifGonder');
@@ -585,6 +585,7 @@ Route::get('ilaniPasifEt' ,'IlanController@ilaniPasifEt');
 Route::get('ilaniAktifEt' ,'IlanController@ilaniAktifEt');
 Route::post('KazananBelirleKismiAcik','IlanController@kazananBelirleKismiAcik');
 Route::post('KazananBelirleKismiKapali','IlanController@kazananBelirleKismiKapali');
+Route::post('KazananBelirleGoturuBedel','IlanController@KazananBelirleGoturuBedel');
 
 /////////////// Rekabet //////////////////////////////////////
 Route::get('rekabet/{ilan_id}' ,function ($ilanid) {
