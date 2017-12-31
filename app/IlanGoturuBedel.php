@@ -15,7 +15,7 @@ class IlanGoturuBedel extends Model
     }
     public function goturu_bedel_teklifler()
     {
-        return $this->hasMany('App\GoturuBedelTeklif', 'ilan_goturu_bedeller_id', 'id');
+        return $this->hasMany('App\GoturuBedelTeklif', 'ilan_goturu_bedel_id', 'id');
     }
      public function miktar_birimler()
     {

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\GoturuBedelKazanan;
 use App\TeklifHareket;
 use Illuminate\Http\Request;
 use Request as Req; // "Illuminate\Http\Request" ile karismamasi icin yeniden adlandirildi
@@ -22,6 +23,8 @@ use App\KismiAcikKazanan;
 use App\Maliyet;
 use App\ParaBirimi;
 use App\Birim;
+use App\Puanlama;
+use App\Yorum;
 use App\OnayliTedarikci;
 use Illuminate\Support\Facades\Session;
 use Input;
@@ -1064,10 +1067,11 @@ class IlanController extends Controller
         $aktif_ilanlar = $aktif_ilanlar->where('statu', 0)->get();
         $sonuc_ilanlar = $sonuc_ilanlar->where('statu', 1)->get();
         $pasif_ilanlar = $pasif_ilanlar->where('statu', 2)->get();
+        $puanControl = new Puanlama();
 
         return view('Firma.ilan.ilanlarim')->with('firma', $firma)
             ->with('aktif_ilanlar', $aktif_ilanlar)->with('sonuc_ilanlar', $sonuc_ilanlar)
-            ->with('pasif_ilanlar', $pasif_ilanlar)->with('yorumPuanIlanlar', $yorumPuanIlanlar);
+            ->with('pasif_ilanlar', $pasif_ilanlar)->with('yorumPuanIlanlar', $yorumPuanIlanlar)->with('puanControl',$puanControl);
     }
 
     public function basvurularim($firma_id)
@@ -1369,6 +1373,26 @@ class IlanController extends Controller
         return Response::json($kismiKazanan);
     }
 
+    public function kazananBelirleGoturuBedel(){
+        $ilanID = Input::get('ilanID');
+        $firmaID = Input::get('firmaID');
+        $kdv_dahil_fiyat = Input::get('kdv_dahil_fiyat');
+
+        $ilan = Ilan::find($ilanID);
+        if(session()->get('firma_id') != $ilan->firma_id){
+            abort(403);
+        }
+
+        $goturuKazanan = new GoturuBedelKazanan();
+        $goturuKazanan->ilan_id =$ilanID ;
+        $goturuKazanan->kazanan_firma_id = $firmaID;
+        $goturuKazanan->kazanan_fiyat =  $kdv_dahil_fiyat;
+        $goturuKazanan->save();
+        $ilan->statu=1;
+        $ilan->save();
+        return Response::json($goturuKazanan);
+    }
+
     public function yorumPuan($ilan_id,$yorum_yapilan_firma_id,Request $request) {
         $now = new \DateTime();
 
@@ -1379,8 +1403,8 @@ class IlanController extends Controller
         $puan = new Puanlama();
         $puan->firma_id=$yorum_yapilan_firma_id;
         $puan->ilan_id=$ilan_id;
-        $puan->yorum_yapan_firma_id=$yorum_firma_id;
-        $puan->yorum_yapan_kullanici_id=$kullanici_id;
+        $puan->yorum_yapan_firma_id=session()->get('firma_id');
+        $puan->yorum_yapan_kullanici_id=session()->get('kullanici_id');
         $puan->kriter1 = $request->puan1;
         $puan->kriter2=$request->puan2;
         $puan->kriter3=$request->puan3;
@@ -1395,12 +1419,12 @@ class IlanController extends Controller
         $yorum = new Yorum();
         $yorum->firma_id=$yorum_yapilan_firma_id;
         $yorum->ilan_id=$ilan_id;
-        $yorum->yorum_yapan_firma_id=$yorum_firma_id;
-        $yorum->yorum_yapan_kullanici_id=$kullanici_id;
+        $yorum->yorum_yapan_firma_id=session()->get('firma_id');
+        $yorum->yorum_yapan_kullanici_id=session()->get('kullanici_id');
         $yorum->yorum = $request->yorum;
         $yorum->tarih=$now;
         $yorum->save();
-        return Redirect::back()->with($yorum_firma_id);
+        //return Redirect::back()->with(session()->get('firma_id'));
     }
 
     public function ilaniPasifEt(Request $request){

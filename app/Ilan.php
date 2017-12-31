@@ -92,6 +92,10 @@ class Ilan extends Model
     {
     return $this->hasMany('App\KismiKapaliKazanan', 'ilan_id', 'id');
     }
+    public function goturu_bedel_kazananlar()
+    {
+        return $this->hasMany('App\GoturuBedelKazanan', 'ilan_id', 'id');
+    }
     public function getIlanTuru()
     {
     if($this->ilan_turu == 1)
@@ -347,6 +351,21 @@ class Ilan extends Model
     public function kisKapaliKazananFirmaId(){
         $kazanan = KismiKapaliKazanan::where("ilan_id",$this->id)->first();
         return $kazanan->kazanan_firma_id;
+    }
+    public function goturuKazanBelirlenmisMi(){
+        $kazanan = GoturuBedelKazanan::where("ilan_id",$this->id)->first();
+        $goturuBelirlenmisMi=count($kazanan);
+        return $goturuBelirlenmisMi;
+    }
+
+    public function goturuKazananFirmaId(){
+        $kazanan = GoturuBedelKazanan::where("ilan_id",$this->id)->first();
+        return $kazanan->kazanan_firma_id;
+    }
+
+    public function goturuKazananFirmalar(){
+        $firmalar=GoturuBedelKazanan::where('ilan_id',$this->id)->select('kazanan_firma_id')->get();
+        return $firmalar;
     }
 
     public function kisKapaliKazananFirmalar(){

@@ -27,6 +27,9 @@ class Puanlama extends Model
     {
         return $this->hasOne('App\Yorum', 'ilan_id', 'ilan_id');
     }
-   
+
+    public function puanGetir($yorum_yapilan_firma_id,$ilan_id){
+        return Puanlama::where('firma_id',$yorum_yapilan_firma_id)->where('ilan_id',$ilan_id)->where('yorum_yapan_firma_id',session()->get('firma_id'))->where('yorum_yapan_kullanici_id',session()->get('kullanici_id'))->first();
+    }
   
 }
