@@ -60,7 +60,7 @@ a{
                     <p id="popIlanIsinSuresi"><img src="{{asset('images/ok.png')}}"><strong>İşin Süresi:</strong> {{$ilan->isin_suresi}}</p>
                     <p id="popIlanSözlesmeTuru"><img src="{{asset('images/ok.png')}}"><strong>Sözleşme Türü : </strong>{{$ilan->getSozlesmeTuru()}}</p>
                 </div>
-                <div class="row hover">
+                <div class="row hover" style="padding-top: 20px;">
                     <div class="col-sm-10">
                         <p><b>İlan Adı: {{$ilan->adi}}</b></p>
 
@@ -95,7 +95,7 @@ a{
                         <?php Debugbar::info($ilan->rekabet_sekli); ?>
                         @if($ilan->rekabet_sekli == 1 || $ilan->rekabet_sekli == 2 || ($ilan->katilimcilar == 2 && $ilan->belirliIstekliControl($ilan->id,$firma_id) == 1)) <!-- Eğer bir firma davet edilmediyse o ilanda başvuru butonu çıkmaz-->
 
-                            <a href="#"><button type="button" class="btn btn-primary purple"  name="{{$ilan->firma_id}}_{{$ilan->id}}" id="{{$ilan->id}}" style='float:right;margin-top:60px'>Başvur</button></a><br><br>
+                            <a href="#"><button type="button" class="btn btn-circle purple"  name="{{$ilan->firma_id}}_{{$ilan->id}}" id="{{$ilan->id}}" style='float:right;margin-top:60px'><i class="icon-target"></i> Başvur</button></a><br><br>
 
                             @endif
                         @endif
@@ -103,7 +103,7 @@ a{
 
                 </div>
 
-                <hr class="hr">
+                <hr>
 
             </div>
         @endforeach

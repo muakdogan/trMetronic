@@ -71,12 +71,12 @@
                                     </ul>
                                     @if(session()->get('firma_id')!=$firma->id)
                                         @if(!$onaylimi)
-                                            <button id="btn-tedEkle" value="{{$firma->id}}" type="button" class="btn btn-circle red"><i class="fa fa-star-half-o"></i> Onaylı Tedarikçilerime Ekle</button>
-                                            <button id="btn-tedCikar" value="{{$firma->id}}" type="button" class="btn btn-circle red" style="display: none;"><i class="fa fa-star"></i> Onaylı Tedarikçilerimden Çıkar</button>
+                                            <button id="btn-tedEkle" value="{{$firma->id}}" type="button" class="btn btn-circle red"><i class="fa fa-star"></i> Onaylı Tedarikçilerime Ekle</button>
+                                            <button id="btn-tedCikar" value="{{$firma->id}}" type="button" class="btn btn-circle red" style="display: none;"><i class="fa fa-star-half-o"></i> Onaylı Tedarikçilerimden Çıkar</button>
                                         @else
 
-                                            <button id="btn-tedEkle" value="{{$firma->id}}" type="button" class="btn btn-circle red" style="display: none;"><i class="fa fa-star-half-o"></i> Onaylı Tedarikçilerime Ekle</button>
-                                            <button id="btn-tedCikar" value="{{$firma->id}}" type="button" class="btn btn-circle red"><i class="fa fa-star"></i> Onaylı Tedarikçilerimden Çıkar</button>
+                                            <button id="btn-tedEkle" value="{{$firma->id}}" type="button" class="btn btn-circle red" style="display: none;"><i class="fa fa-star"></i> Onaylı Tedarikçilerime Ekle</button>
+                                            <button id="btn-tedCikar" value="{{$firma->id}}" type="button" class="btn btn-circle red"><i class="fa fa-star-half-o"></i> Onaylı Tedarikçilerimden Çıkar</button>
                                         @endif
                                     @else
                                          <a href="{{asset('firmaProfili')}}" class="btn btn-circle red"><i class="fa fa-wrench"></i> Profilimi Düzenle</a>
