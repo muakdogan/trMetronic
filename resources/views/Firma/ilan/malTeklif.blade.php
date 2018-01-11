@@ -1,4 +1,4 @@
-<?php use Barryvdh\Debugbar\Facade as Debugbar;//debug yapmak için gerekli ?>
+<?php use Barryvdh\Debugbar\Facade as Debugbar; ?>
 <div id="mal">
     <h4>Fiyat İstenen Kalemler Listesi</h4>
     {{ Form::open(array('id'=>'teklifForm','url'=>'teklifGonder/'.$firma_id .'/'.$ilan->id.'/'.Auth::user()->id)) }}

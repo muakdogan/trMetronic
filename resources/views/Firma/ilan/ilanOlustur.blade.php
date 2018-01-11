@@ -1028,7 +1028,7 @@ $("#btn2").click(function(){ //birden fazla kalem ekleme modal form içerisinde.
                       '<td><textarea id="mal_aciklama" name="mal_aciklama['+kalem_num+']" rows="2" class="form-control required" placeholder="Açıklama" ></textarea></td>',
                       ' <td> <input type="text" class="form-control required" id="mal_ambalaj" name="mal_ambalaj['+kalem_num+']" placeholder="ambalaj" value="" ></td>',
                       '<td><input type="number" class="form-control required " id="mal_miktar'+kalem_num+'" name="mal_miktar['+kalem_num+']" placeholder="Miktar" value="" ></td>',
-                      '<td><select class="form-control required " name="mal_birim['+kalem_num+']" id="mal_birim"><option selected disabled>Seçiniz</option>@foreach($birimler as $birimleri) <option  value="{{$birimleri->id}}" >{{$birimleri->adi}}</option> @endforeach </select></td>',
+                      '<td><select class="form-control selectpicker required " name="mal_birim['+kalem_num+']" id="mal_birim"><option selected disabled>Seçiniz</option>@foreach($birimler as $birimleri) <option  value="{{$birimleri->id}}" >{{$birimleri->adi}}</option> @endforeach </select></td>',
                       '<td><a href="#" class="sil" ><img src="{{asset("images/sil1.png")}}"></a><input type="hidden" name="mal_id['+kalem_num+']"  id="mal_id'+kalem_num+'" value=""></td>','</tr>'].join(''));
 
     }
@@ -1041,12 +1041,12 @@ $("#btn2").click(function(){ //birden fazla kalem ekleme modal form içerisinde.
             '<td><input type="text" style="background:url({{asset("images/ekle.png")}}) no-repeat scroll ;padding-left:25px" class="form-control hizmet_show required" id="hizmet_kalem'+kalem_num+'" name="hizmet_kalem['+kalem_num+']" placeholder="Kalem Ekle" readonly  value="" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"> </td>',
             '<td><textarea id="hizmet_aciklama" name="hizmet_aciklama['+kalem_num+']" rows="2" class="form-control required" placeholder="Açıklama" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"></textarea></td>',
             '<td><input type="text" class="form-control required" id="hizmet_fiyat_standardi" name="hizmet_fiyat_standardi['+kalem_num+']" placeholder="Fiyat Standartı" value="" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"></td>',
-            '<td><select class="form-control required" name="hizmet_fiyat_standardi_birimi['+kalem_num+']" id="hizmet_fiyat_standardi_birimi" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"><option selected disabled>Seçiniz</option>@foreach($birimler as $fiyat_birimi)<option  value="{{$fiyat_birimi->id}}" >{{$fiyat_birimi->adi}}</option>@endforeach</select></td>',
+            '<td><select class="form-control selectpicker required" name="hizmet_fiyat_standardi_birimi['+kalem_num+']" id="hizmet_fiyat_standardi_birimi" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"><option selected disabled>Seçiniz</option>@foreach($birimler as $fiyat_birimi)<option  value="{{$fiyat_birimi->id}}" >{{$fiyat_birimi->adi}}</option>@endforeach</select></td>',
             '<td><input type="number" class="form-control  required" id="hizmet_miktar'+kalem_num+'" name="hizmet_miktar['+kalem_num+']" placeholder="Miktar" value="" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"></td>',
-            '<td><select class="form-control required" name="hizmet_miktar_birim_id['+kalem_num+']" id="hizmet_miktar_birim_id" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"><option selected disabled>Seçiniz</option>@foreach($birimler as $miktar_birim) <option  value="{{$miktar_birim->id}}" >{{$miktar_birim->adi}}</option>@endforeach</select></td>',
+            '<td><select class="form-control selectpicker required" name="hizmet_miktar_birim_id['+kalem_num+']" id="hizmet_miktar_birim_id" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"><option selected disabled>Seçiniz</option>@foreach($birimler as $miktar_birim) <option  value="{{$miktar_birim->id}}" >{{$miktar_birim->adi}}</option>@endforeach</select></td>',
             '<td><a href="#"  class="sil"> <img src="{{asset("images/sil1.png")}}"></a><input type="hidden" name="hizmet_id['+kalem_num+']"  id="hizmet_id'+kalem_num+'" value=""></td>','</tr>'].join(''));
     }
-    else if(sozlesme_turu=="1"){
+    else if(sozlesme_turu=="1" && $("#goturu_kalem0").length==0){
 
           i = ($(".goturu_show").length) +1;
           kalem_num = i-1;
@@ -1055,11 +1055,14 @@ $("#btn2").click(function(){ //birden fazla kalem ekleme modal form içerisinde.
             '<td><input type="text" style="background:url({{asset("images/ekle.png")}}) no-repeat scroll ;padding-left:25px" class="form-control goturu_show required" id="goturu_kalem'+kalem_num+'" name="goturu_kalem['+kalem_num+']" placeholder="Kalem Ekle" readonly  value="" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"> </td>',
 
             '<td><textarea id="goturu_aciklama" name="goturu_aciklama['+kalem_num+']" rows="2" class="form-control required " placeholder="Açıklama" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"></textarea></td>',
-            '<td><input type="text" class="form-control required" id="goturu_miktar" name="goturu_miktar['+kalem_num+']" placeholder="Miktar" value="" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"></td>',
+            '<td><input type="number" class="form-control required" id="goturu_miktar" name="goturu_miktar['+kalem_num+']" placeholder="Miktar" value="" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"></td>',
 
-            '<td><select class="form-control required" name="goturu_miktar_birim_id['+kalem_num+']" id="goturu_miktar_birim_id" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"><option selected disabled>Seçiniz</option>@foreach($birimler as $miktar_birim) <option  value="{{$miktar_birim->id}}" >{{$miktar_birim->adi}}</option>@endforeach</select></td>',
+            '<td><select class="form-control selectpicker required" name="goturu_miktar_birim_id['+kalem_num+']" id="goturu_miktar_birim_id" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"><option selected disabled>Seçiniz</option>@foreach($birimler as $miktar_birim) <option  value="{{$miktar_birim->id}}" >{{$miktar_birim->adi}}</option>@endforeach</select></td>',
             '<td><a href="#"  class="sil"> <img src="{{asset("images/sil1.png")}}"></a><input type="hidden" name="goturu_id['+kalem_num+']"  id="goturu_id'+kalem_num+'" value=""></td>','</tr>'].join(''));
 
+    }
+    else if(sozlesme_turu=="1" && $("#goturu_kalem0").length>0){
+        alert("Götürü Bedel İlanlara Sadece 1 Kalem Eklenebilir!");
     }
     else if(ilan_turu=="3"){
 
@@ -1070,11 +1073,12 @@ $("#btn2").click(function(){ //birden fazla kalem ekleme modal form içerisinde.
             '<td><input type="text" style="background:url({{asset("images/ekle.png")}}) no-repeat scroll ;padding-left:25px" class="form-control yapim_show required" id="yapim_kalem'+kalem_num+'" name="yapim_kalem['+kalem_num+']" placeholder="Kalem Ekle" readonly  value="" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"> </td>',
             '<td><textarea id="yapim_aciklama" name="yapim_aciklama['+kalem_num+']" rows="2" class="form-control required" placeholder="Açıklama" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"></textarea></td>',
             '<td><input type="text" class="form-control required" id="yapim_fiyat_standardi" name="yapim_fiyat_standardi['+kalem_num+']" placeholder="Fiyat Standartı" value="" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"></td>',
-            '<td><select class="form-control required" name="yapim_fiyat_standardi_birimi['+kalem_num+']" id="yapim_fiyat_standardi_birimi" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"><option selected disabled>Seçiniz</option>@foreach($birimler as $fiyat_birimi)<option  value="{{$fiyat_birimi->id}}" >{{$fiyat_birimi->adi}}</option>@endforeach</select></td>',
+            '<td><select class="form-control selectpicker required" name="yapim_fiyat_standardi_birimi['+kalem_num+']" id="yapim_fiyat_standardi_birimi" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"><option selected disabled>Seçiniz</option>@foreach($birimler as $fiyat_birimi)<option  value="{{$fiyat_birimi->id}}" >{{$fiyat_birimi->adi}}</option>@endforeach</select></td>',
             '<td><input type="number" class="form-control required" id="yapim_miktar'+kalem_num+'" name="yapim_miktar['+kalem_num+']" placeholder="Miktar" value="" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"></td>',
-            '<td><select class="form-control required" name="yapim_miktar_birim_id['+kalem_num+']" id="yapim_miktar_birim_id" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"><option selected disabled>Seçiniz</option>@foreach($birimler as $miktar_birim) <option  value="{{$miktar_birim->id}}" >{{$miktar_birim->adi}}</option>@endforeach</select></td>',
+            '<td><select class="form-control selectpicker required" name="yapim_miktar_birim_id['+kalem_num+']" id="yapim_miktar_birim_id" data-validation="required" data-validation-error-msg="Lütfen bu alanı doldurunuz!"><option selected disabled>Seçiniz</option>@foreach($birimler as $miktar_birim) <option  value="{{$miktar_birim->id}}" >{{$miktar_birim->adi}}</option>@endforeach</select></td>',
             '<td><a href="#" class="sil" > <img src="{{asset("images/sil1.png")}}"></a><input type="hidden" name="yapim_id['+kalem_num+']"  id="yapim_id'+kalem_num+'" value=""></td>','</tr>'].join(''));
     }
+    $('.selectpicker').selectpicker('refresh');
 });
 //kalemleri silme
 $('#mal_table').on('click', '.sil', function(e) {
@@ -1694,6 +1698,7 @@ $(function() {
     }();
 
     jQuery(document).ready(function() {
+        CKEDITOR.config.autoParagraph = false;
         FormWizard.init();
     });
 </script>

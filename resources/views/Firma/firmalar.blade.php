@@ -27,7 +27,7 @@
     <div class="portlet-body">
         @foreach($firmalar as $firma)
             <div class="ilanDetayPop ">
-                <div class="row hover">
+                <div class="row hover" style="padding-top: 20px;">
                     <div class="col-sm-10 ">
                         <div class="col-sm-2">
                             @if($firma->logo != "")
@@ -51,12 +51,12 @@
 
                     </div>
                     <div class="col-sm-2">
-                        <button type="button" class="btn btn-primary purple btn-tedEkle" id="btn_tedEkle_{{$firma->id}}" value="{{$firma->id}}" style="float:right;width:170px;margin: 30px">Onaylı Tedarikçi Ekle</button>
-                        <button type="button" class="btn btn-primary purple btn-tedCikar" id="btn_tedCikar_{{$firma->id}}" value="{{$firma->id}}" style="float:right;width:170px;display: none;margin: 30px">Tedarikçilerimden Çıkar</button>
+                        <button type="button" class="btn btn-circle purple btn-tedEkle" id="btn_tedEkle_{{$firma->id}}" value="{{$firma->id}}" style="float:right;margin: 30px"><i class="fa fa-star"></i> Onaylı Tedarikçi Ekle</button>
+                        <button type="button" class="btn btn-circle purple btn-tedCikar" id="btn_tedCikar_{{$firma->id}}" value="{{$firma->id}}" style="float:right;display: none;margin: 30px"><i class="fa fa-star-half-o"></i> Tedarikçilerimden Çıkar</button>
                     </div>
                 </div>
 
-                <hr class="hr">
+                <hr>
 
             </div>
             <?php $i++; ?>
