@@ -33,7 +33,7 @@
                                 <td>{{$onayliFirma->adresler[0]->iller->adi}}</td>
                                 <td><ul type="circle">@foreach($onayliFirma->sektorler as $sektor) <li>{{$sektor->adi}} </li> @endforeach </ul></td>
                                 <td>
-                                    <button type="button" class="btn btn-info btn-tedCikar" value="{{$onayliFirma->id}}">Tedarikçilerimden Çıkar</button>
+                                    <button type="button" class="btn btn-circle purple btn-tedCikar" value="{{$onayliFirma->id}}"><i class="fa fa-star-half-o"></i> Tedarikçilerimden Çıkar</button>
                                 </td>
                             </tr>
                         @endforeach

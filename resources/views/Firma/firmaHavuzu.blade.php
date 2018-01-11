@@ -1,6 +1,21 @@
 @extends('layouts.appUser')
-@section('baslik') Firma Havuzu @endsection
-@section('aciklama') Tüm firmaların listesini içerir. @endsection
+@section('baslik')
+<div class='row content'>
+    <div class="container">
+        <div class="col-sm-2">
+            <h3>Firma Havuzu</h3>
+        </div>
+        <div class="col-sm-10">
+            <ul style="list-style: none outside none;">
+                <?php $j=0; ?>
+                <li class="li" id="multiSel{{$j}}">
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+@endsection
+
 
 @section('head')
     <style>
@@ -9,44 +24,14 @@
             box-sizing: border-box;
             border: 1px solid #ccc;
             border-radius: 4px;
-            font-size: 16px;
             background-color: white;
-            background-image: url("{{asset('images/search.png')}}");
             background-position: 10px 10px;
             background-repeat: no-repeat;
-            padding: 12px 20px 12px 40px;
+            padding: 10px 10px 10px 10px;
             -webkit-transition: width 0.4s ease-in-out;
             transition: width 0.4s ease-in-out;
         }
-        input[type=button] {
-            background-color: #004f70;
-            border: 2px solid #ccc;
-            color: white;
-            border-radius: 4px;
-            padding: 12px 8px 12px 8px;
-            text-decoration: none;
-            margin: 4px 2px;
-        }
-        .search{
-            width: 270px;
-            box-sizing: border-box;
-            border: 1px solid #cc00c0;
-            border-radius: 0px;
-            font-size: 12px;
-            background-color: #ffffff;
-            padding: 12px 8px 12px 8px;
 
-        }
-        .soldivler{
-            width: 270px;
-            box-sizing: border-box;
-            border: 1px solid #cc00c0;
-            border-radius: 0px;
-            font-size: 12px;
-            background-color: #ffffff;
-            padding: 12px 8px 12px 8px;
-
-        }
         a {
             color: #000;
         }
@@ -79,7 +64,7 @@
             padding: 0 3px 2px 0;
         }
         .dropdown dd ul {
-            background-color: #4F6877;
+            background-color: purple;
             border: 0;
             color: #fff;
             display: none;
@@ -102,15 +87,6 @@
         }
         .dropdown dd ul li a:hover {
             background-color: #fff;
-        }
-        button {
-            background-color: #fff;
-            border-radius: 3px;
-            border: 0;
-            font: 13px/18px roboto;
-            text-align: center;
-            color: #003151;
-
         }
         .pclass {
             color: #cc00c0;
@@ -139,12 +115,6 @@
             top:50%;
             left:32%;
         }
-        .hr{
-            margin-top: 0px;
-            margin-bottom: 10px;
-            border: 0;
-            border-top: 1px solid #ddd;
-        }
     </style>
     <link href="{{asset('css/multiple-select.css')}}" rel="stylesheet"/>
 @endsection
@@ -153,56 +123,58 @@
 @endsection
 
  @section('content')
-            <div class="col-sm-12">
-                <ul style="list-style: none outside none;">
-                    <?php $j=0; ?>
-                    <li class="li" id="multiSel{{$j}}">
-                    </li>
-                </ul>
-            </div>
             <div id="FilterSection" class="row content">
                 <div class="col-sm-3">
-                    <div class="search" id="radioDiv3">
-                        <form action="javascript:runCheck()">
-                            <div>
-                                <input type="text" name="search" id="search" placeholder="Anahtar Kelime"><input type="button" id="button" value="ARA">
+                    <div class="row">
+                    <div class="portlet box purple">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="icon-globe"></i>
+                                Detaylı Firma Arama
                             </div>
-                            <div>
-                               <input type="radio" name="searchBox" value="sektor"> Sektör <br>
-                               <input type="radio" name="searchBox" value="sehir" > Şehir<br>
-                               <input type="radio" name="searchBox" value="firma" > Sadece Firma Adında Ara
-                            </div>
-                        </form>
-                    </div>
-                    <br>
-                    <div class="soldivler">
-                        <form>
-                            <h4>İllerde Arama</h4>
-                             <dl style="margin-bottom:0px" class="dropdown">
-                               <dt>
-                                   <a href="#" style="padding:2px"><span class="hida">Seçiniz<span class="caret"></span></span></a>
-                               </dt>
-                               <dd>
-                                   <div class="mutliSelect">
-                                       <ul>
-                                           @foreach($iller as $il)
+                        </div>
+                        <div class="portlet-body">
+                            <h4>Kelime Ara</h4>
+                                <div id="radioDiv3">
+                                    <form action="javascript:runCheck()">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" name="search" id="search" placeholder="Anahtar Kelime">
+                                            <span class="input-group-btn">
+                                                <button id="button" class="btn purple uppercase bold" type="button"><i class="icon-magnifier"></i></button>
+                                            </span>
+                                        </div>
+                                            <input type="radio" name="searchBox" value="sektor"> Sektör Ara<br>
+                                            <input type="radio" name="searchBox" value="sehir" > Şehir Ara<br>
+                                            <input type="radio" name="searchBox" value="firma" > Sadece Firma Adında Ara
+
+                                    </form>
+                                </div>
+                            <hr>
+                            <h4>Şehirlere Göre Ara</h4>
+                            <dl style="margin-bottom:0px" class="dropdown">
+                                <dt>
+                                    <a href="#" style="padding:2px"><span class="hida">Seçiniz<span class="caret"></span></span></a>
+                                </dt>
+                                <dd>
+                                    <div class="mutliSelect">
+                                        <ul>
+                                            @foreach($iller as $il)
                                                 <li><input type="checkbox" value="{{$il->id}}" name="{{$il->adi}}" />{{$il->adi}}</li>
-                                           @endforeach
-                                       </ul>
-                                   </div>
-                               </dd>
-                           </dl>
-                        </form>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </dd>
+                            </dl>
+                            <hr>
+                            <h4>Sektöre Göre Ara</h4>
+                            <select id="sektorler"   name="sektorler[]" multiple="multiple">
+                                @foreach($sektorler as $sektor)
+                                    <option data-toggle="tooltip" data-placement="bottom" title="{{$sektor->adi}}" value="{{$sektor->id}}">{{$sektor->adi}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                    <br>
-                    <div class="soldivler">
-                        <h4>İlan Sektörü</h4>
-                        <select id="sektorler"   name="sektorler[]" multiple="multiple">
-                            @foreach($sektorler as $sektor)
-                                <option data-toggle="tooltip" data-placement="bottom" title="{{$sektor->adi}}" value="{{$sektor->id}}">{{$sektor->adi}}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                </div>
                 </div>
                 <div class="col-sm-9 firmalar" id="auto_load_div">
                    @include('Firma.firmalar')
@@ -296,7 +268,7 @@
             else if(name1.length === 3){
                 birlesmisName=name1[0]+name1[1]+name1[2];
             }
-            var html = '<li class="li" name="'+birlesmisName+'"> <p class="pclass "><span title="' + name + '">' + name + '</span> <button class="silmeButton" onclick=silme("'+birlesmisName+'")><img src="{{asset('images/kapat.png')}}"></button></p> </li>';
+            var html = '<li class="li" name="' + birlesmisName + '"><span class="btn-sm btn btn-circle purple" title="' + name + '" style="cursor:auto;">' + name + ' <a class="silmeButton btn" onclick=silme("'+birlesmisName+'") style="padding: 1px;margin: 2px; color:white"><i class="icon-close"></i></a> </span></li>';
             $("#multiSel"+key).append(html);
         }
         $('#button').click(function(){

@@ -13,11 +13,10 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-sm-2">
-                <div style="float:right">
-                    <br>
-                    <a href="#" id="temizleButton">
-                            <span aria-hidden="true" class="icon-trash" style="color: #333">Temizle</span>
+            <div class=" col-sm-2">
+                <div style="padding: 20px; float: right;">
+                    <a class="btn bold btn-circle btn-outline purple" id="temizleButton">
+                        <span aria-hidden="true" class="icon-trash"></span> Temizle
                     </a>
                 </div>
             </div>
@@ -32,46 +31,14 @@
             box-sizing: border-box;
             border: 1px solid #ccc;
             border-radius: 4px;
-            font-size: 16px;
             background-color: white;
-            background-image: url("{{asset('images/search.png')}}");
             background-position: 10px 10px;
             background-repeat: no-repeat;
-            padding: 12px 20px 12px 40px;
+            padding: 10px 10px 10px 10px;
             -webkit-transition: width 0.4s ease-in-out;
             transition: width 0.4s ease-in-out;
         }
 
-        input[type=button] {
-            background-color: #004f70;
-            border: 2px solid #ccc;
-            color: white;
-            border-radius: 4px;
-            padding: 12px 8px 12px 8px;
-            text-decoration: none;
-            margin: 4px 2px;
-
-        }
-        .search{
-            width: 270px;
-            box-sizing: border-box;
-            border: 1px solid #cc00c0;
-            border-radius: 0px;
-            font-size: 12px;
-            background-color: #ffffff;
-            padding: 12px 8px 12px 8px;
-
-        }
-        .soldivler{
-            width: 270px;
-            box-sizing: border-box;
-            border: 1px solid #cc00c0;
-            border-radius: 0px;
-            font-size: 12px;
-            background-color: #ffffff;
-            padding: 12px 8px 12px 8px;
-
-        }
         a {
             color: #000;
         }
@@ -110,7 +77,7 @@
         }
 
         .dropdown dd ul {
-            background-color: #4F6877;
+            background-color: purple;
             border: 0;
             color: #fff;
             display: none;
@@ -137,22 +104,12 @@
             background-color: #fff;
         }
 
-        button {
-            background-color: #fff;
-            border-radius: 3px;
-            border: 0;
-            font: 13px/18px roboto;
-            text-align: center;
-            color: #003151;
-
-        }
         .pclass {
             color: #cc00c0;
             border-radius: 3px;
             display: inline-block;
             zoom: 1;
             font-size: small;
-            background:#fff;
             padding: 2px;
         }
         .ajax-loader {
@@ -169,13 +126,6 @@
             top:50%;
             left:32%;
         }
-        .hr{
-            margin-top: 0px;
-            margin-bottom: 10px;
-            border: 0;
-            border-top: 1px solid #ddd;
-
-        }
         .trigger {
             /* font: 16px/1 'roboto-m'; */
             color: #333;
@@ -191,83 +141,91 @@
 @endsection
  @section('content')
     <div id="FilterSection" class="row content">
-                <div class="col-sm-3">
-                    <div class="search" id="radioDiv3">
-                       <div>
-                           <input type="text" name="search" id="search" placeholder="Anahtar Kelime"><input type="button" id="button" class="btn purple btn-sm" value="ARA">
-                       </div>
-                       <div>
-                          <input type="radio" name="searchBox" value="tum" checked="checked"> Tüm İlanda<br>
-                          <input type="radio" name="searchBox" value="ilan_baslık"> Sadece İlan Başlığında<br>
-                          <input type="radio" name="searchBox" value="firma"> Sadece Firma Adında Ara
-                       </div>
+        <div class="col-sm-3">
+            <div class="row">
+                <div class="portlet box purple">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-paper-plane"></i>
+                            Detaylı İlan Arama
+                        </div>
                     </div>
-                    <br>
-                    <div class="soldivler">
-                        <form>
-                            <h4>İllerde Arama</h4>
-                             <dl style="margin-bottom:0px" class="dropdown">
-                               <dt>
-                                   <a href="#" style="padding:2px"><span class="hida">Seçiniz<span class="caret"></span></span></a>
-                               </dt>
-                               <dd>
-                                   <div class="mutliSelect">
-                                       <ul>
-                                           @foreach($iller as $il)
-                                                <li><input type="checkbox" value="{{$il->id}}" name="{{$il->adi}}" />{{$il->adi}}</li>
-                                           @endforeach
-                                       </ul>
-                                   </div>
-                               </dd>
-                           </dl>
-                        </form>
-                    </div>
-                    <br>
-                    <div class="soldivler">
-                        <h4>İlan Tarihi Aralığı</h4>
+                    <div class="portlet-body">
+                        <h4>Kelime Ara</h4>
+                        <div id="radioDiv3">
+                            <form action="javascript:runCheck()">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="search" id="search" placeholder="Anahtar Kelime">
+                                    <span class="input-group-btn">
+                                                <button id="button" class="btn purple uppercase bold" type="button"><i class="icon-magnifier"></i></button>
+                                            </span>
+                                </div>
+                                <input type="radio" name="searchBox" value="tum" checked="checked"> Tüm İlanda<br>
+                                <input type="radio" name="searchBox" value="ilan_baslık"> Sadece İlan Başlığında<br>
+                                <input type="radio" name="searchBox" value="firma"> Sadece Firma Adında Ara
+                            </form>
+                        </div>
+                        <hr>
+                        <h4>Şehirlere Göre Ara</h4>
+                        <dl style="margin-bottom:0px" class="dropdown">
+                            <dt>
+                                <a href="#" style="padding:2px"><span class="hida">Seçiniz<span class="caret"></span></span></a>
+                            </dt>
+                            <dd>
+                                <div class="mutliSelect">
+                                    <ul>
+                                        @foreach($iller as $il)
+                                            <li><input type="checkbox" value="{{$il->id}}" name="{{$il->adi}}" />{{$il->adi}}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </dd>
+                        </dl>
+                        <hr>
+                        <h4>Tarihe Göre Ara</h4>
                         <p>Başlangıç Tarihi</p>
                         <input type="date" class="form-control datepicker" id="baslangic_tarihi" name="baslangic_tarihi" placeholder="" value="">
                         <br>
                         <p>Bitiş Tarihi</p>
                         <input type="date" class="form-control datepicker" id="bitis_tarihi" name="bitis_tarihi" placeholder="" value="">
-                    </div>
-                    <br>
-                    <div class="soldivler">
-                        <h4>İlan Sektörü</h4>
+                        <hr>
+                        <h4>Sektöre Göre Ara</h4>
                         <select id="sektorler"   name="sektorler[]" multiple="multiple">
                             @foreach($sektorler as $sektor)
                                 <option data-toggle="tooltip" data-placement="bottom" title="{{$sektor->adi}}" value="{{$sektor->id}}">{{$sektor->adi}}</option>
                             @endforeach
                         </select>
-                    </div>
-                    <br>
-                    <div class="soldivler" id="radioDiv">
-                        <h4>İlan Türü</h4>
+                        <hr>
+                        <div id="radioDiv">
+                        <h4>ilan Türüne Göre Ara</h4>
                         <input type="radio" name="ilanTuru[]" class="tur" value="Mal"><span class="lever"></span>Mal<br>
                         <input type="radio" name="ilanTuru[]" class="tur" value="Hizmet"><span class="lever"></span>Hizmet<br>
                         <input type="radio" name="ilanTuru[]" class="tur" value="Yapım İşi"><span class="lever"></span>Yapım İşi
-                    </div>
-                    <br>
-                     <div class="soldivler" id="radioDiv4"> 
-                        <h4>Sözleşme Türü</h4>
+                        </div>
+                        <hr>
+
+                        <div id="radioDiv4">
+                        <h4>Sözleşme Türüne Göre Ara</h4>
                         <input type="radio" name="sozlesmeTuru[]" class="sozlesme" value="Birim Fiyatlı"><span class="lever"></span>Birim Fiyatlı<br>
                         <input type="radio" name="sozlesmeTuru[]" class="sozlesme" value="Götürü Bedel"><span class="lever"></span>Götürü Bedel<br>
-                     </div>
-                    <br>
-                     <div class="soldivler">
-                        <h4>Ödeme Türleri</h4>
+                        <hr>
+                        <h4>Ödeme Türüne Göre Ara</h4>
                         @foreach($odeme_turleri as $odeme)
-                         <input type="checkbox" class="checkboxClass2" value="{{$odeme->id}}" name="{{$odeme->adi}}"> {{$odeme->adi}}<br>
+                            <input type="checkbox" class="checkboxClass2" value="{{$odeme->id}}" name="{{$odeme->adi}}"> {{$odeme->adi}}<br>
                         @endforeach
-                    </div>
-                    <br>
-                    <div class="soldivler" id="radioDiv2">
-                        <h4>İlan Usulü</h4>
+                        </div>
+                        <hr>
+
+                        <div id="radioDiv2">
+                        <h4>İlan Usülüne Göre Ara</h4>
                         <input type="radio" name="gender[]" class="usul" value="Açık"> Açık<br>
                         <input type="radio" name="gender[]" class="usul" value="Belirli İstekliler Arasında">Belirli İstekler Arasında<br>
                         <input type="radio" name="gender[]" class="usul" value="Başvuru">Başvuru
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
                  @if(count($firma->belirli_istekliler) != 0 )
                 <div class="col-sm-9">
                      <div class="portlet light ">
@@ -279,7 +237,7 @@
                          </div>
                          <div class="portlet-body">
                              @foreach ($firma->belirli_istekliler as $davetEdildigimIlan)
-<div class="row">
+<div class="row hover" style="padding-top: 20px;">
                                  <div class="ilanDetayPop " name="{{$davetEdildigimIlan->ilanlar->id}}">
 
                                      <div class="pop-up"  style="display: none;
@@ -316,13 +274,13 @@
                                      <div class="col-sm-2">
                                          @if(Auth::guest())
                                          @else
-                                             <a href="#"><button type="button" class="btn purple" name="{{$davetEdildigimIlan->ilanlar->firmalar->id}} {{$davetEdildigimIlan->ilanlar->id}}" id="{{$davetEdildigimIlan->ilanlar->id}}"style='float:right;margin-top:60px'>Başvur</button></a><br><br>
+                                             <a href="#"><button type="button" class="btn purple btn-circle" name="{{$davetEdildigimIlan->ilanlar->firmalar->id}} {{$davetEdildigimIlan->ilanlar->id}}" id="{{$davetEdildigimIlan->ilanlar->id}}"style='float:right;margin-top:60px'><i class="icon-target"></i> Başvur</button></a><br><br>
                                          @endif
                                      </div>
                                  </div>
 
-    <hr />
 </div>
+                                 <hr />
                              @endforeach
                          </div>
                      </div>
@@ -472,7 +430,7 @@
                 birlesmisName=name1[0]+name1[1]+name1[2];
             }
 
-            var html = '<li class="li" name="'+birlesmisName+'"> <p class="pclass "><span title="' + name + '">' + name + '</span> <button class="silmeButton" onclick=silme("'+birlesmisName+'")><img src="{{asset('images/kapat.png')}}"></button></p> </li>';
+            var html = '<li class="li" name="'+birlesmisName+'"> <span class="btn-sm btn btn-circle purple" title="' + name + '" style="cursor:auto;">' + name + '<a class="silmeButton btn " onclick=silme("'+birlesmisName+'") style="padding: 1px;margin: 2px; color:white"><i class="icon-close"></i></a></span> </li>';
 
             $("#multiSel"+key).append(html);                                     
     }
