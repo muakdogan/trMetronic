@@ -533,7 +533,7 @@ DebugBar::info($ilan);
                                         <td>{{$ilan->adi}}</td>
                                     </tr>
                                     <tr>
-                                        <td>ilan Türü:</td>
+                                        <td>İlan Türü:</td>
                                         <td>{{$ilan->getIlanTuru()}}</td>
                                     </tr>
                                     <tr>

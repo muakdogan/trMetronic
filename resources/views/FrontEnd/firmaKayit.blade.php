@@ -453,7 +453,7 @@ $(document).ready(function(){
 $("#password").tooltip({
   title: "En az 6 karakter uzunlugunda; sayi, harf veya ozel karakter kombinasyonu giriniz.",
   // place tooltip on the right edge
-  placement: "right",
+  placement: "bottom",
   offset: [-2, 10],
   effect: "fade",
   opacity: 0.7
@@ -601,7 +601,7 @@ $('#fatura_il_id').on('change', function (e) {
   }).done(function(data){
     $('.ajax-loader').css("visibility", "hidden");
   }).fail(function(){
-    alert('Vergi dairesi Yüklenemiyor !!!  ');
+    alert('Vergi Daireleri Yüklenemiyor !!!  ');
   });
 });
 
