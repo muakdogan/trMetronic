@@ -14,6 +14,8 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Auth\Events\Login;
+use Auth;
 use Response;
 
 //use Auth;
@@ -45,7 +47,7 @@ class AuthController extends Controller
 
     protected $activationFactory;
 
-    protected function authenticated(Request $request, Kullanici $user)
+    /*protected function authenticated(Request $request, Kullanici $user)
     {
         //Kullanıcının onayli field'ına bak, onaylı değilse login'e izin verme
         if (!$user->onayli) {
@@ -67,14 +69,13 @@ class AuthController extends Controller
 
         //return redirect()->intended($this->redirectPath());
         return redirect($this->redirectPath());
-    }
+    }*/
+
     public function getLogout(){
         Auth::logout();
         Session::flush();
         return Redirect::to('/');
     }
-
-
 
     /**
      * Create a new authentication controller instance.
@@ -129,6 +130,7 @@ class AuthController extends Controller
     {
         if ($user = $this->activationFactory->activateUser($kullanici_id, $token)) {
             auth()->login($user);
+            event(new Login());
             return redirect($this->redirectPath());
         }
         abort(404);
@@ -195,7 +197,7 @@ class AuthController extends Controller
         //unique:firmalar,adi =>  Database içerisindeki firmalar tablosunun adi sütununda unique olup olmadığını kontrol ediyor.
         //exists:iller,id => İller tablosunun id sütununda var olup olmadığını kontrol ediyor.
         //same:ilce->il_id => İlce satırının içerisindeki ,il_id sütunu ile aynı olup olmadığını kontrol ediyor.
-        $this->validate($request, [
+        /*$this->validate($request, [
           'firma_adi' => 'required|unique:firmalar,adi|min:2',//unique:firmalar'ı bulmuyor
           'sektor_id' => 'required',//???????????????????????????????????????
           'telefon' => 'required|min:10|numeric',
@@ -297,7 +299,7 @@ class AuthController extends Controller
             'ad_soyad.required' => 'Lütfen kullanıcı adını ve soyadını giriniz.',
             'ad_soyad.string' => 'Kulanıcı adı ve soyadı sadece harflerden oluşmalıdır!!!',
           ]);
-        }
+        }*/
 
         if ($request->adres_kopyalayici == null){//Firma Adresi ile Fatura Adresi aynı değil.
 

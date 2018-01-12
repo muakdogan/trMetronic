@@ -238,6 +238,8 @@ Route::get('/firmaKayit', function () {
   // Önceki Hali "Firma.firmaKayit" Güncel Hali "Firma.genFirmaKayit"
 });
 
+Route::post('/firmaKayit', 'Auth\AuthController@kayitForm');
+
 Route::get('/yeniFirmaKaydet' ,function () {
   $kullanici_id=  App\Kullanici::find(session()->get('kullanici_id'));
   $iller = App\Il::all();
@@ -248,11 +250,11 @@ Route::get('/yeniFirmaKaydet' ,function () {
 Route::get('/firmaIslemleri/{id?}',['middleware'=>'auth', function ($id = null) {
     //firma işlemlerindeki parametre opsiyonel yapıldı, eğer parametre geçirilmiyorsa sessiondan alınarak atama yapılıyor
     if($id == null && (session()->has('firma_id')))
-    $id = session()->get('firma_id');
+      $id = session()->get('firma_id');
     $firma = Firma::find($id);
 
     if (Gate::denies('show', $firma)) {
-    return Redirect::to('/');
+      return Redirect::to('/');
     }
 
     $davetEdilIlanlar=DB::table('belirli_istekliler')
@@ -332,8 +334,6 @@ Route::post('/getIlan',function () {
   $querys=$querys->get();
   return Response::json($querys);
 });
-
-Route::post('/form', 'Auth\AuthController@kayitForm');
 
 Route::post('/yeniFirma/{id}', function (Request $request,$id) {
 

@@ -17,10 +17,10 @@ class EventServiceProvider extends ServiceProvider
             'App\Listeners\EventListener',
         ],
          'Illuminate\Auth\Events\Login' => [
-            'App\Listeners\LogSuccessfulLogin',
+            'App\Listeners\LogSuccessfulLogin', 'App\Listeners\UserLoggedIn',
         ],
     ];
-  
+
 
     /**
      * Register any other events for your application.

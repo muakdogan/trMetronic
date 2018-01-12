@@ -28,7 +28,7 @@ class ActivationFactory
         $token = $this->activationRepo->createActivation($user);
 
         $link = route('kullanici.onay', [$user->id, $token]);
-        $message = sprintf('Hesabınızı aktifleştirin %s', $link);
+        $message = sprintf('Hesabınızı aktifleştirin <a href> %s </href>', $link);
 
         $this->mailer->raw($message, function (Message $m) use ($user) {
             $m->to($user->email)->subject('Tamrekabet - Aktivasyon Mailı');
