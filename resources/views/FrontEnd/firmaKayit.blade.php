@@ -42,7 +42,7 @@
             </div>
             <div class="portlet light">
               <div class="portlet-body form">
-          {!! Form::open(array('id'=>'firma_kayit','url'=>'form' ,'name'=>'kayit','method' => 'POST','files'=>true, 'class'=>'form-horizontal'))!!}
+          {!! Form::open(array('id'=>'firma_kayit','url'=>'firmaKayit' ,'name'=>'kayit','method' => 'POST','files'=>true, 'class'=>'form-horizontal'))!!}
             <div class="form-body">
               <div class="row">
                   <div class="col-md-6">
@@ -51,7 +51,7 @@
                     <div class="form-group">
                       <label class="col-md-3 control-label">Firma Adı</label>
                       <div class="col-md-8">
-                        {!! Form::text('firma_adi', null,
+                        {!! Form::text('firma_adi', "Test Firmsı",
                                       array('class'=>'form-control',
                                       'placeholder'=>'Firma adı',
                                       'data-validation'=>'length',
@@ -66,7 +66,7 @@
                     <div class="form-group">
                       <label class="col-md-3 control-label">İletişim Adresi</label>
                       <div class="col-md-8">
-                        {!! Form::textarea('firma_adres', null,
+                        {!! Form::textarea('firma_adres', "Yok",
                             array('id' => 'firma_adres',
                             'class'=>'form-control',
                             'rows'=>'2',
@@ -116,7 +116,7 @@
                     <div class="form-group">
                       <label class="col-md-3 control-label">Telefon</label>
                       <div class="col-md-8">
-                        {!! Form::text('telefon', null,
+                        {!! Form::text('telefon', "0-505-634-19-62",
                                       array('id' => 'telefon',
                                       'class'=>'form-control',
                                       'placeholder'=>'Telefon',
@@ -130,7 +130,7 @@
                     <div class="form-group">
                       <label class="col-md-3 control-label">Web Adresi</label>
                       <div class="col-md-8">
-                        {!! Form::text('telefon', null,
+                        {!! Form::text('web', "www.testFirmasi.com",
                                       array('id' => 'web',
                                       'class'=>'form-control',
                                       'placeholder'=>'www.firmam.com',
@@ -185,14 +185,23 @@
                     <div class="form-group kurumsal">
                       <label class="col-md-3 control-label">Firma Ünvanı</label>
                       <div class="col-md-8">
-                        <input type="text" class="form-control input" placeholder="Firma Ünvanı">
+                        {!! Form::text('firma_unvan', 'San. Tic. Ltd.',
+                                        array('id' => 'firma_unvan',
+                                            'class'=>'form-control',
+                                            'placeholder'=>'Firma Ünvanı',
+                                            'data-toggle' => 'tooltip',
+                                            'data-validation' => 'required',
+                                            'data-validation-depends-on' =>'fatura_tur',
+                                            'data-validation-depends-on-value' => 'kurumsal',
+                                            'data-validation-error-msg'  => 'Lutfen bu alani doldurunuz'
+                                         )) !!}
                       </div>
                     </div>
                     <!-- Ad Soyad (Bireysel) -->
                     <div class="form-group bireysel" style="display:none;">
                       <label class="col-md-3 control-label">Ad Soyad</label>
                       <div class="col-md-8">
-                        {!! Form::text('ad_soyad', null,
+                        {!! Form::text('ad_soyad', "Mete Uğur AKDOĞAN",
                                         array('id' => 'ad_soyad',
                                         'class'=>'form-control',
                                         'placeholder'=>'Adınız ve Soyadınız',
@@ -207,7 +216,7 @@
                     <div class="form-group fatura_adres_group" style="display:none;">
                       <label class="col-md-3 control-label">Fatura Adresi</label>
                       <div class="col-md-8">
-                        {!! Form::text('fatura_adres', null,
+                        {!! Form::text('fatura_adres', "Yok",
                                         array('id' => 'fatura_adres',
                                               'class'=>'form-control',
                                               'placeholder'=>'Fatura Adresi',
@@ -269,7 +278,7 @@
                     <div class="form-group kurumsal">
                       <label class="col-md-3 control-label">Vergi No</label>
                       <div class="col-md-8">
-                        {!! Form::text('vergi_no', null,
+                        {!! Form::text('vergi_no', "23845800314",
                                   array('id' => 'vergi_no',
                                         'class'=>'form-control',
                                         'placeholder'=>'Vergi No',
@@ -287,7 +296,7 @@
                     <div class="form-group bireysel" style="display:none;">
                       <label class="col-md-3 control-label">TC Kimlik No</label>
                       <div class="col-md-8">
-                        {!! Form::text('tc_kimlik', null,
+                        {!! Form::text('tc_kimlik', "23845800314",
                                         array('id' => 'tc_kimlik',
                                               'class'=>'form-control',
                                               'placeholder'=>'T.C Kimlik Numaraniz',
@@ -314,7 +323,7 @@
                   <div class="form-group">
                     <label class="col-md-3 control-label">Ad</label>
                     <div class="col-md-8">
-                      {!! Form::text('adi', null,
+                      {!! Form::text('adi', "Mete Uğur",
                                     array('class'=>'form-control',
                                     'placeholder'=>'Adınız',
                                     'data-validation'=>'length',
@@ -329,7 +338,7 @@
                   <div class="form-group">
                     <label class="col-md-3 control-label">Soyad</label>
                     <div class="col-md-8">
-                      {!! Form::text('soyadi', null,
+                      {!! Form::text('soyadi', "AKDOĞAN",
                                     array('class'=>'form-control',
                                     'placeholder'=>'Soyadınız',
                                     'data-validation'=>'length',
@@ -343,7 +352,7 @@
                   <div class="form-group">
                     <label class="col-md-3 control-label">Ünvan</label>
                     <div class="col-md-8">
-                      {!! Form::text('unvan', null,
+                      {!! Form::text('unvan', "Yönetici",
                                     array('class'=>'form-control',
                                     'placeholder'=>'Ünvanınız',
                                     'data-toggle' => 'tooltip',
@@ -358,7 +367,7 @@
                   <div class="form-group">
                     <label class="col-md-3 control-label">Telefon</label>
                     <div class="col-md-8">
-                      {!! Form::text('telefonkisisel', null,
+                      {!! Form::text('telefonkisisel', "5056341962",
                                     array('id' => 'telefonkisisel',
                                     'class'=>'form-control',
                                     'placeholder'=>'Telefonunuz',
@@ -375,7 +384,7 @@
                   <div class="form-group">
                     <label class="col-md-3 control-label">E-Posta</label>
                     <div class="col-md-8">
-                      {!! Form::email('email_giris', null,
+                      {!! Form::email('email_giris', "muakdogan@gmail.com",
                                      array('id'=>'email_giris','class'=>'form-control email',
                                      'placeholder'=>'E-Postanız' ,
                                      'onFocusout'=>'email_girisControl()',
@@ -432,6 +441,11 @@
 <script src="{{asset('js/jquery.multi-select.js')}}" type="text/javascript"></script>
 <script type="text/javascript" src="{{asset('js/jquery.quicksearch.js')}}"></script>
 <script src="{{asset('MetronicFiles/pages/scripts/components-bootstrap-switch.min.js')}}" type="text/javascript"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.js"></script>
+{{--bu include layouts/app'teki head'te de var ama buraya ulaşamıyor..?--}}
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+
 <script>
 /*
 19.07.2017 Oguzhan

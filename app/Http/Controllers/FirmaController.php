@@ -30,8 +30,8 @@ class FirmaController extends Controller{
 
     public function __construct()
     {
-    $this->middleware('firmaYetkili', ['except' => ['showFirma']]);
-    $this->middleware('auth',['only'=>['showFirma']]);
+      $this->middleware('firmaYetkili', ['except' => ['showFirma']]);
+      $this->middleware('auth',['only'=>['showFirma']]);
     }
 
     /*public function properFunc($string){
