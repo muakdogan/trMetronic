@@ -51,11 +51,11 @@
                     <div class="form-group">
                       <label class="col-md-3 control-label">Firma Adı</label>
                       <div class="col-md-8">
-                        {!! Form::text('firma_adi', "Test Firmsı",
+                        {!! Form::text('firma_adi', "Test Firması",
                                       array('class'=>'form-control',
                                       'placeholder'=>'Firma adı',
                                       'data-validation'=>'length',
-                                      'data-validation-length'=>'min1',
+                                      'data-validation-length'=>'min3',
                                       'data-validation-error-msg'=>'Lütfen bu alanı doldurunuz!'
                                     ))
                         !!}
@@ -72,7 +72,7 @@
                             'rows'=>'2',
                             'placeholder'=>'İletişim Adresi',
                             'data-validation' => 'required',
-                            'data-validation-error-msg' => 'Lutfen bu alanı doldurunuz'
+                            'data-validation-error-msg' => 'Lutfen bu alanı doldurunuz!'
                             ))
                         !!}
                         <span class="help-block" style="color:red"> {{ $errors->first('firma_adres') }}</span>
@@ -97,7 +97,7 @@
                       <label class="col-md-3 control-label">İlçe</label>
                       <div class="col-md-8">
                         <select class="form-control"name="ilce_id" id="ilce_id" data-validation="required"
-                        data-validation-error-msg="Lütfen bu alanı dolduurnuz!"> <!--value= {{ Request::old('ilce_id') }} -->
+                        data-validation-error-msg="Lütfen bu alanı doldurnuz!"> <!--value= {{ Request::old('ilce_id') }} -->
                         </select>
                         <span class="help-block" style="color:red"> {{ $errors->first('ilce_id') }}</span>
                       </div>
@@ -134,8 +134,7 @@
                                       array('id' => 'web',
                                       'class'=>'form-control',
                                       'placeholder'=>'www.firmam.com',
-                                      'data-validation'=>'length',
-                                      'data-validation-length'=>'min15',
+                                      'data-validation-length'=>'min8',
                                       'data-validation-error-msg'=>'Lütfen bu alanı doldurunuz!')) !!}
                       </div>
                     </div>
@@ -160,14 +159,14 @@
                     <div class="form-group">
                       <label class="col-md-3 control-label">Fatura ve İletişim adresi</label>
                       <div class="col-md-8">
-                        <input id="adreslerAyni" type="checkbox" data-off-text="FARKLI" data-on-text="AYNI" checked="false" class="BSswitch">
+                        <input id="adreslerAyni" class="BSswitch" type="checkbox" data-off-text="FARKLI" data-on-text="AYNI" >
                       </div>
                     </div>
                     <!-- Firma Ünvanı -->
                     <div class="form-group">
                       <label class="col-md-3 control-label">Fatura Türü</label>
-                      <div class="col-md-8 make-switch">
-                        <input id="faturaTuru" name="fatura_tur" type="checkbox" data-off-text="BİREYSEL" data-on-text="KURUMSAL" checked="false" class="BSswitch">
+                      <div class="col-md-8">
+                        <input id="faturaTuru" name="fatura_tur" class="BSswitch" type="checkbox" data-off-text="BİREYSEL" data-on-text="KURUMSAL" checked="false">
                       </div>
                       <!--div class="col-md-5">
                         <div class="radio">
@@ -193,7 +192,7 @@
                                             'data-validation' => 'required',
                                             'data-validation-depends-on' =>'fatura_tur',
                                             'data-validation-depends-on-value' => 'kurumsal',
-                                            'data-validation-error-msg'  => 'Lutfen bu alani doldurunuz'
+                                            'data-validation-error-msg'  => 'Lutfen bu alani doldurunuz!'
                                          )) !!}
                       </div>
                     </div>
@@ -208,12 +207,12 @@
                                         'data-validation' => 'required',
                                         'data-validation-depends-on' =>'fatura_tur',
                                         'data-validation-depends-on-value' => 'bireysel',
-                                        'data-validation-error-msg' => 'Lutfen bu alani doldurunuz'
+                                        'data-validation-error-msg' => 'Lutfen bu alani doldurunuz!'
                         )) !!}
                       </div>
                     </div>
                     <!-- Fatura Adresi -->
-                    <div class="form-group fatura_adres_group" style="display:none;">
+                    <div class="form-group fatura_adres_group">
                       <label class="col-md-3 control-label">Fatura Adresi</label>
                       <div class="col-md-8">
                         {!! Form::text('fatura_adres', "Yok",
@@ -227,7 +226,7 @@
                       </div>
                     </div>
                     <!-- Fatura İli -->
-                    <div class="form-group fatura_adres_group" style="display:none;">
+                    <div class="form-group fatura_adres_group">
                       <label class="col-md-3 control-label">İl</label>
                       <div class="col-md-8">
                         <select class="form-control" name="fatura_il_id" id="fatura_il_id"
@@ -242,7 +241,7 @@
                       </div>
                     </div>
                     <!-- Fatura İlçesi -->
-                    <div class="form-group fatura_adres_group" style="display:none;">
+                    <div class="form-group fatura_adres_group">
                       <label class="col-md-3 control-label">İlçe</label>
                       <div class="col-md-8">
                         <select class="form-control" name="fatura_ilce_id" id="fatura_ilce_id"
@@ -253,7 +252,7 @@
                       </div>
                     </div>
                     <!-- Fatura Semti -->
-                    <div class="form-group fatura_adres_group" style="display:none;">
+                    <div class="form-group fatura_adres_group">
                       <label class="col-md-3 control-label">Semt</label>
                       <div class="col-md-8">
                         <select class="form-control" name="fatura_semt_id" id="fatura_semt_id"
@@ -269,7 +268,7 @@
                       <div class="col-md-8">
                         <select class="form-control" name="vergi_daire" id="vergi_daire"
                                 data-validation = "required" data-validation-depends-on = "fatura_tur"
-                                data-validation-depends-on-value = "kurumsal" data-validation-error-msg = "Lutfen Seciniz">
+                                data-validation-depends-on-value = "kurumsal" data-validation-error-msg = "Lütfen bu alanı doldurunuz!">
                         </select>
                         <span class="help-block" style="color:red"> {{ $errors->first('vergi_daire') }}</span>
                       </div>
@@ -278,17 +277,18 @@
                     <div class="form-group kurumsal">
                       <label class="col-md-3 control-label">Vergi No</label>
                       <div class="col-md-8">
-                        {!! Form::text('vergi_no', "23845800314",
+                        {!! Form::text('vergi_no', "2384580031",
                                   array('id' => 'vergi_no',
                                         'class'=>'form-control',
                                         'placeholder'=>'Vergi No',
                                         'data-toggle' => 'tooltip',
-                                        'data-validation' => 'number length',
+                                        'data-validation' => 'length number',
                                         'data-validation-length' => '10',
                                         'data-validation-depends-on' =>'fatura_tur',
                                         'data-validation-depends-on-value' => 'kurumsal',
-                                        'data-validation-error-msg' => 'Lutfen bu alani doldurunuz',
-                                        'data-validation-error-msg-length' => 'Lutfen 10 haneli numara giriniz'
+                                        'data-validation-error-msg-number' => 'Lutfen sadece rakam giriniz!',
+                                        'data-validation-error-msg' => 'Lutfen bu alani doldurunuz!',
+                                        'data-validation-error-msg-length' => 'Lutfen 10 haneli vergi numarası giriniz!'
                         )) !!}
                       </div>
                     </div>
@@ -302,11 +302,11 @@
                                               'placeholder'=>'T.C Kimlik Numaraniz',
                                               'maxlength'=>'11',
                                               'data-validation' => 'tc_kimlik_dogrulama number length',
-                                              'data-validation-length' => 'min11',
+                                              'data-validation-length' => '11',
                                               'data-validation-depends-on' =>'fatura_tur',
                                               'data-validation-depends-on-value' => 'bireysel',
-                                              'data-validation-error-msg-number' => 'Lutfen sayi giriniz',
-                                              'data-validation-error-msg-length' => 'Lutfen 11 haneli sayi giriniz',
+                                              'data-validation-error-msg-number' => 'Lutfen sadece rakam giriniz!',
+                                              'data-validation-error-msg-length' => 'Lutfen 11 haneli TC kimlik numaranızı giriniz!',
                         )) !!}
                       </div>
                     </div>
@@ -326,8 +326,8 @@
                       {!! Form::text('adi', "Mete Uğur",
                                     array('class'=>'form-control',
                                     'placeholder'=>'Adınız',
-                                    'data-validation'=>'length',
-                                    'data-validation-length'=>'min2',
+                                    'data-validation' => 'length',
+                                    'data-validation-length'=>'min3',
                                     'data-validation-error-msg'=>'Lütfen bu alanı doldurunuz!')
                       ) !!}
                       <span class="help-block" style="color:red"> {{ $errors->first('adi') }}</span>
@@ -341,7 +341,7 @@
                       {!! Form::text('soyadi', "AKDOĞAN",
                                     array('class'=>'form-control',
                                     'placeholder'=>'Soyadınız',
-                                    'data-validation'=>'length',
+                                    'data-validation' => 'length',
                                     'data-validation-length'=>'min2',
                                     'data-validation-error-msg'=>'Lütfen bu alanı doldurunuz!')
                       ) !!}
@@ -353,10 +353,11 @@
                     <label class="col-md-3 control-label">Ünvan</label>
                     <div class="col-md-8">
                       {!! Form::text('unvan', "Yönetici",
-                                    array('class'=>'form-control',
+                                    array('id'=>'unvan',
+                                    'class'=>'form-control',
                                     'placeholder'=>'Ünvanınız',
                                     'data-toggle' => 'tooltip',
-                                    'data-validation'=>'length',
+                                    'data-validation' => 'length',
                                     'data-validation-length'=>'min2',
                                     'data-validation-error-msg'=>'LÜtfen bu alanı doldurunuz!')
                       ) !!}
@@ -371,8 +372,8 @@
                                     array('id' => 'telefonkisisel',
                                     'class'=>'form-control',
                                     'placeholder'=>'Telefonunuz',
-                                    'data-validation'=>'length',
-                                    'data-validation-length'=>'3-17',
+                                    'data-validation' => 'length',
+                                    'data-validation-length'=>'15',
                                     'data-validation-error-msg'=>'Lütfen bu alanı doldurunuz!')
                       ) !!}
                       <span class="help-block" style="color:red"> {{ $errors->first('telefonkisisel') }}</span>
@@ -388,8 +389,8 @@
                                      array('id'=>'email_giris','class'=>'form-control email',
                                      'placeholder'=>'E-Postanız' ,
                                      'onFocusout'=>'email_girisControl()',
-                                     'data-validation'=>'email' ,
-                                     'data-validation-error-msg'=>'Lütfen bu alanı doldurunuz!')
+                                     'data-validation' => 'email' ,
+                                     'data-validation-error-msg'=>'Lütfen geçeri bir mail adresi giriniz!')
                       ) !!}
                       <span class="help-block" id="email_error" style="color:red" onload="findPos()">{{ $errors->first('email_giris') }}</span>
                     </div>
@@ -436,12 +437,10 @@
     </section>
 <script src="{{asset('MetronicFiles/global/plugins/jquery.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('MetronicFiles/global/scripts/app.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('MetronicFiles/pages/scripts/form-input-mask.min.js')}}" type="text/javascript"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/js/bootstrap-switch.min.js" type="text/javascript"></script>
 <script src="{{asset('js/jquery.multi-select.js')}}" type="text/javascript"></script>
 <script type="text/javascript" src="{{asset('js/jquery.quicksearch.js')}}"></script>
-<script src="{{asset('MetronicFiles/pages/scripts/components-bootstrap-switch.min.js')}}" type="text/javascript"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.js"></script>
 {{--bu include layouts/app'teki head'te de var ama buraya ulaşamıyor..?--}}
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
@@ -456,73 +455,82 @@ original_state_semt = fatura adresinin semt kismini alana form elemenetinin klon
 var original_state_il;
 var original_state_ilce;
 var original_state_semt;
-$(document).ready(function(){
+$(document).ready(function($){
   $('#telefon').mask('(000) 000-00-00');//jQuery mask plug-in. sirket ve kisisel telefon form'larini maskeler.
   $('#telefonkisisel').mask('(000) 000-00-00');
   original_state_il= $("#fatura_il_id").clone(true);// Cagrilan elementin tam olarak orjinal halini klonlar.
   original_state_ilce = $("#fatura_ilce_id").clone(true);//True paramtresi klonlarken, elemente bagli evenleri de alir.
   original_state_semt = $("#fatura_semt_id").clone(true);
 
+  $("#vergi_daire").tooltip({
+    title: "Önce il seçimi yaparak bağlı bulunduğunuz vergi dairenizi seçiniz.",
+    // place tooltip on the right edge
+    placement: "bottom",
+    offset: [-2, 10],
+    effect: "fade",
+    opacity: 0.7
+  });
 
-$("#password").tooltip({
-  title: "En az 6 karakter uzunlugunda; sayi, harf veya ozel karakter kombinasyonu giriniz.",
-  // place tooltip on the right edge
-  placement: "bottom",
-  offset: [-2, 10],
-  effect: "fade",
-  opacity: 0.7
-});
-$("#unvan").tooltip({
-  title: "Sirkette ki pozisyonunuz",
-  // place tooltip on the right edge
-  placement: "right",
-  offset: [-2, 10],
-  effect: "fade",
-  opacity: 0.7
-});
-$("#firma_unvan").tooltip({
-  title: "Firmanizin adi",
-  // place tooltip on the right edge
-  placement: "right",
-  offset: [-2, 10],
-  effect: "fade",
-  opacity: 0.7
-});
-$("#vergi_no").tooltip({
-  title: "10 haneli sirket numaraniz.",
-  // place tooltip on the right edge
-  placement: "right",
-  offset: [-2, 10],
-  effect: "fade",
-  opacity: 0.7
-});
-$("#vergi_no").tooltip({
-  title: "10 haneli sirket numaraniz.",
-  // place tooltip on the right edge
-  placement: "right",
-  offset: [-2, 10],
-  effect: "fade",
-  opacity: 0.7
-});
-$("#tc_kimlik").tooltip({
-  title: "11 haneli T.C kimlik numaraniz.",
-  // place tooltip on the right edge
-  placement: "right",
-  offset: [-2, 10],
-  effect: "fade",
-  opacity: 0.7
-});
-
-
+  $("#password").tooltip({
+    title: "En az 6 karakter uzunlugunda; sayi, harf veya ozel karakter kombinasyonu giriniz.",
+    // place tooltip on the right edge
+    placement: "bottom",
+    offset: [-2, 10],
+    effect: "fade",
+    opacity: 0.7
+  });
+  $("#firma_unvan").tooltip({
+    title: "Firmanizin adi",
+    // place tooltip on the right edge
+    placement: "right",
+    offset: [-2, 10],
+    effect: "fade",
+    opacity: 0.7
+  });
+  $("#unvan").tooltip({
+    title: "Firmadaki pozisyonunuz",
+    // place tooltip on the right edge
+    placement: "right",
+    offset: [-2, 10],
+    effect: "fade",
+    opacity: 0.7
+  });
+  $("#vergi_no").tooltip({
+    title: "Şirketinizin 10 haneli vergi numarası",
+    // place tooltip on the right edge
+    placement: "bottom",
+    offset: [-2, 10],
+    effect: "fade",
+    opacity: 0.7
+  });
+  $("#tc_kimlik").tooltip({
+    title: "11 haneli T.C kimlik numaraniz",
+    // place tooltip on the right edge
+    placement: "right",
+    offset: [-2, 10],
+    effect: "fade",
+    opacity: 0.7
+  });
 });
 // READY PARANTHESIS
-$('.BSswitch').bootstrapSwitch('state', true); //Init BSswitch
+
+$('#adreslerAyni').bootstrapSwitch(); //Init BSswitch
+$('#faturaTuru').bootstrapSwitch();
 
 $('#adreslerAyni').on('switchChange.bootstrapSwitch', function (event, state) {
-  if (state === true)
+  if (state === true){
     $(".fatura_adres_group").hide();
+    $('#vergi_daire').empty();
+    il_id = $("#il_id").val();
+    if(il_id != null) // eğer adresler aynı ise vergi dairelerini firma iline göre doldur
+      fillVergiDaire(il_id);
+  }
   else
     $(".fatura_adres_group").show();
+    $('#vergi_daire').empty();
+    il_id = $("#fatura_il_id").val();
+    if(il_id != null) // eğer adresler aynı ise vergi dairelerini firma iline göre doldur
+      fillVergiDaire(il_id);
 });
 
 $('#faturaTuru').on('switchChange.bootstrapSwitch', function (event, state) {
@@ -534,32 +542,21 @@ $('#faturaTuru').on('switchChange.bootstrapSwitch', function (event, state) {
     $('.kurumsal').hide();
     $('.bireysel').show();
   }
-  /*
-  var form_kurumsal = document.getElementById('div_kurumsal');
-  var form_bireysel = document.getElementById('div_bireysel');
-  //Kurumsal form aktif degilse aktif eder.
-  if(form_kurumsal.style.display === 'none'){
-    form_bireysel.style.display = 'none';
-    form_kurumsal.style.display = 'block';
-  }
-  //Bireysel form aktif degilse aktif eder.
-  else{
-    form_kurumsal.style.display = 'none';
-    form_bireysel.style.display = 'block';
-  }*/
 });
 
 $('#il_id').change(function (e) {
   var il_id = e.target.value;
+  if(!$(".fatura_adres_group").is(':visible'))
+    fillVergiDaire(il_id);
   $.get("{{asset('ajax-subcat?il_id=')}}"+il_id, function (data) {
   beforeSend:( function(){
-      $('.ajax-loader').css("visibility", "visible");
-    });
-    $('#ilce_id').empty();
-    $('#ilce_id').append('<option value="" selected disabled>İlçe Seçiniz</option>');
-    $.each(data, function (index, subcatObj) {
-      $('#ilce_id').append('<option value="' + subcatObj.id + '">' + subcatObj.adi + '</option>');
-    });
+    $('.ajax-loader').css("visibility", "visible");
+  });
+  $('#ilce_id').empty();
+  $('#ilce_id').append('<option value="" selected disabled>İlçe Seçiniz</option>');
+  $.each(data, function (index, subcatObj) {
+    $('#ilce_id').append('<option value="' + subcatObj.id + '">' + subcatObj.adi + '</option>');
+  });
   }).done(function(data){
     $('.ajax-loader').css("visibility", "hidden");
   }).fail(function(){
@@ -603,20 +600,7 @@ $('#fatura_il_id').on('change', function (e) {
   }).fail(function(){
     alert('İller Yüklenemiyor !!!  ');
   });
-  $.get("{{asset('vergi_daireleri?il_id=')}}"+il_id, function (data) {
-    beforeSend:( function(){
-      $('.ajax-loader').css("visibility", "visible");
-    });
-    $('#vergi_daire').empty();
-    $('#vergi_daire').append('<option value="" selected disabled> Seçiniz </option>');
-    $.each(data, function (index, subcatObj) {
-      $('#vergi_daire').append('<option value="' + subcatObj.id + '">' + subcatObj.adi + '</option>');
-    });
-  }).done(function(data){
-    $('.ajax-loader').css("visibility", "hidden");
-  }).fail(function(){
-    alert('Vergi Daireleri Yüklenemiyor !!!  ');
-  });
+  fillVergiDaire(il_id);
 });
 
 $('#fatura_ilce_id').on('change', function (e) {
@@ -636,6 +620,23 @@ $('#fatura_ilce_id').on('change', function (e) {
     alert('İller Yüklenemiyor !!!  ');
   });
 });
+
+function fillVergiDaire(il_id){
+  $.get("{{asset('vergi_daireleri?il_id=')}}"+il_id, function (data) {
+    beforeSend:( function(){
+      $('.ajax-loader').css("visibility", "visible");
+    });
+    $('#vergi_daire').empty();
+    $('#vergi_daire').append('<option value="" selected disabled> Seçiniz </option>');
+    $.each(data, function (index, subcatObj) {
+      $('#vergi_daire').append('<option value="' + subcatObj.id + '">' + subcatObj.adi + '</option>');
+    });
+  }).done(function(data){
+    $('.ajax-loader').css("visibility", "hidden");
+  }).fail(function(){
+    alert('Vergi Daireleri Yüklenemiyor !!!  ');
+  });
+}
 
 $('#vergi_daire_il').on('change', function (e) {
   var vergi_daire_il = e.target.value;
@@ -814,15 +815,15 @@ $.formUtils.addValidator
   name : 'tc_kimlik_dogrulama',
   validatorFunction : function(value, $el, config, language, $form) {
     if(value.substr(0,1) == 0)
-    return false;
+      return false;
     if(value.substr(10,1)%2 != 0)
-    return false;
+      return false;
     else{
       return true;
     }
   },
   errorMessage : 'Lutfen T.C kimlik numaranizi giriniz',
-  errorMessageKey: 'Lutfen gecerli T.C Kimlik No giriniz.'
+  errorMessageKey: 'Lutfen geçerli T.C Kimlik No giriniz.'
 });
 $.validate({
   /*modules : 'location, date, security, file, logic',//18.7.17 Logic eklendi. -Oguzhan

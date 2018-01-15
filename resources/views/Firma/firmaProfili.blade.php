@@ -266,10 +266,10 @@
                                 </tr>
                                 <tr>
                                     <td><strong>Şirket Türü</strong></td>
-                                    <td>
+                                    <td>:
                                     @foreach($sirketTurleri as $sirket)
                                         @if($sirket->id == $firma->sirket_turu)
-                                            : {{$sirket->adi}}
+                                          {{$sirket->adi}}
                                         @endif
                                     @endforeach
                                     </td>
@@ -589,7 +589,7 @@
                                         <label for="inputEmail3" class="col-sm-4 control-label">Kuruluş Yılı</label>
                                         <label for="inputTask" style="text-align: left"class="col-sm-1 control-label">:</label>
                                         <div class="col-sm-6">
-                                            <input type="number"  min="1000" max="3000" class="form-control" id="kurulus_tarihi" name="kurulus_tarihi" placeholder="Kuruluş Tarihi" value="{{$firma->kurulus_tarihi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
+                                            <input type="number" min="1900" max="{{date("Y")}}" class="form-control" id="kurulus_tarihi" name="kurulus_tarihi" placeholder="Kuruluş Tarihi" value="{{$firma->kurulus_tarihi}}" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                         </div>
                                     </div>
                                     <div class="form-group" id="uretilenDiv">

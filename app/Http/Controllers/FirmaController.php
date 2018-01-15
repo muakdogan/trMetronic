@@ -329,12 +329,12 @@ class FirmaController extends Controller{
     }
 
     public function deleteImage($id){
-    $item = Firma::findOrFail($id);
-    $oldName=$item->logo;
-    $item->logo=null;
-    $item->save();
-    File::delete("uploads/$oldName");
-    Session::set('firma_logo', '');
+      $item = Firma::findOrFail($id);
+      $oldName=$item->logo;
+      $item->logo=null;
+      $item->save();
+      File::delete("uploads/$oldName");
+      Session::set('firma_logo', '');
         if(session()->get('firma_id')!=''){
             FirmaController::firmaProfilDolulukHesapla(session()->get('firma_id'));
         }
@@ -927,18 +927,18 @@ class FirmaController extends Controller{
 
     //eski fonksiyonlar...suan kullanılmıyorlar
     public function firma(Request $request){
-    $firma = new Firma();
-    $firma->adi = $request->firmaAdi;
-    $firma->save();
+      $firma = new Firma();
+      $firma->adi = $request->firmaAdi;
+      $firma->save();
 
-    foreach($request->sektor as $sektor)
-        $firma->sektorler()->attach($sektor);
-    return redirect('/');
+      foreach($request->sektor as $sektor)
+          $firma->sektorler()->attach($sektor);
+      return redirect('/');
     }
     public function index($id){
-    $firmalar = Firma::find($id);
-    $sektorler = Sektor::all();
+      $firmalar = Firma::find($id);
+      $sektorler = Sektor::all();
 
-    return view('firmaKaydet')->with('firmalar',$firmalar)->with('sektorler', $sektorler);
+      return view('firmaKaydet')->with('firmalar',$firmalar)->with('sektorler', $sektorler);
     }
 }

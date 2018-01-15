@@ -155,14 +155,11 @@ class AuthController extends Controller
         $faturaIlceler = \App\Ilce::where('il_id', $request->fatura_il_id)->get();
         $faturaSemtler = \App\Semt::where('ilce_id', $request->fatura_ilce_id)->get();
 
-
-
         $ilcelerString = "";
         foreach ($ilceler as $i)
         {
           $ilcelerString = $ilcelerString.$i->id.",";
         }
-
 
         $semtlerString = "";
         foreach ($semtler as $s)
@@ -176,8 +173,6 @@ class AuthController extends Controller
           $vergi_illerString = $vergi_illerString.$v->id.",";
         }
 
-
-
         $faturaIlcelerString = "";
         foreach ($faturaIlceler as $fi)
         {
@@ -189,9 +184,6 @@ class AuthController extends Controller
         {
           $faturaSemtlerString = $faturaSemtlerString.$fs->id.",";
         }
-
-
-
 
         //Validation Helper By Özenç Çelik
         //unique:firmalar,adi =>  Database içerisindeki firmalar tablosunun adi sütununda unique olup olmadığını kontrol ediyor.
@@ -346,6 +338,7 @@ class AuthController extends Controller
             $iletisim = $firma->iletisim_bilgileri ?: new \App\IletisimBilgisi();
             $iletisim->telefon = $request->telefon;
             $iletisim->email = $request->email;
+            $iletisim->web_sayfasi = $request->web;
             $firma->iletisim_bilgileri()->save($iletisim);
 
             $adres = $firma->adresler()->where('tur_id', '=', '1')->first() ?: new  \App\Adres();
