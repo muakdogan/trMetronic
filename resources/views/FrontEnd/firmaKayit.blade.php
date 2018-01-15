@@ -116,7 +116,7 @@
                     <div class="form-group">
                       <label class="col-md-3 control-label">Telefon</label>
                       <div class="col-md-8">
-                        {!! Form::text('telefon', "0-505-634-19-62",
+                        {!! Form::text('telefon', "505-634-19-62",
                                       array('id' => 'telefon',
                                       'class'=>'form-control',
                                       'placeholder'=>'Telefon',

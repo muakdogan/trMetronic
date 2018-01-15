@@ -29,6 +29,9 @@ class UserLoggedIn
     public function handle(Login $event)
     {
       $user = Auth::user();
+      /*$now = new \DateTime();
+      $user->last_seen = $now;
+      $user->save();*/
 
       if (!$user->onayli) {
           //$this->activationFactory->sendActivationMail($user);
