@@ -164,12 +164,8 @@ class FirmaController extends Controller{
     }
 
     public function uyelikBilgileri(){
-        $firma = Firma::where('id', session()->get('firma_id'))->with([
-            'odemeler'
-        ])->first();
-
-
-    return view('Firma.uyelikBilgileri', ['firma' => $firma]);
+        $firma = Firma::where('id', session()->get('firma_id'))->with(['odemeler'])->first();
+        return view('Firma.uyelikBilgileri', ['firma' => $firma]);
     }
 
     public function showFirmalar(){
@@ -555,8 +551,8 @@ class FirmaController extends Controller{
         $firmaReferans->is_yili=$request->is_yili;
         $firmaReferans->calisma_suresi=Str::title(strtolower($request->calısma_suresi));
         $firmaReferans->yetkili_adi=Str::title(strtolower($request->yetkili_kisi_adi));
-        $firmaReferans->yetkili_email=$request->yetkili_kisi_email;
-        $firmaReferans->yetkili_telefon=Str::title(strtolower($request->yetkili_kisi_telefon));
+        //$firmaReferans->yetkili_email=$request->yetkili_kisi_email;
+        //$firmaReferans->yetkili_telefon=Str::title(strtolower($request->yetkili_kisi_telefon));
         $firma->firma_referanslar()->save( $firmaReferans);
 
        DB::commit();

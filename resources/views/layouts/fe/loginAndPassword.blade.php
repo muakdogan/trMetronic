@@ -11,8 +11,7 @@
         <title>Tamrekabet | Kullanıcı Girişi & Şifre Yenileme</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <meta content="Preview page of Metronic Admin Theme #3 for " name="description" />
-        <meta content="" name="author" />
+        <meta content="Tamrekaber kullanıcı girişi" name="description" />
         <!-- BEGIN GLOBAL MANDATORY STYLES -->
         <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
         <link href="{{asset('MetronicFiles/global/plugins/font-awesome/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css" />
@@ -39,7 +38,7 @@
     <body class=" login">
       <div class="logo">
           <a href="index.html">
-              <img src="{{asset('images/fe/logo_big.png')}}" alt="Tamrekabet" /> </a>
+              <img src="{{asset('images/fe/logo_big_white.png')}}" alt="Tamrekabet" /> </a>
       </div>
       <!-- END LOGO -->
       <!-- BEGIN CONTENT -->

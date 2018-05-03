@@ -37,7 +37,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="{{url('/admin/dashboard')}}" class="site_title"><i class="fa fa-paw"></i> <span>Tam Rekabet !</span></a> <!-- Ana sayfadaki proje isminin yazdıgı yer -->
+              <a href="{{url('/admin/dashboard')}}" class="site_title"><i class="fa fa-paw"></i> <span>Tam Rekabet</span></a> <!-- Ana sayfadaki proje isminin yazdıgı yer -->
             </div>
 
             <div class="clearfix"></div>
@@ -53,7 +53,7 @@
                 @if(Auth::guard('admin')->user())
                 <h2>{{ Auth::guard('admin')->user()->name }}</h2>
                 @else
-                <h2>John Mu Doe</h2>
+                <h2>Kullanıcı</h2>
                 @endif
               </div>
             </div>
@@ -64,7 +64,6 @@
             <!-- sidebar menu -->
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
-                <h3>General</h3>
                 <ul class="nav side-menu">
                    <li><a href="{{ url('/admin/dashboard') }}"><i class="fa fa-home"></i> Anasayfa </a> <!-- If you delete the span stuff the arrow on the right side is removed -->
                      <!-- <ul class="nav child_menu">
@@ -296,22 +295,6 @@
         <!-- page content -->
         <div class="right_col" role="main" style="width=%100; height=%30;">
           <div class="">
-            <div class="page-title">
-              <div class="title_left">
-                <h3>General Elements</h3>
-              </div>
-
-              <div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             <div class="clearfix"></div>
 

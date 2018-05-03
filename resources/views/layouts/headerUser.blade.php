@@ -4,8 +4,8 @@
     <div class="page-header-top">
         <div class="container">
             <!-- BEGIN LOGO -->
-            <div class="page-logo">
-                <a href="#">
+            <div class="page-logo" style="padding-top: 15px;">
+                <a href="{{URL::to('/')}}">
                     <img src="{{asset('images/fe/logo_big.png')}}" alt="Tamrekabet">
                 </a>
             </div>
@@ -27,7 +27,7 @@
                                 <img alt="" class="img-circle" src="{{asset('uploads/logo/defaultFirmaLogo.png')}}">
                             @endif
 
-                            <span class="username username-hide-mobile">{{session()->get('kullanici_adi') }}/ {{session()->get('firma_adi')}}</span>
+                            <span class="username username-hide-mobile">{{session()->get('kullanici_adi') }} / {{session()->get('firma_adi')}}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-default">
                             <li>
@@ -103,11 +103,12 @@
                                     <i class="icon-star"></i> Onaylı Tedarikçilerim
                                 </a>
                             </li>
-                            <li aria-haspopup="true" class="nav-link ">
-                                <a href="{{URL::to('firmaHavuzu')}}" class="nav-link ">
-                                    <i class="icon-globe"></i> Firma Havuzu</a>
-                            </li>
                         </ul>
+                    </li>
+
+                    <li aria-haspopup="true" class="nav-link ">
+                        <a href="{{URL::to('firmaHavuzu')}}" class="nav-link ">
+                            <i class="icon-globe"></i> Firma Havuzu</a>
                     </li>
 
                     <li aria-haspopup="true" class="menu-dropdown classic-menu-dropdown ">
@@ -126,11 +127,6 @@
                                     <i class="icon-plus"></i> İlan Oluştur
                                 </a>
                             </li>
-                            <li aria-haspopup="true" class=" ">
-                                <a href="{{URL::to('davetEdildigim')}}" class="nav-link ">
-                                    <i class="icon-call-in"></i> Davet Edildiğim İlanlar
-                                </a>
-                            </li>
                         </ul>
                     </li>
 
@@ -144,11 +140,16 @@
                                     <i class="icon-list"></i> Başvurularım
                                 </a>
                             </li>
-                            <li aria-haspopup="true" class="nav-link ">
-                                <a href="{{url('ilanAra/')}}" class="nav-link ">
-                                    <i class="icon-target"></i> Başvur</a>
+                            <li aria-haspopup="true" class=" ">
+                                <a href="{{URL::to('davetEdildigim')}}" class="nav-link ">
+                                    <i class="icon-call-in"></i> Davet Edildiğim İlanlar
+                                </a>
                             </li>
                         </ul>
+                    </li>
+                    <li aria-haspopup="true" class="nav-link ">
+                        <a href="{{url('ilanAra/')}}" class="nav-link ">
+                            <i class="icon-target"></i> Başvur</a>
                     </li>
 
 
