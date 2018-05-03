@@ -18,7 +18,6 @@
         width: 100%;
         height:100%;
     }
-
     .ajax-loader img {
         margin: 0;
         position: absolute;
@@ -27,8 +26,6 @@
         -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
     }
-
-
     .wrapper {
         padding: 25px;
     }
@@ -1411,7 +1408,7 @@
                                                         <select class="form-control" name="ref_turu" id="ref_turu" data-validation="required"  data-validation-error-msg="Lütfen bu alanı doldurunuz!">
                                                             <option selected disabled value="Seçiniz">Seçiniz</option>
                                                             <option   value="Geçmiş">Geçmiş</option>
-                                                            <option  value="Şuan">Şuan</option>
+                                                            <option  value="Şuan">Şu an</option>
                                                         </select>
                                                     </div>
                                                 </div>

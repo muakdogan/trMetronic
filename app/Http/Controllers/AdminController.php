@@ -7,10 +7,13 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use DateInterval;
+use Mail;
 use Barryvdh\Debugbar\Facade as Debugbar;
 
 class AdminController extends Controller
 {
+  protected $approvalFactory;
+
     public function __construct(){
     	$this->middleware('admin');
     }
@@ -52,7 +55,7 @@ class AdminController extends Controller
             $tabStates['tab2'] = "active";
             $tabStates['tab2_content'] = "active in";
         }
-        
+
         else
         {
             $tabStates['tab1'] = "active";
@@ -73,7 +76,7 @@ class AdminController extends Controller
 
         DB::beginTransaction();
 
-        try {
+        //try {
             //Onay türünü belirle. 0: standart, 1: ödemesiz, 2: özel, 3: ret
             $onayTuru = $request->input('onay_turu');
             $firma_id = $request->input('firma_id');
@@ -85,12 +88,12 @@ class AdminController extends Controller
 
             switch ($onayTuru)
             {
-                case 0://standart
+              case 0://standart
                 $firma->onay = 1;
                 $firma->uyelik_baslangic_tarihi = NULL;
                 $firma->uyelik_bitis_tarihi = NULL;
                 $firma->save();
-                
+
                 //standart onayda, firma onaylandıktan sonra üyeliği başlatma ödemesini ne zaman yaparsa
                 //o zaman geçerli olan miktar ve üyelik süresi ile üye olacak.
                 //o yüzden burada miktar ve sure'ye atama yapılmıyor.
@@ -101,10 +104,13 @@ class AdminController extends Controller
                 $odeme->save();
 
                 $subject = "Firmanız Onaylandı";
-                $message = "Sayın $kullanici->adi $kullanici->soyadi, $firma->adi adlı firma onaylanmıştır.";
+                $message = "<p><b>$firma->adi</b> adlı firmanın üyeliği onaylanmıştır.
+                            <p><b>tamrekabet.com</b>'u ödeme yaptığınız anda kullanmaya başlayabilirsiniz.</b>
+                            <p>Firmanızı aramızda görmekten mutluluk duyuyoruz...</p>
+                            ";
                 break;
 
-                case 1://ödemesiz
+              case 1://ödemesiz
                 $firma->uyelik_baslangic_tarihi = date_create(NULL);
                 $firma->uyelik_bitis_tarihi = date_create(NULL)->add(new DateInterval("P".$request->input('uyelik_bitis_suresi')."M"))->format('Y-m-d');//şu ana uyelik_bitis_suresi field'ını ay olarak ekle
                 $firma->onay = 1;
@@ -121,11 +127,12 @@ class AdminController extends Controller
                 $odeme->save();
 
                 $subject = "Firmanız Onaylandı";
-                $message = "Sayın $kullanici->adi $kullanici->soyadi, $firma->adi adlı firmanın üyeliği,
-                $firma->uyelik_bitis_tarihi tarihine kadar onaylanmıştır.";
+                $message = "<p><b>$firma->adi</d> adlı firmanın üyeliği onaylanmıştır.</p>
+                            <p>tamrekabet.com'u <b>$firma->uyelik_bitis_tarihi</b> tarihine kadar ücretsiz olarak kullanabilirsiniz.</p>
+                            <p>Firmanızı aramızda görmekten mutluluk duyuyoruz...</p>";
                 break;
 
-                case 2://özel
+              case 2://özel
                 $odeme = new \App\Odeme();
                 $odeme->firma_id = $firma->id;
                 $odeme->sistem_kullanici_id = Auth::guard('admin')->user()->id;
@@ -146,12 +153,20 @@ class AdminController extends Controller
                 $firma->save();
 
                 $subject = "Firmanız Onaylandı";
-                $message = "Sayın $kullanici->adi $kullanici->soyadi, $firma->adi adlı firmanın üyeliği,
-                $odeme->miktar karşılığında, son ödeme tarihi $teklifBitisTarihi olmak üzere
-                $firma->uyelik_bitis_tarihi tarihine kadar onaylanmıştır.";
+                $message = "<p><b>$firma->adi</b> adlı firmanın üyeliği onaylanmıştır.
+                              <b>tamrekabet.com</b>'u hemen kullanbilmeniz için size özel sunduğumuz teklif:
+                              <p><b>Kullanım süresi:</b> $odeme->sure ay</p>
+                              <p><b>Tutar:</b> $odeme->miktar TL</p>
+                              <p><b>Teklif Son Geçerlilik Tarihi:</b> $teklifBitisTarihi 'dir.</p>
+                            </p>
+                            <br>
+                            <p><b>tamrekabet.com</b>'u ödeme yaptığınız anda kullanmaya başlayabilir ve ödeme yaptığınız tarihten itibaren teklifte verilen süre boyunca kullanmaya devam edebilirsiniz.</p>
+                            <p>Teklif son geçerlilik tarihi olan <b> $teklifBitisTarihi </b>'den sonra ödeme yapmaniz durumunda <a href=''>standart fiyatlar</a> geçerli olacaktır.</p>
+                            <p>Firmanızı aramızda görmekten mutluluk duyuyoruz...</p>
+                            ";
                 break;
 
-                case 3://ret
+              case 3://ret
                 $firma->onay = -1;
                 $firma->save();
 
@@ -159,26 +174,30 @@ class AdminController extends Controller
                 $message = "Sayın $kullanici->adi $kullanici->soyadi, $firma->adi adlı firmanın üyeliği reddedilmiştir.";
                 break;
 
-                default:
-
+              default:
                 break;
             }
+            $data = ['subject' => $subject, 'text' => $message, 'adi' => $kullanici->adi, 'firma_adi' => $firma->adi, 'case' => $onayTuru];
+            Mail::send('emails.firmaOnay', $data, function($m) use($kullanici, $subject) {
+              $m->to($kullanici->email);
+              $m->subject("tamrekabet.com - $subject");
+            });
 
             DB::commit();
-            
-            /*$this->mailer->raw($message, function (Message $m) use ($user) {
+            /*
+            $this->mailer->raw($message, function (Message $m) use ($user) {
                 $m->to($kullanici->email)->subject($subject);
             });*/
 
-            return redirect('admin/firmaList');
 
-        }
+        /*}
         catch (\Exception $e)
         {
             DB::rollback();
             return response()->json($e);
-        }
-
+        }*/
+        //everything is ok redirect admin
+        return redirect('admin/firmaList');
     }
 
     public function firmaOnayla ($id) {

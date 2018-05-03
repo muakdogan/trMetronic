@@ -30,30 +30,29 @@
         </td>
         <td>
           <div class="metot">
-            
+
           </div>
           <div class="metot" style="display: none;">
-            <label class="col-md-4">Üyelik süresi (ay): </label>
+            <label class="col-md-6">Üyelik süresi (ay): </label>
             <input class="col-md-4 uyelikBitisSuresi" type="number" name="uyelik_bitis_suresi" pattern="[0-9]*" min="1" max="12" title="1 ila 12 ay">
           </div>
           <div class="metot" style="display: none;">
             <div class="form-group">
-              <label class="col-md-4">Miktar: </label>
+              <label class="col-md-6">Miktar: </label>
               <input class="col-md-4 miktar" name="miktar" pattern="[0-9]*" title="Pozitif sayı"><br>
             </div>
-
             <div class="form-group">
-              <label class="col-md-4">Üyelik süresi (ay): </label>
+              <label class="col-md-6">Üyelik süresi (ay): </label>
               <input class="col-md-4 sure" type="number" name="sure" pattern="[0-9]*" min="1" max="12" title="1 ila 12 ay"><br>
             </div>
 
             <div class="form-group">
-              <label class="col-md-4">Teklif geçerlilik süresi (ay): </label>
-              <input class="col-md-4 gecerlilikSure" type="number" name="gecerlilik_sure" pattern="[0-9]*" min="1" max="12" title="1 ila 12 ay"><br>
+              <label class="col-md-6">Teklif süresi (ay): </label>
+              <input class="col-md-4 sure" type="number" name="gecerlilik_sure" pattern="[0-9]*" min="1" max="12" title="1 ila 12 ay"><br>
             </div>
           </div>
           <div class="metot" style="display: none;">
-            
+
           </div>
         </td>
         <td>
@@ -64,7 +63,7 @@
       </form>
 
     </tr>
-      
+
   @endforeach
 
 </table>
@@ -96,35 +95,39 @@
 
             <h4>İletişim Bilgileri</h4>
 
-            <label>Telefon: </label>{{$firma->iletisim_bilgileri->telefon}}<br>
-            <label>Faks: </label>{{$firma->iletisim_bilgileri->fax}}<br>
-            <label>Email: </label>{{$firma->iletisim_bilgileri->email}}<br>
-            <label>Web: </label>{{$firma->iletisim_bilgileri->web_sayfasi}}<br>
+            <label>Telefon: </label> {{$firma->iletisim_bilgileri->telefon}}<br>
+            <label>Faks: </label> {{$firma->iletisim_bilgileri->fax}}<br>
+            <label>Email: </label> {{$firma->iletisim_bilgileri->email}}<br>
+            <label>Web: </label> {{$firma->iletisim_bilgileri->web_sayfasi}}<br>
 
             <hr/>
 
             <h4>Adresler</h4>
             <ul>
-              @foreach($firma->adresler as $adres)
-                <li>
-                  <label>Türü: </label>{{$adres->adres_turleri->adi}}<br>
-                  <label>İl: </label>{{$adres->iller->adi}}<br>
-                  <label>İlçe: </label>{{$adres->ilceler->adi}}<br>
-                  <label>Semt: </label>{{$adres->semtler->adi}}<br>
-                  <label>Adres: </label>{{$adres->adres}}<br>
-                </li>
-              @endforeach
+              <table width="100%">
+                <tr>
+                  @foreach($firma->adresler as $adres)
+                    <td width="50%">
+                      <h4>{{$adres->adres_turleri->adi}}</h4>
+                      <label>İl: </label> {{$adres->iller->adi}}<br>
+                      <label>İlçe: </label> {{$adres->ilceler->adi}}<br>
+                      <label>Semt: </label> {{$adres->semtler->adi}}<br>
+                      <label>Adres: </label> {{$adres->adres}}<br>
+                    </td>
+                  @endforeach
+                </td>
+              </table>
             </ul>
 
             <hr/>
 
             <h4>Kullanıcı</h4>
 
-            <label>ID: </label>{{$firma->kullanicilar[0]->id}}<br>
-            <label>Adı: </label>{{$firma->kullanicilar[0]->adi}}<br>
-            <label>Soyadı: </label>{{$firma->kullanicilar[0]->soyadi}}<br>
-            <label>Email: </label>{{$firma->kullanicilar[0]->email}}<br>
-            <label>Telefon: </label>{{$firma->kullanicilar[0]->telefon}}<br>
+            <label>ID: </label> {{$firma->kullanicilar[0]->id}}<br>
+            <label>Adı: </label> {{$firma->kullanicilar[0]->adi}}<br>
+            <label>Soyadı: </label> {{$firma->kullanicilar[0]->soyadi}}<br>
+            <label>Email: </label> {{$firma->kullanicilar[0]->email}}<br>
+            <label>Telefon: </label> {{$firma->kullanicilar[0]->telefon}}<br>
 
             <hr/>
 
@@ -157,7 +160,7 @@
   $(".detayButon").click(function(event){
     //submit önle
     event.preventDefault();
-    
+
     //detay satırı
     //$(this).parents(".onaySatir").next(".detaySatir:first").toggle();
 

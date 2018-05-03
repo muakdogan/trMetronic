@@ -141,7 +141,10 @@
                     <!-- Sektörler -->
                     <div class="form-group">
                       <label class="col-md-3 control-label">Firma Sektörleri</label>
-                      <div class="col-md-8">
+
+                    </div>
+                    <div class="form-group">
+                      <div class="col-md-12">
                         <p id ='sektor_count' style='font-size:12px;color:#9055a2;font-weight: bold;'>Lütfen maksimum 5 sektör seçiniz!</p>
                         <select class="form-control deneme" name="sektor_id[]" id="custom-headers" multiple='multiple' value="{{1}}" data-validation = "required" data-validation-error-msg = "Lütfen Sektör Seçiniz">
                           @foreach($sektorler as $sektor)
@@ -152,6 +155,7 @@
                       </div>
                     </div>
                   </div>
+
                   <!--/span-->
                   <div class="col-md-6">
                     <h4 class="form-section">Fatura Bilgileri</h4>
@@ -159,7 +163,7 @@
                     <div class="form-group">
                       <label class="col-md-3 control-label">Fatura ve İletişim adresi</label>
                       <div class="col-md-8">
-                        <input id="adreslerAyni" class="BSswitch" type="checkbox" data-off-text="FARKLI" data-on-text="AYNI" >
+                        <input id="adreslerAyni" name="adresler_ayni" class="BSswitch" type="checkbox" data-off-text="FARKLI" data-on-text="AYNI" >
                       </div>
                     </div>
                     <!-- Firma Ünvanı -->
@@ -553,6 +557,7 @@ $('#il_id').change(function (e) {
     $('.ajax-loader').css("visibility", "visible");
   });
   $('#ilce_id').empty();
+  $('#semt_id').empty();
   $('#ilce_id').append('<option value="" selected disabled>İlçe Seçiniz</option>');
   $.each(data, function (index, subcatObj) {
     $('#ilce_id').append('<option value="' + subcatObj.id + '">' + subcatObj.adi + '</option>');
@@ -591,6 +596,7 @@ $('#fatura_il_id').on('change', function (e) {
       $('.ajax-loader').css("visibility", "visible");
     });
     $('#fatura_ilce_id').empty();
+    $('#fatura_semt_id').empty();
     $('#fatura_ilce_id').append('<option value="" selected disabled>İlçe Seçiniz</option>');
     $.each(data, function (index, subcatObj) {
       $('#fatura_ilce_id').append('<option value="' + subcatObj.id + '">' + subcatObj.adi + '</option>');

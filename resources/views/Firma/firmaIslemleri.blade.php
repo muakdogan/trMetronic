@@ -1,5 +1,5 @@
 @extends('layouts.appUser')
-@section('baslik') Kontrol Panel @endsection
+@section('baslik') Firma Anasayfası @endsection
 @section('aciklama')  @endsection
 @section('head')
     <link href="{{asset('MetronicFiles/global/plugins/bootstrap-table/bootstrap-table.min.css')}}" rel="stylesheet" type="text/css" />
@@ -186,7 +186,43 @@
             <!-- END WIDGET THUMB -->
         </div>
     </div>
+@endsection
 
+@section('popUps')
+  @if(session('email_validated'))
+    <script type="text/javascript">
+      $(document).ready(function () {
+      $('#popupmodal').modal({show:true});
+    });
+    </script>
+    <div id="popupmodal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="caption-subject theme-font bold">E-postanız Doğrulandı</h4>
+          </div>
+          <div class="modal-body">
+              <p> Teşekkürler <b>{{Session::get('kullanici_adi')}}</b>,</p>
+              <p>
+                E-postanı başarılı bir şekilde doğruladık. Bilgilerini girdiğin {{Session::get('firma_adi')}}
+                firmasını kontrol ediyoruz. Bu süreci en hızlı şekilde tamamlayarak sonucu e-posta ve sms ile iletiyor olacağız.
+                Firmanın kontrol süreci olumlu bir şekilde tamamlandıktan sonra ödemeni yaparak <strong>tamrekabet.com</strong>'un
+                tüm özelliklerini kullanmaya başlayabilirisin.
+              </p>
+              <p>
+                Biz firmanı kontrol ederken <a href="{{URL::to('firmaProfili', false)}}"> firma profilindeki </a> bilgileri doldurabilirisin.
+                Unutma firma profilin ne kadar doluysa diğer firmalar {{Session::get('firma_adi')}} firmasını o kadar iyi tanıyacaklar ve güveneceklerdir.
+                Ayrıca firma profili doluluk oranı yüksek olan firmalar ilan aramalarında üst sıralarda yer almaktadır!
+              </p>
+          </div>
+          <div class="modal-footer">
+              <button class="btn purple" data-dismiss="modal" aria-hidden="true">Kapat</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  @endif
 @endsection
 
 @section('sayfaSonu')

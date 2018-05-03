@@ -1,44 +1,21 @@
 @extends('layouts.fe.feMaster')
 <!-- navbar-->
 @include('FrontEnd.ustMenu')
-<!-- *** SIGNUP MODAL ***_________________________________________________________
--->
-<div id="get-started" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true" class="modal fade">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
-        <h4 class="modal-title text-center">Get started</h4>
-      </div>
-      <div class="modal-body">
-        <form action="#" method="post">
-          <div class="form-group">
-            <input id="email_modal" type="text" placeholder="name@company.com" class="form-control">
-          </div>
-          <p class="text-center">
-            <button class="btn btn-primary"><i class="pe-7s-magic-wand"></i> Sign up</button>
-          </p>
-        </form>
-        <p class="text-center text-muted">Effects present letters inquiry no an removed or friends. Desire behind latter me though in.</p>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- *** SIGNUP MODAL END ***-->
+
 @section('content')
+
 <section id="intro" class="text-intro no-padding-bottom">
-  <div class="container">
+  <div class="container banne-con">
     <div class="row">
       <div class="col-md-12">
-        <h1>Al Kazan Sat Kazan <!--span class="rotate">startup intro site, landing page, bootstrap template</span--> </h1>
-        <h3 class="weight-300"><b>tamrekabet.com</b> Nedir?</h3>
+        <h1 class="banner-h1">Al Kazan Sat Kazan <!--span class="rotate">startup intro site, landing page, bootstrap template</span--> </h1>
+        <h3 class="weight-300 banner-h3"><b>tamrekabet.com</b> Nedir?</h3>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <p><b>tamrekabet.com</b> mal, hizmet veya yapım işi ihtiyacı olan firmaların teklif toplama süreçlerinde destek vererek <br/> bu ihtiyaçları karşılayabilecek satıcı firmalar ile buluşturur.</p>
-        <p><b>tamrekabet.com</b> satış süreçlerinde yenilikçi bir anlayışla satıcı firmaları alıcı firmaların taleplerinden haberdar eder. <br/> Ayrıca satıcı firmalar <b>tamrekabet.com</b> üzerinden kolayca tekliflerini gönderebilirler.</p>
-        <a href="{{url('/firmaKayit')}}" class="btn navbar-btn btn-white">HEMEN ÜYE OLUN</a>
+        <p class="banner-p"><b>tamrekabet.com</b> mal, hizmet veya yapım işi ihtiyacı olan firmaların teklif toplama süreçlerinde destek vererek <br/> bu ihtiyaçları karşılayabilecek satıcı firmalar ile buluşturur.</p>
+        <a href="{{url('/firmaKayit')}}" class="btn navbar-btn btn-white banner-btn"><b>HEMEN ÜYE OLUN</b></a>
         <!--form class="form-inline margin-top sign-up-form">
           <input id="email_intro" type="email" placeholder="name@company.com" class="form-control">
           <input id="submit_intro" type="submit" value="Get started for FREE" class="btn btn-primary">
@@ -414,7 +391,7 @@ div.circle-avatar{
         <div class="box-simple">
           <div class="icon"><i class="pe-7s-mail-open-file"></i></div>
           <h3>Elektronik destek</h3>
-          <p class="text-muted">Bize dilediğiniz zaman e-posta yoluyla ulaşarak destek alabilirsiniz.</p>
+          <p class="text-muted">Bize dilediğiniz zaman E-posta yoluyla ulaşarak destek alabilirsiniz.</p>
           <p><strong><a href="mailto:">info@tamrekabet.com</a></strong></p>
         </div>
       </div>
@@ -431,7 +408,7 @@ div.circle-avatar{
       var panel = this.nextElementSibling;
       if (panel.style.maxHeight){
         panel.style.maxHeight = null;
-      } else {
+      }else{
         panel.style.maxHeight = panel.scrollHeight + "px";
       }
     }
@@ -442,7 +419,7 @@ div.circle-avatar{
     <div class="container">
       <div class="row">
         <div class="col-md-6">
-          <p>&copy;2017 tamrekabet</p>
+          <p>&copy;2018 tamrekabet</p>
         </div>
         <div class="col-md-6">
         </div>
@@ -450,4 +427,33 @@ div.circle-avatar{
     </div>
   </div>
 </footer>
+@endsection
+@section('javaScripts')
+  @if(session('modal_message_info'))
+    <script type="text/javascript">
+      $(document).ready(function () {
+      $('#popupmodal').modal({show:true});
+    });
+    </script>
+    <div id="popupmodal" class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4>Kaydınız alınmıştır</h4>
+          </div>
+          <div class="modal-body">
+              <p> Teşekkürler <b>{{Session::get('modal_message_info')}}</b>,</p>
+              <p>
+                Girdiğin e-posta hesabına bir doğrulama e-postası gönderdik. E-posta'daki
+                butona tıklayarak bu işlemi gerçekleştirebilir ve firma profilindeki bilgileri doldurmaya başlayabilirsin.
+              </p>
+          </div>
+          <div class="modal-footer">
+              <button class="btn navbar-btn btn-ghost" data-dismiss="modal" aria-hidden="true">Kapat</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  @endif
 @endsection

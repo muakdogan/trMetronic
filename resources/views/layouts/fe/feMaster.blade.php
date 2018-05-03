@@ -53,4 +53,5 @@
       ga('create','UA-XXXXX-X');ga('send','pageview');
     </script-->
   </body>
+  @yield('javaScripts')
 </html>

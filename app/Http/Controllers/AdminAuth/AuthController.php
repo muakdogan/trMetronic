@@ -55,7 +55,7 @@ class AuthController extends Controller
             return view('auth.authenticate');
         }
 
-        return view('admin.auth.genLogin');
+        return view('admin.auth.login');
         //admin.auth.genLogin = Gentelelladaki login ekranı fakat henüz uyarlayamadım.
     }
 

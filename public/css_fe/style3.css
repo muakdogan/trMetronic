@@ -361,13 +361,11 @@ INTRO
 }
 @media (min-width: 1200px) {
   .text-intro {
-    background-image: -webkit-linear-gradient(left, color-stop(#9055a2 0%), color-stop(#453f69 60%));
-    background-image: linear-gradient(to right, #9055a2 0%, #453f69 60%);
-    background-repeat: repeat-x;
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff9055a2', endColorstr='#ff453f69', GradientType=1);
+    background-image: url('../images/fe/banner.png');
+    background-size: cover;
   }
 }
-@media (max-width: 1199px) {
+/*@media (max-width: 1199px) {
   .text-intro {
     background: #453f69;
   }
@@ -1164,7 +1162,6 @@ STYLE SWITCHER FOR DEMO
 }
 .navbar-brand {
   float: left;
-  padding: 10px 15px;
   font-size: 20px;
   line-height: 24px;
   height: 80px;
@@ -1993,4 +1990,17 @@ p.social.social--outline a.email {
 p.social.social--outline a.link {
   color: #871AFF;
   border-color: #871AFF;
+}
+
+.banner-h1, .banner-h3, .banner-p, .banner-btn {
+  color: white;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+.banner-btn:hover {
+  text-shadow: none;
+}
+
+.banner-con {
+  padding-top: 30px;
 }

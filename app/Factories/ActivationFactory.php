@@ -4,6 +4,7 @@ namespace App\Factories;
 
 use App\Kullanici;
 use App\Repositories\ActivationRepository;
+use Mail;
 use Illuminate\Mail\Mailer;
 use Illuminate\Mail\Message;
 
@@ -28,10 +29,18 @@ class ActivationFactory
         $token = $this->activationRepo->createActivation($user);
 
         $link = route('kullanici.onay', [$user->id, $token]);
-        $message = sprintf('Hesabınızı aktifleştirin <a href> %s </href>', $link);
+        //$message = sprintf('Hesabınızı aktifleştirin <a href> %s </href>', $link);
 
-        $this->mailer->raw($message, function (Message $m) use ($user) {
+        /*$this->mailer->raw($message, function (Message $m) use ($user) {
             $m->to($user->email)->subject('Tamrekabet - Aktivasyon Mailı');
+        });*/
+        $data = ['adi' => $user->adi, 'link' => $link, 'firma_adi' =>$user->firmalar()->first()->adi];
+
+        Mail::send('emails.firmaKayit', $data, function($message) use ($data, $user) {
+          $message->from('info@tamrekabet.com', 'tamrekabet');
+
+          $message->to($user->email, $data['adi'])
+            ->subject('tamrekabet.com - Kullanıcı hesabı doğrulama e-postası');
         });
     }
 

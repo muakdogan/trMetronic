@@ -130,8 +130,8 @@ class AuthController extends Controller
     {
         if ($user = $this->activationFactory->activateUser($kullanici_id, $token)) {
             auth()->login($user);
-            event(new Login());
-            return redirect($this->redirectPath());
+            //event(new Login());
+            return redirect($this->redirectPath())->with("email_validated", "E-posta doğrulandı");
         }
         abort(404);
     }
@@ -299,7 +299,7 @@ class AuthController extends Controller
           $fatura_ilce = \App\Ilce::find($request->fatura_ilce_id);
           $fatura_semt = \App\Semt::find($request->fatura_semt_id);
 
-          $this->validate($request, [
+          /*$this->validate($request, [
             'fatura_adres' => 'required',
             'fatura_il_id' => 'required|integer|exists:iller,id',
             'fatura_ilce_id' => 'required|integer|exists:ilceler,id|in:'.$faturaIlcelerString,
@@ -321,7 +321,7 @@ class AuthController extends Controller
             'fatura_semt_id.exists'=> 'Sistemimizde kayıtlı olmayan bir semt seçtiniz.Lütfen tekrar deneyin',
             'fatura_semt_id.integer'=> 'Semt id si integer olması gerekiyor.',
             'fatura_semt_id.in'=> 'İlçe ye ait olamyan bir semt seçemezsiniz'
-          ]);
+          ]);*/
         }
 
 
@@ -350,7 +350,7 @@ class AuthController extends Controller
             $adres->tur_id = $tur;
             $firma->adresler()->save($adres);
 
-            if ($request->adres_kopyalayici == null)
+            if ($request->adresler_ayni == null)
             {
                 $fatura_adres = new \App\Adres();
                 $fatura_adres->il_id = $request->fatura_il_id;
@@ -360,7 +360,7 @@ class AuthController extends Controller
                 $fatura_adres->tur_id = 2;
                 $firma->adresler()->save($fatura_adres);
             }
-            else if ($request->adres_kopyalayici == "on")
+            else if ($request->adresler_ayni == "on")
             {
                 $fatura_adres = new \App\Adres();
                 $fatura_adres->il_id = $request->il_id;
@@ -401,24 +401,14 @@ class AuthController extends Controller
 
             $firma->kullanicilar()->attach($kullanici,['rol_id'=>1, 'unvan'=>Str::title(strtolower($request->unvan))]);
 
-            /*$data = ['ad' => $request->adi, 'soyad' => $request->soyadi];
-
-            Mail::send('auth.emails.mesaj', $data, function($message) use($data,$request)
-            {
-
-            $message->to($request->email, $data['ad'])
-            ->subject('YENİ KAYIT OLMA İSTEĞİ!');
-
-            });*/
-
             $this->activationFactory->sendActivationMail($kullanici);
 
             DB::commit();
-            // all good
+            // all good redirect to homepage
+            return redirect('/')->with("modal_message_info", $kullanici->adi);
         } catch (\Exception $e) {
             DB::rollback();
             return Response::json($e);
-
         }
 
     }
