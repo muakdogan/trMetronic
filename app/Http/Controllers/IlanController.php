@@ -179,7 +179,7 @@ class IlanController extends Controller
                         $sektor_id = $sektor->id;
             }
         }
-        
+
         $ilId = Input::get('ilAdi');
         $keyword = Input::get('keyword');
         $il_id = Input::get('il');
@@ -708,8 +708,7 @@ class IlanController extends Controller
         DebugBar::info(Input::get('ilan_adi'));
     }
 
-    public function ilanOlusturEkle(Request $request, $firma_id)
-    {
+    public function ilanOlusturEkle(Request $request, $firma_id){
         //ilan bilgileri kaydediliyor.
        /* DebugBar::info($request->all());
 
@@ -1074,8 +1073,7 @@ class IlanController extends Controller
             ->with('pasif_ilanlar', $pasif_ilanlar)->with('yorumPuanIlanlar', $yorumPuanIlanlar)->with('puanControl',$puanControl);
     }
 
-    public function basvurularim($firma_id)
-    {
+    public function basvurularim($firma_id){
         $firma = Firma::find($firma_id);
 
         if (Gate::denies('show', $firma)) {
@@ -1105,8 +1103,7 @@ class IlanController extends Controller
 
     }
 
-    public function davetEdildigimIlanlar ()
-    {
+    public function davetEdildigimIlanlar (){
         $id = session()->get('firma_id');
         $davetEdilIlanlar=DB::table('belirli_istekliler')
             ->join('ilanlar', 'ilanlar.id', '=', 'belirli_istekliler.ilan_id')
@@ -1438,6 +1435,7 @@ class IlanController extends Controller
             abort(403, 'teklif verilmis ilan pasif edilemez!');
         }
     }
+
     public function ilaniAktifEt(Request $request){
         $ilan=$request->instance()->query('ilan');
         $ilan->statu=0;

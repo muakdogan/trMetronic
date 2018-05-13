@@ -1,5 +1,5 @@
 <style>
-.puanlama { 
+.puanlama {
     background: #dddddd;
     width: 30px;
     border-radius: 4px;
@@ -17,7 +17,7 @@ a{
     border-color: #ccc;
     border-radius:3px;
     padding:10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0,0, 0.2), 0 6px 20px 0 rgba(0, 0, 0,0.19);       
+    box-shadow: 0 4px 8px 0 rgba(0, 0,0, 0.2), 0 6px 20px 0 rgba(0, 0, 0,0.19);
 }
 .hover:hover {
     background-color:#eee;
@@ -95,7 +95,7 @@ a{
                         <?php Debugbar::info($ilan->rekabet_sekli); ?>
                         @if($ilan->rekabet_sekli == 1 || $ilan->rekabet_sekli == 2 || ($ilan->katilimcilar == 2 && $ilan->belirliIstekliControl($ilan->id,$firma_id) == 1)) <!-- Eğer bir firma davet edilmediyse o ilanda başvuru butonu çıkmaz-->
 
-                            <a href="#"><button type="button" class="btn btn-circle purple"  name="{{$ilan->firma_id}}_{{$ilan->id}}" id="{{$ilan->id}}" style='float:right;margin-top:60px'><i class="icon-target"></i> Başvur</button></a><br><br>
+                            <a href="{{URL::to('ilanTeklifVer', array($ilan->id))}}"><button type="button" class="btn btn-circle purple"  name="{{$ilan->firma_id}}_{{$ilan->id}}" id="{{$ilan->id}}" style='float:right;margin-top:60px'><i class="icon-target"></i> Başvur</button></a><br><br>
 
                             @endif
                         @endif
@@ -119,9 +119,9 @@ a{
     $('.ilanDetayPop').mouseleave(function () {
         $('div.pop-up').hide();
     });
-        
+
     var ILAN_ID;
-    
+
     var name;
     var FIRMA_ID;
     var deneme;
@@ -134,7 +134,7 @@ a{
 
         funcIlanFirma();
     });
-    function func(){          
+    function func(){
            $.ajax({
             type:"GET",
             url:"{{url('basvuruControl')}}",
@@ -143,7 +143,7 @@ a{
             cache: false,
             success: function(data){
                 console.log(data);
-                    if(data==0){                        
+                    if(data==0){
                         var url = "{{url('teklifGor', ['_firma', '_ilan'])}}";
                         url = url.replace('_firma', FIRMA_ID);
                         url = url.replace('_ilan', ILAN_ID);
@@ -157,8 +157,8 @@ a{
             }
         });
     }
-    
-    function funcIlanFirma(){          
+
+    function funcIlanFirma(){
         $.ajax({
         type:"GET",
         url:"{{url('IlanFirmaControl')}}",
@@ -166,8 +166,8 @@ a{
         cache: false,
         success: function(data){
             console.log(data);
-                if(data==0){   
-                    func();    
+                if(data==0){
+                    func();
                 }
                 else{
 
@@ -179,7 +179,7 @@ a{
         }
         });
     }
-    
+
     $(".puanlama").each(function(){
         var puan = $(this).text();
         if(puan > 0 && puan < 3){
@@ -206,7 +206,7 @@ a{
         else if (puan > 9 && puan <= 10){
             $(this).css("background", "#45c538");
         }
-        
+
     });
     $('#ilanCount').children().html("<strong>Arama kriterlerinize uyan</strong><img src='{{asset('images/sol.png')}}'><strong style='font-size:36px'> {{$count}} </strong>ilan");
 

@@ -274,7 +274,7 @@
                                      <div class="col-sm-2">
                                          @if(Auth::guest())
                                          @else
-                                             <a href="#"><button type="button" class="btn purple btn-circle" name="{{$davetEdildigimIlan->ilanlar->firmalar->id}} {{$davetEdildigimIlan->ilanlar->id}}" id="{{$davetEdildigimIlan->ilanlar->id}}"style='float:right;margin-top:60px'><i class="icon-target"></i> Başvur</button></a><br><br>
+                                             <a href="#"><button type="button" class="btn purple btn-circle" name="{{$davetEdildigimIlan->ilanlar->firmalar->id}} {{$davetEdildigimIlan->ilanlar->id}}" id="{{$davetEdildigimIlan->ilanlar->id}}" style='float:right;margin-top:60px'><i class="icon-target"></i> Başvur</button></a><br><br>
                                          @endif
                                      </div>
                                  </div>
@@ -307,12 +307,12 @@
             onClick: function() {
                 var sonSecilen="";
                 var id=0;
-                
+
                 console.log($(this));
-              
+
                 $('#sektorler option:selected').each(function() {
                     sonSecilen = $(this).text();
-             
+
                     id=$(this).val();
                     if(jQuery.inArray(sonSecilen, sektor) === -1){
                         sektor.push(sonSecilen);
@@ -374,7 +374,7 @@
                         this.value = this.defaultValue;
                     }
                 } );
-                getIlanlar(1);    
+                getIlanlar(1);
             }
             if($('#search').val() !== null){
                 $("#radioDiv3 input[type='radio']").each(function(){
@@ -397,7 +397,7 @@
                     if($(this).val()=== id){
                         console.log($('input:checkbox[data-name="selectItemsektorler[]"][value="' + id + '"]'));
                        $('input:checkbox[data-name="selectItemsektorler[]"][value="' + id + '"]').trigger("click");
-                       
+
                     }
                 });
                 getIlanlar(1);
@@ -417,7 +417,7 @@
             var birlesmisName;
             $("#multisel"+key).empty();
             if(code.length === 0){
-                
+
             }
             var name1 = code.split(" "); /// Birden fazla kelime kontrolü
             if(name1.length === 1){
@@ -432,7 +432,7 @@
 
             var html = '<li class="li" name="'+birlesmisName+'"> <span class="btn-sm btn btn-circle purple" title="' + name + '" style="cursor:auto;">' + name + '<a class="silmeButton btn " onclick=silme("'+birlesmisName+'") style="padding: 1px;margin: 2px; color:white"><i class="icon-close"></i></a></span> </li>';
 
-            $("#multiSel"+key).append(html);                                     
+            $("#multiSel"+key).append(html);
     }
     $('#button').click(function(){
         doldurma("anahtar kelime:"+$('#search').val(),$('#search').val());
@@ -492,8 +492,8 @@
         getIlanlar(1);
         doldurma(sonSecilen,sonSecilen);
     });
-    
-    
+
+
     $(".dropdown dt a").on('click', function() {
         $(".dropdown dd ul").slideToggle('fast');
     });
@@ -561,13 +561,13 @@
         }
         if(sektorID != ""){
             var sektor = new Array();
-           
+
             $("#sektorler").multipleSelect("setSelects", [sektorID]);
-              
+
             var sonSecilen;
             var id=0;
             $('#sektorler option:selected').each(function() {
-            
+
                 sonSecilen = $(this).text();
                 id=$(this).val();
                 if(jQuery.inArray(sonSecilen, sektor) === -1){
@@ -576,7 +576,7 @@
                 }
             });
             console.log(sonSecilen,"s"+id);
-            
+
             getIlanlar(1);
             doldurma(sonSecilen,"s"+id);
         }
@@ -592,7 +592,7 @@
             $('#sektorler option:selected').each(function() {
                  selectedSektor.push($(this).val());
             });
-           
+
         }
         var selectedIl = new Array(); /////////// iller //////////////
         var n = jQuery('.mutliSelect input[type="checkbox"]').length;
@@ -665,7 +665,7 @@
             window.scrollTo(0, 0);
 
             $('.ajax-loader').css("visibility", "hidden");
-        }).fail(function(jqXHR, textStatus, errorThrown){ 
+        }).fail(function(jqXHR, textStatus, errorThrown){
             console.log("jqXHR:");
             console.log(jqXHR);
             console.log("textStatus:");
