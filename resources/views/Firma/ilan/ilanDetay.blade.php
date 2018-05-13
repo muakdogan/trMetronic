@@ -26,10 +26,9 @@ DebugBar::info($ilan);
 @if($sektor_kontrol==1)
     @section('content')
     <?php
-    $kullaniciTeklifi=null;
-    $para_birimi=$ilan->para_birimleri->para_birimi();
+      $kullaniciTeklifi=null;
+      $para_birimi=$ilan->para_birimleri->para_birimi();
     ?>
-
     @foreach($teklifler as $tekliff)
         @if(session()->get('firma_id') == $tekliff->teklifler->getFirma("id"))
             <?php $kullaniciTeklifi=$tekliff;?>
@@ -1515,8 +1514,6 @@ DebugBar::info($ilan);
 
     </script>
 @endsection
-<<<<<<< HEAD
-=======
 @else
     @section('content')
         <div class="row">
@@ -1529,11 +1526,10 @@ DebugBar::info($ilan);
                         </div>
                     </div>
                     <div class="portlet-body">
-                        <h3>Firma sektörleriniz ile ilan sektörünün uyuşmaması nedeniyle ilanı görüntüleyemezsiniz.</h3>
+                        <h3>Firmanızın faliyet gösterdiği sektörler ile ilan sektörünün uyuşmaması nedeniyle ilanı görüntüleyemezsiniz.</h3>
                     </div>
                 </div>
             </div>
         </div>
     @endsection
 @endif
->>>>>>> bf8e8f1d8ec54b16e2764d4ed7b887548cf65a0c

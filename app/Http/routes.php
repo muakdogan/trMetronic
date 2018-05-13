@@ -19,6 +19,7 @@ use App\Semt;
 use App\Ilan;
 use App\Teklif;
 use App\MaliBilgi;
+use App\Kullanici;
 use Carbon\Carbon;
 use Spatie\Activitylog\Models\Activity;
 use Illuminate\Support\Str;
@@ -506,8 +507,36 @@ Route::get('ilanTeklifVer/{ilan_id}',['middleware'=>'auth' ,function ($ilan_id) 
         ORDER BY kdv_dahil_fiyat ASC "));
     $kullanici = App\Kullanici::find(session()->get('kullanici_id'));
 
+    $ilanSahibi=0;
+    $sektor_kontrol=0;
+    if($firma->id == $ilan->firmalar->id){
+      $ilanSahibi=1;
+      $sektor_kontrol=1;
+    }
+    else{
+      foreach ($firma->sektorler as $i_g_firma_sektor){
+        if($i_g_firma_sektor->id==$ilan->ilan_sektor){
+          $sektor_kontrol=1;
+          break;
+        }
+      }
+    }
+
+    $teklif = Teklif::where('firma_id',$firma->id)->where('ilan_id',$ilan->id)->get();
+
+    $dt = Carbon::today();
+    $time = Carbon::parse($dt);
+    $dt = $time->format('Y-m-d');
+    $kullanici = Kullanici::find(session()->get('kullanici_id'));
+
+    $minFiyat = $ilan->minFiyat();
+    $firmaIlan=$ilan->firmalar;
+
     return view('Firma.ilan.ilanDetay')->with('firma', $firma)->with('ilan', $ilan)
-            ->with('birimler',$birimler)->with('teklifler',$teklifler);
+            ->with('birimler',$birimler)->with('teklifler',$teklifler)
+            ->with('sektor_kontrol', $sektor_kontrol)->with('teklif', $teklif)
+            ->with('dt', $dt)->with('minFiyat', $minFiyat)->with('ilanSahibi',$ilanSahibi)
+            ->with('kullanici',$kullanici)->with('firmaIlan',$firmaIlan);
   }]);
 
   Route::get('/ilanOlustur/{firma_id}', 'IlanController@ilanOlustur');
